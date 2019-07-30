@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public Vector2 wallJump;
     public float wallClimbSpeed = 3;
 
+    public int extraJumps = 1;
+
     float gravity;
     float maxJumpVelocity;
     float minJumpVelocity;
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
     bool wallSticking;
     bool wallStickingOld;
     int wallDirX;
+    int extraJumpRemained;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,7 @@ public class Player : MonoBehaviour
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 
         wallStickingOld = false;
+        ResetExtraJumps();
 
         print("Gravity: " + gravity + " Jump Velocity: " + maxJumpVelocity);
     }
@@ -69,6 +73,11 @@ public class Player : MonoBehaviour
                 velocity.y = 0;
             }
         }
+
+        if (controller.collisions.below)
+        {
+            ResetExtraJumps();
+        }
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -83,8 +92,7 @@ public class Player : MonoBehaviour
             velocity.x = -wallDirX * wallJump.x;
             velocity.y = wallJump.y;
         }
-
-        if (controller.collisions.below)
+        else if (controller.collisions.below)
         {
             if (controller.collisions.slidingDownMaxSlope)
             {
@@ -98,6 +106,12 @@ public class Player : MonoBehaviour
             {
                 velocity.y = maxJumpVelocity;
             }
+        }
+        else if (extraJumpRemained > 0)
+        {
+            velocity.y = maxJumpVelocity;
+
+            extraJumpRemained--;
         }
     }
 
@@ -142,5 +156,10 @@ public class Player : MonoBehaviour
         {
             velocity.y += gravity * Time.deltaTime;
         }
+    }
+
+    void ResetExtraJumps()
+    {
+        extraJumpRemained = extraJumps;
     }
 }
