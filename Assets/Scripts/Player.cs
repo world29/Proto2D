@@ -14,24 +14,20 @@ public class Player : MonoBehaviour
     float accelarationTimeGrounded = .1f;
     float moveSpeed = 6;
 
-    public Vector2 wallJumpClimb;
-    public Vector2 wallJumpOff;
-    public Vector2 wallLeap;
-
-    float wallSlideSpeedMax = 3;
-    public float wallStickTime = .25f;
-    float timeToWallUnstick;
+    public Vector2 wallJump;
+    public float wallClimbSpeed = 3;
 
     float gravity;
     float maxJumpVelocity;
     float minJumpVelocity;
     Vector3 velocity;
     float velocityXSmoothing;
+    float velocityYSmoothing;
 
     Controller2D controller;
 
     Vector2 directionalInput;
-    bool wallSliding;
+    bool wallSticking;
     int wallDirX;
 
     // Start is called before the first frame update
@@ -54,8 +50,8 @@ public class Player : MonoBehaviour
             return;
         }
 
+        UpdateWallSticking();
         CalculateVelocity();
-        HandleWallSliding();
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
@@ -79,24 +75,12 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {
-        if (wallSliding)
+        if (wallSticking)
         {
-            if (wallDirX == directionalInput.x)
-            {
-                velocity.x = -wallDirX * wallJumpClimb.x;
-                velocity.y = wallJumpClimb.y;
-            }
-            else if (directionalInput.x == 0)
-            {
-                velocity.x = -wallDirX * wallJumpOff.x;
-                velocity.y = wallJumpOff.y;
-            }
-            else
-            {
-                velocity.x = -wallDirX * wallLeap.x;
-                velocity.y = wallLeap.y;
-            }
+            velocity.x = -wallDirX * wallJump.x;
+            velocity.y = wallJump.y;
         }
+
         if (controller.collisions.below)
         {
             if (controller.collisions.slidingDownMaxSlope)
@@ -106,7 +90,8 @@ public class Player : MonoBehaviour
                     velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
                     velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
                 }
-            } else
+            }
+            else
             {
                 velocity.y = maxJumpVelocity;
             }
@@ -121,36 +106,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HandleWallSliding()
+    void UpdateWallSticking()
     {
         wallDirX = (controller.collisions.left) ? -1 : 1;
-        wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+
+        wallSticking = false;
+        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
         {
-            wallSliding = true;
-
-            if (velocity.y < -wallSlideSpeedMax)
-            {
-                velocity.y = -wallSlideSpeedMax;
-            }
-
-            if (timeToWallUnstick > 0)
-            {
-                velocityXSmoothing = 0;
-                velocity.x = 0;
-                if (directionalInput.x != wallDirX && directionalInput.x != 0)
-                {
-                    timeToWallUnstick -= Time.deltaTime;
-                }
-                else
-                {
-                    timeToWallUnstick = wallStickTime;
-                }
-            }
-            else
-            {
-                timeToWallUnstick = wallStickTime;
-            }
+            wallSticking = true;
         }
     }
 
@@ -158,6 +121,15 @@ public class Player : MonoBehaviour
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelarationTimeGrounded : accelarationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+
+        if (wallSticking)
+        {
+            float targetVelocityY = directionalInput.y * wallClimbSpeed;
+            velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
+        }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
     }
 }
