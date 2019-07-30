@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     Vector2 directionalInput;
     bool wallSticking;
+    bool wallStickingOld;
     int wallDirX;
 
     // Start is called before the first frame update
@@ -38,6 +39,8 @@ public class Player : MonoBehaviour
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+
+        wallStickingOld = false;
 
         print("Gravity: " + gravity + " Jump Velocity: " + maxJumpVelocity);
     }
@@ -115,6 +118,14 @@ public class Player : MonoBehaviour
         {
             wallSticking = true;
         }
+
+        if (wallSticking && !wallStickingOld)
+        {
+            velocity.y = 0;
+            velocityYSmoothing = 0;
+        }
+
+        wallStickingOld = wallSticking;
     }
 
     void CalculateVelocity()
