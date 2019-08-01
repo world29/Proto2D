@@ -123,6 +123,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Hop(Vector3 hoppingVelocity)
+    {
+        velocity.x += hoppingVelocity.x;
+        velocity.y = hoppingVelocity.y;
+    }
+
     void UpdateWallSticking()
     {
         wallDirX = (controller.collisions.left) ? -1 : 1;
