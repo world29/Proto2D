@@ -29,9 +29,7 @@ public class Player : MonoBehaviour
     Controller2D controller;
 
     Vector2 directionalInput;
-    bool wallSticking;
-    bool wallStickingOld;
-    int wallDirX;
+    bool wallClimbing;
     int extraJumpRemained;
 
     // Start is called before the first frame update
@@ -43,7 +41,7 @@ public class Player : MonoBehaviour
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 
-        wallStickingOld = false;
+        wallClimbing = false;
         ResetExtraJumps();
 
         print("Gravity: " + gravity + " Jump Velocity: " + maxJumpVelocity);
@@ -56,9 +54,9 @@ public class Player : MonoBehaviour
         {
             return;
         }
-
-        UpdateWallSticking();
+        
         CalculateVelocity();
+        HandleWallClimbing();
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
@@ -87,12 +85,7 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {
-        if (wallSticking)
-        {
-            velocity.x = -wallDirX * wallJump.x;
-            velocity.y = wallJump.y;
-        }
-        else if (controller.collisions.below)
+        if (controller.collisions.below)
         {
             if (controller.collisions.slidingDownMaxSlope)
             {
@@ -128,39 +121,34 @@ public class Player : MonoBehaviour
         velocity.x += hoppingVelocity.x;
         velocity.y = hoppingVelocity.y;
     }
-
-    void UpdateWallSticking()
-    {
-        wallDirX = (controller.collisions.left) ? -1 : 1;
-
-        wallSticking = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below)
-        {
-            wallSticking = true;
-        }
-
-        if (wallSticking && !wallStickingOld)
-        {
-            velocity.y = 0;
-            velocityYSmoothing = 0;
-        }
-
-        wallStickingOld = wallSticking;
-    }
-
+    
     void CalculateVelocity()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelarationTimeGrounded : accelarationTimeAirborne);
+        velocity.y += gravity * Time.deltaTime;
+    }
 
-        if (wallSticking)
+    void HandleWallClimbing()
+    {
+        if (directionalInput.x != 0)
         {
-            float targetVelocityY = directionalInput.y * wallClimbSpeed;
-            velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
-        }
-        else
-        {
-            velocity.y += gravity * Time.deltaTime;
+            if ((controller.collisions.right && Mathf.Sign(directionalInput.x) > 0) || (controller.collisions.left && Mathf.Sign(directionalInput.x) < 0))
+            {
+                if (!wallClimbing)
+                {
+                    velocity.y = 0;
+                    velocityYSmoothing = 0;
+                }
+                wallClimbing = true;
+
+                float targetVelocityY = wallClimbSpeed;
+                velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
+            }
+            else
+            {
+                wallClimbing = false;
+            }
         }
     }
 
