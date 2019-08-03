@@ -185,34 +185,37 @@ public class Player : MonoBehaviour
     {
         wallAction = false;
 
-        if ((controller.collisions.right || controller.collisions.left) && directionalInput.x != 0)
+        if (controller.collisions.climbable)
         {
-            int wallDirX = controller.collisions.right ? 1 : -1;
-
-            // 壁よじ登り
-            if (wallDirX == Mathf.Sign(directionalInput.x))
+            if ((controller.collisions.right || controller.collisions.left) && directionalInput.x != 0)
             {
-                wallAction = true;
+                int wallDirX = controller.collisions.right ? 1 : -1;
 
-                if (!wallActionOld)
+                // 壁よじ登り
+                if (wallDirX == Mathf.Sign(directionalInput.x))
                 {
-                    velocity.y = 0;
-                    velocityYSmoothing = 0;
+                    wallAction = true;
 
-                    ResetAirJump();
+                    if (!wallActionOld)
+                    {
+                        velocity.y = 0;
+                        velocityYSmoothing = 0;
+
+                        ResetAirJump();
+                    }
+
+                    float targetVelocityY = wallClimbSpeed;
+                    velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
                 }
 
-                float targetVelocityY = wallClimbSpeed;
-                velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
-            }
+                // 壁キック (ジャンプ)
+                if (wallDirX != Mathf.Sign(directionalInput.x) && !controller.collisions.below)
+                {
+                    wallAction = true;
 
-            // 壁キック (ジャンプ)
-            if (wallDirX != Mathf.Sign(directionalInput.x) && !controller.collisions.below)
-            {
-                wallAction = true;
-
-                velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
-                velocity.y = wallKickVelocity.y;
+                    velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
+                    velocity.y = wallKickVelocity.y;
+                }
             }
         }
 

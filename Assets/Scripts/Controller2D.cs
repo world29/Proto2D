@@ -112,6 +112,11 @@ public class Controller2D : RaycastController
 
                     collisions.left = directionX == -1;
                     collisions.right = directionX == 1;
+
+                    if (hit.collider.tag == "Climbable")
+                    {
+                        collisions.climbable = true;
+                    }
                 }
             }
         }
@@ -276,6 +281,7 @@ public class Controller2D : RaycastController
         public Vector2 moveAmountOld;
         public int faceDir;
         public bool fallingThroughPlatform;
+        public bool climbable;
 
         public void Reset()
         {
@@ -288,6 +294,7 @@ public class Controller2D : RaycastController
 
             slopeAngleOld = slopeAngle;
             slopeAngle = 0;
+            climbable = false;
         }
     }
 }
