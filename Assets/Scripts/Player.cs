@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     public float wallClimbSpeed = 3;
 
     public Material colorStateAirJump;
-    public float airJumpVelocityY = 10;
 
     float gravity;
     float maxJumpVelocity;
@@ -130,7 +129,14 @@ public class Player : MonoBehaviour
             // 空中ジャンプを消費する
             airJump = true;
 
-            velocity.y = airJumpVelocityY;
+            if (velocity.y <= 0)
+            {
+                velocity.y = maxJumpVelocity;
+            }
+            else
+            {
+                velocity.y += maxJumpVelocity;
+            }
 
             // 色を変更する
             GetComponent<Renderer>().material.color = colorStateAirJump.color;
