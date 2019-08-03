@@ -35,11 +35,14 @@ public class Player : MonoBehaviour
 
     bool airJump;
     Color playerColor;
+    TrailRenderer trailRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<Controller2D>();
+        GameObject playerTrail = transform.Find("PlayerTrail").gameObject;
+        trailRenderer = playerTrail.GetComponent<TrailRenderer>();
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -131,6 +134,9 @@ public class Player : MonoBehaviour
 
             // 色を変更する
             GetComponent<Renderer>().material.color = colorStateAirJump.color;
+
+            // 軌跡を出す
+            trailRenderer.emitting = true;
         }
     }
 
@@ -141,6 +147,9 @@ public class Player : MonoBehaviour
 
         // 色を戻す
         GetComponent<Renderer>().material.color = playerColor;
+
+        // 軌跡を消す
+        trailRenderer.emitting = false;
     }
 
     public void Hop(Vector3 hoppingVelocity)
