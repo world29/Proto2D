@@ -147,6 +147,8 @@ public class Player : MonoBehaviour
     {
         velocity.x += hoppingVelocity.x;
         velocity.y = hoppingVelocity.y;
+
+        ResetAirJump();
     }
     
     void CalculateVelocityHorizontal()
@@ -181,6 +183,8 @@ public class Player : MonoBehaviour
                 {
                     velocity.y = 0;
                     velocityYSmoothing = 0;
+
+                    ResetAirJump();
                 }
 
                 float targetVelocityY = wallClimbSpeed;
