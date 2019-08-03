@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
 
-    public int extraJumps = 1;
+    public Material colorStateAirJump;
+    public float airJumpVelocityY = 10;
 
     float gravity;
     float maxJumpVelocity;
@@ -31,7 +32,9 @@ public class Player : MonoBehaviour
     Vector2 directionalInput;
     bool wallAction;
     bool wallActionOld;
-    int extraJumpRemained;
+
+    bool airJump;
+    Color playerColor;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +46,8 @@ public class Player : MonoBehaviour
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 
         wallActionOld = false;
-        ResetExtraJumps();
+        playerColor = GetComponent<Renderer>().material.color;
+        ResetAirJump();
 
         print("Gravity: " + gravity + " Jump Velocity: " + maxJumpVelocity);
     }
@@ -76,7 +80,7 @@ public class Player : MonoBehaviour
 
         if (controller.collisions.below)
         {
-            ResetExtraJumps();
+            ResetAirJump();
         }
     }
 
@@ -102,11 +106,9 @@ public class Player : MonoBehaviour
                 velocity.y = maxJumpVelocity;
             }
         }
-        else if (extraJumpRemained > 0)
+        else
         {
-            velocity.y = maxJumpVelocity;
-
-            extraJumpRemained--;
+            AirJump();
         }
     }
 
@@ -116,6 +118,29 @@ public class Player : MonoBehaviour
         {
             velocity.y = minJumpVelocity;
         }
+    }
+
+    public void AirJump()
+    {
+        if (!airJump)
+        {
+            // 空中ジャンプを消費する
+            airJump = true;
+
+            velocity.y = airJumpVelocityY;
+
+            // 色を変更する
+            GetComponent<Renderer>().material.color = colorStateAirJump.color;
+        }
+    }
+
+    public void ResetAirJump()
+    {
+        // 空中ジャンプを再度使えるようにする
+        airJump = false;
+
+        // 色を戻す
+        GetComponent<Renderer>().material.color = playerColor;
     }
 
     public void Hop(Vector3 hoppingVelocity)
@@ -173,10 +198,5 @@ public class Player : MonoBehaviour
         }
 
         wallActionOld = wallAction;
-    }
-
-    void ResetExtraJumps()
-    {
-        extraJumpRemained = extraJumps;
     }
 }
