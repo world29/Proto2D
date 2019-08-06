@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     SpriteRenderer renderer;
     TrailRenderer trailRenderer;
 
+    bool isControllable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +52,8 @@ public class Player : MonoBehaviour
 
         wallActionOld = false;
         ResetAirJump();
+
+        isControllable = true;
     }
 
     // Update is called once per frame
@@ -60,8 +64,11 @@ public class Player : MonoBehaviour
             return;
         }
         
-        CalculateVelocityHorizontal();
-        HandleWallClimbing();
+        if (isControllable)
+        {
+            CalculateVelocityHorizontal();
+            HandleWallClimbing();
+        }
         CalculateVelocityVertical();
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
@@ -167,12 +174,23 @@ public class Player : MonoBehaviour
 
         ResetAirJump();
     }
-    
+
+    public void SetVelocity(Vector3 _velocity)
+    {
+        velocity = _velocity;
+
+        Debug.Log("SetVelocity: " + _velocity.ToString());
+    }
+
+    public void SetUncontrollable(float time)
+    {
+        StartCoroutine("StartUncontrollable", time);
+    }
+
     void CalculateVelocityHorizontal()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelarationTimeGrounded : accelarationTimeAirborne);
-        velocity.y -= gravity * Time.deltaTime;
     }
 
     void CalculateVelocityVertical()
@@ -219,5 +237,14 @@ public class Player : MonoBehaviour
         }
 
         wallActionOld = wallAction;
+    }
+
+    IEnumerator StartUncontrollable(float time)
+    {
+        isControllable = false;
+
+        yield return new WaitForSeconds(time);
+
+        isControllable = true;
     }
 }

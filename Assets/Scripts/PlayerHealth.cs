@@ -103,6 +103,16 @@ public class PlayerHealth : MonoBehaviour
         if (damager)
         {
             TakeDamage(damager.damage);
+
+            Player player = gameObject.GetComponent<Player>();
+            Debug.Assert(player != null);
+
+            Vector2 knockbackDir = collision.transform.position - player.transform.position;
+            knockbackDir.x *= -1;
+            knockbackDir.y = 1;
+
+            player.SetVelocity(knockbackDir.normalized * damager.knockbackForce);
+            player.SetUncontrollable(invincibleTime);
         }
     }
 }
