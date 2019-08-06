@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
-    public Material colorStateAirJump;
+    public Color airJumpColor;
 
     Vector3 velocity;
     float velocityXSmoothing;
@@ -32,7 +32,8 @@ public class Player : MonoBehaviour
     bool wallActionOld;
 
     bool airJump;
-    Color playerColor;
+    Color cachedColor;
+    SpriteRenderer renderer;
     TrailRenderer trailRenderer;
 
     // Start is called before the first frame update
@@ -42,8 +43,12 @@ public class Player : MonoBehaviour
         GameObject playerTrail = transform.Find("PlayerTrail").gameObject;
         trailRenderer = playerTrail.GetComponent<TrailRenderer>();
 
+        GameObject playerSprite = transform.Find("PlayerSprite").gameObject;
+        renderer = playerSprite.GetComponent<SpriteRenderer>();
+
+        cachedColor = renderer.color;
+
         wallActionOld = false;
-        playerColor = GetComponent<Renderer>().material.color;
         ResetAirJump();
     }
 
@@ -136,7 +141,7 @@ public class Player : MonoBehaviour
             }
 
             // 色を変更する
-            GetComponent<Renderer>().material.color = colorStateAirJump.color;
+            renderer.color = airJumpColor;
 
             // 軌跡を出す
             trailRenderer.emitting = true;
@@ -149,7 +154,7 @@ public class Player : MonoBehaviour
         airJump = false;
 
         // 色を戻す
-        GetComponent<Renderer>().material.color = playerColor;
+        renderer.color = cachedColor;
 
         // 軌跡を消す
         trailRenderer.emitting = false;
