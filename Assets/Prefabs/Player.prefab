@@ -428,12 +428,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 0}
-  maxJumpHeight: 6
-  minJumpHeight: 1
-  timeToJumpApex: 1
+  gravity: 12
+  maxJumpVelocity: 12
+  minJumpVelocity: 5
+  moveSpeed: 7
   accelarationTimeAirborne: 0
   accelarationTimeGrounded: 0
-  moveSpeed: 7
+  maxVelocity: 15
   wallKickVelocity: {x: 10, y: 10}
   wallClimbSpeed: 6
   colorStateAirJump: {fileID: 2100000, guid: 6a6ff1143fec2214a9513f1676d2fc32, type: 2}
@@ -462,6 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  timeToInvincible: 0.5
   slider: {fileID: 541023431183492382}
   fillImage: {fileID: 7502507272582563968}
   fullHealthColor: {r: 0, g: 1, b: 0, a: 1}

@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public float accelarationTimeAirborne = .2f;
     public float accelarationTimeGrounded = .1f;
 
+    public float maxVelocity = 20;
+
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
     public Material colorStateAirJump;
@@ -75,6 +77,10 @@ public class Player : MonoBehaviour
         {
             ResetAirJump();
         }
+
+        // 速度をクランプ
+        velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
+        velocity.y = Mathf.Clamp(velocity.y, -maxVelocity, maxVelocity);
     }
 
     public void SetDirectionalInput(Vector2 input)
