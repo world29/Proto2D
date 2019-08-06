@@ -283,6 +283,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1104668815501729987, guid: 64a4e5a51e1f1a347a04f4ff801af566,
+        type: 3}
+      propertyPath: hoppingVelocity.y
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64a4e5a51e1f1a347a04f4ff801af566, type: 3}
 --- !u!1 &48576145
@@ -2255,6 +2260,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104668815501729987, guid: 64a4e5a51e1f1a347a04f4ff801af566,
+        type: 3}
+      propertyPath: hoppingVelocity.y
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64a4e5a51e1f1a347a04f4ff801af566, type: 3}
@@ -9481,5 +9491,40 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 664792913}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: maxJumpVelocity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: minJumpVelocity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: maxVelocity
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: wallKickVelocity.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: wallKickVelocity.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: wallClimbSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 4.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b157c4fcdfa3a5f48b2a53af22023fab, type: 3}
