@@ -7,21 +7,18 @@ public class Player : MonoBehaviour
 {
     public GameController gameController;
 
-    public float maxJumpHeight = 4;
-    public float minJumpHeight = 1;
-    public float timeToJumpApex = .4f;
+    public float gravity = 12;
+    public float maxJumpVelocity = 12;
+    public float minJumpVelocity = 5;
+    public float moveSpeed = 6;
+
     public float accelarationTimeAirborne = .2f;
     public float accelarationTimeGrounded = .1f;
-    public float moveSpeed = 6;
 
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
-
     public Material colorStateAirJump;
 
-    float gravity;
-    float maxJumpVelocity;
-    float minJumpVelocity;
     Vector3 velocity;
     float velocityXSmoothing;
     float velocityYSmoothing;
@@ -43,15 +40,9 @@ public class Player : MonoBehaviour
         GameObject playerTrail = transform.Find("PlayerTrail").gameObject;
         trailRenderer = playerTrail.GetComponent<TrailRenderer>();
 
-        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
-
         wallActionOld = false;
         playerColor = GetComponent<Renderer>().material.color;
         ResetAirJump();
-
-        print("Gravity: " + gravity + " Jump Velocity: " + maxJumpVelocity);
     }
 
     // Update is called once per frame
@@ -72,7 +63,7 @@ public class Player : MonoBehaviour
         {
             if (controller.collisions.slidingDownMaxSlope)
             {
-                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                velocity.y += controller.collisions.slopeNormal.y * gravity * Time.deltaTime;
             }
             else
             {
@@ -170,14 +161,14 @@ public class Player : MonoBehaviour
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelarationTimeGrounded : accelarationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y -= gravity * Time.deltaTime;
     }
 
     void CalculateVelocityVertical()
     {
         if (!wallAction)
         {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y -= gravity * Time.deltaTime;
         }
     }
 
