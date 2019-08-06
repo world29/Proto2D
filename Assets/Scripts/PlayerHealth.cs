@@ -3,28 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : Damageable
+public class PlayerHealth : MonoBehaviour
 {
+    public float startingHealth = 1; // 初期のヒットポイント
+    public float invincibleTime = .5f; // ダメージを受けた後無敵状態になる秒数
+    public float blinkInterval = .1f; // 点滅の間隔
+
     public Slider slider;
     public Image fillImage;
     public Color fullHealthColor = Color.green;
     public Color zeroHealthColor = Color.red;
+
+    float currentHealth;
+
+    bool isInvincible;
+    SpriteRenderer playerRenderer;
+    Color cachedColor;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = startingHealth;
 
+        isInvincible = false;
+
+        GameObject playerSprite = transform.Find("PlayerSprite").gameObject;
+        Debug.Assert(playerSprite != null);
+        playerRenderer = playerSprite.GetComponent<SpriteRenderer>();
+
         SetHealthUI();
     }
 
-    protected override void OnTakeDamage()
+    public void TakeDamage(float amount)
     {
-        SetHealthUI();
+        currentHealth -= amount;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            OnDeath();
+        }
+        else
+        {
+            OnTakeDamage();
+        }
     }
 
-    protected override void OnDeath()
+    void OnTakeDamage()
     {
+        SetHealthUI();
+
+        StartCoroutine("EnableInvincibility");
+        StartCoroutine("Blink");
+    }
+
+    void OnDeath()
+    {
+        Debug.Log("OnDead");
+
         gameObject.SetActive(false);
     }
 
@@ -33,5 +69,40 @@ public class PlayerHealth : Damageable
         slider.value = currentHealth;
 
         fillImage.color = Color.Lerp(zeroHealthColor, fullHealthColor, currentHealth / startingHealth);
+    }
+
+    IEnumerator EnableInvincibility()
+    {
+        isInvincible = true;
+
+        yield return new WaitForSeconds(invincibleTime);
+
+        isInvincible = false;
+    }
+
+    IEnumerator Blink()
+    {
+        Debug.Log("start blinking");
+
+        while (isInvincible)
+        {
+            float alpha = playerRenderer.color.a;
+            playerRenderer.color = new Color(1, 1, 1, 1 - alpha);
+
+            Debug.Log("blinking: ");
+
+            yield return new WaitForSeconds(blinkInterval);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("OnTriggerEnter");
+
+        Damager damager = collision.gameObject.GetComponent<Damager>();
+        if (damager)
+        {
+            TakeDamage(damager.damage);
+        }
     }
 }
