@@ -9491,15 +9491,6 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 664792913}
-    - target: {fileID: 4432179070284022773, guid: b157c4fcdfa3a5f48b2a53af22023fab,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432179070284022773, guid: b157c4fcdfa3a5f48b2a53af22023fab,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
     - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
         type: 3}
       propertyPath: maxJumpVelocity
@@ -9508,12 +9499,12 @@ PrefabInstance:
     - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
         type: 3}
       propertyPath: minJumpVelocity
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
         type: 3}
       propertyPath: maxVelocity
-      value: 12
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
         type: 3}
@@ -9533,7 +9524,26 @@ PrefabInstance:
     - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
         type: 3}
       propertyPath: moveSpeed
-      value: 4.5
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7562968442314390868, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: gravity
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432179070284022773, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432179070284022773, guid: b157c4fcdfa3a5f48b2a53af22023fab,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397572927, guid: b157c4fcdfa3a5f48b2a53af22023fab, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 664792913}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b157c4fcdfa3a5f48b2a53af22023fab, type: 3}
