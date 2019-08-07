@@ -209,14 +209,23 @@ public class Player : MonoBehaviour
 
             if (directionalInput.x == 0)
             {
-                // 壁くっつき
+                // 壁くっつき & 上下移動
                 if (enableWallSticking)
                 {
                     wallAction = true;
 
                     Debug.Log("WallSticking");
 
-                    velocity.y = 0;
+                    if (directionalInput.y != 0)
+                    {
+                        float targetVelocityY = directionalInput.y * wallClimbSpeed;
+                        velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
+                    }
+                    else
+                    {
+                        velocity.y = 0;
+                    }
+
                     ResetAirJump();
                 }
             }
