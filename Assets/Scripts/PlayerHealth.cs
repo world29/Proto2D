@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public GameController gameController;
+
     public float startingHealth = 1; // 初期のヒットポイント
 
     public Slider slider;
@@ -50,6 +52,8 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("OnDeath");
 
         gameObject.SetActive(false);
+
+        gameController.GameOver();
     }
 
     void SetHealthUI()

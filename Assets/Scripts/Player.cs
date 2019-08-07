@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class Player : MonoBehaviour
 {
-    public GameController gameController;
-
     public float gravity = 12;
     public float maxJumpVelocity = 12;
     public float minJumpVelocity = 5;
@@ -65,11 +63,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameController.IsGameClear())
-        {
-            return;
-        }
-        
         if (!isKnockback)
         {
             CalculateVelocityHorizontal();
