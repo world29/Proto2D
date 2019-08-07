@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
 
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
+
+    [Range(0,1), Header("空中ジャンプによる速度の加算を抑制する割合")]
+    public float airJumpModulation = 0;
     public Color airJumpColor;
 
     Vector3 velocity;
@@ -143,7 +146,9 @@ public class Player : MonoBehaviour
             }
             else
             {
-                velocity.y += maxJumpVelocity;
+                // 現在の速度が max に近いほど、加算される値を小さくする
+                float modulation = velocity.y * airJumpModulation;
+                velocity.y += (maxJumpVelocity - modulation);
             }
 
             // 色を変更する
