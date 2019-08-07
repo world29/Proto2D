@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
 
     public float maxVelocity = 20;
 
+    public float invincibleTime = 1; // ダメージを受けた後無敵状態になる秒数
+    public float blinkInterval = .1f; // 点滅の間隔
+    public float knockbackTime = .5f; // 行動不能時間
+
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
     public Color airJumpColor;
@@ -25,35 +29,37 @@ public class Player : MonoBehaviour
     float velocityXSmoothing;
     float velocityYSmoothing;
 
-    Controller2D controller;
-
     Vector2 directionalInput;
     bool wallAction;
     bool wallActionOld;
 
     bool airJump;
     Color cachedColor;
-    SpriteRenderer renderer;
-    TrailRenderer trailRenderer;
+    bool isInvincible;
+    bool isKnockback;
 
-    bool isControllable;
+    Controller2D controller;
+    SpriteRenderer spriteRenderer;
+    TrailRenderer trailRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<Controller2D>();
+
         GameObject playerTrail = transform.Find("PlayerTrail").gameObject;
         trailRenderer = playerTrail.GetComponent<TrailRenderer>();
 
         GameObject playerSprite = transform.Find("PlayerSprite").gameObject;
-        renderer = playerSprite.GetComponent<SpriteRenderer>();
+        spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
 
-        cachedColor = renderer.color;
+        cachedColor = spriteRenderer.color;
 
         wallActionOld = false;
         ResetAirJump();
 
-        isControllable = true;
+        isInvincible = false;
+        isKnockback = false;
     }
 
     // Update is called once per frame
@@ -64,7 +70,7 @@ public class Player : MonoBehaviour
             return;
         }
         
-        if (isControllable)
+        if (!isKnockback)
         {
             CalculateVelocityHorizontal();
             HandleWallClimbing();
@@ -85,7 +91,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (controller.collisions.below)
+        if (controller.collisions.below && airJump)
         {
             ResetAirJump();
         }
@@ -148,7 +154,7 @@ public class Player : MonoBehaviour
             }
 
             // 色を変更する
-            renderer.color = airJumpColor;
+            spriteRenderer.color = airJumpColor;
 
             // 軌跡を出す
             trailRenderer.emitting = true;
@@ -161,7 +167,7 @@ public class Player : MonoBehaviour
         airJump = false;
 
         // 色を戻す
-        renderer.color = cachedColor;
+        spriteRenderer.color = cachedColor;
 
         // 軌跡を消す
         trailRenderer.emitting = false;
@@ -173,18 +179,6 @@ public class Player : MonoBehaviour
         velocity.y = hoppingVelocity.y;
 
         ResetAirJump();
-    }
-
-    public void SetVelocity(Vector3 _velocity)
-    {
-        velocity = _velocity;
-
-        Debug.Log("SetVelocity: " + _velocity.ToString());
-    }
-
-    public void SetUncontrollable(float time)
-    {
-        StartCoroutine("StartUncontrollable", time);
     }
 
     void CalculateVelocityHorizontal()
@@ -239,12 +233,57 @@ public class Player : MonoBehaviour
         wallActionOld = wallAction;
     }
 
-    IEnumerator StartUncontrollable(float time)
+    IEnumerator StartKnockback()
     {
-        isControllable = false;
+        isKnockback = true;
 
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(knockbackTime);
 
-        isControllable = true;
+        isKnockback = false;
+    }
+
+    IEnumerator StartInvincible()
+    {
+        isInvincible = true;
+
+        yield return new WaitForSeconds(invincibleTime);
+
+        isInvincible = false;
+        spriteRenderer.enabled = true;
+    }
+
+    IEnumerator StartBlink()
+    {
+        while (isInvincible)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+
+            yield return new WaitForSeconds(blinkInterval);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("OnTriggerEnter");
+
+        Damager damager = collision.gameObject.GetComponent<Damager>();
+        if (damager)
+        {
+            PlayerHealth health = GetComponent<PlayerHealth>();
+            health.TakeDamage(damager.damage);
+
+            if (health.currentHealth > 0)
+            {
+                Vector2 direction = collision.transform.position - transform.position;
+                direction.x = Mathf.Sign(direction.x) * -1;
+                direction.y = 1;
+
+                velocity = direction.normalized * damager.knockbackForce;
+
+                StartCoroutine("StartKnockback");
+                StartCoroutine("StartInvincible");
+                StartCoroutine("StartBlink");
+            }
+        }
     }
 }
