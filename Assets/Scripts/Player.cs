@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public float blinkInterval = .1f; // 点滅の間隔
     public float knockbackTime = .5f; // 行動不能時間
 
+    public bool enableWallSticking = true;
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
 
@@ -161,14 +162,17 @@ public class Player : MonoBehaviour
 
     public void ResetAirJump()
     {
-        // 空中ジャンプを再度使えるようにする
-        airJump = false;
+        if (airJump)
+        {
+            // 空中ジャンプを再度使えるようにする
+            airJump = false;
 
-        // 色を戻す
-        spriteRenderer.color = cachedColor;
+            // 色を戻す
+            spriteRenderer.color = cachedColor;
 
-        // 軌跡を消す
-        trailRenderer.emitting = false;
+            // 軌跡を消す
+            trailRenderer.emitting = false;
+        }
     }
 
     public void Hop(Vector3 hoppingVelocity)
@@ -197,34 +201,55 @@ public class Player : MonoBehaviour
     {
         wallAction = false;
 
-        if ((controller.collisions.right || controller.collisions.left) && directionalInput.x != 0)
+        // 壁に隣接しているか
+        if (controller.collisions.right || controller.collisions.left)
         {
+            // 壁の向き
             int wallDirX = controller.collisions.right ? 1 : -1;
 
-            // 壁よじ登り
-            if (wallDirX == Mathf.Sign(directionalInput.x))
+            if (directionalInput.x == 0)
             {
-                wallAction = true;
-
-                if (!wallActionOld)
+                // 壁くっつき
+                if (enableWallSticking)
                 {
-                    velocity.y = 0;
-                    velocityYSmoothing = 0;
+                    wallAction = true;
 
+                    Debug.Log("WallSticking");
+
+                    velocity.y = 0;
                     ResetAirJump();
                 }
-
-                float targetVelocityY = wallClimbSpeed;
-                velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
             }
-
-            // 壁キック (ジャンプ)
-            if (wallDirX != Mathf.Sign(directionalInput.x) && !controller.collisions.below)
+            else
             {
-                wallAction = true;
+                // 壁よじ登り
+                if (wallDirX == Mathf.Sign(directionalInput.x))
+                {
+                    wallAction = true;
+                    if (!wallActionOld)
+                    {
+                        velocity.y = 0;
+                        velocityYSmoothing = 0;
 
-                velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
-                velocity.y = wallKickVelocity.y;
+                        ResetAirJump();
+                    }
+
+                    Debug.Log("WallClimbing");
+
+                    float targetVelocityY = wallClimbSpeed;
+                    velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
+                }
+
+                // 壁キック (ジャンプ)
+                if (wallDirX != Mathf.Sign(directionalInput.x) && !controller.collisions.below)
+                {
+                    wallAction = true;
+
+                    Debug.Log("WallKick");
+
+                    velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
+                    velocity.y = wallKickVelocity.y;
+                }
             }
         }
 
@@ -262,8 +287,6 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerEnter");
-
         Damager damager = collision.gameObject.GetComponent<Damager>();
         if (damager)
         {
