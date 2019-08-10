@@ -347,7 +347,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &7562968442314390871
 MonoBehaviour:
@@ -393,8 +393,10 @@ MonoBehaviour:
   invincibleTime: 1
   blinkInterval: 0.1
   knockbackTime: 0.5
+  enableWallSticking: 1
   wallKickVelocity: {x: 10, y: 10}
   wallClimbSpeed: 6
+  airJumpModulation: 0
   airJumpColor: {r: 0.49411768, g: 0.14901961, b: 0.8470589, a: 1}
 --- !u!114 &7562968442314390874
 MonoBehaviour:
@@ -522,7 +524,7 @@ Transform:
   m_GameObject: {fileID: 8155965431535579607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.126, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7562968442314390875}
   m_RootOrder: 0
@@ -611,7 +613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0.917}
   m_SizeDelta: {x: 0.5, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &9219743020555276569
