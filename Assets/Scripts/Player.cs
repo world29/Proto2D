@@ -268,6 +268,29 @@ public class Player : MonoBehaviour
         wallActionOld = wallAction;
     }
 
+    private void ApplyDamage(Collider2D collision)
+    {
+        Damager damager = collision.gameObject.GetComponent<Damager>();
+        if (damager && !isInvincible)
+        {
+            PlayerHealth health = GetComponent<PlayerHealth>();
+            health.TakeDamage(damager.damage);
+
+            if (health.currentHealth > 0)
+            {
+                Vector2 direction = collision.transform.position - transform.position;
+                direction.x = Mathf.Sign(direction.x) * -1;
+                direction.y = 1;
+
+                velocity = direction.normalized * damager.knockbackForce;
+
+                StartCoroutine("StartKnockback");
+                StartCoroutine("StartInvincible");
+                StartCoroutine("StartBlink");
+            }
+        }
+    }
+
     IEnumerator StartKnockback()
     {
         isKnockback = true;
@@ -321,26 +344,11 @@ public class Player : MonoBehaviour
             }
         }
 
-        Damager damager = collision.gameObject.GetComponent<Damager>();
-        if (damager)
-        {
-            Debug.Log("On Hit Damager");
+        ApplyDamage(collision);
+    }
 
-            PlayerHealth health = GetComponent<PlayerHealth>();
-            health.TakeDamage(damager.damage);
-
-            if (health.currentHealth > 0)
-            {
-                Vector2 direction = collision.transform.position - transform.position;
-                direction.x = Mathf.Sign(direction.x) * -1;
-                direction.y = 1;
-
-                velocity = direction.normalized * damager.knockbackForce;
-
-                StartCoroutine("StartKnockback");
-                StartCoroutine("StartInvincible");
-                StartCoroutine("StartBlink");
-            }
-        }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        ApplyDamage(collision);
     }
 }
