@@ -92,6 +92,11 @@ public class Player : MonoBehaviour
         // 速度をクランプ
         velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
         velocity.y = Mathf.Clamp(velocity.y, -maxVelocity, maxVelocity);
+
+        // 向きを更新
+        Vector3 scale = transform.localScale;
+        scale.x = controller.collisions.faceDir;
+        transform.localScale = scale;
     }
 
     public void SetDirectionalInput(Vector2 input)
