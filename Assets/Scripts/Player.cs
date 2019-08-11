@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     public float airJumpModulation = 0;
     public Color airJumpColor;
 
+    [Header("踏みつけによって与えるダメージ")]
+    public float stompDamage = 1;
+
     Vector3 velocity;
     float velocityXSmoothing;
     float velocityYSmoothing;
@@ -214,7 +217,7 @@ public class Player : MonoBehaviour
                 {
                     wallAction = true;
 
-                    Debug.Log("WallSticking");
+                    //Debug.Log("WallSticking");
 
                     if (directionalInput.y != 0)
                     {
@@ -243,7 +246,7 @@ public class Player : MonoBehaviour
                         ResetAirJump();
                     }
 
-                    Debug.Log("WallClimbing");
+                    //Debug.Log("WallClimbing");
 
                     float targetVelocityY = wallClimbSpeed;
                     velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
@@ -254,7 +257,7 @@ public class Player : MonoBehaviour
                 {
                     wallAction = true;
 
-                    Debug.Log("WallKick");
+                    //Debug.Log("WallKick");
 
                     velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
                     velocity.y = wallKickVelocity.y;
@@ -296,9 +299,33 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 敵の場合
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        if (enemy)
+        {
+            Debug.Log("On Hit Enemy");
+
+            // プレイヤーの足が敵の中心より上なら踏みつけとみなす (要調整)
+            Vector3 playerBottom = transform.position - controller.collider.bounds.extents;
+            Vector3 enemyTop = collision.transform.position;
+
+            if (playerBottom.y > enemyTop.y)
+            {
+                // 敵にダメージを与える
+                enemy.TakeDamage(stompDamage);
+
+                // ジャンプ
+                Hop(new Vector3(0, maxJumpVelocity, 0));
+
+                return;
+            }
+        }
+
         Damager damager = collision.gameObject.GetComponent<Damager>();
         if (damager)
         {
+            Debug.Log("On Hit Damager");
+
             PlayerHealth health = GetComponent<PlayerHealth>();
             health.TakeDamage(damager.damage);
 
