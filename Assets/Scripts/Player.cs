@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     bool isInvincible;
     bool isKnockback;
 
+    Animator anim;
     Controller2D controller;
     SpriteRenderer spriteRenderer;
     TrailRenderer trailRenderer;
@@ -51,12 +52,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = GetComponent<Controller2D>();
-
         GameObject playerTrail = transform.Find("PlayerTrail").gameObject;
         trailRenderer = playerTrail.GetComponent<TrailRenderer>();
 
         GameObject playerSprite = transform.Find("PlayerSprite").gameObject;
         spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
+        anim = playerSprite.GetComponent<Animator>();
+
 
         cachedColor = spriteRenderer.color;
 
@@ -70,6 +72,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!isKnockback)
         {
             CalculateVelocityHorizontal();
@@ -97,6 +100,13 @@ public class Player : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x = controller.collisions.faceDir;
         transform.localScale = scale;
+
+        // アニメーションコントローラーを更新
+        anim.SetBool("wallAction", wallAction);
+        anim.SetBool("airJump", airJump);
+        anim.SetBool("isKnockback", isKnockback);
+        anim.SetFloat("velocity_x", velocity.x);
+        anim.SetFloat("velocity_y", velocity.y);
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -251,7 +261,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
         wallActionOld = wallAction;
     }
 
