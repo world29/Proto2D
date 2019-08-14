@@ -135,7 +135,11 @@ public class Player : MonoBehaviour
         {
             velocity.y = maxJumpVelocity;
         }
-        else if (!wallAction)
+        else if (wallAction)
+        {
+            WallKick();
+        }
+        else
         {
             AirJump();
         }
@@ -173,6 +177,16 @@ public class Player : MonoBehaviour
             // 軌跡を出す
             trailRenderer.emitting = true;
         }
+    }
+
+    public void WallKick()
+    {
+        wallKick = true;
+
+        int wallDirX = controller.collisions.right ? 1 : -1;
+
+        velocity.x = wallKickVelocity.x * -wallDirX;
+        velocity.y = wallKickVelocity.y;
     }
 
     public void ResetAirJump()
@@ -221,7 +235,13 @@ public class Player : MonoBehaviour
     void HandleWallClimbing()
     {
         wallAction = false;
-        wallKick = false;
+
+        if (wallKick)
+        {
+            wallKick = false;
+            wallActionOld = wallAction;
+            return;
+        }
 
         // 壁に隣接しているか
         if (controller.collisions.right || controller.collisions.left)
@@ -265,13 +285,7 @@ public class Player : MonoBehaviour
                 else if (wallDirX != Mathf.Sign(directionalInput.x))
                 {
                     // 壁キック (ジャンプ)
-                    wallAction = true;
-                    wallKick = true;
-
-                    //Debug.Log("WallKick");
-
-                    velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
-                    velocity.y = wallKickVelocity.y;
+                    WallKick();
                 }
             }
             else
@@ -302,6 +316,8 @@ public class Player : MonoBehaviour
                 // クライム状態に移行したフレームの処理
                 if (wallAction)
                 {
+                    Debug.Log("Entry WallAction State");
+
                     wallActionEntryTime = 0;
 
                     velocity.y = 0;
