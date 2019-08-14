@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
         {
             velocity.y = maxJumpVelocity;
         }
-        else
+        else if (!wallAction)
         {
             AirJump();
         }
@@ -250,8 +250,6 @@ public class Player : MonoBehaviour
                         {
                             velocity.y = 0;
                         }
-
-                        ResetAirJump();
                     }
                 }
                 else if (wallDirX == Mathf.Sign(directionalInput.x))
