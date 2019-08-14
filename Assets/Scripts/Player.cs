@@ -36,7 +36,9 @@ public class Player : MonoBehaviour
 
     Vector2 directionalInput;
     bool wallAction;
+    bool wallKick;
     bool wallActionOld;
+    bool hopAction;
 
     bool airJump;
     Color cachedColor;
@@ -62,8 +64,11 @@ public class Player : MonoBehaviour
 
         cachedColor = spriteRenderer.color;
 
+        wallKick = false;
         wallActionOld = false;
         ResetAirJump();
+
+        hopAction = false;
 
         isInvincible = false;
         isKnockback = false;
@@ -101,12 +106,21 @@ public class Player : MonoBehaviour
         scale.x = controller.collisions.faceDir;
         transform.localScale = scale;
 
+        if (velocity.y <= 0 || wallAction || airJump)
+        {
+            hopAction = false;
+        }
+
+
         // アニメーションコントローラーを更新
         anim.SetBool("wallAction", wallAction);
+        anim.SetBool("wallKick", wallKick);
+        anim.SetBool("hopAction", hopAction);
         anim.SetBool("airJump", airJump);
         anim.SetBool("isKnockback", isKnockback);
         anim.SetFloat("velocity_x", velocity.x);
         anim.SetFloat("velocity_y", velocity.y);
+
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -180,6 +194,7 @@ public class Player : MonoBehaviour
         velocity.x += hoppingVelocity.x;
         velocity.y = hoppingVelocity.y;
 
+        hopAction = true;
         ResetAirJump();
     }
 
@@ -200,6 +215,7 @@ public class Player : MonoBehaviour
     void HandleWallClimbing()
     {
         wallAction = false;
+        wallKick = false;
 
         // 壁に隣接しているか
         if (controller.collisions.right || controller.collisions.left)
@@ -253,6 +269,7 @@ public class Player : MonoBehaviour
                 if (wallDirX != Mathf.Sign(directionalInput.x) && !controller.collisions.below)
                 {
                     wallAction = true;
+                    wallKick = true;
 
                     //Debug.Log("WallKick");
 
