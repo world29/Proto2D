@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
 
+    [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
+    public float timeToEntryWallClimbing = 1;
+
     [Range(0,1), Header("空中ジャンプによる速度の加算を抑制する割合")]
     public float airJumpModulation = 0;
     public Color airJumpColor;
@@ -32,6 +35,7 @@ public class Player : MonoBehaviour
     float velocityYSmoothing;
 
     Vector2 directionalInput;
+    float wallActionEntryTime;
     bool wallAction;
     bool wallKick;
     bool wallActionOld;
@@ -225,51 +229,44 @@ public class Player : MonoBehaviour
             // 壁の向き
             int wallDirX = controller.collisions.right ? 1 : -1;
 
-            if (directionalInput.x == 0)
+            if (wallActionOld)
             {
-                // 壁くっつき & 上下移動
-                if (enableWallSticking)
+                if (directionalInput.x == 0)
                 {
-                    wallAction = true;
-
-                    //Debug.Log("WallSticking");
-
-                    if (directionalInput.y != 0)
+                    // 壁くっつき
+                    if (enableWallSticking)
                     {
-                        float targetVelocityY = directionalInput.y * wallClimbSpeed;
-                        velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
-                    }
-                    else
-                    {
-                        velocity.y = 0;
-                    }
+                        wallAction = true;
 
-                    ResetAirJump();
-                }
-            }
-            else
-            {
-                // 壁よじ登り
-                if (wallDirX == Mathf.Sign(directionalInput.x))
-                {
-                    wallAction = true;
-                    if (!wallActionOld)
-                    {
-                        velocity.y = 0;
-                        velocityYSmoothing = 0;
+                        //Debug.Log("WallSticking");
+
+                        // 上下移動
+                        if (directionalInput.y != 0)
+                        {
+                            float targetVelocityY = directionalInput.y * wallClimbSpeed;
+                            velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
+                        }
+                        else
+                        {
+                            velocity.y = 0;
+                        }
 
                         ResetAirJump();
                     }
+                }
+                else if (wallDirX == Mathf.Sign(directionalInput.x))
+                {
+                    // 壁よじ登り
+                    wallAction = true;
 
                     //Debug.Log("WallClimbing");
 
                     float targetVelocityY = wallClimbSpeed;
                     velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityY, ref velocityYSmoothing, accelarationTimeGrounded);
                 }
-
-                // 壁キック (ジャンプ)
-                if (wallDirX != Mathf.Sign(directionalInput.x) && !controller.collisions.below)
+                else if (wallDirX != Mathf.Sign(directionalInput.x))
                 {
+                    // 壁キック (ジャンプ)
                     wallAction = true;
                     wallKick = true;
 
@@ -277,6 +274,42 @@ public class Player : MonoBehaviour
 
                     velocity.x = wallKickVelocity.x * Mathf.Sign(directionalInput.x);
                     velocity.y = wallKickVelocity.y;
+                }
+            }
+            else
+            {
+                // 地上にいる場合、壁方向に一定時間キー入力するとクライム状態に移行する
+                if (controller.collisions.below)
+                {
+                    if (directionalInput.x != 0 && wallDirX == Mathf.Sign(directionalInput.x))
+                    {
+                        wallActionEntryTime += Time.deltaTime;
+                    }
+                    else
+                    {
+                        wallActionEntryTime = 0;
+                    }
+
+                    if (wallActionEntryTime >= timeToEntryWallClimbing)
+                    {
+                        wallAction = true;
+                    }
+                }
+                else if (wallDirX == Mathf.Sign(directionalInput.x))
+                {
+                    // 空中にいる場合、壁方向にキー入力するとクライム状態に移行する
+                    wallAction = true;
+                }
+
+                // クライム状態に移行したフレームの処理
+                if (wallAction)
+                {
+                    wallActionEntryTime = 0;
+
+                    velocity.y = 0;
+                    velocityYSmoothing = 0;
+
+                    ResetAirJump();
                 }
             }
         }
