@@ -234,7 +234,7 @@ public class Player : MonoBehaviour
                 if (directionalInput.x == 0)
                 {
                     // 壁くっつき
-                    if (enableWallSticking)
+                    if (enableWallSticking && !controller.collisions.below)
                     {
                         wallAction = true;
 
