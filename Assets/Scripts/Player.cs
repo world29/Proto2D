@@ -295,7 +295,7 @@ public class Player : MonoBehaviour
                         wallAction = true;
                     }
                 }
-                else if (wallDirX == Mathf.Sign(directionalInput.x))
+                else if (directionalInput.x != 0 && wallDirX == Mathf.Sign(directionalInput.x))
                 {
                     // 空中にいる場合、壁方向にキー入力するとクライム状態に移行する
                     wallAction = true;
