@@ -15,9 +15,12 @@ public class Player : MonoBehaviour
 
     public float maxVelocity = 20;
 
-    public float invincibleTime = 1; // ダメージを受けた後無敵状態になる秒数
-    public float blinkInterval = .1f; // 点滅の間隔
-    public float knockbackTime = .5f; // 行動不能時間
+    [Header("ダメージを受けた後無敵状態になる秒数")]
+    public float invincibleDuration = 1;
+    [Header("無敵状態をあらわす演出における点滅の間隔")]
+    public float blinkInterval = .1f;
+    [Header("ダメージを受けた後に行動不能となる秒数")]
+    public float knockbackDuration = .5f;
 
     public bool enableWallSticking = true;
     public Vector2 wallKickVelocity;
@@ -30,22 +33,31 @@ public class Player : MonoBehaviour
     public float airJumpModulation = 0;
     public Color airJumpColor;
 
+    [Header("ダメージを受けたときのヒットストップ時間")]
+    public float hitStopDurationOnDamage = .1f;
+
     Vector3 velocity;
     float velocityXSmoothing;
     float velocityYSmoothing;
 
     Vector2 directionalInput;
-    float wallActionEntryTime;
+
+    float wallActionEntryTimer;
+    float invincibleTimer;
+    float knockbackTimer;
+
+    Color cachedColor;
+
+    // 状態フラグ
+    bool airJump;
     bool wallAction;
     bool wallKick;
     bool wallActionOld;
     bool runGround;
     bool hopAction;
-
-    bool airJump;
-    Color cachedColor;
     bool isInvincible;
     bool isKnockback;
+    bool isHitStop;
 
     Animator anim;
     Controller2D controller;
@@ -75,14 +87,41 @@ public class Player : MonoBehaviour
 
         isInvincible = false;
         isKnockback = false;
+        isHitStop = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (!isKnockback)
+        if (isHitStop)
         {
+            return;
+        }
+
+        // 無敵状態の更新
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer <= 0)
+            {
+                invincibleTimer = 0;
+                isInvincible = false;
+            }
+        }
+
+        // ノックバック状態の更新
+        if (isKnockback)
+        {
+            knockbackTimer -= Time.deltaTime;
+            if (knockbackTimer <= 0)
+            {
+                knockbackTimer = 0;
+                isKnockback = false;
+            }
+        }
+        else
+        {
+            // ノックバック状態でないときのみ、方向キーおよび壁アクションを処理する
             CalculateVelocityHorizontal();
             HandleWallClimbing();
         }
@@ -222,6 +261,27 @@ public class Player : MonoBehaviour
         ResetAirJump();
     }
 
+    public void HitStop(float duration)
+    {
+        StartCoroutine("StartHitStop", duration);
+    }
+
+    public void SetInvincible(float duration)
+    {
+        isInvincible = true;
+        invincibleTimer = duration;
+
+        StartCoroutine("StartBlink");
+    }
+
+    public void Knockback(Vector2 knockbackVelocity, float duration)
+    {
+        isKnockback = true;
+        knockbackTimer = duration;
+
+        velocity = knockbackVelocity;
+    }
+
     void CalculateVelocityHorizontal()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
@@ -305,14 +365,14 @@ public class Player : MonoBehaviour
                 {
                     if (directionalInput.x != 0 && wallDirX == Mathf.Sign(directionalInput.x))
                     {
-                        wallActionEntryTime += Time.deltaTime;
+                        wallActionEntryTimer += Time.deltaTime;
                     }
                     else
                     {
-                        wallActionEntryTime = 0;
+                        wallActionEntryTimer = 0;
                     }
 
-                    if (wallActionEntryTime >= timeToEntryWallClimbing)
+                    if (wallActionEntryTimer >= timeToEntryWallClimbing)
                     {
                         wallAction = true;
                     }
@@ -328,7 +388,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("Entry WallAction State");
 
-                    wallActionEntryTime = 0;
+                    wallActionEntryTimer = 0;
 
                     velocity.y = 0;
                     velocityYSmoothing = 0;
@@ -354,32 +414,11 @@ public class Player : MonoBehaviour
                 direction.x = Mathf.Sign(direction.x) * -1;
                 direction.y = 1;
 
-                velocity = direction.normalized * damager.knockbackForce;
-
-                StartCoroutine("StartKnockback");
-                StartCoroutine("StartInvincible");
-                StartCoroutine("StartBlink");
+                HitStop(hitStopDurationOnDamage);
+                Knockback(direction.normalized * damager.knockbackForce, knockbackDuration);
+                SetInvincible(invincibleDuration);
             }
         }
-    }
-
-    IEnumerator StartKnockback()
-    {
-        isKnockback = true;
-
-        yield return new WaitForSeconds(knockbackTime);
-
-        isKnockback = false;
-    }
-
-    IEnumerator StartInvincible()
-    {
-        isInvincible = true;
-
-        yield return new WaitForSeconds(invincibleTime);
-
-        isInvincible = false;
-        spriteRenderer.enabled = true;
     }
 
     IEnumerator StartBlink()
@@ -390,6 +429,17 @@ public class Player : MonoBehaviour
 
             yield return new WaitForSeconds(blinkInterval);
         }
+
+        spriteRenderer.enabled = true;
+    }
+
+    IEnumerator StartHitStop(float duration)
+    {
+        isHitStop = true;
+
+        yield return new WaitForSeconds(duration);
+
+        isHitStop = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

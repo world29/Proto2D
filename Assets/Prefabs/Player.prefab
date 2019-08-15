@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  hitStopDuration: 0.1
 --- !u!1 &7562968441911707377
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,15 +483,16 @@ MonoBehaviour:
   accelarationTimeAirborne: 0
   accelarationTimeGrounded: 0
   maxVelocity: 40
-  invincibleTime: 1
+  invincibleDuration: 1
   blinkInterval: 0.5
-  knockbackTime: 0.5
+  knockbackDuration: 0.5
   enableWallSticking: 1
   wallKickVelocity: {x: 6, y: 10}
   wallClimbSpeed: 8
   timeToEntryWallClimbing: 0.05
   airJumpModulation: 1
   airJumpColor: {r: 0.49411768, g: 0.14901961, b: 0.8470589, a: 1}
+  hitStopDurationOnDamage: 0.1
 --- !u!114 &7562968442314390874
 MonoBehaviour:
   m_ObjectHideFlags: 0

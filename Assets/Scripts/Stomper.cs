@@ -8,6 +8,9 @@ public class Stomper : MonoBehaviour
     [Header("踏みつけによって与えるダメージ")]
     public float damage = 1;
 
+    [Header("踏みつけ時のヒットストップ時間")]
+    public float hitStopDuration = .1f;
+
     private Player player;
 
     private void Start()
@@ -31,6 +34,7 @@ public class Stomper : MonoBehaviour
         {
             Debug.Log("OnTriggerEnter in Stomper");
 
+            player.HitStop(hitStopDuration);
             player.Hop();
         }
     }
