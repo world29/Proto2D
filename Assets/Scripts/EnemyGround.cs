@@ -15,7 +15,7 @@ public class EnemyGround : MonoBehaviour
     public Transform groundDetection;
 
     [Header("進行方向に地面があるか判定するためのレイの長さ")]
-    public float distance = 2;
+    public float distance = .5f;
 
     private int moveDirection = 1; // 1: 右, -1: 左
 
@@ -39,10 +39,10 @@ public class EnemyGround : MonoBehaviour
             velocity.y -= gravity;
         }
 
-        controller.Move(velocity * Time.deltaTime, controller.collisions.below);
+        controller.Move(velocity * Time.deltaTime, false);
 
         // 進行方向に地面がないなら向きを反転する
-        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distance);
+        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distance, controller.collisionMask);
         Debug.DrawRay(groundDetection.position, Vector2.down, Color.red);
 
         // 進行方向に障害物があるなら向きを反転する
