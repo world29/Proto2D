@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
-public class EnemyGround : MonoBehaviour
+public class EnemyGround : MonoBehaviour, IEnemyMovement
 {
     [Header("重力")]
     public float gravity = 10;
@@ -26,7 +26,7 @@ public class EnemyGround : MonoBehaviour
         controller = GetComponent<Controller2D>();
     }
 
-    void Update()
+    public void UpdateMovement()
     {
         Vector2 velocity = Vector2.zero;
 

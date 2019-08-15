@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Stompable : MonoBehaviour
 {
-    public EnemyHealth enemyHealth;
+    public Enemy enemy;
 
     private void OnDrawGizmos()
     {
@@ -22,7 +22,7 @@ public class Stompable : MonoBehaviour
             Debug.Log("OnTriggerEnter in Stompable");
 
             // ダメージを受ける
-            enemyHealth.TakeDamage(other.damage);
+            enemy.TakeDamage(other.damage);
         }
     }
 }

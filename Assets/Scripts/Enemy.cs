@@ -1,36 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Controller2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
-    [Header("重力")]
-    public float gravity = 10;
-
     [Header("ヒットポイント")]
     public float startingHealth = 1;
 
-    private Vector2 velocity;
-    private float currentHealth;
+    [Header("ダメージを受けたときのヒットストップ")]
+    public float hitStopDurationOnDamage = .2f;
 
-    Controller2D controller;
+    [Header("ダメージを受けたときの点滅の持続時間")]
+    public float blinkDuration = 1;
+
+    [Header("ダメージを受けたときの点滅の間隔")]
+    public float blinkInterval = .1f;
+
+    private float currentHealth;
+    private bool isHitStop;
+
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
-        controller = GetComponent<Controller2D>();
-
         currentHealth = startingHealth;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Assert(spriteRenderer != null);
     }
 
     void Update()
     {
-        controller.Move(velocity * Time.deltaTime, false);
+        if (!isHitStop)
+        {
+            IEnemyMovement movement = GetComponent(typeof(IEnemyMovement)) as IEnemyMovement;
+            if (movement != null)
+            {
+                movement.UpdateMovement();
+            }
+        }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damage)
     {
-        currentHealth -= amount;
+        // ヒットストップが終了したあとにダメージを適用する
+        StartCoroutine(StartHitStop(ApplyDamage, damage));
+    }
+
+    public void ApplyDamage(float damage)
+    {
+        currentHealth -= damage;
 
         if (currentHealth <= 0)
         {
@@ -42,12 +63,11 @@ public class Enemy : MonoBehaviour
         {
             OnTakeDamage();
         }
-
     }
 
     void OnTakeDamage()
     {
-
+        StartCoroutine(StartBlink(Time.time + blinkDuration));
     }
 
     void OnDeath()
@@ -55,7 +75,27 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    IEnumerator StartHitStop(UnityAction<float> callback, float damage)
     {
+        isHitStop = true;
+
+        yield return new WaitForSeconds(hitStopDurationOnDamage);
+
+        isHitStop = false;
+
+        callback(damage);
     }
+
+    IEnumerator StartBlink(float endTime)
+    {
+        while (Time.time < endTime)
+        {
+            spriteRenderer.enabled ^= true;
+
+            yield return new WaitForSeconds(blinkInterval);
+        }
+
+        spriteRenderer.enabled = true;
+    }
+
 }

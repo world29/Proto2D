@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
-public class EnemyAir : MonoBehaviour
+public class EnemyAir : MonoBehaviour, IEnemyMovement
 {
     [Header("移動速度")]
     public float speed = 1;
@@ -35,7 +35,7 @@ public class EnemyAir : MonoBehaviour
         }
     }
 
-    void Update()
+    public void UpdateMovement()
     {
         Vector3 movement = CalculateMovement();
 
