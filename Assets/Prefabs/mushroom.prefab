@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8778643387317822641}
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 8778643387317822653}
-  - component: {fileID: 8778643387317822642}
   - component: {fileID: 4314615837480245480}
+  - component: {fileID: 1227491755611213450}
   - component: {fileID: 3695806071682226587}
   m_Layer: 0
   m_Name: mushroom
@@ -154,20 +154,6 @@ MonoBehaviour:
   verticalRaySpacing: 0
   collider: {fileID: 0}
   playerInput: {x: 0, y: 0}
---- !u!114 &8778643387317822642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8778643387317822647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c0cad1c066087547bb19f7d44be2054, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: 10
-  startingHealth: 1
 --- !u!114 &4314615837480245480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +168,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0.5
   knockbackForce: 3
+--- !u!114 &1227491755611213450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0104ea640fa6de42afd0c0c6ff6aeb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 1
 --- !u!95 &3695806071682226587
 Animator:
   serializedVersion: 3
@@ -278,6 +277,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.0125
       objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: enemyHealth
+      value: 
+      objectReference: {fileID: 1227491755611213450}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &5999483903810187055 stripped
