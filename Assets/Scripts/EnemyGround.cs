@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class EnemyGround : MonoBehaviour
 {
-    [Header("ヒットポイント")]
-    public float startingHealth = 1;
-
     [Header("重力")]
     public float gravity = 10;
 
@@ -20,7 +17,6 @@ public class EnemyGround : MonoBehaviour
     [Header("進行方向に地面があるか判定するためのレイの長さ")]
     public float distance = 2;
 
-    private float currentHealth;
     private int moveDirection = 1; // 1: 右, -1: 左
 
     private Controller2D controller;
@@ -28,8 +24,6 @@ public class EnemyGround : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<Controller2D>();
-
-        currentHealth = startingHealth;
     }
 
     void Update()
@@ -62,32 +56,5 @@ public class EnemyGround : MonoBehaviour
             scl.x *= -1;
             transform.localScale = scl;
         }
-    }
-
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-
-            OnDeath();
-        }
-        else
-        {
-            OnTakeDamage();
-        }
-
-    }
-
-    void OnTakeDamage()
-    {
-
-    }
-
-    void OnDeath()
-    {
-        gameObject.SetActive(false);
     }
 }

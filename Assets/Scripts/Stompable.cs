@@ -5,14 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Stompable : MonoBehaviour
 {
-    private Enemy enemy;
-
-    private void Start()
-    {
-        // 親 gameObject が Enemy コンポーネントを持つ必要がある
-        enemy = transform.parent.gameObject.GetComponent<Enemy>();
-        Debug.Assert(enemy != null);
-    }
+    public EnemyHealth enemyHealth;
 
     private void OnDrawGizmos()
     {
@@ -29,7 +22,7 @@ public class Stompable : MonoBehaviour
             Debug.Log("OnTriggerEnter in Stompable");
 
             // ダメージを受ける
-            enemy.TakeDamage(other.damage);
+            enemyHealth.TakeDamage(other.damage);
         }
     }
 }

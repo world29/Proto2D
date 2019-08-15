@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class EnemyAir : MonoBehaviour
 {
-    [Header("ヒットポイント")]
-    public float startingHealth = 1;
-
     [Header("移動速度")]
     public float speed = 1;
 
@@ -20,8 +17,6 @@ public class EnemyAir : MonoBehaviour
 
     [Header("ある地点に到達してから次の地点への移動を開始するまでの待機時間")]
     public float waitTime;
-
-    private float currentHealth;
 
     int fromWaypointIndex;
     float percentBetweenWaypoints;
@@ -107,31 +102,5 @@ public class EnemyAir : MonoBehaviour
                 Gizmos.DrawLine(globalWaypointPos - Vector3.left * size, globalWaypointPos + Vector3.left * size);
             }
         }
-    }
-
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-
-            OnDeath();
-        }
-        else
-        {
-            OnTakeDamage();
-        }
-    }
-
-    void OnTakeDamage()
-    {
-
-    }
-
-    void OnDeath()
-    {
-        gameObject.SetActive(false);
     }
 }
