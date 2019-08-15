@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 8806861694332298749}
   - component: {fileID: 8806861694332298746}
   - component: {fileID: 8806861694332298737}
-  - component: {fileID: 4038844394899118500}
-  - component: {fileID: 8277124502349428511}
+  - component: {fileID: 3708944749114691988}
   - component: {fileID: 4719374428826962421}
+  - component: {fileID: 4038844394899118500}
+  - component: {fileID: 5686858227295186480}
   - component: {fileID: 3505603300724250839}
   m_Layer: 0
   m_Name: Bat
@@ -155,7 +156,7 @@ MonoBehaviour:
   verticalRaySpacing: 0
   collider: {fileID: 0}
   playerInput: {x: 0, y: 0}
---- !u!114 &4038844394899118500
+--- !u!114 &3708944749114691988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,24 +165,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8806861694332298747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  knockbackForce: 3
---- !u!114 &8277124502349428511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806861694332298747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0104ea640fa6de42afd0c0c6ff6aeb7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c0cad1c066087547bb19f7d44be2054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 1
+  hitStopDurationOnDamage: 0.2
+  blinkDuration: 1
+  blinkInterval: 0.1
 --- !u!114 &4719374428826962421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +190,33 @@ MonoBehaviour:
   - {x: 2, y: 0, z: 0}
   cyclic: 0
   waitTime: 0
+--- !u!114 &4038844394899118500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806861694332298747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  knockbackForce: 3
+--- !u!114 &5686858227295186480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806861694332298747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ade9bb0f2cbd7e42a84a90755f7b441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 3708944749114691988}
 --- !u!95 &3505603300724250839
 Animator:
   serializedVersion: 3
@@ -300,7 +317,12 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyHealth
       value: 
-      objectReference: {fileID: 8277124502349428511}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 3708944749114691988}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &6418896005797703883 stripped
