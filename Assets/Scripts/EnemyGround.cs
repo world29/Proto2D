@@ -51,7 +51,10 @@ public class EnemyGround : MonoBehaviour
         RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distance);
         Debug.DrawRay(groundDetection.position, Vector2.down, Color.red);
 
-        if (!groundInfo)
+        // 進行方向に障害物があるなら向きを反転する
+        bool obstacleInfo = moveDirection > 0 ? controller.collisions.right : controller.collisions.left;
+
+        if (!groundInfo || obstacleInfo)
         {
             moveDirection *= -1;
 
