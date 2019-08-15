@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     bool wallAction;
     bool wallKick;
     bool wallActionOld;
+    bool runGround;
     bool hopAction;
 
     bool airJump;
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
 
         wallKick = false;
         wallActionOld = false;
+        runGround = false;
         ResetAirJump();
 
         hopAction = false;
@@ -107,11 +109,12 @@ public class Player : MonoBehaviour
         scale.x = controller.collisions.faceDir;
         transform.localScale = scale;
 
-        if (velocity.y <= 0 || wallAction || airJump)
+        if (velocity.y <= 0.5 || wallAction || airJump)
         {
             hopAction = false;
         }
 
+        runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction; 
 
         // アニメーションコントローラーを更新
         anim.SetBool("wallAction", wallAction);
@@ -119,6 +122,7 @@ public class Player : MonoBehaviour
         anim.SetBool("hopAction", hopAction);
         anim.SetBool("airJump", airJump);
         anim.SetBool("isKnockback", isKnockback);
+        anim.SetBool("runGround", runGround);
         anim.SetFloat("velocity_x", velocity.x);
         anim.SetFloat("velocity_y", velocity.y);
 
@@ -235,6 +239,12 @@ public class Player : MonoBehaviour
     void HandleWallClimbing()
     {
         wallAction = false;
+
+        // ホップ中はクライミング不可
+        if (hopAction)
+        {
+            return;
+        }
 
         if (wallKick)
         {
