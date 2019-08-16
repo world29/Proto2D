@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
     bool wallActionOld;
     bool runGround;
     bool hopAction;
+    bool isStomp;
     bool isInvincible;
     bool isKnockback;
     bool isHitStop;
@@ -85,6 +86,7 @@ public class Player : MonoBehaviour
 
         hopAction = false;
 
+        isStomp = false;
         isInvincible = false;
         isKnockback = false;
         isHitStop = false;
@@ -153,20 +155,26 @@ public class Player : MonoBehaviour
             hopAction = false;
         }
 
-        runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction; 
+        runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction;
+        isStomp = false;
 
         // アニメーションコントローラーを更新
         anim.SetBool("wallAction", wallAction);
         anim.SetBool("wallKick", wallKick);
         anim.SetBool("hopAction", hopAction);
         anim.SetBool("airJump", airJump);
+        anim.SetBool("isStomp", isStomp);
         anim.SetBool("isKnockback", isKnockback);
         anim.SetBool("runGround", runGround);
         anim.SetFloat("velocity_x", velocity.x);
         anim.SetFloat("velocity_y", velocity.y);
 
     }
-
+    public void setStompState(bool flag)
+    {
+        isStomp = flag;
+        anim.SetBool("isStomp", flag);
+    }
     public void SetDirectionalInput(Vector2 input)
     {
         directionalInput = input;
@@ -440,15 +448,19 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         isHitStop = false;
+        //isStomp = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("OnTriggerEnter2D");
         ApplyDamage(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        Debug.Log("OnTriggerStay2D");
+
         ApplyDamage(collision);
     }
 }

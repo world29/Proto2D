@@ -43,7 +43,7 @@ public class Stomper : MonoBehaviour
         if (receiver)
         {
             Debug.Log("OnTriggerEnter in Stomper");
-
+            player.setStompState(true);
             cameraShake.Shake(cameraShakeAmount, cameraShakeDuration);
             player.HitStop(hitStopDuration);
             player.Hop();
