@@ -153,10 +153,11 @@ public class Player : MonoBehaviour
         if (velocity.y <= 0.5 || wallAction || airJump)
         {
             hopAction = false;
-        }
+            
 
-        runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction;
+        }
         isStomp = false;
+        runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction;
 
         // アニメーションコントローラーを更新
         anim.SetBool("wallAction", wallAction);
@@ -453,13 +454,11 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerEnter2D");
         ApplyDamage(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerStay2D");
 
         ApplyDamage(collision);
     }
