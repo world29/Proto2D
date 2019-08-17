@@ -35,11 +35,9 @@ public class EnemyAir : MonoBehaviour, IEnemyMovement
         }
     }
 
-    public void UpdateMovement()
+    public Vector3 CalculateVelocity(Vector3 prevVelocity, float gravity)
     {
         Vector3 movement = CalculateMovement();
-
-        controller.Move(movement, false);
 
         if (movement.x > 0)
         {
@@ -53,6 +51,8 @@ public class EnemyAir : MonoBehaviour, IEnemyMovement
             scl.x = -Mathf.Abs(scl.x);
             transform.localScale = scl;
         }
+
+        return movement / Time.deltaTime;
     }
 
     Vector3 CalculateMovement()

@@ -33,19 +33,13 @@ public class Stomper : MonoBehaviour
         Debug.Assert(cameraShake != null);
     }
 
-    private void OnDrawGizmos()
-    {
-        BoxCollider2D collider = GetComponent<BoxCollider2D>();
-        Gizmos.color = new Color(1, 0, 0, .5f);
-        Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Stompable receiver = collision.gameObject.GetComponent<Stompable>();
         if (receiver)
         {
-            Debug.Log("OnTriggerEnter in Stomper");
+            Debug.LogFormat("[{0}] Hit stomp attack to {1}", Time.frameCount, collision.gameObject.name);
+
             player.setStompState(true);
 
             // エフェクト表示
@@ -55,6 +49,26 @@ public class Stomper : MonoBehaviour
             cameraShake.Shake(cameraShakeAmount, cameraShakeDuration);
             player.HitStop(hitStopDuration);
             player.Hop();
+        }
+    }
+
+    private void OnEnable()
+    {
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        if (collider.enabled)
+        {
+            Gizmos.color = new Color(1, 0, 0, .5f);
+            Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
         }
     }
 }

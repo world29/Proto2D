@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IEnemyMovement
 {
-    void UpdateMovement();
+    Vector3 CalculateVelocity(Vector3 prevVelocity, float gravity);
 }

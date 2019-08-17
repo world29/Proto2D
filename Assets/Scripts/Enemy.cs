@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(Controller2D), typeof(SpriteRenderer))]
+public class Enemy : MonoBehaviour, IDamageable
 {
     [Header("ヒットポイント")]
     public float startingHealth = 1;
+
+    [Header("重力加速度")]
+    public float gravity = 10;
 
     [Header("ダメージを受けたときのヒットストップ")]
     public float hitStopDurationOnDamage = .2f;
@@ -18,32 +21,98 @@ public class Enemy : MonoBehaviour
     [Header("ダメージを受けたときの点滅の間隔")]
     public float blinkInterval = .1f;
 
-    private float currentHealth;
-    private bool isHitStop;
-    Animator anim;
+    [Header("ノックバックの持続時間")]
+    public float knockbackDuration = 1;
 
+    private float currentHealth;
+    private float knockbackTimer;
+    private Vector3 velocity;
+
+    private bool isHitStopOnDamage;
+    private bool isKnockback;
+
+    Animator anim;
+    private Controller2D controller;
+    private IEnemyMovement movement;
     private SpriteRenderer spriteRenderer;
+    private Damager damager;
+    private Stompable stompable;
 
     void Start()
     {
         currentHealth = startingHealth;
-        anim = GetComponent<Animator>();
 
+        anim = GetComponent<Animator>();
+        controller = GetComponent<Controller2D>();
+        movement = GetComponent(typeof(IEnemyMovement)) as IEnemyMovement;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Assert(spriteRenderer != null);
+
+        damager = GetComponentInChildren<Damager>();
+        Debug.Assert(damager);
+        stompable = GetComponentInChildren<Stompable>();
+        Debug.Assert(stompable);
     }
 
     void Update()
     {
-        if (!isHitStop)
+        if (isHitStopOnDamage)
         {
-            IEnemyMovement movement = GetComponent(typeof(IEnemyMovement)) as IEnemyMovement;
-            if (movement != null)
+            return;
+        }
+
+        if (isKnockback)
+        {
+            if (!controller.collisions.below)
             {
-                movement.UpdateMovement();
+                velocity.y -= gravity * Time.deltaTime;
+            }
+
+            knockbackTimer -= Time.deltaTime;
+            if (knockbackTimer < 0)
+            {
+                isKnockback = false;
+                if (damager)
+                {
+                    damager.enabled = true;
+                }
+                if (stompable)
+                {
+                    stompable.enabled = true;
+                }
             }
         }
-        
+        else if (movement != null)
+        {
+            velocity = movement.CalculateVelocity(velocity, gravity);
+        }
+
+        controller.Move(velocity * Time.deltaTime, false);
+    }
+
+    public void Damage(float amount)
+    {
+        TakeDamage(amount);
+    }
+
+    public void Knockback(Vector2 direction, float force)
+    {
+        velocity = direction * force;
+
+        knockbackTimer = knockbackDuration;
+
+        isKnockback = true;
+
+        // ノックバック中は敵の攻撃判定を無効化する
+        if (damager)
+        {
+            damager.enabled = false;
+        }
+
+        // ノックバック中は踏みつけのやられ判定を無効化する
+        if (stompable)
+        {
+            stompable.enabled = false;
+        }
     }
 
     public void TakeDamage(float damage)
@@ -80,12 +149,12 @@ public class Enemy : MonoBehaviour
 
     IEnumerator StartHitStop(UnityAction<float> callback, float damage)
     {
-        isHitStop = true;
-        anim.SetBool("isHitStop", isHitStop);
+        isHitStopOnDamage = true;
+        anim.SetBool("isHitStop", isHitStopOnDamage);
         yield return new WaitForSeconds(hitStopDurationOnDamage);
 
-        isHitStop = false;
-        anim.SetBool("isHitStop", isHitStop);
+        isHitStopOnDamage = false;
+        anim.SetBool("isHitStop", isHitStopOnDamage);
 
         callback(damage);
     }

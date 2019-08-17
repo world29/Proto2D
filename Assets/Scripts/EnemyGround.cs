@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class EnemyGround : MonoBehaviour, IEnemyMovement
 {
-    [Header("重力")]
-    public float gravity = 10;
-
     [Header("移動速度")]
     public float speed = 1;
 
@@ -26,21 +23,8 @@ public class EnemyGround : MonoBehaviour, IEnemyMovement
         controller = GetComponent<Controller2D>();
     }
 
-    public void UpdateMovement()
+    public Vector3 CalculateVelocity(Vector3 prevVelocity, float gravity)
     {
-        Vector2 velocity = Vector2.zero;
-
-        // 水平方向
-        velocity.x = speed * moveDirection;
-
-        // 垂直方向
-        if (!controller.collisions.below)
-        {
-            velocity.y -= gravity;
-        }
-
-        controller.Move(velocity * Time.deltaTime, false);
-
         // 進行方向に地面がないなら向きを反転する
         RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distance, controller.collisionMask);
         Debug.DrawRay(groundDetection.position, Vector2.down, Color.red);
@@ -56,5 +40,18 @@ public class EnemyGround : MonoBehaviour, IEnemyMovement
             scl.x *= -1;
             transform.localScale = scl;
         }
+
+        Vector3 velocity = prevVelocity;
+
+        // 水平方向
+        velocity.x = speed * moveDirection;
+
+        // 垂直方向
+        if (!controller.collisions.below)
+        {
+            velocity.y -= gravity * Time.deltaTime;
+        }
+
+        return velocity;
     }
 }

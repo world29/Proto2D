@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     bool runGround;
     bool hopAction;
     bool isStomp;
+    bool isJumpAttackHit;
     bool isInvincible;
     bool isKnockback;
     bool isHitStop;
@@ -72,6 +73,8 @@ public class Player : MonoBehaviour
     Controller2D controller;
     SpriteRenderer spriteRenderer;
     TrailRenderer trailRenderer;
+    Stomper stompAttack;
+    JumpAttack jumpAttack;
 
     private const float attackAngleStep = 45;
 
@@ -86,6 +89,11 @@ public class Player : MonoBehaviour
         spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
         anim = playerSprite.GetComponent<Animator>();
 
+        stompAttack = GetComponentInChildren<Stomper>();
+        stompAttack.enabled = true;
+
+        jumpAttack = GetComponentInChildren<JumpAttack>();
+        jumpAttack.enabled = false;
 
         cachedColor = spriteRenderer.color;
 
@@ -165,6 +173,7 @@ public class Player : MonoBehaviour
             hopAction = false;
         }
         isStomp = false;
+        isJumpAttackHit = false;
         runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction;
 
         // ジャンプアタックは着地するか他のアクションに移行するまで継続する
@@ -173,6 +182,8 @@ public class Player : MonoBehaviour
             if (controller.collisions.below || wallAction || hopAction)
             {
                 isJumpAttack = false;
+                stompAttack.enabled = true;
+                jumpAttack.enabled = false;
             }
         }
 
@@ -193,8 +204,13 @@ public class Player : MonoBehaviour
     {
         isStomp = flag;
         anim.SetBool("isStomp", flag);
-
     }
+
+    public void setJumpAttackHitState(bool flag)
+    {
+        isJumpAttackHit = flag;
+    }
+
     public void SetDirectionalInput(Vector2 input)
     {
         directionalInput = input;
@@ -268,7 +284,7 @@ public class Player : MonoBehaviour
         }
 
         float attackAngle = step * attackAngleStep;
-        Debug.LogFormat("On Attack ({0} -> {1})", deg, attackAngle);
+        Debug.LogFormat("Jump Attack ({0})", attackAngle);
 
         JumpAttack(attackAngle * Mathf.Deg2Rad, jumpAttackSpeed);
     }
@@ -284,6 +300,8 @@ public class Player : MonoBehaviour
         velocity.y = Mathf.Sin(angleRadian) * speed;
 
         isJumpAttack = true;
+        jumpAttack.enabled = true;
+        stompAttack.enabled = false;
     }
 
     public void AirJump()
@@ -504,8 +522,19 @@ public class Player : MonoBehaviour
     private void ApplyDamage(Collider2D collision)
     {
         Damager damager = collision.gameObject.GetComponent<Damager>();
-        if (damager && !isInvincible)
+        if (damager == null)
         {
+            return;
+        }
+
+        if (!isInvincible)
+        {
+            if (isJumpAttack)
+            {
+                Debug.LogWarning("ApplyDamage while JumpAttack");
+                return;
+            }
+
             PlayerHealth health = GetComponent<PlayerHealth>();
             health.TakeDamage(damager.damage);
 
