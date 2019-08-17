@@ -40,7 +40,7 @@ public class PlayerInput : MonoBehaviour
 
         if (mouseState.isDragged)
         {
-            Debug.LogFormat("MouseDragged ({0} - {1})", mouseState.dragStartPos.ToString(), mouseState.dragEndPos.ToString());
+            //Debug.LogFormat("MouseDragged ({0} - {1})", mouseState.dragStartPos.ToString(), mouseState.dragEndPos.ToString());
 
             Vector3 direction = mouseState.dragEndPos - mouseState.dragStartPos;
             direction.Normalize();
