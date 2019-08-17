@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Stomper : MonoBehaviour
 {
+    [Header("敵を踏みつけた時のエフェクト")]
+    public GameObject stompEffectPrefab;
+
     [Header("踏みつけによって与えるダメージ")]
     public float damage = 1;
 
@@ -44,6 +47,11 @@ public class Stomper : MonoBehaviour
         {
             Debug.Log("OnTriggerEnter in Stomper");
             player.setStompState(true);
+
+            // エフェクト表示
+            GameObject effect = Instantiate(stompEffectPrefab) as GameObject;
+            effect.transform.position = new Vector3( (receiver.transform.position.x + transform.position.x) / 2 ,(receiver.transform.position.y + transform.position.y) / 2,-1 );
+
             cameraShake.Shake(cameraShakeAmount, cameraShakeDuration);
             player.HitStop(hitStopDuration);
             player.Hop();
