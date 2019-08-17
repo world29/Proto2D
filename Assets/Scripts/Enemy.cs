@@ -20,12 +20,14 @@ public class Enemy : MonoBehaviour
 
     private float currentHealth;
     private bool isHitStop;
+    Animator anim;
 
     private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         currentHealth = startingHealth;
+        anim = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         Debug.Assert(spriteRenderer != null);
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
                 movement.UpdateMovement();
             }
         }
+        
     }
 
     public void TakeDamage(float damage)
@@ -78,10 +81,11 @@ public class Enemy : MonoBehaviour
     IEnumerator StartHitStop(UnityAction<float> callback, float damage)
     {
         isHitStop = true;
-
+        anim.SetBool("isHitStop", isHitStop);
         yield return new WaitForSeconds(hitStopDurationOnDamage);
 
         isHitStop = false;
+        anim.SetBool("isHitStop", isHitStop);
 
         callback(damage);
     }
