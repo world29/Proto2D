@@ -36,6 +36,13 @@ public class Player : MonoBehaviour
     [Header("ダメージを受けたときのヒットストップ時間")]
     public float hitStopDurationOnDamage = .1f;
 
+    [Header("ジャンプアタックを有効化 (空中ジャンプと排他的)")]
+    public bool enableJumpAttack = true;
+    [Header("ジャンプアタックの速さ")]
+    public float jumpAttackSpeed = 10;
+    [Header("ジャンプアタック中に方向キーで与えられる加速度")]
+    public float acceralationWhileJumpAttack = 1;
+
     Vector3 velocity;
     float velocityXSmoothing;
     float velocityYSmoothing;
@@ -59,11 +66,14 @@ public class Player : MonoBehaviour
     bool isInvincible;
     bool isKnockback;
     bool isHitStop;
+    bool isJumpAttack;
 
     Animator anim;
     Controller2D controller;
     SpriteRenderer spriteRenderer;
     TrailRenderer trailRenderer;
+
+    private const float attackAngleStep = 45;
 
     // Start is called before the first frame update
     void Start()
@@ -153,16 +163,24 @@ public class Player : MonoBehaviour
         if (velocity.y <= 0.5 || wallAction || airJump)
         {
             hopAction = false;
-            
-
         }
         isStomp = false;
         runGround = Mathf.Abs(velocity.x) > 0.1 && velocity.y == 0 && !wallAction;
 
+        // ジャンプアタックは着地するか他のアクションに移行するまで継続する
+        if (isJumpAttack)
+        {
+            if (controller.collisions.below || wallAction || hopAction)
+            {
+                isJumpAttack = false;
+            }
+        }
+
         // アニメーションコントローラーを更新
         anim.SetBool("wallAction", wallAction);
         anim.SetBool("wallKick", wallKick);
-        anim.SetBool("hopAction", hopAction);
+        //anim.SetBool("hopAction", hopAction);
+        anim.SetBool("hopAction", hopAction || isJumpAttack); //TODO: ジャンプアタックのテスト用なので消す
         anim.SetBool("airJump", airJump);
         anim.SetBool("isStomp", isStomp);
         anim.SetBool("isKnockback", isKnockback);
@@ -192,6 +210,27 @@ public class Player : MonoBehaviour
         {
             WallKick();
         }
+        else if (enableJumpAttack)
+        {
+            // 方向キーの入力からジャンプアタックの方向を決定する。
+            // 下方向は無視する。
+            Vector2 dir;
+            dir.x = directionalInput.x;
+            dir.y = Mathf.Max(directionalInput.y, 0);
+
+            float angleDeg = 0;
+            if (dir == Vector2.zero)
+            {
+                // 方向キーの入力がない場合、進行方向の斜め上とする。
+                angleDeg = controller.collisions.faceDir == 1 ? attackAngleStep : 180 - attackAngleStep;
+            }
+            else
+            {
+                angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            }
+
+            JumpAttack(angleDeg * Mathf.Deg2Rad, jumpAttackSpeed);
+        }
         else
         {
             AirJump();
@@ -204,6 +243,47 @@ public class Player : MonoBehaviour
         {
             velocity.y = minJumpVelocity;
         }
+    }
+
+    public void OnJumpAttackInput(Vector2 direction)
+    {
+        if (!enableJumpAttack || isJumpAttack)
+        {
+            return;
+        }
+
+        float rad = Mathf.Atan2(direction.y, direction.x);
+        float deg = Mathf.Rad2Deg * rad;
+
+        // 四捨五入
+        float step = deg / attackAngleStep;
+        float realPart = step - Mathf.Floor(step);
+        if (realPart >= .5f)
+        {
+            step = Mathf.Ceil(step);
+        }
+        else
+        {
+            step = Mathf.Floor(step);
+        }
+
+        float attackAngle = step * attackAngleStep;
+        Debug.LogFormat("On Attack ({0} -> {1})", deg, attackAngle);
+
+        JumpAttack(attackAngle * Mathf.Deg2Rad, jumpAttackSpeed);
+    }
+
+    public void JumpAttack(float angleRadian, float speed)
+    {
+        if (!enableJumpAttack || isJumpAttack)
+        {
+            return;
+        }
+
+        velocity.x = Mathf.Cos(angleRadian) * speed;
+        velocity.y = Mathf.Sin(angleRadian) * speed;
+
+        isJumpAttack = true;
     }
 
     public void AirJump()
@@ -294,8 +374,19 @@ public class Player : MonoBehaviour
 
     void CalculateVelocityHorizontal()
     {
-        float targetVelocityX = directionalInput.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelarationTimeGrounded : accelarationTimeAirborne);
+        if (isJumpAttack)
+        {
+            // ジャンプアタック中の左右移動は慣性運動
+            if (directionalInput.x != 0)
+            {
+                velocity.x += directionalInput.x * acceralationWhileJumpAttack * Time.deltaTime;
+            }
+        }
+        else
+        {
+            float targetVelocityX = directionalInput.x * moveSpeed;
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelarationTimeGrounded : accelarationTimeAirborne);
+        }
     }
 
     void CalculateVelocityVertical()
@@ -396,7 +487,7 @@ public class Player : MonoBehaviour
                 // クライム状態に移行したフレームの処理
                 if (wallAction)
                 {
-                    Debug.Log("Entry WallAction State");
+                    //Debug.Log("Entry WallAction State");
 
                     wallActionEntryTimer = 0;
 
@@ -462,5 +553,25 @@ public class Player : MonoBehaviour
     {
 
         ApplyDamage(collision);
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        int unit = 45;
+        int i_max = 360 / unit;
+
+        // プレイヤーの周囲に 45度ずつ線を引く
+        for (int i = 0; i < i_max; i++)
+        {
+            Vector2 origin = transform.position;
+            Vector2 line;
+
+            float rad = Mathf.Deg2Rad * i * unit;
+            line.x = Mathf.Cos(rad);
+            line.y = Mathf.Sin(rad);
+
+            Debug.DrawLine(origin, origin + line, Color.HSVToRGB((float)i/i_max, 1, 1), 0, false);
+        }
     }
 }
