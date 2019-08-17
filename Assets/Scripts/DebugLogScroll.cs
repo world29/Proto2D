@@ -29,7 +29,14 @@ public class DebugLogScroll : MonoBehaviour
         {
             contentText.text += logText + System.Environment.NewLine;
 
-            scrollRect.verticalNormalizedPosition = 0;
+            StartCoroutine(ScrollToBottom());
         }
+    }
+
+    IEnumerator ScrollToBottom()
+    {
+        yield return new WaitForSeconds(.1f);
+
+        scrollRect.verticalNormalizedPosition = 0;
     }
 }
