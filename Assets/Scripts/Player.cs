@@ -175,6 +175,7 @@ public class Player : MonoBehaviour
     {
         isStomp = flag;
         anim.SetBool("isStomp", flag);
+
     }
     public void SetDirectionalInput(Vector2 input)
     {
