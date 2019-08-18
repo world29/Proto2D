@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
     TrailRenderer trailRenderer;
     Stomper stompAttack;
     JumpAttack jumpAttack;
+    ComboSystem comboSystem;
 
     private const float attackAngleStep = 45;
 
@@ -95,6 +96,8 @@ public class Player : MonoBehaviour
         GameObject playerSprite = transform.Find("PlayerSprite").gameObject;
         spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
         anim = playerSprite.GetComponent<Animator>();
+
+        comboSystem = GameObject.Find("ComboText").GetComponent<ComboSystem>();
 
         stompAttack = GetComponentInChildren<Stomper>();
         stompAttack.enabled = true;
@@ -155,6 +158,11 @@ public class Player : MonoBehaviour
         CalculateVelocityVertical();
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
+
+        if (controller.collisions.below)
+        {
+            comboSystem.ResetCombo();
+        }
 
         if (controller.collisions.above || controller.collisions.below)
         {
@@ -420,6 +428,8 @@ public class Player : MonoBehaviour
 
         hopAction = true;
         ResetAirJump();
+
+        comboSystem.IncrementCombo();
     }
 
     public void HitStop(float duration)
@@ -595,6 +605,7 @@ public class Player : MonoBehaviour
 
             PlayerHealth health = GetComponent<PlayerHealth>();
             health.TakeDamage(damager.damage);
+            comboSystem.ResetCombo();
 
             if (health.currentHealth > 0)
             {
