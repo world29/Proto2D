@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class JumpAttack : MonoBehaviour
 {
+    [Header("ジャンプアタック命中時のエフェクト")]
+    public GameObject jumpAttackHitEffectPrefab;
+
     [Header("ジャンプアタックのダメージ量")]
     public float damage = 2;
 
@@ -56,6 +59,10 @@ public class JumpAttack : MonoBehaviour
             damageable.Knockback(dir.normalized, knockbackForce);
 
             player.setJumpAttackHitState(true);
+            // エフェクト表示
+            GameObject effect = Instantiate(jumpAttackHitEffectPrefab) as GameObject;
+            effect.transform.position = new Vector3( (collision.gameObject.transform.position.x + transform.position.x) / 2 ,(collision.gameObject.transform.position.y + transform.position.y) / 2,-1 );
+
             cameraShake.Shake(cameraShakeAmount, cameraShakeDuration);
             player.HitStop(hitStopDuration);
             player.Hop();

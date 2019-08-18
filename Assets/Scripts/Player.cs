@@ -193,6 +193,7 @@ public class Player : MonoBehaviour
         //anim.SetBool("hopAction", hopAction);
         anim.SetBool("hopAction", hopAction || isJumpAttack); //TODO: ジャンプアタックのテスト用なので消す
         anim.SetBool("airJump", airJump);
+        anim.SetBool("isJumpAttackHit", isJumpAttackHit);
         anim.SetBool("isStomp", isStomp);
         anim.SetBool("isKnockback", isKnockback);
         anim.SetBool("runGround", runGround);
@@ -209,6 +210,7 @@ public class Player : MonoBehaviour
     public void setJumpAttackHitState(bool flag)
     {
         isJumpAttackHit = flag;
+        anim.SetBool("isJumpAttackHit", flag);
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -229,10 +231,11 @@ public class Player : MonoBehaviour
         else if (enableJumpAttack)
         {
             // 方向キーの入力からジャンプアタックの方向を決定する。
-            // 下方向は無視する。
+            // 下方向は無視する。 // 一旦下方向も効くように
             Vector2 dir;
             dir.x = directionalInput.x;
-            dir.y = Mathf.Max(directionalInput.y, 0);
+            dir.y = directionalInput.y;
+            //dir.y = Mathf.Max(directionalInput.y, 0);
 
             float angleDeg = 0;
             if (dir == Vector2.zero)
