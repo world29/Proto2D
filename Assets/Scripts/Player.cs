@@ -40,8 +40,15 @@ public class Player : MonoBehaviour
     public bool enableJumpAttack = true;
     [Header("ジャンプアタックの速さ")]
     public float jumpAttackSpeed = 10;
+
+    [Header("ジャンプアタックの真上方向の速さ")]
+    public float jumpAttackAboveDirectionSpeed = 15;
+
+    [Header("ジャンプアタックの真下、斜め下方向の速さ")]
+    public float jumpAttackUnderDirectionSpeed = 5f;
+
     [Header("ジャンプアタック中に方向キーで与えられる加速度")]
-    public float acceralationWhileJumpAttack = 1;
+    public float acceralationWhileJumpAttack = 1f;
 
     Vector3 velocity;
     float velocityXSmoothing;
@@ -220,7 +227,6 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {
-        Debug.Log(controller.collisions.faceDir);
         if (wallAction){
             WallKick();
             controller.collisions.faceDir *= -1;
@@ -277,16 +283,17 @@ public class Player : MonoBehaviour
             }
 
             float resultSpeed = jumpAttackSpeed;
-            if ( dir.y == 1 && dir.x == 0)
+            if ( dir.y == 1 && directionalInput.x == 0)
             {
-                // 真上に飛ぶ時は飛距離を伸ばす
-                resultSpeed *= 1.3f;
+                // 真上に飛ぶ時は飛距離を変える
+                resultSpeed = jumpAttackAboveDirectionSpeed;
+                Debug.Log(resultSpeed);
             }
             
             if ( dir.y < 0)
             {
                 // 下・斜め下方向に飛ぶ時は飛距離を減らす
-                resultSpeed *= 0.5f;
+                resultSpeed = jumpAttackUnderDirectionSpeed;
             }
 
             
