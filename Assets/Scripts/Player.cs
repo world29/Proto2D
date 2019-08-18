@@ -316,7 +316,7 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputUp()
     {
-        if (velocity.y > minJumpVelocity)
+        if (velocity.y > minJumpVelocity && ! hopAction)
         {
             velocity.y = minJumpVelocity;
         }
