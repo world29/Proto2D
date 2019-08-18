@@ -197,8 +197,8 @@ public class Player : MonoBehaviour
         // アニメーションコントローラーを更新
         anim.SetBool("wallAction", wallAction);
         anim.SetBool("wallKick", wallKick);
-        //anim.SetBool("hopAction", hopAction);
-        anim.SetBool("hopAction", hopAction || isJumpAttack); //TODO: ジャンプアタックのテスト用なので消す
+        anim.SetBool("isJumpAttack", isJumpAttack);
+        anim.SetBool("hopAction", hopAction);
         anim.SetBool("airJump", airJump);
         anim.SetBool("isJumpAttackHit", isJumpAttackHit);
         anim.SetBool("isStomp", isStomp);
@@ -232,7 +232,8 @@ public class Player : MonoBehaviour
             controller.collisions.faceDir *= -1;
         }
 
-        if (controller.collisions.below)
+        // 方向キー上を入力していないで地面に接地している場合のみ、通常ジャンプ
+        if (controller.collisions.below && directionalInput.y < 1 )
         {
             velocity.y = maxJumpVelocity;
         }
