@@ -220,14 +220,20 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputDown()
     {
+        Debug.Log(controller.collisions.faceDir);
+        if (wallAction){
+            WallKick();
+            controller.collisions.faceDir *= -1;
+        }
+
         if (controller.collisions.below)
         {
             velocity.y = maxJumpVelocity;
         }
-        else if (wallAction)
-        {
-            WallKick();
-        }
+        //else if (wallAction)
+        //{
+            //WallKick();
+        //}
         else if (enableJumpAttack)
         {
             // 方向キーの入力からジャンプアタックの方向を決定する。
@@ -245,10 +251,46 @@ public class Player : MonoBehaviour
             }
             else
             {
+
+                // 斜め方向に入力した場合の軌道を変更
+                if ( dir.y == 1 && dir.x != 0)
+                {
+                    dir.y*=1.5f;
+                }
+                if ( dir.y == -1 && dir.x != 0)
+                {
+                    dir.y*=0.5f;
+                }
+
+                // 真上方向に入力した場合の軌道を変更
+                if ( dir.y == 1 && dir.x == 0)
+                {
+                    dir.x = controller.collisions.faceDir == 1 ? 0.1f : -0.1f;
+                }
+                // 真下方向に入力した場合の軌道を変更
+                if ( dir.y == -1 && dir.x == 0)
+                {
+                    dir.x = controller.collisions.faceDir == 1 ? 0.8f : -0.8f;
+                }
+
                 angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             }
 
-            JumpAttack(angleDeg * Mathf.Deg2Rad, jumpAttackSpeed);
+            float resultSpeed = jumpAttackSpeed;
+            if ( dir.y == 1 && dir.x == 0)
+            {
+                // 真上に飛ぶ時は飛距離を伸ばす
+                resultSpeed *= 1.3f;
+            }
+            
+            if ( dir.y < 0)
+            {
+                // 下・斜め下方向に飛ぶ時は飛距離を減らす
+                resultSpeed *= 0.5f;
+            }
+
+            
+            JumpAttack(angleDeg * Mathf.Deg2Rad, resultSpeed);
         }
         else
         {
@@ -482,8 +524,13 @@ public class Player : MonoBehaviour
             }
             else
             {
+                // ジャンプアタック中の場合、即座にクライム状態に移行する
+                if (isJumpAttack)
+                {
+                    wallAction = true;
+                }
                 // 地上にいる場合、壁方向に一定時間キー入力するとクライム状態に移行する
-                if (controller.collisions.below)
+                else if (controller.collisions.below)
                 {
                     if (directionalInput.x != 0 && wallDirX == Mathf.Sign(directionalInput.x))
                     {
