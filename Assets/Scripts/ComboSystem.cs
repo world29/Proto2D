@@ -39,6 +39,11 @@ public class ComboSystem : MonoBehaviour
         }
     }
 
+    public int GetComboCount()
+    {
+        return comboCounter;
+    }
+
     public void ResetCombo()
     {
         comboCounter = 0;

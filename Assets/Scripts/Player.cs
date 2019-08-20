@@ -56,6 +56,9 @@ public class Player : MonoBehaviour
     [Header("ジャンプアタック中に方向キーで与えられる加速度")]
     public float acceralationWhileJumpAttack = 1f;
 
+    [Header("ジャンプアタックの回数を増やすためのコンボ数")]
+    public int combosRequiredForBonusJump = 3;
+
     Vector3 velocity;
     float velocityXSmoothing;
     float velocityYSmoothing;
@@ -89,6 +92,7 @@ public class Player : MonoBehaviour
     Stomper stompAttack;
     JumpAttack jumpAttack;
     ComboSystem comboSystem;
+    JumpGauge jumpGauge;
 
     private const float attackAngleStep = 45;
 
@@ -104,7 +108,8 @@ public class Player : MonoBehaviour
         anim = playerSprite.GetComponent<Animator>();
 
         comboSystem = GameObject.Find("ComboText").GetComponent<ComboSystem>();
-
+        jumpGauge = GameObject.Find("PlayerPanel").GetComponent<JumpGauge>();
+    
         stompAttack = GetComponentInChildren<Stomper>();
         stompAttack.enabled = true;
 
@@ -374,6 +379,12 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (jumpGauge.GetJumpCount() == 0)
+        {
+            return;
+        }
+        jumpGauge.DecrementJumpCount();
+
         velocity.x = Mathf.Cos(angleRadian) * speed;
         velocity.y = Mathf.Sin(angleRadian) * speed;
 
@@ -447,6 +458,10 @@ public class Player : MonoBehaviour
         ResetAirJump();
 
         comboSystem.IncrementCombo();
+        if (comboSystem.GetComboCount() % combosRequiredForBonusJump == 0)
+        {
+            jumpGauge.IncrementJumpCount();
+        }
     }
 
     public void HitStop(float duration)
