@@ -23,15 +23,22 @@ namespace UnityEngine.Tilemaps
 		public Sprite[] m_PatternedSprites;
 
 		public override void RefreshTile(Vector3Int location, ITilemap tileMap)
-		{
-			for (int yd = -1; yd <= 1; yd++)
-				for (int xd = -1; xd <= 1; xd++)
-				{
-					Vector3Int position = new Vector3Int(location.x + xd, location.y + yd, location.z);
-					if (TileValue(tileMap, position))
-						tileMap.RefreshTile(position);
-				}
-		}
+        {
+            if (m_PatternedSprites != null)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    for (int x = -1; x <= 1; x++)
+                    {
+                        base.RefreshTile(location + new Vector3Int(x, y, 0), tileMap);
+                    }
+                }
+            }
+            else
+            {
+                base.RefreshTile(location, tileMap);
+            }
+        }
 
 		public override void GetTileData(Vector3Int location, ITilemap tileMap, ref TileData tileData)
 		{
