@@ -16,6 +16,8 @@ public class JumpGauge : MonoBehaviour
     private void Start()
     {
         jumpCount = initialJumpCount;
+
+        UpdateUI();
     }
 
     void Update()
