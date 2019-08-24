@@ -22,12 +22,17 @@ public class Stomper : MonoBehaviour
 
     private Player player;
     private CameraShake cameraShake;
+    private ComboSystem comboSystem;
+    private JumpGauge jumpGauge;
 
     private void Start()
     {
         // 親 gameObject が Player コンポーネントを持つ必要がある
         player = transform.parent.gameObject.GetComponent<Player>();
         Debug.Assert(player != null);
+
+        comboSystem = GameObject.Find("ComboText").GetComponent<ComboSystem>();
+        jumpGauge = GameObject.Find("PlayerPanel").GetComponent<JumpGauge>();
 
         cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         Debug.Assert(cameraShake != null);
@@ -49,6 +54,12 @@ public class Stomper : MonoBehaviour
             cameraShake.Shake(cameraShakeAmount, cameraShakeDuration);
             player.HitStop(hitStopDuration);
             player.Hop();
+
+            comboSystem.IncrementCombo();
+            if (comboSystem.GetComboCount() % player.combosRequiredForBonusJump == 0)
+            {
+                jumpGauge.IncrementJumpCount();
+            }
         }
     }
 

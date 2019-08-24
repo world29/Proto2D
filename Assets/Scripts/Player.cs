@@ -456,12 +456,6 @@ public class Player : MonoBehaviour
 
         hopAction = true;
         ResetAirJump();
-
-        comboSystem.IncrementCombo();
-        if (comboSystem.GetComboCount() % combosRequiredForBonusJump == 0)
-        {
-            jumpGauge.IncrementJumpCount();
-        }
     }
 
     public void HitStop(float duration)
