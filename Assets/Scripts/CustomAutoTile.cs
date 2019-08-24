@@ -84,7 +84,7 @@ namespace UnityEngine.Tilemaps
             // タイルのプレビューを TilePalette に表示するため (コードで生成したスプライトは TilePalette に表示されない)。
             if (index == m_PatternedSprites.Length-1)
             {
-                tileData.sprite = m_RawTilesSprites[0];
+                tileData.sprite = m_RawTilesSprites[13];
             } 
 		}
 
