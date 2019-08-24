@@ -72,6 +72,13 @@ namespace UnityEngine.Tilemaps
 				tileData.flags = (TileFlags.LockTransform | TileFlags.LockColor);
 				tileData.colliderType = Tile.ColliderType.Sprite;
 			}
+
+            // 周囲に同じタイルがない場合のスプライトはインポートされたものを直接使用する。
+            // タイルのプレビューを TilePalette に表示するため (コードで生成したスプライトは TilePalette に表示されない)。
+            if (index == m_PatternedSprites.Length-1)
+            {
+                tileData.sprite = m_RawTilesSprites[0];
+            } 
 		}
 
 		private bool TileValue(ITilemap tileMap, Vector3Int position)
