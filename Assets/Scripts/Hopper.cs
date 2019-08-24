@@ -8,6 +8,9 @@ public class Hopper : MonoBehaviour
     public Vector2 hoppingVelocity;
     public GameObject effectPrefab;
 
+    [Header("ホップでコンボ数が増える")]
+    public bool incrementComboOnHop = false;
+
     private ComboSystem comboSystem;
     private JumpGauge jumpGauge;
 
@@ -19,8 +22,6 @@ public class Hopper : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
         if (collision.gameObject.CompareTag("Player"))
         {
             Player player = collision.gameObject.GetComponent<Player>();
@@ -31,7 +32,7 @@ public class Hopper : MonoBehaviour
             
             player.Hop(hoppingVelocity);
 
-            if (player.incrementComboOnHop)
+            if (incrementComboOnHop)
             {
                 comboSystem.IncrementCombo();
                 if (comboSystem.GetComboCount() % player.combosRequiredForBonusJump == 0)

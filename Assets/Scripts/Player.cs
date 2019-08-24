@@ -59,9 +59,6 @@ public class Player : MonoBehaviour
     [Header("ジャンプアタックの回数を増やすためのコンボ数")]
     public int combosRequiredForBonusJump = 3;
 
-    [Header("ホップでコンボ数が増える")]
-    public bool incrementComboOnHop = false;
-
     Vector3 velocity;
     float velocityXSmoothing;
     float velocityYSmoothing;
