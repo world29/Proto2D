@@ -89,6 +89,11 @@ public class Enemy : MonoBehaviour, IDamageable
         controller.Move(velocity * Time.deltaTime, false);
     }
 
+    public Stompable getStompable()
+    {
+        return stompable;
+    }
+
     public void Damage(float amount)
     {
         TakeDamage(amount);

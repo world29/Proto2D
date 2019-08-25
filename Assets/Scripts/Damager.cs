@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Damager : MonoBehaviour
 {
+    public Enemy enemy;
+    
     [Header("ダメージ量")]
     public float damage = 1;
 

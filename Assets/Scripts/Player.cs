@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
 
+    public bool enableHopAttackMode = true;
+
     [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
     public float timeToEntryWallClimbing = 1;
 
@@ -618,6 +620,19 @@ public class Player : MonoBehaviour
         Damager damager = collision.gameObject.GetComponent<Damager>();
         if (damager == null)
         {
+            return;
+        }
+
+        // ホップ攻撃有効の場合、ダメージを受けない
+        if (hopAction && enableHopAttackMode)
+        {
+            if (damager.enemy != null)
+            {
+                //Debug.Log("hopAttack");
+                //damager.enemy.TakeDamage(stompAttack.damage);
+                //stompAttack.Hop(damager.enemy.getStompable());
+            }
+            
             return;
         }
 

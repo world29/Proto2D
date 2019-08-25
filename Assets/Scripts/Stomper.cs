@@ -38,13 +38,10 @@ public class Stomper : MonoBehaviour
         Debug.Assert(cameraShake != null);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Hop(Stompable receiver)
     {
-        Stompable receiver = collision.gameObject.GetComponent<Stompable>();
         if (receiver)
         {
-            Debug.LogFormat("[{0}] Hit stomp attack to {1}", Time.frameCount, collision.gameObject.name);
-
             player.setStompState(true);
 
             // エフェクト表示
@@ -61,6 +58,17 @@ public class Stomper : MonoBehaviour
                 jumpGauge.IncrementJumpCount();
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Stompable receiver = collision.gameObject.GetComponent<Stompable>();
+        if (receiver)
+        {
+            Debug.LogFormat("[{0}] Hit stomp attack to {1}", Time.frameCount, collision.gameObject.name);
+            Hop(receiver);
+        }
+        
     }
 
     private void OnEnable()
