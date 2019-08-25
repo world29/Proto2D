@@ -685,7 +685,26 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ApplyDamage(collision);
+        Damager damager = collision.gameObject.GetComponent<Damager>();
+        if (damager == null)
+        {
+            return;
+        }
+
+        // ホップ攻撃有効の場合、ダメージを与える
+        if (hopAction && enableHopAttackMode)
+        {
+            if (damager.enemy != null)
+            {
+                Debug.Log("hopAttack");
+                damager.enemy.TakeDamage(stompAttack.damage);
+                stompAttack.Hop(damager.enemy.getStompable());
+            }
+        }
+        else
+        {
+            ApplyDamage(collision);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
