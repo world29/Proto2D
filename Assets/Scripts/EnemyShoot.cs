@@ -34,12 +34,15 @@ public class EnemyShoot : MonoBehaviour
     {
         Projectile clone = Instantiate(projectilePrefab, shootTransform.position, shootTransform.rotation) as Projectile;
 
-        // 初速度の水平方向に対してオブジェクトの向きを反映する
+        // オブジェクトの向きをプロジェクタイルの向きと初速度に反映する
         Vector3 velocity = shootVelocity;
+        Vector3 scale = Vector3.one;
         if (GetComponent<Controller2D>().collisions.faceDir < 0)
         {
             velocity.x *= -1;
+            scale.x *= -1;
         }
         clone.initialVelocity = velocity;
+        clone.transform.localScale = scale;
     }
 }
