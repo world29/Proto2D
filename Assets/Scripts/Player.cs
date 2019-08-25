@@ -500,10 +500,26 @@ public class Player : MonoBehaviour
 
     void CalculateVelocityVertical()
     {
-        if (!wallAction)
+        float value = gravity * Time.deltaTime;
+        if (enableWallSticking)
         {
-            velocity.y -= gravity * Time.deltaTime;
+            if (wallAction)
+            {
+                value = 0;
+            }
         }
+        else
+        {
+            if (wallAction)
+            {
+                if (directionalInput.x != 0)
+                {
+                    value = 0;
+                }
+            }
+        }
+
+        velocity.y -= value;
     }
 
     void HandleWallClimbing()
@@ -533,10 +549,11 @@ public class Player : MonoBehaviour
             {
                 if (directionalInput.x == 0)
                 {
+                    wallAction = true;
+
                     // 壁くっつき
                     if (enableWallSticking && !controller.collisions.below)
-                    {
-                        wallAction = true;
+                    {    
 
                         //Debug.Log("WallSticking");
 
