@@ -590,39 +590,21 @@ public class Player : MonoBehaviour
             }
             else
             {
-                // ホップ中はクライミング不可
-                if (hopAction)
+                // 移動キー横方向がニュートラルかつ設定速度以上の速さで壁に衝突した場合、バウンドする
+                if(enableWallBounce && Mathf.Abs(velocity.x) > WallBounceThreshold && directionalInput.x == 0)
                 {
-                    if(enableWallBounce)
-                    {
-                        if(Mathf.Abs(velocity.x) > WallBounceThreshold)
-                        {
-                            velocity.x *= -1;
-                            velocity.y += WallBounceVelocityY;
-                        }
-                    }
-
+                        velocity.x *= -1;
+                        velocity.y += WallBounceVelocityY;
+                }
+                // ホップ中はクライミング不可
+                else if (hopAction)
+                {
 
                 }
                 // ジャンプアタック中の場合、即座にクライム状態に移行する
                 else if (isJumpAttack)
                 {
-                    if(enableWallBounce)
-                    {
-                        if(Mathf.Abs(velocity.x) > WallBounceThreshold)
-                        {
-                            velocity.x *= -1;
-                            velocity.y += WallBounceVelocityY;
-                        }
-                        else
-                        {
-                            wallAction = true;                    
-                        }
-                    }
-                    else
-                    {
-                        wallAction = true;                    
-                    }
+                    wallAction = true;                    
                 }
                 // 地上にいる場合、壁方向に一定時間キー入力するとクライム状態に移行する
                 else if (controller.collisions.below)
