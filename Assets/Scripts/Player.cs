@@ -26,6 +26,13 @@ public class Player : MonoBehaviour
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
 
+    [Header("ジャンプアタック、ホップ時に、壁をバウンドするかどうか")]
+    public bool enableWallBounce = false;
+    [Header("Velocity_Xのしきい値。この数値以上のばあい、クライムではなくバウンスする")]
+    public float WallBounceThreshold = 5f;
+    [Header("バウンス時の上方向へのVelocity")]
+    public float WallBounceVelocityY = 0f;
+
     public bool enableHopAttackMode = true;
 
     [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
@@ -526,11 +533,7 @@ public class Player : MonoBehaviour
     {
         wallAction = false;
 
-        // ホップ中はクライミング不可
-        if (hopAction)
-        {
-            return;
-        }
+
 
         if (wallKick)
         {
@@ -587,10 +590,39 @@ public class Player : MonoBehaviour
             }
             else
             {
-                // ジャンプアタック中の場合、即座にクライム状態に移行する
-                if (isJumpAttack)
+                // ホップ中はクライミング不可
+                if (hopAction)
                 {
-                    wallAction = true;
+                    if(enableWallBounce)
+                    {
+                        if(Mathf.Abs(velocity.x) > WallBounceThreshold)
+                        {
+                            velocity.x *= -1;
+                            velocity.y += WallBounceVelocityY;
+                        }
+                    }
+
+
+                }
+                // ジャンプアタック中の場合、即座にクライム状態に移行する
+                else if (isJumpAttack)
+                {
+                    if(enableWallBounce)
+                    {
+                        if(Mathf.Abs(velocity.x) > WallBounceThreshold)
+                        {
+                            velocity.x *= -1;
+                            velocity.y += WallBounceVelocityY;
+                        }
+                        else
+                        {
+                            wallAction = true;                    
+                        }
+                    }
+                    else
+                    {
+                        wallAction = true;                    
+                    }
                 }
                 // 地上にいる場合、壁方向に一定時間キー入力するとクライム状態に移行する
                 else if (controller.collisions.below)
