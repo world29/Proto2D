@@ -10,10 +10,13 @@ public class EnemyShoot : MonoBehaviour
     public Transform shootTransform;
     [Header("初速度")]
     public Vector3 shootVelocity;
-    [Header("発射の時間間隔")]
-    public float shootInterval;
 
-    private float shootTimer;
+    [Header("攻撃の時間間隔")]
+    public float attackInterval = 2;
+    [Header("攻撃状態になってから発射までのディレイ")]
+    public float shootDelay = .1f;
+
+    private float attackTimer;
 
     void Start()
     {
@@ -21,17 +24,31 @@ public class EnemyShoot : MonoBehaviour
 
     void Update()
     {
-        shootTimer += Time.deltaTime;
-        if (shootTimer >= shootInterval)
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= attackInterval)
         {
-            Shoot();
+            StartCoroutine(StartAttack());
 
-            shootTimer = 0;
+            attackTimer = 0;
         }
+    }
+
+    IEnumerator StartAttack()
+    {
+        GetComponentInChildren<Animator>().SetBool("isAttack", true);
+
+        if (shootDelay > 0)
+        {
+            yield return new WaitForSeconds(shootDelay);
+        }
+        Shoot();
+
+        GetComponentInChildren<Animator>().SetBool("isAttack", false);
     }
 
     void Shoot()
     {
+        // 発射
         Projectile clone = Instantiate(projectilePrefab, shootTransform.position, shootTransform.rotation) as Projectile;
 
         // オブジェクトの向きをプロジェクタイルの向きと初速度に反映する
