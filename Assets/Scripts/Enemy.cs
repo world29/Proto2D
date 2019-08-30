@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Controller2D), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Controller2DEnemy), typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour, IDamageable
 {
     [Header("ヒットポイント")]
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private bool isKnockback;
 
     Animator anim;
-    private Controller2D controller;
+    private Controller2DEnemy controller;
     private IEnemyMovement movement;
     private SpriteRenderer spriteRenderer;
     private Damager damager;
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour, IDamageable
         currentHealth = startingHealth;
 
         anim = GetComponent<Animator>();
-        controller = GetComponent<Controller2D>();
+        controller = GetComponent<Controller2DEnemy>();
         movement = GetComponent(typeof(IEnemyMovement)) as IEnemyMovement;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour, IDamageable
             velocity = movement.CalculateVelocity(velocity, gravity);
         }
 
-        controller.Move(velocity * Time.deltaTime, false);
+        controller.Move(velocity * Time.deltaTime);
     }
 
     public Stompable getStompable()

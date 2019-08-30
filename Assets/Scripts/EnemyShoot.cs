@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyGround), typeof(Animator))]
 public class EnemyShoot : MonoBehaviour
 {
     [Header("発射するオブジェクト")]
@@ -18,8 +19,13 @@ public class EnemyShoot : MonoBehaviour
 
     private float attackTimer;
 
+    private EnemyGround enemyGround;
+    private Animator anim;
+
     void Start()
     {
+        enemyGround = GetComponent<EnemyGround>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -35,7 +41,7 @@ public class EnemyShoot : MonoBehaviour
 
     IEnumerator StartAttack()
     {
-        GetComponentInChildren<Animator>().SetBool("isAttack", true);
+        anim.SetBool("isAttack", true);
 
         if (shootDelay > 0)
         {
@@ -43,7 +49,7 @@ public class EnemyShoot : MonoBehaviour
         }
         Shoot();
 
-        GetComponentInChildren<Animator>().SetBool("isAttack", false);
+        anim.SetBool("isAttack", false);
     }
 
     void Shoot()
@@ -54,7 +60,7 @@ public class EnemyShoot : MonoBehaviour
         // オブジェクトの向きをプロジェクタイルの向きと初速度に反映する
         Vector3 velocity = shootVelocity;
         Vector3 scale = Vector3.one;
-        if (GetComponent<Controller2D>().collisions.faceDir < 0)
+        if (!enemyGround.facingRight)
         {
             velocity.x *= -1;
             scale.x *= -1;
