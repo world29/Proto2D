@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameController gameController;
-
     public Controller2D target;
+
     public float verticalOffset;
     public float verticalSmoothTime;
     public Vector2 focusAreaSize;
@@ -22,11 +21,6 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (gameController.IsGameOver())
-        {
-            return;
-        }
-
         focusArea.Update(target.collider.bounds);
 
         Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
