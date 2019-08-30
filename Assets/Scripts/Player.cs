@@ -26,6 +26,15 @@ public class Player : MonoBehaviour
     public Vector2 wallKickVelocity;
     public float wallClimbSpeed = 3;
 
+    [Header("ジャンプアタック、ホップ時に、壁をバウンドするかどうか")]
+    public bool enableWallBounce = false;
+    [Header("Velocity_Xのしきい値。この数値以上のばあい、クライムではなくバウンスする")]
+    public float WallBounceThreshold = 5f;
+    [Header("バウンス時の上方向へのVelocity")]
+    public float WallBounceVelocityY = 0f;
+
+    public bool enableHopAttackMode = true;
+
     [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
     public float timeToEntryWallClimbing = 1;
 
@@ -498,21 +507,33 @@ public class Player : MonoBehaviour
 
     void CalculateVelocityVertical()
     {
-        if (!wallAction)
+        float value = gravity * Time.deltaTime;
+        if (enableWallSticking)
         {
-            velocity.y -= gravity * Time.deltaTime;
+            if (wallAction)
+            {
+                value = 0;
+            }
         }
+        else
+        {
+            if (wallAction)
+            {
+                if (directionalInput.x != 0)
+                {
+                    value = 0;
+                }
+            }
+        }
+
+        velocity.y -= value;
     }
 
     void HandleWallClimbing()
     {
         wallAction = false;
 
-        // ホップ中はクライミング不可
-        if (hopAction)
-        {
-            return;
-        }
+
 
         if (wallKick)
         {
@@ -531,10 +552,11 @@ public class Player : MonoBehaviour
             {
                 if (directionalInput.x == 0)
                 {
+                    wallAction = true;
+
                     // 壁くっつき
                     if (enableWallSticking && !controller.collisions.below)
-                    {
-                        wallAction = true;
+                    {    
 
                         //Debug.Log("WallSticking");
 
@@ -568,10 +590,21 @@ public class Player : MonoBehaviour
             }
             else
             {
-                // ジャンプアタック中の場合、即座にクライム状態に移行する
-                if (isJumpAttack)
+                // 移動キー横方向がニュートラルかつ設定速度以上の速さで壁に衝突した場合、バウンドする
+                if(enableWallBounce && Mathf.Abs(velocity.x) > WallBounceThreshold && directionalInput.x == 0)
                 {
-                    wallAction = true;
+                        velocity.x *= -1;
+                        velocity.y += WallBounceVelocityY;
+                }
+                // ホップ中はクライミング不可
+                else if (hopAction)
+                {
+
+                }
+                // ジャンプアタック中の場合、即座にクライム状態に移行する
+                else if (isJumpAttack)
+                {
+                    wallAction = true;                    
                 }
                 // 地上にいる場合、壁方向に一定時間キー入力するとクライム状態に移行する
                 else if (controller.collisions.below)
@@ -618,6 +651,19 @@ public class Player : MonoBehaviour
         Damager damager = collision.gameObject.GetComponent<Damager>();
         if (damager == null)
         {
+            return;
+        }
+
+        // ホップ攻撃有効の場合、ダメージを受けない
+        if (hopAction && enableHopAttackMode)
+        {
+            if (damager.enemy != null)
+            {
+                //Debug.Log("hopAttack");
+                //damager.enemy.TakeDamage(stompAttack.damage);
+                //stompAttack.Hop(damager.enemy.getStompable());
+            }
+            
             return;
         }
 
@@ -670,7 +716,26 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ApplyDamage(collision);
+        Damager damager = collision.gameObject.GetComponent<Damager>();
+        if (damager == null)
+        {
+            return;
+        }
+
+        // ホップ攻撃有効の場合、ダメージを与える
+        if (hopAction && enableHopAttackMode)
+        {
+            if (damager.enemy != null)
+            {
+                Debug.Log("hopAttack");
+                damager.enemy.TakeDamage(stompAttack.damage);
+                stompAttack.Hop(damager.enemy.getStompable());
+            }
+        }
+        else
+        {
+            ApplyDamage(collision);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

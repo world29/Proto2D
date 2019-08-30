@@ -167,9 +167,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 1
+  gravity: 10
   hitStopDurationOnDamage: 0.3
   blinkDuration: 1
   blinkInterval: 0.1
+  knockbackDuration: 1
 --- !u!114 &4314615837480245480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 6305960945838036570}
   damage: 0.5
   knockbackForce: 3
 --- !u!95 &3695806071682226587
