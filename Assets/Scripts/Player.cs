@@ -646,7 +646,7 @@ public class Player : MonoBehaviour
         wallActionOld = wallAction;
     }
 
-    private void ApplyDamage(Collider2D collision)
+    public void ApplyDamage(Collider2D collision)
     {
         Damager damager = collision.gameObject.GetComponent<Damager>();
         if (damager == null)
