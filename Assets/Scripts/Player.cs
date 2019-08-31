@@ -181,7 +181,10 @@ public class Player : MonoBehaviour
 
         if (controller.collisions.below)
         {
-            comboSystem.ResetCombo();
+            if (comboSystem != null)
+            {
+                comboSystem.ResetCombo();
+            }
         }
 
         if (controller.collisions.above || controller.collisions.below)
@@ -677,7 +680,10 @@ public class Player : MonoBehaviour
 
             PlayerHealth health = GetComponent<PlayerHealth>();
             health.TakeDamage(damager.damage);
-            comboSystem.ResetCombo();
+            if (comboSystem != null)
+            {
+                comboSystem.ResetCombo();
+            }
 
             if (health.currentHealth > 0)
             {
