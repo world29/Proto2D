@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Controller2D))]
 public class EnemyAir : MonoBehaviour, IEnemyMovement
 {
     [Header("移動速度")]
@@ -22,12 +21,8 @@ public class EnemyAir : MonoBehaviour, IEnemyMovement
     float percentBetweenWaypoints;
     float nextMoveTime;
 
-    Controller2D controller;
-
     void Start()
     {
-        controller = GetComponent<Controller2D>();
-
         globalWaypoints = new Vector3[localWaypoints.Length];
         for (int i = 0; i < localWaypoints.Length; i++)
         {

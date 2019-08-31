@@ -8,6 +8,9 @@ public class GameController : MonoBehaviour
 {
     public Text replayText;
 
+    [Header("ゲームオーバー時に読み込まれるシーン名")]
+    public string sceneNameToLoad;
+
     private bool isGameOver;
     private bool isGameClear;
 
@@ -29,7 +32,7 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Return))
         {
-            SceneManager.LoadScene("MainScene");
+            SceneManager.LoadScene(sceneNameToLoad);
         }
     }
 
