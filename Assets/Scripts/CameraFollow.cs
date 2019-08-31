@@ -10,6 +10,9 @@ public class CameraFollow : MonoBehaviour
     public float verticalSmoothTime;
     public Vector2 focusAreaSize;
 
+    [Header("下方向に追従")]
+    public bool followDownward = true;
+
     FocusArea focusArea;
 
     float smoothVelocityY;
@@ -21,7 +24,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        focusArea.Update(target.collider.bounds);
+        focusArea.Update(target.collider.bounds, followDownward);
 
         Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
 
@@ -53,10 +56,10 @@ public class CameraFollow : MonoBehaviour
             centre = new Vector2((left + right) / 2, (top + bottom) / 2);
         }
 
-        public void Update(Bounds targetBounds)
+        public void Update(Bounds targetBounds, bool followDownward)
         {
             float shiftY = 0;
-            if (targetBounds.min.y < bottom)
+            if (targetBounds.min.y < bottom && followDownward)
             {
                 shiftY = targetBounds.min.y - bottom;
             }
