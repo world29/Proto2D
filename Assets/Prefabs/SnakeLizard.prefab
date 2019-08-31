@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ce6f4776621ad48878de8c42606d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0
   facingRight: 1
   groundDetection: {fileID: 4656553412495861962}
   distance: 0.5
@@ -339,8 +339,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2710078861558965266, guid: 25c301cec0ebf8444b846fcf2646036e,
     type: 3}
   shootTransform: {fileID: 6989717490569475386}
-  shootVelocity: {x: 2, y: 0, z: 0}
-  attackInterval: 3
+  shootVelocity: {x: 5, y: 0, z: 0}
+  attackInterval: 1.5
   shootDelay: 0.5
 --- !u!95 &3695806071682226587
 Animator:
