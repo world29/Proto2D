@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyGround), typeof(Animator))]
+[RequireComponent(typeof(EnemyGround))]
 public class EnemyShoot : MonoBehaviour
 {
     [Header("発射するオブジェクト")]
