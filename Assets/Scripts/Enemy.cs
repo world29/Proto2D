@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Controller2DEnemy), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Controller2DEnemy))]
 public class Enemy : MonoBehaviour, IDamageable
 {
     [Header("ヒットポイント")]
@@ -42,10 +42,10 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         currentHealth = startingHealth;
 
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         controller = GetComponent<Controller2DEnemy>();
         movement = GetComponent(typeof(IEnemyMovement)) as IEnemyMovement;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         damager = GetComponentInChildren<Damager>();
         Debug.Assert(damager);

@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SnakeLizard_Animation
+  m_Name: ArtilleryTank_Animation
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: isHitStop
@@ -152,32 +152,6 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 35fd43ba41fd8f043b54a072a578286a, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1102671156435373400
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ArtilleryTank_Run
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: a60bab9c8437516428a6af8b60681f36, type: 2}
   m_Tag: 
   m_SpeedParameter: 
@@ -205,7 +179,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 26ae47e5e6aeb294e8f7783925879465, type: 2}
+  m_Motion: {fileID: 7400000, guid: a60bab9c8437516428a6af8b60681f36, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -231,7 +205,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 206d78c2f9aea0e48b82993f403a1874, type: 2}
+  m_Motion: {fileID: 7400000, guid: a60bab9c8437516428a6af8b60681f36, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -255,9 +229,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102707636475544190}
     m_Position: {x: 313.69965, y: -73.01605, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102671156435373400}
-    m_Position: {x: 348.69965, y: -8.016052, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 1101890685867877426}
