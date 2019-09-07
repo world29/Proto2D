@@ -6,13 +6,48 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D), typeof(Animator))]
 public class EnemyController : MonoBehaviour, IDamageReceiver
 {
+    public float gravity = 20;
     public float damageDuration = .5f;
 
+    public enum Direction
+    {
+        Right = 1,
+        Left = -1
+    }
+
+    public Direction direction = Direction.Right;
+
+    [HideInInspector]
+    public Vector2 velocity;
+
     Animator animator;
+    IEnemyState state;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        state = new EnemyState_Idle();
+        state.OnEnter(gameObject);
+    }
+
+    private void Update()
+    {
+        IEnemyState next = state.Update(gameObject);
+        if (next != state)
+        {
+            ChangeState(next);
+        }
+    }
+
+    private void ChangeState(IEnemyState next)
+    {
+        if (state != next)
+        {
+            state.OnExit(gameObject);
+            state = next;
+            state.OnEnter(gameObject);
+        }
     }
 
     public void OnReceiveDamage(DamageType type, GameObject sender)
@@ -20,9 +55,11 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
         switch(type)
         {
             case DamageType.Stomp:
+                ChangeState(new EnemyState_Idle());
                 StartCoroutine(StartDamaging(damageDuration));
                 break;
             case DamageType.Attack:
+                ChangeState(new EnemyState_Idle());
                 StartCoroutine(StartDamaging(damageDuration));
                 break;
             default:
@@ -46,9 +83,16 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
     private void OnDrawGizmos()
     {
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
-
         Gizmos.color = new Color(1, 1, 0, .3f);
         Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
+
+        if (!Application.isPlaying)
+        {
+            // 向き
+            Vector3 scl = transform.localScale;
+            scl.x = Mathf.Abs(scl.x) * (float)direction;
+            transform.localScale = scl;
+        }
     }
 
     IEnumerator StartDamaging(float duration)
