@@ -57,13 +57,13 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
     public struct HitInfo
     {
         public DamageType type;
-        public GameObject receiver;
+        public Vector3 receiverPos;
     }
 
     public struct DamageInfo
     {
         public DamageType type;
-        public GameObject sender;
+        public Vector3 senderPos;
     }
 
     private Queue<HitInfo> hitQueue;
@@ -254,10 +254,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
             return;
         }
 
-        if (info.type == DamageType.Collision)
         {
-            // 敵と接触
-            Vector3 collvec = info.sender.transform.position - transform.position;
+            Vector3 collvec = info.senderPos - transform.position;
 
             velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
             velocity.y = knockbackVelocity.y;
@@ -271,7 +269,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
     {
         HitInfo info;
         info.type = type;
-        info.receiver = receiver;
+        info.receiverPos = receiver.transform.position;
 
         hitQueue.Enqueue(info);
     }
@@ -280,7 +278,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
     {
         DamageInfo info;
         info.type = type;
-        info.sender = sender;
+        info.senderPos = sender.transform.position;
 
         damageQueue.Enqueue(info);
     }

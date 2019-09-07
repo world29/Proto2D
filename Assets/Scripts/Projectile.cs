@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Projectile : MonoBehaviour
 {
@@ -40,6 +41,13 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameObject receiver = collision.gameObject;
+
+            // ヒットしたオブジェクトに衝突ダメージを与える
+            ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
+                (target, eventTarget) => target.OnReceiveDamage(DamageType.Projectile, gameObject));
+
+            // 自分を削除する
             Destroy(gameObject);
         }
     }

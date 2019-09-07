@@ -5,9 +5,10 @@ using UnityEngine.EventSystems;
 
 public enum DamageType
 {
-    Collision, // 接触
-    Stomp,     // 踏みつけ
-    Attack,    // ジャンプアタック
+    Collision,  // 接触
+    Stomp,      // 踏みつけ
+    Attack,     // ジャンプアタック
+    Projectile, // 弾
 }
 
 public interface IDamageSender : IEventSystemHandler
