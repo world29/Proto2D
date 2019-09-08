@@ -24,11 +24,25 @@ public class PlayerState_Hop : IPlayerState
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 
+        // 攻撃判定を有効化
+        Attacker attacker = context.GetComponentInChildren<Attacker>();
+        if (attacker && player.enableHopAttackMode)
+        {
+            attacker.enabled = true;
+        }
+
         animator.SetBool("hop", true);
     }
 
     public void OnExit(GameObject context)
     {
+        // 攻撃判定を無効化
+        Attacker attacker = context.GetComponentInChildren<Attacker>();
+        if (attacker && player.enableHopAttackMode)
+        {
+            attacker.enabled = false;
+        }
+
         animator.SetBool("hop", false);
     }
 

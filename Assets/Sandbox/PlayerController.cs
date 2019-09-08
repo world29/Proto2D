@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float jumpAttackBelowDirectionSpeed;
     public float jumpAttackDiagonallyBelowDirectionSpeed;
 
+    public bool enableHopAttackMode = false;
+
     public GameObject stompEffectPrefab;
     public GameObject attackEffectPrefab;
 
