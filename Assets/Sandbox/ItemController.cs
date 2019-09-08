@@ -9,6 +9,8 @@ public class ItemController : MonoBehaviour
     public ItemType itemType;
     public GameObject pickupEffectPrefab;
 
+    public bool once = true;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -29,8 +31,11 @@ public class ItemController : MonoBehaviour
             GameObject effect = Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity, null);
         }
 
-        // 自分を削除
-        Destroy(gameObject);
+        if (once)
+        {
+            // 自分を削除
+            Destroy(gameObject);
+        }
     }
 
     private void OnDrawGizmos()
