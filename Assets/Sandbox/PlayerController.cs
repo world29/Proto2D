@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
+    public float health = 5;
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
     public float jumpSpeed = 15;
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public struct DamageInfo
     {
         public DamageType type;
+        public float damage;
         public Vector3 senderPos;
     }
 
@@ -263,15 +265,22 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             return;
         }
 
+        // ダメージ計算
+        health -= info.damage;
+        if (health <= 0)
         {
-            Vector3 collvec = info.senderPos - transform.position;
-
-            velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
-            velocity.y = knockbackVelocity.y;
-
-            ChangeState(new PlayerState_Knockback());
-            StartCoroutine(StartInvincible(invincibleDuration));
+            // ノックバックした後、Death ステートに遷移する
+            health = 0;
         }
+
+        // ノックバック
+        Vector3 collvec = info.senderPos - transform.position;
+
+        velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
+        velocity.y = knockbackVelocity.y;
+
+        ChangeState(new PlayerState_Knockback());
+        StartCoroutine(StartInvincible(invincibleDuration));
     }
 
     public void OnApplyDamage(DamageType type, float damage, GameObject receiver)
@@ -287,6 +296,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         DamageInfo info;
         info.type = type;
+        info.damage = damage;
         info.senderPos = sender.transform.position;
 
         damageQueue.Enqueue(info);

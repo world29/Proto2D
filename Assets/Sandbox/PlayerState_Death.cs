@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState_Knockback : IPlayerState
+public class PlayerState_Death : IPlayerState
 {
     private PlayerController player;
     private Controller2D controller;
     private Animator animator;
-
-    private float timer;
+    private SpriteRenderer renderer;
 
     public void HandleInput()
     {
@@ -19,6 +18,7 @@ public class PlayerState_Knockback : IPlayerState
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
+        renderer = context.GetComponent<SpriteRenderer>();
 
         // 踏みつけ判定を無効化
         StomperBox stomper = context.GetComponentInChildren<StomperBox>();
@@ -27,8 +27,7 @@ public class PlayerState_Knockback : IPlayerState
             stomper.enabled = false;
         }
 
-        timer = 0;
-        animator.SetBool("knockback", true);
+        animator.SetTrigger("death");
     }
 
     public void OnExit(GameObject context)
@@ -39,38 +38,36 @@ public class PlayerState_Knockback : IPlayerState
         {
             stomper.enabled = true;
         }
-
-        animator.SetBool("knockback", false);
     }
 
     public IPlayerState Update(GameObject context)
     {
-        // 重力の影響のみ
-        player.velocity.y -= player.gravity * Time.deltaTime;
+        CalculateVelocity(ref player.velocity);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
 
-        // 接地
-        if (controller.collisions.below || controller.collisions.above)
+        if (controller.collisions.below)
         {
             player.velocity.y = 0;
         }
 
-        // 遷移
-        timer += Time.deltaTime;
-        if (timer > player.knockbackDuration)
-        {
-            if (player.health <= 0)
-            {
-                return new PlayerState_Death();
-            }
-            else
-            {
-                return new PlayerState_Free();
-            }
-        }
+        // 徐々に透明にする
+        Color clr = renderer.color;
+        clr.a = Mathf.Clamp01(clr.a - .05f);
+        renderer.color = clr;
+
+        // 遷移しない
 
         return this;
+    }
+
+    private void CalculateVelocity(ref Vector2 velocity)
+    {
+        velocity.x = 0;
+
+        // 垂直方向の速度を算出
+        velocity.y -= player.gravity * Time.deltaTime;
+        velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
     }
 }
