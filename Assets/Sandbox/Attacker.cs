@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Attacker : MonoBehaviour
 {
+    public float damage = 1;
+
     public GameObject sender;
 
     private void OnEnable()
@@ -27,11 +29,11 @@ public class Attacker : MonoBehaviour
 
             // ヒットしたオブジェクトにジャンプアタックダメージを与える
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                (target, eventTarget) => target.OnReceiveDamage(DamageType.Attack, sender));
+                (target, eventTarget) => target.OnReceiveDamage(DamageType.Attack, damage, sender));
 
             // ジャンプアタックがヒットしたことを親に通知
             ExecuteEvents.Execute<IDamageSender>(sender, null,
-                (target, eventTarget) => target.OnApplyDamage(DamageType.Attack, receiver));
+                (target, eventTarget) => target.OnApplyDamage(DamageType.Attack, damage, receiver));
         }
     }
 

@@ -274,7 +274,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
     }
 
-    public void OnApplyDamage(DamageType type, GameObject receiver)
+    public void OnApplyDamage(DamageType type, float damage, GameObject receiver)
     {
         HitInfo info;
         info.type = type;
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         hitQueue.Enqueue(info);
     }
 
-    public void OnReceiveDamage(DamageType type, GameObject sender)
+    public void OnReceiveDamage(DamageType type, float damage, GameObject sender)
     {
         DamageInfo info;
         info.type = type;

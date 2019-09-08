@@ -13,10 +13,11 @@ public enum DamageType
 
 public interface IDamageSender : IEventSystemHandler
 {
-    void OnApplyDamage(DamageType type, GameObject receiver);
+    //TODO: これ以上パラメータが増える場合は DamageInfo にまとめる
+    void OnApplyDamage(DamageType type, float damage, GameObject receiver);
 }
 
 public interface IDamageReceiver : IEventSystemHandler
 {
-    void OnReceiveDamage(DamageType type, GameObject sender);
+    void OnReceiveDamage(DamageType type, float damage, GameObject sender);
 }

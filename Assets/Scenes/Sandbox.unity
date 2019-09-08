@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
 --- !u!61 &81229237
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -586,7 +587,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: 20
+  health: 2
   damageDuration: 0.5
+  delayToDeath: 1
   direction: 1
   velocity: {x: 0, y: 0}
 --- !u!114 &1404689820
@@ -672,6 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ff4334f8bf61248b65e20e10378f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
   sender: {fileID: 1820242385}
 --- !u!61 &1441883369
 BoxCollider2D:
@@ -6674,6 +6678,7 @@ MonoBehaviour:
   jumpAttackDiagonallyAboveDirectionSpeed: 17
   jumpAttackBelowDirectionSpeed: 6
   jumpAttackDiagonallyBelowDirectionSpeed: 5
+  enableHopAttackMode: 1
   stompEffectPrefab: {fileID: 7615431906169996719, guid: b7ac704cad472ce4ebf012163fbd4841,
     type: 3}
   attackEffectPrefab: {fileID: 7615431906169996719, guid: 74524ed1c2bcab6478b82c2464f0ac5a,
@@ -6797,6 +6802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97b46c97cd788a42be0ddb4464720c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
   sender: {fileID: 1820242385}
 --- !u!61 &1823421687
 BoxCollider2D:

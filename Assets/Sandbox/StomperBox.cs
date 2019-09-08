@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D))]
 public class StomperBox : MonoBehaviour
 {
+    public float damage = 1;
     public GameObject sender;
 
     private void OnEnable()
@@ -27,11 +28,11 @@ public class StomperBox : MonoBehaviour
 
             // ヒットしたオブジェクトに踏みつけダメージを与える
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                (target, eventTarget) => target.OnReceiveDamage(DamageType.Stomp, sender));
+                (target, eventTarget) => target.OnReceiveDamage(DamageType.Stomp, damage, sender));
 
             // 踏みつけがヒットしたことを親に通知
             ExecuteEvents.Execute<IDamageSender>(sender, null,
-                (target, eventTarget) => target.OnApplyDamage(DamageType.Stomp, receiver));
+                (target, eventTarget) => target.OnApplyDamage(DamageType.Stomp, damage, receiver));
         }
     }
 

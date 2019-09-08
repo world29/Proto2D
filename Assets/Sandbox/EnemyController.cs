@@ -8,7 +8,9 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
 {
     public float gravity = 20;
     public float health = 1;
+
     public float damageDuration = .5f;
+    public float delayToDeath = 1;
 
     public enum Direction
     {
@@ -41,6 +43,11 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
         }
     }
 
+    public void Blink(float duration, float blinkInterval)
+    {
+        StartCoroutine(StartBlinking(duration, blinkInterval));
+    }
+
     private void ChangeState(IEnemyState next)
     {
         if (state != next)
@@ -51,13 +58,24 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
         }
     }
 
-    public void OnReceiveDamage(DamageType type, GameObject sender)
+    public void OnReceiveDamage(DamageType type, float damage, GameObject sender)
     {
         switch(type)
         {
             case DamageType.Stomp:
             case DamageType.Attack:
-                ChangeState(new EnemyState_Damage());
+                {
+                    health -= damage;
+                    if (health <= 0)
+                    {
+                        ChangeState(new EnemyState_Death());
+                        Destroy(gameObject, delayToDeath);
+                    }
+                    else
+                    {
+                        ChangeState(new EnemyState_Damage());
+                    }
+                }
                 break;
             default:
                 break;
@@ -74,7 +92,7 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
         ProcessTrigger(collision);
     }
 
-    void ProcessTrigger(Collider2D collision)
+    private void ProcessTrigger(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -83,8 +101,24 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
 
             // ヒットしたオブジェクトに衝突ダメージを与える
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, gameObject));
+                (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, 1, gameObject));
         }
+    }
+
+    IEnumerator StartBlinking(float duration, float blinkInterval)
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+        float endTime = Time.timeSinceLevelLoad + duration;
+
+        while (Time.timeSinceLevelLoad < endTime)
+        {
+            renderer.color = Color.white - renderer.color;
+
+            yield return new WaitForSeconds(blinkInterval);
+        }
+
+        renderer.color = Color.white;
     }
 
     private void OnDrawGizmos()

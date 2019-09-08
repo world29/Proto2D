@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyState_Damage : IEnemyState
+public class EnemyState_Death : IEnemyState
 {
     private EnemyController enemy;
     private Controller2DEnemy controller;
     private Animator animator;
-
-    private float timer;
 
     public void OnEnter(GameObject context)
     {
@@ -16,16 +14,13 @@ public class EnemyState_Damage : IEnemyState
         controller = context.GetComponent<Controller2DEnemy>();
         animator = context.GetComponent<Animator>();
 
-        animator.SetBool("damage", true);
+        animator.SetTrigger("death");
 
-        timer = 0;
-
-        enemy.Blink(.2f, .1f);
+        enemy.Blink(enemy.delayToDeath, .1f);
     }
 
     public void OnExit(GameObject context)
     {
-        animator.SetBool("damage", false);
     }
 
     public IEnemyState Update(GameObject context)
@@ -39,12 +34,7 @@ public class EnemyState_Damage : IEnemyState
             enemy.velocity.y = 0;
         }
 
-        // 遷移
-        timer += Time.deltaTime;
-        if (timer >= enemy.damageDuration)
-        {
-            return new EnemyState_Idle();
-        }
+        // 遷移しない
 
         return this;
     }

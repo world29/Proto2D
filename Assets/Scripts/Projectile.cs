@@ -8,6 +8,9 @@ public class Projectile : MonoBehaviour
     [Header("重力")]
     public float gravity = 20;
 
+    [Header("ダメージ量")]
+    public float damage = 1;
+
     [Header("生存期間 (0 なら無制限)")]
     public float lifespan = 0;
 
@@ -45,7 +48,7 @@ public class Projectile : MonoBehaviour
 
             // ヒットしたオブジェクトに衝突ダメージを与える
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                (target, eventTarget) => target.OnReceiveDamage(DamageType.Projectile, gameObject));
+                (target, eventTarget) => target.OnReceiveDamage(DamageType.Projectile, damage, gameObject));
 
             // 自分を削除する
             Destroy(gameObject);

@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D))]
 public class DamagerBox : MonoBehaviour
 {
+    public float damage = 1;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         ProcessTrigger(collision);
@@ -23,7 +25,7 @@ public class DamagerBox : MonoBehaviour
             GameObject receiver = collision.gameObject;
 
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, gameObject));
+                (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, damage, gameObject));
         }
     }
 
