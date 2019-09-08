@@ -20,15 +20,15 @@ public class ItemController : MonoBehaviour
             ExecuteEvents.Execute<IItemReceiver>(receiver, null,
                 (target, eventTarget) => target.OnPickupItem(itemType, gameObject));
 
-            OnPickedUp();
+            OnPickedUp(receiver);
         }
     }
 
-    void OnPickedUp()
+    void OnPickedUp(GameObject receiver)
     {
         if (pickupEffectPrefab)
         {
-            GameObject effect = Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity, null);
+            GameObject effect = Instantiate(pickupEffectPrefab, receiver.transform.position, Quaternion.identity, null);
         }
 
         if (once)
