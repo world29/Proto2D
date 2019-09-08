@@ -16,8 +16,16 @@ public class Hopper : MonoBehaviour
 
     private void Start()
     {
-        comboSystem = GameObject.Find("ComboText").GetComponent<ComboSystem>();
-        jumpGauge = GameObject.Find("PlayerPanel").GetComponent<JumpGauge>();
+        GameObject obj = GameObject.Find("ComboText");
+        if (obj) {
+            comboSystem = obj.GetComponent<ComboSystem>();
+        }
+
+        GameObject obj2 = GameObject.Find("PlayerPanel");
+        if (obj2)
+        {
+            jumpGauge = obj2.GetComponent<JumpGauge>();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,14 +33,16 @@ public class Hopper : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Player player = collision.gameObject.GetComponent<Player>();
+            if (player)
+            {
+                // エフェクト作成
+                GameObject effect = Instantiate(effectPrefab) as GameObject;
+                effect.transform.position = new Vector2((transform.position.x + player.transform.position.x) / 2, transform.position.y);
 
-             // エフェクト作成
-            GameObject effect = Instantiate(effectPrefab) as GameObject;
-            effect.transform.position = new Vector2( (transform.position.x + player.transform.position.x) / 2 ,transform.position.y);
-            
-            player.Hop(hoppingVelocity);
+                player.Hop(hoppingVelocity);
+            }
 
-            if (incrementComboOnHop)
+            if (comboSystem && incrementComboOnHop)
             {
                 comboSystem.IncrementCombo();
                 if (comboSystem.GetComboCount() % player.combosRequiredForBonusJump == 0)
