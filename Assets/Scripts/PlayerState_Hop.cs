@@ -53,6 +53,11 @@ public class PlayerState_Hop : IPlayerState
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
 
+        if (controller.collisions.below || controller.collisions.above)
+        {
+            player.velocity.y = 0;
+        }
+
         // 遷移
         if (player.velocity.y < 0)
         {
