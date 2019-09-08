@@ -20,12 +20,26 @@ public class PlayerState_Knockback : IPlayerState
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
 
+        // 踏みつけ判定を無効化
+        StomperBox stomper = context.GetComponentInChildren<StomperBox>();
+        if (stomper)
+        {
+            stomper.enabled = false;
+        }
+
         timer = 0;
         animator.SetBool("knockback", true);
     }
 
     public void OnExit(GameObject context)
     {
+        // 踏みつけ判定を有効化
+        StomperBox stomper = context.GetComponentInChildren<StomperBox>();
+        if (stomper)
+        {
+            stomper.enabled = true;
+        }
+
         animator.SetBool("knockback", false);
     }
 
