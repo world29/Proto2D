@@ -69,6 +69,16 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        ProcessTrigger(collision);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        ProcessTrigger(collision);
+    }
+
+    void ProcessTrigger(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Player"))
         {
             // 衝突ダメージのレシーバーは player gameObject
