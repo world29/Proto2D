@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Controller2D), typeof(Animator))]
-public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
+public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
     public float jumpSpeed = 15;
+    public float hopSpeed = 20;
 
     public float acceralationGround = 1;
     public float acceralationAirborne = 1;
@@ -226,8 +227,11 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
                     // 踏みつけの反動で跳ねる
                     velocity.y = jumpSpeed;
 
-                    GameObject effect = Instantiate(stompEffectPrefab, transform.position, Quaternion.identity, null);
-                    Destroy(effect, 1);
+                    if (stompEffectPrefab)
+                    {
+                        GameObject effect = Instantiate(stompEffectPrefab, transform.position, Quaternion.identity, null);
+                        Destroy(effect, 1);
+                    }
 
                     animator.SetTrigger("stomp");
                 }
@@ -237,8 +241,11 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
                     // ジャンプアタックの反動で跳ねる
                     velocity.y = jumpSpeed;
 
-                    GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
-                    Destroy(effect, 1);
+                    if (attackEffectPrefab)
+                    {
+                        GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
+                        Destroy(effect, 1);
+                    }
 
                     // ヒットストップ
                     StartCoroutine(StartHitStop(hitStopDuration));
@@ -281,6 +288,18 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver
         info.senderPos = sender.transform.position;
 
         damageQueue.Enqueue(info);
+    }
+
+    public void OnPickupItem(ItemType type, GameObject sender)
+    {
+        switch (type)
+        {
+            case ItemType.Hopper:
+                ChangeState(new PlayerState_Hop());
+                break;
+            default:
+                break;
+        }
     }
 
     private void OnDrawGizmos()
