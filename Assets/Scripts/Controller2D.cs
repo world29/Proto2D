@@ -94,8 +94,6 @@ public class Controller2D : RaycastController
 
                     collisions.left = directionX == -1;
                     collisions.right = directionX == 1;
-
-                    print("close to wall");
                 }
             }
         }
@@ -157,12 +155,6 @@ public class Controller2D : RaycastController
             collisions.below = true;
             collisions.climbingSlope = true;
             collisions.slopeAngle = slopeAngle;
-
-            print("climbing slope");
-        }
-        else
-        {
-            print("jumping on slope");
         }
     }
 
@@ -189,8 +181,6 @@ public class Controller2D : RaycastController
 
                         collisions.below = true;
                         collisions.descendingSlope = true;
-
-                        print("descending slope");
                     }
                 }
             }
