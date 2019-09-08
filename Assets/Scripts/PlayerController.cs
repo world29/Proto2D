@@ -11,34 +11,55 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float jumpSpeed = 15;
     public float hopSpeed = 20;
 
+    [Header("地上の加速度")]
     public float acceralationGround = 1;
+    [Header("空中の加速度")]
     public float acceralationAirborne = 1;
-    [Range(0, 1)]
+    [Header("地上のすべりにくさ"), Range(0, 1)]
     public float friction = 1;
 
+    [Header("ノックバック中の操作不能時間")]
     public float knockbackDuration = .5f;
+    [Header("ノックバックの速度")]
     public Vector2 knockbackVelocity;
 
+    [Header("被ダメージ時の無敵時間")]
     public float invincibleDuration = 1;
+    [Header("無敵時間中の点滅間隔")]
     public float invincibleBlinkInterval = .2f;
 
+    [Header("クライムの速さ")]
     public float climbSpeed = 6;
+    [Header("壁ジャンプの速度")]
     public Vector2 wallJumpVelocity;
+    [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
     public float timeToEntryWallClimbing = .5f;
 
-    public float jumpAttackSpeed;
-    public float jumpAttackAboveDirectionSpeed;
-    public float jumpAttackDiagonallyAboveDirectionSpeed;
-    public float jumpAttackBelowDirectionSpeed;
-    public float jumpAttackDiagonallyBelowDirectionSpeed;
+    [Header("ジャンプアタックの速さ")]
+    public float jumpAttackSpeed = 10;
+    [Header("ジャンプアタックの真上方向の速さ")]
+    public float jumpAttackAboveDirectionSpeed = 15;
+    [Header("ジャンプアタック斜め上方向の速さ")]
+    public float jumpAttackDiagonallyAboveDirectionSpeed = 11;
+    [Header("ジャンプアタックの斜め下方向の速さ")]
+    public float jumpAttackBelowDirectionSpeed = 8f;
+    [Header("ジャンプアタックの真下方向の速さ")]
+    public float jumpAttackDiagonallyBelowDirectionSpeed = 5f;
+    //TODO:
+    //[Header("ジャンプアタック中に方向キーで与えられる加速度")]
+    //public float acceralationWhileJumpAttack = 1f;
 
-    public bool enableHopAttackMode = false;
+    [Header("ホップ中に攻撃判定あり")]
+    public bool enableHopAttackMode = true;
 
+    [Header("踏みつけ攻撃ヒット時のエフェクト")]
     public GameObject stompEffectPrefab;
+    [Header("ジャンプアタックヒット時のエフェクト")]
     public GameObject attackEffectPrefab;
-
+    [Header("ジャンプアタックのヒットストップ")]
     public float hitStopDuration = 0;
 
+    [Header("フリックとみなされる最短距離")]
     public float minFlickDistance = .1f;
     [HideInInspector]
     public bool flickInput;
