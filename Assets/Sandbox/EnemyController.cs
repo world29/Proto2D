@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class EnemyController : MonoBehaviour, IDamageReceiver
 {
     public float gravity = 20;
+    public float health = 1;
     public float damageDuration = .5f;
 
     public enum Direction
@@ -55,12 +56,8 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
         switch(type)
         {
             case DamageType.Stomp:
-                ChangeState(new EnemyState_Idle());
-                StartCoroutine(StartDamaging(damageDuration));
-                break;
             case DamageType.Attack:
-                ChangeState(new EnemyState_Idle());
-                StartCoroutine(StartDamaging(damageDuration));
+                ChangeState(new EnemyState_Damage());
                 break;
             default:
                 break;
@@ -104,14 +101,4 @@ public class EnemyController : MonoBehaviour, IDamageReceiver
             transform.localScale = scl;
         }
     }
-
-    IEnumerator StartDamaging(float duration)
-    {
-        animator.SetBool("damage", true);
-
-        yield return new WaitForSeconds(duration);
-
-        animator.SetBool("damage", false);
-    }
-
 }
