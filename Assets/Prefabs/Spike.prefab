@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9105431855795714059}
   - component: {fileID: 9105431855795714058}
   - component: {fileID: 5039154731406819376}
+  - component: {fileID: 398435221180221879}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -119,5 +120,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
   damage: 1
   knockbackForce: 3
+--- !u!114 &398435221180221879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105431855795714057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

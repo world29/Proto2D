@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1104668815501729987}
   - component: {fileID: 8063587637774805263}
   - component: {fileID: 8873733562865962630}
+  - component: {fileID: 5182045210943736350}
   m_Layer: 0
   m_Name: Hopper
   m_TagString: Untagged
@@ -166,3 +167,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5182045210943736350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104668815501729984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8edba9d31b8acf488aeba7bd0ba25b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 0
+  pickupEffectPrefab: {fileID: 7615431906169996719, guid: 74524ed1c2bcab6478b82c2464f0ac5a,
+    type: 3}
+  once: 1
