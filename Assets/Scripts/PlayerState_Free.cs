@@ -7,16 +7,6 @@ public class PlayerState_Free : IPlayerState
     private PlayerController player;
     private Controller2D controller;
 
-    private Vector2 directionalInput;
-    private bool jumpInput;
-
-    public void HandleInput()
-    {
-        directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        jumpInput = Input.GetKeyDown(KeyCode.Space);
-    }
-
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
@@ -32,7 +22,7 @@ public class PlayerState_Free : IPlayerState
         bool normalJumped = false;
 
         // 速度計算
-        player.velocity = CalculateVelocity(player.velocity, ref normalJumped);
+        CalculateVelocity(ref player.velocity, player.inputState, ref normalJumped);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -53,11 +43,11 @@ public class PlayerState_Free : IPlayerState
         }
 
         // 状態の遷移
-        if (player.CheckEntryWallClimbing(directionalInput))
+        if (player.CheckEntryWallClimbing())
         {
             return new PlayerState_Climb();
         }
-        else if (player.flickInput || (jumpInput && !normalJumped))
+        else if (player.inputState.isFlicked || (player.inputState.isTouched && !normalJumped))
         {
             return new PlayerState_Attack();
         }
@@ -65,12 +55,12 @@ public class PlayerState_Free : IPlayerState
         return this;
     }
 
-    private Vector2 CalculateVelocity(Vector2 velocity, ref bool jumped)
+    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input, ref bool jumped)
     {
         bool grounded = controller.collisions.below;
 
         // 水平方向の速度を算出
-        if (directionalInput.x == 0)
+        if (input.directionalInput.x == 0)
         {
             // 地上で方向キーの入力がない場合、速度は 0 に近づく
             if (grounded)
@@ -93,14 +83,14 @@ public class PlayerState_Free : IPlayerState
             float acc = grounded
                 ? player.acceralationGround * player.friction // 地上なら摩擦の影響を受ける
                 : player.acceralationAirborne;
-            acc *= Mathf.Sign(directionalInput.x);
+            acc *= Mathf.Sign(input.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;
         }
         velocity.x = Mathf.Clamp(velocity.x, -player.maxVelocity.x, player.maxVelocity.x);
 
         // 垂直方向の速度を算出
-        if (grounded && jumpInput && directionalInput.y < 1)
+        if (grounded && input.isTouched && input.directionalInput.y < 1)
         {
             velocity.y = player.jumpSpeed;
             jumped = true;
@@ -110,8 +100,6 @@ public class PlayerState_Free : IPlayerState
             velocity.y -= player.gravity * Time.deltaTime;
         }
         velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
-
-        return velocity;
     }
 
 }

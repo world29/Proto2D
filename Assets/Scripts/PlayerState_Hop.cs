@@ -8,13 +8,6 @@ public class PlayerState_Hop : IPlayerState
     private Controller2D controller;
     private Animator animator;
 
-    private Vector2 directionalInput;
-
-    public void HandleInput()
-    {
-        directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
-
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
@@ -48,7 +41,7 @@ public class PlayerState_Hop : IPlayerState
 
     public IPlayerState Update(GameObject context)
     {
-        player.velocity = CalculateVelocity(player.velocity);
+        CalculateVelocity(ref player.velocity, player.inputState);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -63,7 +56,7 @@ public class PlayerState_Hop : IPlayerState
         {
             return new PlayerState_Free();
         }
-        else if (player.CheckEntryWallClimbing(directionalInput))
+        else if (player.CheckEntryWallClimbing())
         {
             return new PlayerState_Climb();
         }
@@ -76,18 +69,18 @@ public class PlayerState_Hop : IPlayerState
         velocity.y = player.hopSpeed;
     }
 
-    private Vector2 CalculateVelocity(Vector2 velocity)
+    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
     {
         bool grounded = controller.collisions.below;
 
         // 水平方向の速度を算出
-        if (directionalInput.x == 0)
+        if (input.directionalInput.x == 0)
         {
         }
         else
         {
             float acc = player.acceralationAirborne;
-            acc *= Mathf.Sign(directionalInput.x);
+            acc *= Mathf.Sign(input.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;
         }
@@ -96,7 +89,5 @@ public class PlayerState_Hop : IPlayerState
         // 垂直方向の速度を算出
         velocity.y -= player.gravity * Time.deltaTime;
         velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
-
-        return velocity;
     }
 }

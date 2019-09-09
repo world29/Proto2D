@@ -8,13 +8,6 @@ public class PlayerState_Attack : IPlayerState
     private Controller2D controller;
     private Animator animator;
 
-    private Vector2 directionalInput;
-
-    public void HandleInput()
-    {
-        directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
-
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
@@ -22,7 +15,7 @@ public class PlayerState_Attack : IPlayerState
         animator = context.GetComponent<Animator>();
 
         // 初速の計算
-        player.velocity = CalculateInitialVelocity();
+        CalculateInitialVelocity(ref player.velocity, player.inputState);
 
         // 攻撃判定を有効化
         Attacker attacker = context.GetComponentInChildren<Attacker>();
@@ -63,7 +56,7 @@ public class PlayerState_Attack : IPlayerState
     public IPlayerState Update(GameObject context)
     {
         // 重力の影響のみ
-        player.velocity = CalculateVelocity(player.velocity);
+        CalculateVelocity(ref player.velocity, player.inputState);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -79,7 +72,7 @@ public class PlayerState_Attack : IPlayerState
         {
             return new PlayerState_Free();
         }
-        else if (player.CheckEntryWallClimbing(directionalInput))
+        else if (player.CheckEntryWallClimbing())
         {
             return new PlayerState_Climb();
         }
@@ -87,29 +80,30 @@ public class PlayerState_Attack : IPlayerState
         return this;
     }
 
-    private Vector2 CalculateInitialVelocity()
+    private void CalculateInitialVelocity(ref Vector2 velocity, PlayerController.InputState input)
     {
-        // 本関数は遷移直後に呼ばれるため、入力状態を明示的に反映する
-        HandleInput();
-
         // フリック入力あるいは方向キーの入力からジャンプアタックの方向を決定する。
         Vector2 dir;
-        if (player.flickInput)
+        if (input.isFlicked)
         {
-            dir.x = Mathf.CeilToInt(Mathf.Cos(player.flickAngle));
-            dir.y = Mathf.CeilToInt(Mathf.Sin(player.flickAngle));
+            dir.x = Mathf.Cos(input.flickAngleRounded);
+            dir.y = Mathf.Sin(input.flickAngleRounded);
+
+            Debug.LogFormat("attack flick direction: {0}", dir.ToString());
         }
         else
         {
-            dir = directionalInput;
+            dir = input.directionalInput.normalized;
+
+            Debug.LogFormat("attack key direction: {0}", dir.ToString());
         }
 
         float attackAngleStep = 45;
         float angleDeg = 0;
         if (dir == Vector2.zero)
         {
-            // 方向キーの入力がない場合、進行方向の斜め上とする。
-            angleDeg = controller.collisions.faceDir == 1 ? attackAngleStep : 180 - attackAngleStep;
+            // 方向キーの入力がない場合、前方の斜め上とする。
+            angleDeg = player.direction == 1 ? attackAngleStep : 180 - attackAngleStep;
         }
         else
         {
@@ -121,12 +115,12 @@ public class PlayerState_Attack : IPlayerState
             // 真上方向に入力した場合の軌道を変更
             else if (dir.y > 0 && dir.x == 0)
             {
-                dir.x = controller.collisions.faceDir == 1 ? 0.1f : -0.1f;
+                dir.x = player.direction == 1 ? 0.1f : -0.1f;
             }
             // 下方向に入力した場合の軌道を変更
             else if (dir.y < 0)
             {
-                dir.x = controller.collisions.faceDir == 1 ? 1f : -1f;
+                dir.x = player.direction;
                 dir.y = -0.0001f;
             }
 
@@ -136,7 +130,7 @@ public class PlayerState_Attack : IPlayerState
         float resultSpeed = player.jumpAttackSpeed;
         if (dir.y > 0)
         {
-            if (directionalInput.x == 0)
+            if (input.directionalInput.x == 0)
             {
                 // 真上に飛ぶ時は飛距離を変える
                 resultSpeed = player.jumpAttackAboveDirectionSpeed;
@@ -148,11 +142,11 @@ public class PlayerState_Attack : IPlayerState
 
         }
 
+        // 下・斜め下方向に飛ぶ時は飛距離を減らす
         if (dir.y < 0)
         {
-            if (directionalInput.x == 0)
+            if (input.directionalInput.x == 0)
             {
-                // 下・斜め下方向に飛ぶ時は飛距離を減らす
                 resultSpeed = player.jumpAttackBelowDirectionSpeed;
             }
             else
@@ -162,24 +156,21 @@ public class PlayerState_Attack : IPlayerState
 
         }
 
-        Vector2 velocity;
         velocity.x = Mathf.Cos(angleDeg * Mathf.Deg2Rad) * resultSpeed;
         velocity.y = Mathf.Sin(angleDeg * Mathf.Deg2Rad) * resultSpeed;
-
-        return velocity;
     }
 
-    private Vector2 CalculateVelocity(Vector2 velocity)
+    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
     {
         // 水平方向の速度を算出
-        if (directionalInput.x == 0)
+        if (input.directionalInput.x == 0)
         {
             ;
         }
         else
         {
             float acc = player.acceralationAirborne;
-            acc *= Mathf.Sign(directionalInput.x);
+            acc *= Mathf.Sign(input.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;
         }
@@ -188,7 +179,5 @@ public class PlayerState_Attack : IPlayerState
         // 垂直方向の速度を算出
         velocity.y -= player.gravity * Time.deltaTime;
         velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
-
-        return velocity;
     }
 }

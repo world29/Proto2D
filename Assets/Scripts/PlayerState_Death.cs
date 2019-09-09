@@ -9,10 +9,6 @@ public class PlayerState_Death : IPlayerState
     private Animator animator;
     private SpriteRenderer renderer;
 
-    public void HandleInput()
-    {
-    }
-
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();

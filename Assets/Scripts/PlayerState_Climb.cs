@@ -8,16 +8,6 @@ public class PlayerState_Climb : IPlayerState
     private Controller2D controller;
     private Animator animator;
 
-    private Vector2 directionalInput;
-    private bool jumpInput;
-
-    public void HandleInput()
-    {
-        directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        jumpInput = Input.GetKeyDown(KeyCode.Space);
-    }
-
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
@@ -34,7 +24,7 @@ public class PlayerState_Climb : IPlayerState
 
     public IPlayerState Update(GameObject context)
     {
-        player.velocity = CalculateVelocity(player.velocity);
+        CalculateVelocity(ref player.velocity, player.inputState);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -43,7 +33,7 @@ public class PlayerState_Climb : IPlayerState
         {
             return new PlayerState_Free();
         }
-        else if (player.flickInput || jumpInput)
+        else if (player.inputState.isFlicked || player.inputState.isTouched)
         {
             return new PlayerState_Attack();
         }
@@ -51,29 +41,27 @@ public class PlayerState_Climb : IPlayerState
         return this;
     }
 
-    private Vector2 CalculateVelocity(Vector2 velocity)
+    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
     {
         int wallDirX = controller.collisions.right ? 1 : -1;
         float moveDirY = 0;
 
         // 壁の向きか上下方向のキー入力で、壁を登る
-        if (directionalInput.x != 0 && (int)Mathf.Sign(directionalInput.x) == wallDirX)
+        if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) == wallDirX)
         {
             moveDirY = 1;
         }
-        else if (directionalInput.y != 0)
+        else if (input.directionalInput.y != 0)
         {
-            moveDirY = Mathf.Sign(directionalInput.y);
+            moveDirY = Mathf.Sign(input.directionalInput.y);
         }
         velocity.y = moveDirY * player.climbSpeed;
 
         // 壁と反対方向のキー入力で壁からジャンプする
-        if (directionalInput.x != 0 && (int)Mathf.Sign(directionalInput.x) != wallDirX)
+        if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
         {
             velocity.x = player.wallJumpVelocity.x * -wallDirX;
             velocity.y = player.wallJumpVelocity.y;
         }
-
-        return velocity;
     }
 }

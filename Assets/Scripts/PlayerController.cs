@@ -62,12 +62,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("フリックとみなされる最短距離")]
     public float minFlickDistance = .1f;
     [HideInInspector]
-    public bool flickInput;
-    [HideInInspector]
-    public float flickAngle;
+    public InputState inputState;
 
     [HideInInspector]
     public Vector2 velocity;
+    [HideInInspector]
+    public float direction = 1; // 1: right, -1: left
 
     Controller2D controller;
     Animator animator;
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Update()
     {
-        HandleInputFlick();
+        inputState.Update(minFlickDistance);
 
         if (isHitStop)
         {
@@ -125,8 +125,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
 
         ProcessEventQueue();
-
-        state.HandleInput();
 
         IPlayerState next = state.Update(gameObject);
         if (next != state)
@@ -141,12 +139,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         UpdateAnimationParameters();
     }
 
-    public bool CheckEntryWallClimbing(Vector2 directionalInput)
+    public bool CheckEntryWallClimbing()
     {
         if (controller.collisions.right || controller.collisions.left)
         {
             int wallDirX = controller.collisions.right ? 1 : -1;
-            bool inputToWall = directionalInput.x != 0 && (int)Mathf.Sign(directionalInput.x) == wallDirX;
+            bool inputToWall = inputState.directionalInput.x != 0 && (int)Mathf.Sign(inputState.directionalInput.x) == wallDirX;
 
             // 地上にいる場合、壁方向に一定時間以上方向キーを入力すると壁アクションに移行する
             if (controller.collisions.below)
@@ -174,32 +172,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         return wallClimbEntryTimer > timeToEntryWallClimbing;
     }
 
-    private void HandleInputFlick()
-    {
-        // フリック
-        flickInput = false;
-        if (Input.GetMouseButtonDown(0))
-        {
-            touchStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            touchEndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            if (Vector3.Distance(touchEndPos, touchStartPos) > minFlickDistance)
-            {
-                flickInput = true;
-
-                float rad = Mathf.Atan2(touchEndPos.y - touchStartPos.y, touchEndPos.x - touchStartPos.x);
-                flickAngle = Mathf.Floor(rad / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
-
-                Debug.LogFormat("Flicked. (angle: {0})", flickAngle * Mathf.Rad2Deg);
-                Vector3 dir = new Vector3(Mathf.Cos(flickAngle), Mathf.Sin(flickAngle), 0);
-                Debug.DrawLine(touchStartPos, touchStartPos + dir * 3, Color.red, .3f);
-            }
-        }
-    }
-
     private void ChangeState(IPlayerState next)
     {
         if (state != next)
@@ -214,8 +186,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         if (inputX != 0)
         {
+            direction = Mathf.Sign(inputX);
+
             Vector3 scale = transform.localScale;
-            scale.x = Mathf.Sign(inputX);
+            scale.x = direction;
             transform.localScale = scale;
         }
     }
@@ -369,5 +343,70 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         yield return new WaitForSeconds(duration);
 
         isHitStop = false;
+    }
+
+    public struct InputState
+    {
+        public Vector2 directionalInput; // 方向キー
+        public bool isTouched;
+        public bool isFlicked;
+        public float flickAngle; // rad
+        public float flickAngleRounded; // 45度で丸められた角度 (rad)
+
+        private Vector3 touchStartPos;
+        private Vector3 touchEndPos;
+
+        public void Update(float minFlickDistance)
+        {
+            // リセット
+            isTouched = false;
+            isFlicked = false;
+
+            // 方向キー
+            directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+            // タッチ / フリック検出
+            if (Input.GetMouseButtonDown(0))
+            {
+                touchStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                // タッチを終えたときに、タッチ開始地点からの距離が一定以上ならフリックとみなす
+                touchEndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                if (Vector3.Distance(touchEndPos, touchStartPos) < minFlickDistance)
+                {
+                    isTouched = true;
+
+                    Debug.LogFormat("Touched. (pos: {0})", touchEndPos.ToString());
+                }
+                else
+                {
+                    isFlicked = true;
+
+                    flickAngle = Mathf.Atan2(touchEndPos.y - touchStartPos.y, touchEndPos.x - touchStartPos.x);
+                    flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
+
+                    // デバッグ表示
+                    Debug.LogFormat("Flicked. (angle: {0})", flickAngle * Mathf.Rad2Deg);
+                    Vector3 dir = new Vector3(Mathf.Cos(flickAngle), Mathf.Sin(flickAngle), 0);
+                    Debug.DrawLine(touchStartPos, touchStartPos + dir * 3, Color.red, .3f);
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                // 方向キーの入力があればフリックとみなす
+                if (directionalInput.magnitude > 0)
+                {
+                    isFlicked = true;
+                    flickAngle = flickAngleRounded = Mathf.Atan2(directionalInput.y, directionalInput.x);
+                }
+                else
+                {
+                    isTouched = true;
+                }
+            }
+        }
     }
 }
