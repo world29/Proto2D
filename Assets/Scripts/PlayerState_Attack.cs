@@ -83,9 +83,13 @@ public class PlayerState_Attack : IPlayerState
     private void CalculateInitialVelocity(ref Vector2 velocity, PlayerController.InputState input)
     {
         // フリック入力あるいは方向キーの入力からジャンプアタックの方向を決定する。
+        JoystickDirection joystick = JoystickDirection.None;
+
         Vector2 dir;
         if (input.isFlicked)
         {
+            joystick = AngleToJoystickDirection(input.flickAngleRounded * Mathf.Rad2Deg);
+
             dir.x = Mathf.Cos(input.flickAngleRounded);
             dir.y = Mathf.Sin(input.flickAngleRounded);
 
@@ -93,71 +97,76 @@ public class PlayerState_Attack : IPlayerState
         }
         else
         {
+            if (input.directionalInput != Vector2.zero)
+            {
+                float deg = Mathf.Atan2(input.directionalInput.y, input.directionalInput.x) * Mathf.Rad2Deg;
+                joystick = AngleToJoystickDirection(deg);
+            }
+
             dir = input.directionalInput.normalized;
 
             Debug.LogFormat("attack key direction: {0}", dir.ToString());
         }
+        Debug.LogFormat("joystick direction: {0}", joystick.ToString());
 
         float attackAngleStep = 45;
         float angleDeg = 0;
-        if (dir == Vector2.zero)
+        if (joystick == JoystickDirection.None)
         {
             // 方向キーの入力がない場合、前方の斜め上とする。
             angleDeg = player.direction == 1 ? attackAngleStep : 180 - attackAngleStep;
         }
         else
         {
-            // 斜め上方向に入力した場合の軌道を変更
-            if (dir.y > 0 && dir.x != 0)
+            switch (joystick)
             {
-                dir.x *= 0.5f;
-            }
-            // 真上方向に入力した場合の軌道を変更
-            else if (dir.y > 0 && dir.x == 0)
-            {
-                dir.x = player.direction == 1 ? 0.1f : -0.1f;
-            }
-            // 下方向に入力した場合の軌道を変更
-            else if (dir.y < 0)
-            {
-                dir.x = player.direction;
-                dir.y = -0.0001f;
+                case JoystickDirection.Up:
+                    // 真上方向に入力した場合の軌道を変更
+                    dir.x = player.direction == 1 ? 0.1f : -0.1f;
+                    break;
+                case JoystickDirection.UpLeft:
+                case JoystickDirection.UpRight:
+                    // 斜め上方向に入力した場合の軌道を変更
+                    dir.x *= 0.5f;
+                    break;
+                case JoystickDirection.Down:
+                case JoystickDirection.LeftDown:
+                case JoystickDirection.RightDown:
+                    // 下方向に入力した場合の軌道を変更
+                    dir.x = player.direction;
+                    dir.y = -0.0001f;
+                    break;
             }
 
             angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         }
 
         float resultSpeed = player.jumpAttackSpeed;
-        if (dir.y > 0)
-        {
-            if (input.directionalInput.x == 0)
-            {
-                // 真上に飛ぶ時は飛距離を変える
-                resultSpeed = player.jumpAttackAboveDirectionSpeed;
-            }
-            else
-            {
-                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
-            }
 
+        // 真上に飛ぶ時は飛距離を変える
+        if (joystick == JoystickDirection.Up)
+        {
+            resultSpeed = player.jumpAttackAboveDirectionSpeed;
+        }
+        else if (joystick == JoystickDirection.UpLeft || joystick == JoystickDirection.UpRight)
+        {
+            resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
         }
 
         // 下・斜め下方向に飛ぶ時は飛距離を減らす
-        if (dir.y < 0)
+        if (joystick == JoystickDirection.Down)
         {
-            if (input.directionalInput.x == 0)
-            {
-                resultSpeed = player.jumpAttackBelowDirectionSpeed;
-            }
-            else
-            {
-                resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
-            }
-
+            resultSpeed = player.jumpAttackBelowDirectionSpeed;
+        }
+        else if (joystick == JoystickDirection.LeftDown || joystick == JoystickDirection.RightDown)
+        {
+            resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
         }
 
         velocity.x = Mathf.Cos(angleDeg * Mathf.Deg2Rad) * resultSpeed;
         velocity.y = Mathf.Sin(angleDeg * Mathf.Deg2Rad) * resultSpeed;
+
+        player.direction = Mathf.Sign(velocity.x);
     }
 
     private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
@@ -179,5 +188,24 @@ public class PlayerState_Attack : IPlayerState
         // 垂直方向の速度を算出
         velocity.y -= player.gravity * Time.deltaTime;
         velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
+    }
+
+    enum JoystickDirection
+    {
+        None = -1,
+        LeftDown = -135,
+        Down = -90,
+        RightDown = -45,
+        Left = 180,
+        Right = 0,
+        UpLeft = 135,
+        Up = 90,
+        UpRight = 45,
+    }
+
+    JoystickDirection AngleToJoystickDirection(float angleDeg)
+    {
+        int rounded = Mathf.FloorToInt((angleDeg / 45) + .5f) * 45;
+        return (JoystickDirection)rounded;
     }
 }
