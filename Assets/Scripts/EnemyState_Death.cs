@@ -17,6 +17,11 @@ public class EnemyState_Death : IEnemyState
         animator.SetTrigger("death");
 
         enemy.Blink(enemy.delayToDeath, .1f);
+
+        // コリジョン無効化
+        foreach(var c in context.GetComponentsInChildren<Collider2D>()) {
+            c.enabled = false;
+        }
     }
 
     public void OnExit(GameObject context)
@@ -25,15 +30,6 @@ public class EnemyState_Death : IEnemyState
 
     public IEnemyState Update(GameObject context)
     {
-        enemy.velocity.y -= enemy.gravity * Time.deltaTime;
-
-        controller.Move(enemy.velocity * Time.deltaTime);
-
-        if (controller.collisions.below)
-        {
-            enemy.velocity.y = 0;
-        }
-
         // 遷移しない
 
         return this;
