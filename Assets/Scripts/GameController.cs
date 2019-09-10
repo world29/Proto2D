@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
     private bool isGameOver;
     private bool isGameClear;
 
-    // Start is called before the first frame update
     void Start()
     {
         isGameOver = false;
@@ -22,9 +21,14 @@ public class GameController : MonoBehaviour
         replayText.text = "";
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // デバッグビルド時、R キーを押すとシーンをリロードする
+        if (Debug.isDebugBuild && Input.GetKey(KeyCode.R))
+        {
+            ReloadScene();
+        }
+
         if (!isGameOver && !isGameClear)
         {
             return;
@@ -32,7 +36,7 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Return))
         {
-            SceneManager.LoadScene(sceneNameToLoad);
+            ReloadScene();
         }
     }
 
@@ -56,5 +60,10 @@ public class GameController : MonoBehaviour
     {
         isGameClear = true;
         replayText.text = "Congratulations!\nHit Enter to replay!";
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(sceneNameToLoad);
     }
 }
