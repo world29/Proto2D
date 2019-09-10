@@ -369,7 +369,7 @@ PrefabInstance:
     - target: {fileID: 8778643387317822643, guid: 3c2e1c64588709e4baac110d5be2894b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8778643387317822643, guid: 3c2e1c64588709e4baac110d5be2894b,
         type: 3}
@@ -393,6 +393,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c2e1c64588709e4baac110d5be2894b, type: 3}
+--- !u!1 &347982794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 201617310}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347982795}
+  m_Layer: 0
+  m_Name: BerryPlant (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &347982795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 201617310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347982794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &348140090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -443,7 +473,7 @@ PrefabInstance:
     - target: {fileID: 8778643387317822643, guid: c4a3f23bf06f2664591d176e9c9be6d7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8778643387317822643, guid: c4a3f23bf06f2664591d176e9c9be6d7,
         type: 3}
@@ -726,7 +756,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &945759625
 PrefabInstance:
@@ -778,7 +808,7 @@ PrefabInstance:
     - target: {fileID: 8778643387317822643, guid: 777bff2b516785b448c2b106c4fa9fee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8778643387317822643, guid: 777bff2b516785b448c2b106c4fa9fee,
         type: 3}
@@ -854,7 +884,7 @@ Transform:
   m_Children:
   - {fileID: 1680443028}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1362783448
 PrefabInstance:
@@ -1034,7 +1064,7 @@ Transform:
   - {fileID: 357984613}
   - {fileID: 1500301284}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1404689817
 BoxCollider2D:
@@ -1189,7 +1219,7 @@ PrefabInstance:
     - target: {fileID: 8778643387317822643, guid: 4e981fb188f658f4986bb1ae5d7bd4bd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8778643387317822643, guid: 4e981fb188f658f4986bb1ae5d7bd4bd,
         type: 3}
@@ -1392,7 +1422,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1500301283
 GameObject:
@@ -6198,7 +6228,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1629068074
 GameObject:
@@ -8100,7 +8130,7 @@ Transform:
   - {fileID: 1823421685}
   - {fileID: 1441883367}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1820242389
 MonoBehaviour:
@@ -8114,7 +8144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87eecb1b343a7524d8abc4392b17b6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  initialHealth: 5
   gravity: 30
   maxVelocity: {x: 5, y: 15}
   jumpSpeed: 12
@@ -8141,9 +8171,8 @@ MonoBehaviour:
     type: 3}
   hitStopDuration: 0.05
   minFlickDistance: 0.1
-  flickInput: 0
-  flickAngle: 0
   velocity: {x: 0, y: 0}
+  direction: 1
 --- !u!114 &1820242390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8307,6 +8336,80 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1001 &1825248292
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8778643387317822647, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_Name
+      value: BerryPlant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7471004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.5146255
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439724807625870644, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: health
+      value: 22
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 52247a89b4d120c4887d902e54e8c641, type: 3}
 --- !u!1001 &1919942052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8412,7 +8515,7 @@ MonoBehaviour:
   itemType: 0
   pickupEffectPrefab: {fileID: 7615431906169996719, guid: 74524ed1c2bcab6478b82c2464f0ac5a,
     type: 3}
-  once: 0
+  pickupSound: {fileID: 0}
 --- !u!61 &1936652023
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8539,5 +8642,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
