@@ -10,6 +10,13 @@ public class ItemController : MonoBehaviour
     public GameObject pickupEffectPrefab;
 
     public bool once = true;
+    public AudioClip pickupSound;
+    AudioSource audioSource;
+
+    void Start () {
+        //Componentを取得
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,6 +33,11 @@ public class ItemController : MonoBehaviour
 
     void OnPickedUp(GameObject receiver)
     {
+        if (audioSource)
+        {
+            audioSource.PlayOneShot(pickupSound);
+        }
+
         if (pickupEffectPrefab)
         {
             GameObject effect = Instantiate(pickupEffectPrefab, receiver.transform.position, Quaternion.identity, null);
