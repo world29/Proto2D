@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxCollider2D), typeof(AudioSource))]
 public class ItemController : MonoBehaviour
 {
     public ItemType itemType;
-    public GameObject pickupEffectPrefab;
 
-    public bool once = true;
+    public GameObject pickupEffectPrefab;
     public AudioClip pickupSound;
+
     AudioSource audioSource;
 
     void Start () {
@@ -33,20 +33,37 @@ public class ItemController : MonoBehaviour
 
     void OnPickedUp(GameObject receiver)
     {
-        if (audioSource)
-        {
-            audioSource.PlayOneShot(pickupSound);
-        }
-
         if (pickupEffectPrefab)
         {
             GameObject effect = Instantiate(pickupEffectPrefab, receiver.transform.position, Quaternion.identity, null);
         }
 
-        if (once)
+        float delayToDestroy = 0;
+        if (pickupSound)
         {
-            // 自分を削除
-            Destroy(gameObject);
+            audioSource.PlayOneShot(pickupSound);
+            delayToDestroy = pickupSound.length;
+        }
+        Destroy(gameObject, delayToDestroy);
+
+        // 描画とコリジョンを無効化
+        DisableComponent<SpriteRenderer>();
+        DisableComponent<BoxCollider2D>();
+    }
+
+    private void DisableComponent<T>()
+    {
+        T component = GetComponent<T>();
+        if (component != null)
+        {
+            // http://answers.unity.com/answers/417142/view.html
+
+            if (component is Behaviour)
+                (component as Behaviour).enabled = false;
+            else if (component is Collider)
+                (component as Collider).enabled = false;
+            else if (component is Renderer)
+                (component as Renderer).enabled = false;
         }
     }
 
