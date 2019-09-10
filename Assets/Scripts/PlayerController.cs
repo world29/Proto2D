@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
+    public Joystick joystick;
+
     public float initialHealth = 5;
     [HideInInspector]
     public NotificationObject<float> health;
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Update()
     {
-        inputState.Update(minFlickDistance);
+        inputState.Update(joystick, minFlickDistance);
 
         if (isHitStop)
         {
@@ -143,7 +145,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state.OnEnter(gameObject);
         }
 
-        UpdateDirection(Input.GetAxisRaw("Horizontal"));
+        UpdateDirection(joystick.Horizontal);
         UpdateAnimationParameters();
     }
 
@@ -364,15 +366,33 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         private Vector3 touchStartPos;
         private Vector3 touchEndPos;
 
-        public void Update(float minFlickDistance)
+        public void Update(Joystick joystick, float minFlickDistance)
         {
             // リセット
+            directionalInput = Vector2.zero;
             isTouched = false;
             isFlicked = false;
 
-            // 方向キー
-            directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            float deadzone = .2f;
 
+            // 方向キー
+            if (joystick.Horizontal > deadzone)
+            {
+                directionalInput.x = 1;
+            }
+            else if (joystick.Horizontal < -deadzone)
+            {
+                directionalInput.x = -1;
+            }
+            if (joystick.Vertical > deadzone)
+            {
+                directionalInput.y = 1;
+            }
+            else if (joystick.Vertical < -deadzone)
+            {
+                directionalInput.y = -1;
+            }
+#if false
             // タッチ / フリック検出
             if (Input.GetMouseButtonDown(0))
             {
@@ -415,6 +435,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                     isTouched = true;
                 }
             }
+#endif
         }
     }
 }

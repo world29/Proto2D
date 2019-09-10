@@ -34,7 +34,7 @@ public class GameController : SingletonMonoBehaviour<GameController>
             return;
         }
 
-        if (Input.GetKey(KeyCode.Return))
+        if (Input.touchCount > 0)
         {
             ReloadScene();
         }
