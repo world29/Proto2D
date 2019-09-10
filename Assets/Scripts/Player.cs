@@ -677,24 +677,6 @@ public class Player : MonoBehaviour
                 Debug.LogWarning("ApplyDamage while JumpAttack");
                 return;
             }
-
-            PlayerHealth health = GetComponent<PlayerHealth>();
-            health.TakeDamage(damager.damage);
-            if (comboSystem != null)
-            {
-                comboSystem.ResetCombo();
-            }
-
-            if (health.currentHealth > 0)
-            {
-                Vector2 direction = collision.transform.position - transform.position;
-                direction.x = Mathf.Sign(direction.x) * -1;
-                direction.y = 1;
-
-                HitStop(hitStopDurationOnDamage);
-                Knockback(direction.normalized * damager.knockbackForce, knockbackDuration);
-                SetInvincible(invincibleDuration);
-            }
         }
     }
 

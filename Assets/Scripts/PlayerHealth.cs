@@ -5,63 +5,41 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public GameController gameController;
-
-    public float startingHealth = 1; // 初期のヒットポイント
+    public PlayerController player;
 
     public Slider slider;
     public Image fillImage;
     public Color fullHealthColor = Color.green;
     public Color zeroHealthColor = Color.red;
 
-    [HideInInspector]
-    public float currentHealth;
+    float initialHealth = 0;
+    float currentHealth;
 
-    // Start is called before the first frame update
     void Start()
     {
-        slider.maxValue = startingHealth;
-
-        currentHealth = startingHealth;
-
-        SetHealthUI();
-    }
-
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
+        if (player)
         {
-            currentHealth = 0;
-            OnDeath();
+            // プレイヤーの HP 更新時のコールバックを登録
+            player.health.OnChanged += OnChangeHealth;
+
+            initialHealth = player.initialHealth;
         }
-        else
-        {
-            OnTakeDamage();
-        }
+
+        // 初期化
+        OnChangeHealth(initialHealth);
     }
 
-    void OnTakeDamage()
+    void OnChangeHealth(float value)
     {
-        Debug.Log("OnTakeDamage");
+        currentHealth = value;
 
-        SetHealthUI();
+        UpdateUI();
     }
 
-    void OnDeath()
-    {
-        Debug.Log("OnDeath");
-
-        gameObject.SetActive(false);
-
-        gameController.GameOver();
-    }
-
-    void SetHealthUI()
+    public void UpdateUI()
     {
         slider.value = currentHealth;
 
-        fillImage.color = Color.Lerp(zeroHealthColor, fullHealthColor, currentHealth / startingHealth);
+        fillImage.color = Color.Lerp(zeroHealthColor, fullHealthColor, currentHealth / initialHealth);
     }
 }

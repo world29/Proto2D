@@ -61,7 +61,7 @@ public class PlayerState_Knockback : IPlayerState
         timer += Time.deltaTime;
         if (timer > player.knockbackDuration)
         {
-            if (player.health <= 0)
+            if (player.health.Value == 0)
             {
                 return new PlayerState_Death();
             }

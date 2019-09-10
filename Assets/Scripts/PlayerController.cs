@@ -5,7 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
-    public float health = 5;
+    public float initialHealth = 5;
+    [HideInInspector]
+    public NotificationObject<float> health;
+
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
     public float jumpSpeed = 15;
@@ -94,6 +97,11 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     private Queue<HitInfo> hitQueue;
     private Queue<DamageInfo> damageQueue;
+
+    private void Awake()
+    {
+        health = new NotificationObject<float>(initialHealth);
+    }
 
     void Start()
     {
@@ -261,11 +269,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
 
         // ダメージ計算
-        health -= info.damage;
-        if (health <= 0)
+        health.Value = Mathf.Max(0, health.Value - info.damage);
+        if (health.Value == 0)
         {
             // ノックバックした後、Death ステートに遷移する
-            health = 0;
         }
 
         // ノックバック
