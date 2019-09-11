@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
-    public Joystick joystick;
+    public Joystick moveJoystick;
+    public Joystick actionJoystick;
 
     public float initialHealth = 5;
     [HideInInspector]
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Update()
     {
-        inputState.Update(joystick, minFlickDistance);
+        inputState.Update(moveJoystick, actionJoystick, minFlickDistance);
 
         if (isHitStop)
         {
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state.OnEnter(gameObject);
         }
 
-        UpdateDirection(joystick.Horizontal);
+        UpdateDirection(moveJoystick.Horizontal);
         UpdateAnimationParameters();
     }
 
@@ -366,17 +367,17 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         private Vector3 touchStartPos;
         private Vector3 touchEndPos;
 
-        public void Update(Joystick joystick, float minFlickDistance)
+        public void Update(Joystick moveJoystick, Joystick actionJoystick, float minFlickDistance)
         {
             // リセット
             isTouched = false;
             isFlicked = false;
 
             // 方向キー
-            directionalInput = joystick.Direction;
+            directionalInput = moveJoystick.Direction;
 
             // タッチ / フリック
-            var customJoystick = joystick as CustomFloatingJoystick;
+            var customJoystick = actionJoystick as CustomFloatingJoystick;
             if (customJoystick)
             {
                 isTouched = customJoystick.Touched;

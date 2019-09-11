@@ -17,6 +17,7 @@ public class CustomFloatingJoystick : FloatingJoystick
 {
     public float flickThresholdTime = .2f;
     public Rect touchableRect = new Rect(0, 0, 1, 1);
+    public Color touchableAreaColor = new Color(1, 0, 1, .3f);
 
     public bool Touched { get { return touched; } }
     public bool Flicked { get { return flicked; } }
@@ -25,6 +26,8 @@ public class CustomFloatingJoystick : FloatingJoystick
     [SerializeField] private bool touched = false;
     [SerializeField] private bool flicked = false;
     private bool touching = false;
+    private int touchingFingerId;
+
     private float timeTouchBegan;
     private Vector2 positionTouchBegan;
     private Vector2 positionTouchEnded;
@@ -47,6 +50,7 @@ public class CustomFloatingJoystick : FloatingJoystick
         if (!GetTouchableScreenRect().Contains(eventData.position)) return;
 
         touching = true;
+        touchingFingerId = eventData.pointerId;
         positionTouchBegan = eventData.position;
         timeTouchBegan = Time.timeSinceLevelLoad;
 
@@ -56,7 +60,7 @@ public class CustomFloatingJoystick : FloatingJoystick
 
     public override void OnDrag(PointerEventData eventData)
     {
-        if (!touching) return;
+        if (!touching || touchingFingerId != eventData.pointerId) return;
 
         //
         base.OnDrag(eventData);
@@ -64,7 +68,7 @@ public class CustomFloatingJoystick : FloatingJoystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        if (!touching) return;
+        if (!touching || touchingFingerId != eventData.pointerId) return;
 
         touching = false;
         positionTouchEnded = eventData.position;
@@ -95,7 +99,7 @@ public class CustomFloatingJoystick : FloatingJoystick
     {
         Rect rect = GetTouchableScreenRect();
 
-        Gizmos.color = new Color(1, 0, 1, .3f);
+        Gizmos.color = touchableAreaColor;
         Gizmos.DrawCube(rect.center, rect.size);
     }
 
