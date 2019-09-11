@@ -21,10 +21,16 @@ public struct FlickData
 public class CustomFloatingJoystick : FloatingJoystick
 {
     public bool Touched { get { return touched; } }
+    public bool Flicked { get { return flicked; } }
+    public Vector2 FlickDirection { get { return positionTouchEnded - positionTouchBegan; } }
+
+    public float flickThresholdTime = .2f;
 
     [SerializeField] private bool touched = false;
+    [SerializeField] private bool flicked = false;
     private float timeTouchBegan;
-    private float timeTouchEnded;
+    private Vector2 positionTouchBegan;
+    private Vector2 positionTouchEnded;
 
     protected override void Start()
     {
@@ -35,11 +41,14 @@ public class CustomFloatingJoystick : FloatingJoystick
     private void LateUpdate()
     {
         touched = false;
+        flicked = false;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
     {
         //
+        positionTouchBegan = eventData.position;
+
         timeTouchBegan = Time.timeSinceLevelLoad;
 
         base.OnPointerDown(eventData);
@@ -48,10 +57,15 @@ public class CustomFloatingJoystick : FloatingJoystick
     public override void OnPointerUp(PointerEventData eventData)
     {
         //
-        timeTouchEnded = Time.timeSinceLevelLoad;
+        positionTouchEnded = eventData.position;
+
         if (Direction == Vector2.zero)
         {
             touched = true;
+        }
+        else if ((Time.timeSinceLevelLoad - timeTouchBegan) < flickThresholdTime)
+        {
+            flicked = true;
         }
 
         base.OnPointerUp(eventData);

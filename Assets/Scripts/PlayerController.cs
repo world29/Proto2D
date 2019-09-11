@@ -375,11 +375,15 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             // 方向キー
             directionalInput = joystick.Direction;
 
-            // タッチ
+            // タッチ / フリック
             var customJoystick = joystick as CustomFloatingJoystick;
             if (customJoystick)
             {
                 isTouched = customJoystick.Touched;
+
+                isFlicked = customJoystick.Flicked;
+                flickAngle = Mathf.Atan2(customJoystick.FlickDirection.y, customJoystick.FlickDirection.x);
+                flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
             }
 
 #if false
