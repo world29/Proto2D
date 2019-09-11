@@ -369,29 +369,19 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         public void Update(Joystick joystick, float minFlickDistance)
         {
             // リセット
-            directionalInput = Vector2.zero;
             isTouched = false;
             isFlicked = false;
 
-            float deadzone = .2f;
-
             // 方向キー
-            if (joystick.Horizontal > deadzone)
+            directionalInput = joystick.Direction;
+
+            // タッチ
+            var customJoystick = joystick as CustomFloatingJoystick;
+            if (customJoystick)
             {
-                directionalInput.x = 1;
+                isTouched = customJoystick.Touched;
             }
-            else if (joystick.Horizontal < -deadzone)
-            {
-                directionalInput.x = -1;
-            }
-            if (joystick.Vertical > deadzone)
-            {
-                directionalInput.y = 1;
-            }
-            else if (joystick.Vertical < -deadzone)
-            {
-                directionalInput.y = -1;
-            }
+
 #if false
             // タッチ / フリック検出
             if (Input.GetMouseButtonDown(0))
