@@ -47,7 +47,7 @@ public class PlayerState_Free : IPlayerState
         {
             return new PlayerState_Climb();
         }
-        else if (player.inputState.isFlicked || (player.inputState.isTouched && !normalJumped))
+        else if (player.inputState.isFlicked)
         {
             return new PlayerState_Attack();
         }
@@ -90,7 +90,7 @@ public class PlayerState_Free : IPlayerState
         velocity.x = Mathf.Clamp(velocity.x, -player.maxVelocity.x, player.maxVelocity.x);
 
         // 垂直方向の速度を算出
-        if (grounded && input.isTouched && input.directionalInput.y < 1)
+        if (grounded && input.isTouched)
         {
             velocity.y = player.jumpSpeed;
             jumped = true;
