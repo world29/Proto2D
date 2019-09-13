@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 6503610203471954345}
   - component: {fileID: 6503610203471954342}
   - component: {fileID: 6503610203471954343}
+  - component: {fileID: 6759853421765695750}
   - component: {fileID: 6503610203471954340}
   - component: {fileID: 1976185563777546678}
   m_Layer: 8
@@ -525,6 +526,26 @@ MonoBehaviour:
   collider: {fileID: 0}
   maxSlopeAngle: 60
   playerInput: {x: 0, y: 0}
+--- !u!114 &6759853421765695750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503610203471954336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bd948881ca6304a8283abc228f4656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveJoystick: {fileID: 0}
+  actionJoystick: {fileID: 0}
+  minDistanceToPlayer: 1
+  directionalInput: {x: 0, y: 0}
+  isTouched: 0
+  isFlicked: 0
+  flickAngle: 0
+  flickAngleRounded: 0
 --- !u!114 &6503610203471954340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +584,6 @@ MonoBehaviour:
   attackEffectPrefab: {fileID: 7615431906169996719, guid: 509896ac4f0a38d4985c92d48a0a9009,
     type: 3}
   hitStopDuration: 0.05
-  minFlickDistance: 1
   velocity: {x: 0, y: 0}
   direction: 1
 --- !u!114 &1976185563777546678

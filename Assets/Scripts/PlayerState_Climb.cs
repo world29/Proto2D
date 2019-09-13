@@ -7,12 +7,14 @@ public class PlayerState_Climb : IPlayerState
     private PlayerController player;
     private Controller2D controller;
     private Animator animator;
+    private PlayerInput input;
 
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
+        input = context.GetComponent<PlayerInput>();
 
         animator.SetBool("climb", true);
     }
@@ -24,7 +26,7 @@ public class PlayerState_Climb : IPlayerState
 
     public IPlayerState Update(GameObject context)
     {
-        CalculateVelocity(ref player.velocity, player.inputState);
+        CalculateVelocity(ref player.velocity);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -33,7 +35,7 @@ public class PlayerState_Climb : IPlayerState
         {
             return new PlayerState_Free();
         }
-        else if (player.inputState.isFlicked || player.inputState.isTouched)
+        else if (input.isFlicked || input.isTouched)
         {
             return new PlayerState_Attack();
         }
@@ -41,7 +43,7 @@ public class PlayerState_Climb : IPlayerState
         return this;
     }
 
-    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
+    private void CalculateVelocity(ref Vector2 velocity)
     {
         int wallDirX = controller.collisions.right ? 1 : -1;
         float moveDirY = 0;

@@ -6,11 +6,13 @@ public class PlayerState_Free : IPlayerState
 {
     private PlayerController player;
     private Controller2D controller;
+    private PlayerInput input;
 
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
+        input = context.GetComponent<PlayerInput>();
     }
 
     public void OnExit(GameObject context)
@@ -22,7 +24,7 @@ public class PlayerState_Free : IPlayerState
         bool normalJumped = false;
 
         // 速度計算
-        CalculateVelocity(ref player.velocity, player.inputState, ref normalJumped);
+        CalculateVelocity(ref player.velocity, ref normalJumped);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -47,7 +49,7 @@ public class PlayerState_Free : IPlayerState
         {
             return new PlayerState_Climb();
         }
-        else if (player.inputState.isFlicked || (player.inputState.isTouched && !normalJumped))
+        else if (input.isFlicked)
         {
             return new PlayerState_Attack();
         }
@@ -55,7 +57,7 @@ public class PlayerState_Free : IPlayerState
         return this;
     }
 
-    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input, ref bool jumped)
+    private void CalculateVelocity(ref Vector2 velocity, ref bool jumped)
     {
         bool grounded = controller.collisions.below;
 
@@ -90,7 +92,7 @@ public class PlayerState_Free : IPlayerState
         velocity.x = Mathf.Clamp(velocity.x, -player.maxVelocity.x, player.maxVelocity.x);
 
         // 垂直方向の速度を算出
-        if (grounded && input.isTouched && input.directionalInput.y < 1)
+        if (grounded && input.isTouched)
         {
             velocity.y = player.jumpSpeed;
             jumped = true;

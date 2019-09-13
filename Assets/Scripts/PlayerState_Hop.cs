@@ -7,12 +7,14 @@ public class PlayerState_Hop : IPlayerState
     private PlayerController player;
     private Controller2D controller;
     private Animator animator;
+    private PlayerInput input;
 
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
+        input = context.GetComponent<PlayerInput>();
 
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
@@ -41,7 +43,7 @@ public class PlayerState_Hop : IPlayerState
 
     public IPlayerState Update(GameObject context)
     {
-        CalculateVelocity(ref player.velocity, player.inputState);
+        CalculateVelocity(ref player.velocity);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -69,7 +71,7 @@ public class PlayerState_Hop : IPlayerState
         velocity.y = player.hopSpeed;
     }
 
-    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
+    private void CalculateVelocity(ref Vector2 velocity)
     {
         bool grounded = controller.collisions.below;
 
