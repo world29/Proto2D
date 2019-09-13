@@ -7,15 +7,17 @@ public class PlayerState_Attack : IPlayerState
     private PlayerController player;
     private Controller2D controller;
     private Animator animator;
+    private PlayerInput input;
 
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
+        input = context.GetComponent<PlayerInput>();
 
         // 初速の計算
-        CalculateInitialVelocity(ref player.velocity, player.inputState);
+        CalculateInitialVelocity(ref player.velocity);
 
         // 攻撃判定を有効化
         Attacker attacker = context.GetComponentInChildren<Attacker>();
@@ -56,7 +58,7 @@ public class PlayerState_Attack : IPlayerState
     public IPlayerState Update(GameObject context)
     {
         // 重力の影響のみ
-        CalculateVelocity(ref player.velocity, player.inputState);
+        CalculateVelocity(ref player.velocity);
 
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
@@ -80,7 +82,7 @@ public class PlayerState_Attack : IPlayerState
         return this;
     }
 
-    private void CalculateInitialVelocity(ref Vector2 velocity, PlayerController.InputState input)
+    private void CalculateInitialVelocity(ref Vector2 velocity)
     {
         // フリック入力あるいは方向キーの入力からジャンプアタックの方向を決定する。
         JoystickDirection joystick = JoystickDirection.None;
@@ -169,7 +171,7 @@ public class PlayerState_Attack : IPlayerState
         player.direction = Mathf.Sign(velocity.x);
     }
 
-    private void CalculateVelocity(ref Vector2 velocity, PlayerController.InputState input)
+    private void CalculateVelocity(ref Vector2 velocity)
     {
         // 水平方向の速度を算出
         if (input.directionalInput.x == 0)

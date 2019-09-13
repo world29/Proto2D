@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Controller2D), typeof(Animator))]
+[RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
-    public Joystick moveJoystick;
-    public Joystick actionJoystick;
-
     public float initialHealth = 5;
     [HideInInspector]
     public NotificationObject<float> health;
@@ -65,11 +62,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("ジャンプアタックのヒットストップ")]
     public float hitStopDuration = 0;
 
-    [Header("フリックとみなされる最短距離")]
-    public float minFlickDistance = .1f;
-    [HideInInspector]
-    public InputState inputState;
-
     [HideInInspector]
     public Vector2 velocity;
     [HideInInspector]
@@ -77,13 +69,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     Controller2D controller;
     Animator animator;
+    PlayerInput input;
 
     private IPlayerState state;
     private bool isInvincible;
     private bool isHitStop;
     private float wallClimbEntryTimer;
-    private Vector3 touchStartPos;
-    private Vector3 touchEndPos;
 
     public struct HitInfo
     {
@@ -110,6 +101,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         controller = GetComponent<Controller2D>();
         animator = GetComponent<Animator>();
+        input = GetComponent<PlayerInput>();
 
         hitQueue = new Queue<HitInfo>();
         damageQueue = new Queue<DamageInfo>();
@@ -128,8 +120,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Update()
     {
-        inputState.Update(moveJoystick, actionJoystick, minFlickDistance);
-
         if (isHitStop)
         {
             return;
@@ -146,7 +136,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state.OnEnter(gameObject);
         }
 
-        UpdateDirection(moveJoystick.Horizontal);
+        UpdateDirection(input.directionalInput.x);
         UpdateAnimationParameters();
     }
 
@@ -155,7 +145,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         if (controller.collisions.right || controller.collisions.left)
         {
             int wallDirX = controller.collisions.right ? 1 : -1;
-            bool inputToWall = inputState.directionalInput.x != 0 && (int)Mathf.Sign(inputState.directionalInput.x) == wallDirX;
+            bool inputToWall = input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) == wallDirX;
 
             // 地上にいる場合、壁方向に一定時間以上方向キーを入力すると壁アクションに移行する
             if (controller.collisions.below)
@@ -354,83 +344,5 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         yield return new WaitForSeconds(duration);
 
         isHitStop = false;
-    }
-
-    public struct InputState
-    {
-        public Vector2 directionalInput; // 方向キー
-        public bool isTouched;
-        public bool isFlicked;
-        public float flickAngle; // rad
-        public float flickAngleRounded; // 45度で丸められた角度 (rad)
-
-        private Vector3 touchStartPos;
-        private Vector3 touchEndPos;
-
-        public void Update(Joystick moveJoystick, Joystick actionJoystick, float minFlickDistance)
-        {
-            // リセット
-            isTouched = false;
-            isFlicked = false;
-
-            // 方向キー
-            directionalInput = moveJoystick.Direction;
-
-            // タッチ / フリック
-            var customJoystick = actionJoystick as CustomFloatingJoystick;
-            if (customJoystick)
-            {
-                isTouched = customJoystick.Touched;
-
-                isFlicked = customJoystick.Flicked;
-                flickAngle = Mathf.Atan2(customJoystick.FlickDirection.y, customJoystick.FlickDirection.x);
-                flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
-            }
-
-#if false
-            // タッチ / フリック検出
-            if (Input.GetMouseButtonDown(0))
-            {
-                touchStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                // タッチを終えたときに、タッチ開始地点からの距離が一定以上ならフリックとみなす
-                touchEndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                if (Vector3.Distance(touchEndPos, touchStartPos) < minFlickDistance)
-                {
-                    isTouched = true;
-
-                    Debug.LogFormat("Touched. (pos: {0})", touchEndPos.ToString());
-                }
-                else
-                {
-                    isFlicked = true;
-
-                    flickAngle = Mathf.Atan2(touchEndPos.y - touchStartPos.y, touchEndPos.x - touchStartPos.x);
-                    flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
-
-                    // デバッグ表示
-                    Debug.LogFormat("Flicked. (angle: {0})", flickAngle * Mathf.Rad2Deg);
-                    Vector3 dir = new Vector3(Mathf.Cos(flickAngle), Mathf.Sin(flickAngle), 0);
-                    Debug.DrawLine(touchStartPos, touchStartPos + dir * 3, Color.red, .3f);
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                // 方向キーの入力があればフリックとみなす
-                if (directionalInput.magnitude > 0)
-                {
-                    isFlicked = true;
-                    flickAngle = flickAngleRounded = Mathf.Atan2(directionalInput.y, directionalInput.x);
-                }
-                else
-                {
-                    isTouched = true;
-                }
-            }
-#endif
-        }
     }
 }

@@ -72,6 +72,7 @@ public class CustomFloatingJoystick : FloatingJoystick
 
     private void OnDrawGizmos()
     {
+        // タッチ可能領域の可視化
         Vector3[] v = new Vector3[4];
 
         RectTransform rectTransform = GetComponent<RectTransform>();

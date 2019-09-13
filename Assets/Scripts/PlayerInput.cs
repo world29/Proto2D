@@ -2,114 +2,94 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof (Player))]
 public class PlayerInput : MonoBehaviour
 {
-    [Header("ドラッグとみなされるマウスポインタの移動量の最小値")]
-    public float dragDistanceMin = 5;
+    public CustomFloatingJoystick moveJoystick;
+    public CustomFloatingJoystick actionJoystick;
 
-    Player player;
+    public float minDistanceToPlayer = 1;
 
-    private MouseState mouseState;
+    [HideInInspector]
+    public Vector2 directionalInput; // 方向キー
+    [HideInInspector]
+    public bool isTouched; //TODO: isTapped
+    [HideInInspector]
+    public bool isFlicked;
+    [HideInInspector]
+    public float flickAngle; // rad
+    [HideInInspector]
+    public float flickAngleRounded; // 45度で丸められた角度 (rad)
 
-    // Start is called before the first frame update
-    void Start()
+    public void Update()
     {
-        player = GetComponent<Player>();
+        // リセット
+        directionalInput = Vector2.zero;
+        isTouched = false;
+        isFlicked = false;
+        flickAngle = 0;
 
-        mouseState.dragDistanceMin = dragDistanceMin;
+        // タッチデバイスの入力取得
+        UpdateInputTouch();
+
+        // その他のデバイス (マウス、キーボード、ジョイスティック)
+        UpdateInput();
+
+        // 入力の正規化
+        NormalizeInput();
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateInputTouch()
     {
-        Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        player.SetDirectionalInput(directionalInput);
+        // 他の入力を上書きしないため加算
+        directionalInput += moveJoystick.Direction;
 
-        mouseState.Update();
-
-        if (GetJumpButtonDown() || mouseState.isClicked)
+        // タップ / フリック
+        isTouched = actionJoystick.Touched;
+        if (actionJoystick.Flicked)
         {
-            player.OnJumpInputDown();
-        }
-
-        if (GetJumpButtonUp())
-        {
-            player.OnJumpInputUp();
-        }
-
-        if (mouseState.isDragged)
-        {
-            //Debug.LogFormat("MouseDragged ({0} - {1})", mouseState.dragStartPos.ToString(), mouseState.dragEndPos.ToString());
-
-            Vector3 direction = mouseState.dragEndPos - mouseState.dragStartPos;
-            direction.Normalize();
-
-            player.OnJumpAttackInput(direction);
-
-            Vector3 origin = transform.position;
-            Debug.DrawLine(origin, origin + direction, Color.red, 1, false);
+            isFlicked = true;
+            flickAngle = Mathf.Atan2(actionJoystick.FlickDirection.y, actionJoystick.FlickDirection.x);
         }
     }
 
-    bool GetJumpButtonDown()
+    void UpdateInput()
     {
-        return Input.GetKeyDown(KeyCode.Space);
-    }
+        // キーボードとジョイスティックに対応
+        directionalInput += new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-    bool GetJumpButtonUp()
-    {
-        return Input.GetKeyUp(KeyCode.Space);
-    }
-
-    struct MouseState
-    {
-        public bool isClicked;
-        public bool isDragged;
-        public bool isDragging;
-        public Vector3 dragStartPos;
-        public Vector3 dragEndPos;
-        public float dragDistanceMin;
-
-        public void Reset()
+        // スペースキーをタッチとみなす
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            isClicked = false;
-            isDragged = false;
+            isTouched = true;
         }
 
-        public void Update()
+        // マウスクリックをフリックとみなす
+        if (Input.GetMouseButtonDown(0))
         {
-            Reset();
+            Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (isDragging)
+            Vector2 playerToPointer = clickPos - gameObject.transform.position;
+            if (playerToPointer.magnitude >= minDistanceToPlayer)
             {
-                if (Input.GetMouseButtonUp(0))
-                {
-                    isDragging = false;
-
-                    dragEndPos = Input.mousePosition;
-
-                    // ドラッグの始点と終点の距離が最小値未満なら無視する
-                    if (Vector3.Distance(dragEndPos, dragStartPos) < dragDistanceMin)
-                    {
-                        isClicked = true;
-                    }
-                    else
-                    {
-                        isDragged = true;
-                    }
-                }
+                isFlicked = true;
+                flickAngle = Mathf.Atan2(playerToPointer.y, playerToPointer.x);
             }
-            else
-            {
-                // start dragging
-                if (Input.GetMouseButtonDown(0))
-                {
-                    dragStartPos = Input.mousePosition;
-                    isDragging = true;
-                }
-            }
-
         }
+    }
+
+    void NormalizeInput()
+    {
+        // 次のいずれかの値にする: -1, 0, 1
+        if (directionalInput.x != 0)
+        {
+            directionalInput.x = Mathf.Sign(directionalInput.x);
+        }
+        if (directionalInput.y != 0)
+        {
+            directionalInput.y = Mathf.Sign(directionalInput.y);
+        }
+
+        // フリックの方向を丸める
+        flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
     }
 }
