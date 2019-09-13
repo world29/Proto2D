@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    public PlayerInputMode inputMode = PlayerInputMode.Auto;
+
     public CustomFloatingJoystick moveJoystick;
     public CustomFloatingJoystick actionJoystick;
 
@@ -20,21 +22,37 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector]
     public float flickAngleRounded; // 45度で丸められた角度 (rad)
 
+    private bool isMobile;
+
     private void Awake()
     {
         // マウスとタッチを区別するための設定
         Input.simulateMouseWithTouches = false;
 
-        SetEnableJoystick(Application.isMobilePlatform);
+        if (inputMode == PlayerInputMode.Auto)
+        {
+            isMobile = Application.isMobilePlatform;
+        }
+        else
+        {
+            isMobile = (inputMode == PlayerInputMode.Mobile);
+        }
+
+        SetEnableJoystick(isMobile);
     }
 
     public void Update()
     {
-        // リモート接続ならジョイスティックを有効化
-        // リモート接続の判定は起動後数フレーム経過しないと取得できないため、ここで呼ぶ
-        if (CheckForRemote())
+        if (inputMode == PlayerInputMode.Auto)
         {
-            SetEnableJoystick(true);
+            // リモート接続ならジョイスティックを有効化
+            // リモート接続の判定は起動後数フレーム経過しないと取得できないため、ここで呼ぶ
+            bool isRemote = CheckForRemote();
+            if (isMobile != isRemote)
+            {
+                isMobile = isRemote;
+                SetEnableJoystick(isMobile);
+            }
         }
 
         // リセット
@@ -43,20 +61,24 @@ public class PlayerInput : MonoBehaviour
         isFlicked = false;
         flickAngle = 0;
 
-        // タッチデバイスの入力取得
-        UpdateInputTouch();
-
-        // その他のデバイス (マウス、キーボード、ジョイスティック)
-        UpdateInput();
+        if (isMobile)
+        {
+            // タッチデバイスの入力取得
+            UpdateInputMobile();
+        }
+        else
+        {
+            // その他のデバイス (マウス、キーボード、ジョイスティック)
+            UpdateInputConsole();
+        }
 
         // 入力の正規化
         NormalizeInput();
     }
 
-    void UpdateInputTouch()
+    void UpdateInputMobile()
     {
-        // 他の入力を上書きしないため加算
-        directionalInput += moveJoystick.Direction;
+        directionalInput = moveJoystick.Direction;
 
         // タップ / フリック
         isTouched = actionJoystick.Touched;
@@ -67,10 +89,10 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    void UpdateInput()
+    void UpdateInputConsole()
     {
         // キーボードとジョイスティックに対応
-        directionalInput += new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // スペースキーをタッチとみなす
         if (Input.GetKeyDown(KeyCode.Space))
@@ -105,7 +127,10 @@ public class PlayerInput : MonoBehaviour
         }
 
         // フリックの方向を丸める
-        flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
+        if (isFlicked)
+        {
+            flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
+        }
     }
 
     bool CheckForRemote()
@@ -131,3 +156,5 @@ public class PlayerInput : MonoBehaviour
         }
     }
 }
+
+public enum PlayerInputMode{ Auto, Mobile, Console }
