@@ -20,6 +20,12 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector]
     public float flickAngleRounded; // 45度で丸められた角度 (rad)
 
+    private void Awake()
+    {
+        // マウスとタッチを区別するための設定
+        Input.simulateMouseWithTouches = false;
+    }
+
     public void Update()
     {
         // リセット
