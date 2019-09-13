@@ -24,10 +24,19 @@ public class PlayerInput : MonoBehaviour
     {
         // マウスとタッチを区別するための設定
         Input.simulateMouseWithTouches = false;
+
+        SetEnableJoystick(Application.isMobilePlatform);
     }
 
     public void Update()
     {
+        // リモート接続ならジョイスティックを有効化
+        // リモート接続の判定は起動後数フレーム経過しないと取得できないため、ここで呼ぶ
+        if (CheckForRemote())
+        {
+            SetEnableJoystick(true);
+        }
+
         // リセット
         directionalInput = Vector2.zero;
         isTouched = false;
@@ -97,5 +106,28 @@ public class PlayerInput : MonoBehaviour
 
         // フリックの方向を丸める
         flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
+    }
+
+    bool CheckForRemote()
+    {
+#if UNITY_EDITOR
+        return UnityEditor.EditorApplication.isRemoteConnected;
+#else
+        return false;
+#endif
+    }
+
+    void SetEnableJoystick(bool enabled)
+    {
+        if (enabled)
+        {
+            moveJoystick.enabled = true;
+            actionJoystick.enabled = true;
+        }
+        else
+        {
+            moveJoystick.enabled = false;
+            actionJoystick.enabled = false;
+        }
     }
 }
