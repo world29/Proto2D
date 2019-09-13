@@ -52,12 +52,6 @@ public class CustomFloatingJoystick : FloatingJoystick
         base.OnPointerDown(eventData);
     }
 
-    public override void OnDrag(PointerEventData eventData)
-    {
-        //
-        base.OnDrag(eventData);
-    }
-
     public override void OnPointerUp(PointerEventData eventData)
     {
         touching = false;
