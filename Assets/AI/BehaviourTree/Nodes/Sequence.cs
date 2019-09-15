@@ -64,6 +64,12 @@ namespace Proto2D.AI
                 }
             }
 
+            // 末尾ノードが SUCCESS なら、次回の評価は先頭ノードから開始する
+            if (i == m_nodes.Count && m_nodeStatus == NodeStatus.SUCCESS)
+            {
+                m_nodeIndex = 0;
+            }
+
             return m_nodeStatus;
         }
     }
