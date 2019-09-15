@@ -192,5 +192,10 @@ namespace XNodeEditor {
                 windows[i].Repaint();
             }
         }
+
+        private void Update()
+        {
+            Repaint();
+        }
     }
 }
