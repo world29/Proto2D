@@ -24,12 +24,13 @@ namespace Proto2D.AI
 
         protected override void Init()
         {
-            ResetStatus();
+            m_nodeStatus = NodeStatus.READY;
         }
 
-        public void ResetStatus()
+        public virtual void Reset()
         {
-            m_nodeStatus = NodeStatus.READY;
+            // 明示的に Init を呼ぶ
+            Init();
         }
 
         public virtual void PreEvaluate()
@@ -65,7 +66,7 @@ namespace Proto2D.AI
 
         public void OnRestart()
         {
-            nodes.ForEach(item => (item as Node).ResetStatus());
+            nodes.ForEach(item => (item as Node).Reset());
         }
 
         public NodeStatus OnUpdate(EnemyBehaviour context)
