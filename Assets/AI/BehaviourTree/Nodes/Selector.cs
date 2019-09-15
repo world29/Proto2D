@@ -36,7 +36,7 @@ namespace Proto2D.AI
             m_nodeIndex = 0;
         }
 
-        public override NodeStatus Evaluate(BehaviourContext context)
+        public override NodeStatus Evaluate(EnemyBehaviour context)
         {
             for (int i = m_nodeIndex; i < m_nodes.Count; i++)
             {

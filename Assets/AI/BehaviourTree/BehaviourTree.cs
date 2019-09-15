@@ -24,6 +24,11 @@ namespace Proto2D.AI
 
         protected override void Init()
         {
+            ResetStatus();
+        }
+
+        public void ResetStatus()
+        {
             m_nodeStatus = NodeStatus.READY;
         }
 
@@ -35,17 +40,12 @@ namespace Proto2D.AI
             }
         }
 
-        public abstract NodeStatus Evaluate(BehaviourContext context);
+        public abstract NodeStatus Evaluate(EnemyBehaviour context);
 
         public override object GetValue(XNode.NodePort port)
         {
             return null;
         }
-    }
-
-    public struct BehaviourContext
-    {
-        public GameObject gameObject;
     }
 
     [CreateAssetMenu(fileName = "BehaviourTree", menuName = "Node Graph/BehaviourTree")]
@@ -55,27 +55,27 @@ namespace Proto2D.AI
 
         // ルートノードを検索する
         // 最初に呼ぶ必要がある
-        public void Init()
+        public void OnStart()
         {
-            Debug.Log("BehaviourTree.Init() called");
-
             XNode.Node root = nodes.Find(item => (item as Node).IsRoot());
 
             m_rootNode = root as Node;
             Debug.Assert(m_rootNode != null, "BehaviourTree.m_rootNode is null");
         }
 
-        public NodeStatus Evaluate(GameObject gameObject)
+        public void OnRestart()
         {
-            ResetNodeStatusAll();
+            nodes.ForEach(item => (item as Node).ResetStatus());
+        }
 
-            BehaviourContext context;
-            context.gameObject = gameObject;
+        public NodeStatus OnUpdate(EnemyBehaviour context)
+        {
+            PrepareForEvaluate();
 
             return m_rootNode.Evaluate(context);
         }
 
-        public void ResetNodeStatusAll()
+        private void PrepareForEvaluate()
         {
             nodes.ForEach(item => (item as Node).PreEvaluate());
         }

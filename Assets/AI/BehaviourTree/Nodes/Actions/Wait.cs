@@ -10,7 +10,7 @@ namespace Proto2D.AI
 
         private float timeWaitStart;
 
-        public override NodeStatus Evaluate(BehaviourContext context)
+        public override NodeStatus Evaluate(EnemyBehaviour context)
         {
             if (m_nodeStatus == NodeStatus.READY)
             {
