@@ -12,7 +12,7 @@ namespace Proto2D.AI
         {
             context.MoveForward(speed);
 
-            m_nodeStatus = NodeStatus.RUNNING;
+            m_nodeStatus = NodeStatus.SUCCESS;
 
             return m_nodeStatus;
         }

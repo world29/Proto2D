@@ -18,16 +18,21 @@ namespace Proto2D
         public AI.BehaviourTree behaviourTree;
         public Transform groundDetectionTransform;
         public Transform shotTransform;
+        [Range(0, 360)]
+        public float viewAngle = 45;
+        public float viewDistance = 3;
 
         float groundDetectionRayLength = .5f;
 
         private Controller2DEnemy controller;
         private Vector2 velocity;
         private IEnemyState state;
+        private GameObject player;
 
         void Start()
         {
             controller = GetComponent<Controller2DEnemy>();
+            player = GameObject.FindGameObjectWithTag("Player");
 
             if (behaviourTree)
             {
@@ -115,6 +120,31 @@ namespace Proto2D
             Instantiate(prefab, shotTransform.position, shotTransform.rotation, gameObject.transform);
         }
 
+        public virtual bool IsPlayerInSight()
+        {
+            if (player == null)
+            {
+                Debug.Assert(false, "Player was not found");
+                return false;
+            }
+
+            Vector3 toPlayer = player.transform.position - gameObject.transform.position;
+            if (facing == Facing.Left)
+            {
+                toPlayer.x *= -1;
+            }
+
+            float angleDeg = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
+            float distance = toPlayer.magnitude;
+
+            float viewAngleHalf = viewAngle * .5f;
+            if (angleDeg <= viewAngleHalf && angleDeg >= -viewAngleHalf && distance <= viewDistance)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void OnReceiveDamage(DamageType type, float damage, GameObject sender)
         {
             switch (type)
@@ -192,6 +222,35 @@ namespace Proto2D
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
             Gizmos.color = new Color(1, 1, 0, .3f);
             Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
+
+#if UNITY_EDITOR
+            {
+                float angleHalf = viewAngle * .5f;
+
+                if (Application.isPlaying && IsPlayerInSight())
+                {
+                    UnityEditor.Handles.color = new Color(0, 1, 0, .2f);
+                }
+                else
+                {
+                    UnityEditor.Handles.color = new Color(1, 0, 0, .2f);
+                }
+
+                UnityEditor.Handles.DrawSolidArc(
+                    gameObject.transform.position,
+                    Vector3.forward,
+                    Vector3.right * (float)facing,
+                    angleHalf, viewDistance);
+
+                UnityEditor.Handles.DrawSolidArc(
+                    gameObject.transform.position,
+                    Vector3.forward,
+                    Vector3.right * (float)facing,
+                    -angleHalf, viewDistance);
+
+                UnityEditor.Handles.color = Color.white;
+            }
+#endif
 
             // 向き
             if (!Application.isPlaying)
