@@ -40,9 +40,15 @@ namespace Proto2D
 
         void Update()
         {
+            ResetMovement();
             UpdateAI();
             UpdateMovement();
             UpdateFacing();
+        }
+
+        void ResetMovement()
+        {
+            velocity.x = 0;
         }
 
         void UpdateAI()
