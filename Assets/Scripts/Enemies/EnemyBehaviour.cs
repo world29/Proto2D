@@ -16,7 +16,10 @@ namespace Proto2D
 
         // AI behaviour
         public AI.BehaviourTree behaviourTree;
+        public Transform groundDetectionTransform;
         public Transform shotTransform;
+
+        float groundDetectionRayLength = .5f;
 
         private Controller2DEnemy controller;
         private Vector2 velocity;
@@ -39,6 +42,7 @@ namespace Proto2D
         {
             UpdateAI();
             UpdateMovement();
+            UpdateFacing();
         }
 
         void UpdateAI()
@@ -59,6 +63,13 @@ namespace Proto2D
             }
         }
 
+        void UpdateFacing()
+        {
+            Vector3 scl = transform.localScale;
+            scl.x = Mathf.Abs(scl.x) * (float)facing;
+            transform.localScale = scl;
+        }
+
         private void ChangeState(IEnemyState next)
         {
             if (state != next)
@@ -69,9 +80,28 @@ namespace Proto2D
             }
         }
 
-        public virtual bool IsDamaging()
+        public virtual void MoveForward(float moveSpeed)
         {
-            return (state as EnemyState_Damage) != null;
+            if (CanMoveForward())
+            {
+                velocity.x = moveSpeed * (float)facing;
+            }
+            else
+            {
+                facing = (facing == Facing.Right) ? Facing.Left : Facing.Right;
+            }
+        }
+
+        public bool CanMoveForward()
+        {
+            // 進行方向に地面があるか調べる
+            RaycastHit2D groundInfo = Physics2D.Raycast(groundDetectionTransform.position, Vector2.down, groundDetectionRayLength, controller.collisionMask);
+            Debug.DrawRay(groundDetectionTransform.position, Vector2.down, Color.red);
+
+            // 進行方向に障害物があるか調べる
+            bool obstacleInfo = facing == Facing.Right ? controller.collisions.right : controller.collisions.left;
+
+            return groundInfo && !obstacleInfo;
         }
 
         public virtual void Shot(Projectile prefab)
@@ -166,6 +196,6 @@ namespace Proto2D
             }
         }
 
-        public enum Facing { Right, Left }
+        public enum Facing { Right = 1, Left = -1 }
     }
 }
