@@ -10,23 +10,23 @@ namespace Proto2D
 
         private float timeToTransition;
 
-        public void OnEnter(EnemyBehaviour context)
+        public void OnEnter(EnemyBehaviour enemyBehaviour)
         {
-            animator = context.gameObject.GetComponent<Animator>();
+            animator = enemyBehaviour.gameObject.GetComponent<Animator>();
 
             animator.SetBool("damage", true);
 
-            context.Blink(context.damageDuration, context.blinkInterval);
+            enemyBehaviour.Blink(enemyBehaviour.damageDuration, enemyBehaviour.blinkInterval);
 
-            timeToTransition = Time.timeSinceLevelLoad + context.damageDuration;
+            timeToTransition = Time.timeSinceLevelLoad + enemyBehaviour.damageDuration;
         }
 
-        public void OnExit(EnemyBehaviour context)
+        public void OnExit(EnemyBehaviour enemyBehaviour)
         {
             animator.SetBool("damage", false);
         }
 
-        public IEnemyState OnUpdate(EnemyBehaviour context)
+        public IEnemyState OnUpdate(EnemyBehaviour enemyBehaviour)
         {
             if (Time.timeSinceLevelLoad >= timeToTransition)
             {

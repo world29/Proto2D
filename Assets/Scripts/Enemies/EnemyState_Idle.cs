@@ -6,23 +6,23 @@ namespace Proto2D
 {
     public class EnemyState_Idle : IEnemyState
     {
-        public void OnEnter(EnemyBehaviour context)
+        public void OnEnter(EnemyBehaviour enemyBehaviour)
         {
-            if (context.behaviourTree)
+        }
+
+        public void OnExit(EnemyBehaviour enemyBehaviour)
+        {
+            if (enemyBehaviour.behaviourTree)
             {
-                context.behaviourTree.OnRestart();
+                enemyBehaviour.behaviourTree.Abort(enemyBehaviour.behaviourTreeContext);
             }
         }
 
-        public void OnExit(EnemyBehaviour context)
+        public IEnemyState OnUpdate(EnemyBehaviour enemyBehaviour)
         {
-        }
-
-        public IEnemyState OnUpdate(EnemyBehaviour context)
-        {
-            if (context.behaviourTree)
+            if (enemyBehaviour.behaviourTree)
             {
-                context.behaviourTree.OnUpdate(context);
+                enemyBehaviour.behaviourTree.Evaluate(enemyBehaviour.behaviourTreeContext);
             }
 
             return this;

@@ -16,6 +16,8 @@ namespace Proto2D
 
         // AI behaviour
         public AI.BehaviourTree behaviourTree;
+        [HideInInspector]
+        public AI.BehaviourTreeContext behaviourTreeContext;
         public Transform groundDetectionTransform;
         public Transform shotTransform;
         [Range(0, 360)]
@@ -33,10 +35,11 @@ namespace Proto2D
         {
             controller = GetComponent<Controller2DEnemy>();
             player = GameObject.FindGameObjectWithTag("Player");
+            behaviourTreeContext = new AI.BehaviourTreeContext(this);
 
             if (behaviourTree)
             {
-                behaviourTree.OnStart();
+                behaviourTree.Init();
             }
 
             state = new EnemyState_Idle();

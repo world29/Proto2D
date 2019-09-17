@@ -6,10 +6,10 @@ namespace Proto2D
 {
     public interface IEnemyState
     {
-        void OnEnter(EnemyBehaviour context);
+        void OnEnter(EnemyBehaviour enemyBehaviour);
 
-        void OnExit(EnemyBehaviour context);
+        void OnExit(EnemyBehaviour enemyBehaviour);
 
-        IEnemyState OnUpdate(EnemyBehaviour context);
+        IEnemyState OnUpdate(EnemyBehaviour enemyBehaviour);
     }
 }
