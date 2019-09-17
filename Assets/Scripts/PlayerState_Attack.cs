@@ -176,7 +176,17 @@ public class PlayerState_Attack : IPlayerState
         // 水平方向の速度を算出
         if (input.directionalInput.x == 0)
         {
-            ;
+            // 方向キーの入力がない場合、速度は 0 に近づく
+            if (Mathf.Abs(velocity.x) > 0)
+            {
+                velocity.x += -velocity.x * player.attenuationAir;
+            }
+
+            // 速度が十分小さいなら 0 とする
+            if (Mathf.Abs(velocity.x) < .1f)
+            {
+                velocity.x = 0;
+            }
         }
         else
         {
