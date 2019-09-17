@@ -9,12 +9,13 @@ namespace Proto2D.AI
         [Output] public List<Node> children;
 
         private List<Node> m_nodes = new List<Node>();
-        private int m_nodeIndex;
+
+#if UNITY_EDITOR
+        private NodeStatus m_nodeStatus = NodeStatus.SUCCESS;
+#endif
 
         protected override void Init()
         {
-            Debug.Log("SelectorNode.Init() called");
-
             //
             m_nodes.Clear();
 
@@ -29,28 +30,34 @@ namespace Proto2D.AI
             {
                 m_nodes.Add(port.node as Node);
             }
-
-            Debug.LogFormat("SelectorNode.Init() : nodes.Count = {0}", m_nodes.Count);
-
-            //
-            m_nodeIndex = 0;
         }
 
-        public override NodeStatus Evaluate(EnemyBehaviour context)
+        public override void PrepareForEvaluation(BehaviourTreeContext context)
         {
-            for (int i = m_nodeIndex; i < m_nodes.Count; i++)
+            SelectorNodeContext nodeContext = context.dict.Get<SelectorNodeContext>(GetInstanceID());
+            if (nodeContext.nodeStatus != NodeStatus.RUNNING)
             {
-                m_nodeStatus = m_nodes[i].Evaluate(context);
-                switch (m_nodeStatus)
+                nodeContext.nodeStatus = NodeStatus.READY;
+            }
+        }
+
+        public override NodeStatus Evaluate(BehaviourTreeContext context)
+        {
+            SelectorNodeContext nodeContext = context.dict.Get<SelectorNodeContext>(GetInstanceID());
+
+            for (int i = nodeContext.nodeIndex; i < m_nodes.Count; i++)
+            {
+                nodeContext.nodeStatus = m_nodes[i].Evaluate(context);
+                switch (nodeContext.nodeStatus)
                 {
                     case NodeStatus.FAILURE:
                     case NodeStatus.SUCCESS:
                         // 次回の評価は先頭ノードから開始する
-                        m_nodeIndex = 0;
+                        nodeContext.nodeIndex = 0;
                         break;
                     case NodeStatus.RUNNING:
                         // 次回の評価はこのノードから開始する
-                        m_nodeIndex = i;
+                        nodeContext.nodeIndex = i;
                         break;
                     default:
                         Debug.Assert(false, "Invalid Node Status");
@@ -58,13 +65,41 @@ namespace Proto2D.AI
                 }
 
                 // FAILURE の場合のみ、次のノードを評価する
-                if (m_nodeStatus != NodeStatus.FAILURE)
+                if (nodeContext.nodeStatus != NodeStatus.FAILURE)
                 {
                     break;
                 }
             }
 
+            context.dict.Store(GetInstanceID(), nodeContext);
+
+#if UNITY_EDITOR
+            m_nodeStatus = nodeContext.nodeStatus;
+#endif
+
+            return nodeContext.nodeStatus;
+        }
+
+        public override void Abort(BehaviourTreeContext context)
+        {
+            context.dict.Remove(GetInstanceID());
+        }
+
+#if UNITY_EDITOR
+        public override NodeStatus GetStatus()
+        {
             return m_nodeStatus;
+        }
+#endif
+
+        protected class SelectorNodeContext : NodeContext
+        {
+            public int nodeIndex;
+
+            public SelectorNodeContext()
+            {
+                nodeIndex = 0;
+            }
         }
     }
 }

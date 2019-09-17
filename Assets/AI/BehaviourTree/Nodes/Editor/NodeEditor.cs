@@ -12,7 +12,7 @@ namespace Proto2D.AI
         {
             GUI.color = Color.white;
             Node node = target as Node;
-            switch (node.Status)
+            switch (node.GetStatus())
             {
                 case NodeStatus.READY:
                     GUI.color = Color.yellow;
@@ -38,7 +38,7 @@ namespace Proto2D.AI
             Node node = target as Node;
 
             Action actionNode = node as Action;
-            if (actionNode && actionNode.Status == NodeStatus.RUNNING)
+            if (actionNode && actionNode.GetStatus() == NodeStatus.RUNNING)
             {
                 EditorGUI.ProgressBar(new Rect(3, 0, GetWidth() - 6, 5), actionNode.GetProgress(), "");
             }

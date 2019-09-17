@@ -10,9 +10,9 @@ namespace Proto2D.AI
         public string paramName;
         public string paramValue;
 
-        public override NodeStatus Evaluate(EnemyBehaviour context)
+        public override NodeStatus Evaluate(BehaviourTreeContext context)
         {
-            Animator animator = context.gameObject.GetComponent<Animator>();
+            Animator animator = context.enemy.gameObject.GetComponent<Animator>();
             if (animator == null)
             {
                 Debug.LogWarning("Animator is not set");

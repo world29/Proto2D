@@ -8,7 +8,7 @@ namespace Proto2D.AI
     {
         [Output] public Node child;
 
-        protected Node m_node;
+        [SerializeField] protected Node m_node;
 
         protected override void Init()
         {

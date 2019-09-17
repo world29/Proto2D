@@ -8,13 +8,11 @@ namespace Proto2D.AI
     {
         public float speed = 1;
 
-        public override NodeStatus Evaluate(EnemyBehaviour context)
+        public override NodeStatus Evaluate(BehaviourTreeContext context)
         {
-            context.MoveForward(speed);
+            context.enemy.MoveForward(speed);
 
-            m_nodeStatus = NodeStatus.SUCCESS;
-
-            return m_nodeStatus;
+            return NodeStatus.SUCCESS;
         }
 
         public override float GetProgress()

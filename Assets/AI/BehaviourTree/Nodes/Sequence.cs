@@ -9,7 +9,10 @@ namespace Proto2D.AI
         [Output] public List<Node> children;
 
         private List<Node> m_nodes = new List<Node>();
-        private int m_nodeIndex;
+
+#if UNITY_EDITOR
+        private NodeStatus m_nodeStatus = NodeStatus.SUCCESS;
+#endif
 
         protected override void Init()
         {
@@ -29,26 +32,34 @@ namespace Proto2D.AI
             {
                 m_nodes.Add(port.node as Node);
             }
-
-            //
-            m_nodeIndex = 0;
         }
 
-        public override NodeStatus Evaluate(EnemyBehaviour context)
+        public override void PrepareForEvaluation(BehaviourTreeContext context)
         {
-            int i = m_nodeIndex;
+            SequenceNodeContext nodeContext = context.dict.Get<SequenceNodeContext>(GetInstanceID());
+            if (nodeContext.nodeStatus != NodeStatus.RUNNING)
+            {
+                nodeContext.nodeStatus = NodeStatus.READY;
+            }
+        }
+
+        public override NodeStatus Evaluate(BehaviourTreeContext context)
+        {
+            SequenceNodeContext nodeContext = context.dict.Get<SequenceNodeContext>(GetInstanceID());
+
+            int i = nodeContext.nodeIndex;
             for (; i < m_nodes.Count; i++)
             {
-                m_nodeStatus = m_nodes[i].Evaluate(context);
-                switch (m_nodeStatus)
+                nodeContext.nodeStatus = m_nodes[i].Evaluate(context);
+                switch (nodeContext.nodeStatus)
                 {
                     case NodeStatus.FAILURE:
                         // 次回の評価は先頭ノードから開始する
-                        m_nodeIndex = 0;
+                        nodeContext.nodeIndex = 0;
                         break;
                     case NodeStatus.RUNNING:
                         // 次回の評価はこのノードから開始する
-                        m_nodeIndex = i;
+                        nodeContext.nodeIndex = i;
                         break;
                     case NodeStatus.SUCCESS:
                         break;
@@ -58,19 +69,47 @@ namespace Proto2D.AI
                 }
 
                 // SUCCESS の場合のみ、次のノードを評価する
-                if (m_nodeStatus != NodeStatus.SUCCESS)
+                if (nodeContext.nodeStatus != NodeStatus.SUCCESS)
                 {
                     break;
                 }
             }
 
             // 末尾ノードが SUCCESS なら、次回の評価は先頭ノードから開始する
-            if (i == m_nodes.Count && m_nodeStatus == NodeStatus.SUCCESS)
+            if (i == m_nodes.Count && nodeContext.nodeStatus == NodeStatus.SUCCESS)
             {
-                m_nodeIndex = 0;
+                nodeContext.nodeIndex = 0;
             }
 
+            context.dict.Store(GetInstanceID(), nodeContext);
+
+#if UNITY_EDITOR
+            m_nodeStatus = nodeContext.nodeStatus;
+#endif
+
+            return nodeContext.nodeStatus;
+        }
+
+        public override void Abort(BehaviourTreeContext context)
+        {
+            context.dict.Remove(GetInstanceID());
+        }
+
+#if UNITY_EDITOR
+        public override NodeStatus GetStatus()
+        {
             return m_nodeStatus;
+        }
+#endif
+
+        protected class SequenceNodeContext : NodeContext
+        {
+            public int nodeIndex;
+
+            public SequenceNodeContext()
+            {
+                nodeIndex = 0;
+            }
         }
     }
 }

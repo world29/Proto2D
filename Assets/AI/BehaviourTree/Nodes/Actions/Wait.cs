@@ -8,27 +8,70 @@ namespace Proto2D.AI
     {
         public float timeout = 1;
 
-        private float timeWaitStart;
+#if UNITY_EDITOR
+        private float m_timeWaitStart = 0;
+        private NodeStatus m_nodeStatus = NodeStatus.SUCCESS;
+#endif
 
-        public override NodeStatus Evaluate(EnemyBehaviour context)
+        public override void PrepareForEvaluation(BehaviourTreeContext context)
         {
-            if (m_nodeStatus == NodeStatus.READY)
+            WaitActionNodeContext nodeContext = context.dict.Get<WaitActionNodeContext>(GetInstanceID());
+            if (nodeContext.nodeStatus != NodeStatus.RUNNING)
             {
-                timeWaitStart = Time.timeSinceLevelLoad;
-
-                m_nodeStatus = NodeStatus.RUNNING;
+                nodeContext.nodeStatus = NodeStatus.READY;
             }
-            else if ((Time.timeSinceLevelLoad - timeWaitStart) >= timeout)
+        }
+
+        public override NodeStatus Evaluate(BehaviourTreeContext context)
+        {
+            WaitActionNodeContext nodeContext = context.dict.Get<WaitActionNodeContext>(GetInstanceID());
+
+            if (nodeContext.nodeStatus == NodeStatus.READY)
             {
-                m_nodeStatus = NodeStatus.SUCCESS;
+                nodeContext.timeWaitStart = Time.timeSinceLevelLoad;
+
+                nodeContext.nodeStatus = NodeStatus.RUNNING;
+            }
+            else if ((Time.timeSinceLevelLoad - nodeContext.timeWaitStart) >= timeout)
+            {
+                nodeContext.nodeStatus = NodeStatus.SUCCESS;
             }
 
-            return m_nodeStatus;
+            context.dict.Store(GetInstanceID(), nodeContext);
+
+#if UNITY_EDITOR
+        m_timeWaitStart = nodeContext.timeWaitStart;
+        m_nodeStatus = nodeContext.nodeStatus;
+#endif
+
+            return nodeContext.nodeStatus;
+        }
+
+        public override void Abort(BehaviourTreeContext context)
+        {
+            context.dict.Remove(GetInstanceID());
         }
 
         public override float GetProgress()
         {
-            return (Time.timeSinceLevelLoad - timeWaitStart) / timeout;
+            return (Time.timeSinceLevelLoad - m_timeWaitStart) / timeout;
+        }
+
+#if UNITY_EDITOR
+        public override NodeStatus GetStatus()
+        {
+            return m_nodeStatus;
+        }
+#endif
+
+        protected class WaitActionNodeContext : NodeContext
+        {
+            public float timeWaitStart;
+
+            public WaitActionNodeContext()
+            {
+                timeWaitStart = 0;
+            }
         }
     }
 }

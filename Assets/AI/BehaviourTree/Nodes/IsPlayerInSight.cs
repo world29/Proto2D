@@ -6,19 +6,53 @@ namespace Proto2D.AI
 {
     public class IsPlayerInSight : Decorator
     {
-        public override NodeStatus Evaluate(EnemyBehaviour context)
+
+#if UNITY_EDITOR
+        private NodeStatus m_nodeStatus = NodeStatus.SUCCESS;
+#endif
+
+        public override void PrepareForEvaluation(BehaviourTreeContext context)
         {
-            if (context.IsPlayerInSight() || m_nodeStatus == NodeStatus.RUNNING)
+            NodeContext nodeContext = context.dict.Get<NodeContext>(GetInstanceID());
+            if (nodeContext.nodeStatus != NodeStatus.RUNNING)
             {
-                m_nodeStatus = m_node.Evaluate(context);
+                nodeContext.nodeStatus = NodeStatus.READY;
+            }
+        }
+
+        public override NodeStatus Evaluate(BehaviourTreeContext context)
+        {
+            NodeContext nodeContext = context.dict.Get<NodeContext>(GetInstanceID());
+
+            if (context.enemy.IsPlayerInSight() || nodeContext.nodeStatus == NodeStatus.RUNNING)
+            {
+                nodeContext.nodeStatus = m_node.Evaluate(context);
             }
             else
             {
-                m_nodeStatus = NodeStatus.FAILURE;
+                nodeContext.nodeStatus = NodeStatus.FAILURE;
             }
 
+            context.dict.Store(GetInstanceID(), nodeContext);
+
+#if UNITY_EDITOR
+            m_nodeStatus = nodeContext.nodeStatus;
+#endif
+
+            return nodeContext.nodeStatus;
+        }
+
+        public override void Abort(BehaviourTreeContext context)
+        {
+            context.dict.Remove(GetInstanceID());
+        }
+
+#if UNITY_EDITOR
+        public override NodeStatus GetStatus()
+        {
             return m_nodeStatus;
         }
+#endif
 
     }
 }
