@@ -94,8 +94,8 @@ public class PlayerInput : MonoBehaviour
         // キーボードとジョイスティックに対応
         directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // スペースキーをタッチとみなす
-        if (Input.GetKeyDown(KeyCode.Space))
+        // スペースキー、マウス右クリックをタッチとみなす
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(1))
         {
             isTouched = true;
         }

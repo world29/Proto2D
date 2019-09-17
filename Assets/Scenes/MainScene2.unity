@@ -27948,6 +27948,11 @@ PrefabInstance:
       propertyPath: actionJoystick
       value: 
       objectReference: {fileID: 2062544270}
+    - target: {fileID: 6503610203471954340, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
+        type: 3}
+      propertyPath: attenuationAir
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 6759853421765695750, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
         type: 3}
       propertyPath: moveJoystick
@@ -77869,7 +77874,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3ff9b4b737da718499afa01a9eaeb7ee, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3654289ebdce3094f9943df1ccc4673b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -80771,6 +80776,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floating Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_Name
+      value: MoveJoystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -80875,16 +80890,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_Name
-      value: MoveJoystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
@@ -92223,6 +92228,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floating Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_Name
+      value: ActionJoystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -92327,16 +92342,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_Name
-      value: ActionJoystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}

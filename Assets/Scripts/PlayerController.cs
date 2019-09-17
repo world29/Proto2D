@@ -19,7 +19,9 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("空中の加速度")]
     public float acceralationAirborne = 1;
     [Header("地上のすべりにくさ"), Range(0, 1)]
-    public float friction = 1;
+    public float frictionGround = 1;
+    [Header("空中での速度減衰係数"), Range(0, 1)]
+    public float attenuationAir = .02f;
 
     [Header("ノックバック中の操作不能時間")]
     public float knockbackDuration = .5f;
@@ -136,7 +138,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state.OnEnter(gameObject);
         }
 
-        UpdateDirection(input.directionalInput.x);
+        UpdateDirection();
         UpdateAnimationParameters();
     }
 
@@ -183,16 +185,24 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
     }
 
-    void UpdateDirection(float inputX)
+    void UpdateDirection()
     {
+        float inputX = input.directionalInput.x;
         if (inputX != 0)
         {
             direction = Mathf.Sign(inputX);
-
-            Vector3 scale = transform.localScale;
-            scale.x = direction;
-            transform.localScale = scale;
         }
+        else if (velocity.x == 0)
+        {
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 diff = targetPosition - transform.position;
+
+            direction = Mathf.Sign(diff.x);
+        }
+
+        Vector3 scale = transform.localScale;
+        scale.x = direction;
+        transform.localScale = scale;
     }
 
     void UpdateAnimationParameters()
