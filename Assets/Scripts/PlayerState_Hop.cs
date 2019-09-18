@@ -48,6 +48,8 @@ public class PlayerState_Hop : IPlayerState
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
 
+        UpdateFacing();
+
         if (controller.collisions.below || controller.collisions.above)
         {
             player.velocity.y = 0;
@@ -102,5 +104,18 @@ public class PlayerState_Hop : IPlayerState
         // 垂直方向の速度を算出
         velocity.y -= player.gravity * Time.deltaTime;
         velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
+    }
+
+    void UpdateFacing()
+    {
+        float inputX = input.directionalInput.x;
+        if (inputX != 0)
+        {
+            player.direction = Mathf.Sign(inputX);
+        }
+
+        Vector3 scale = player.gameObject.transform.localScale;
+        scale.x = player.direction;
+        player.gameObject.transform.localScale = scale;
     }
 }

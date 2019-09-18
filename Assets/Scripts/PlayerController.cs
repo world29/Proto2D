@@ -138,7 +138,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state.OnEnter(gameObject);
         }
 
-        UpdateDirection();
         UpdateAnimationParameters();
     }
 
@@ -183,26 +182,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state = next;
             state.OnEnter(gameObject);
         }
-    }
-
-    void UpdateDirection()
-    {
-        float inputX = input.directionalInput.x;
-        if (inputX != 0)
-        {
-            direction = Mathf.Sign(inputX);
-        }
-        else if (velocity.x == 0)
-        {
-            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 diff = targetPosition - transform.position;
-
-            direction = Mathf.Sign(diff.x);
-        }
-
-        Vector3 scale = transform.localScale;
-        scale.x = direction;
-        transform.localScale = scale;
     }
 
     void UpdateAnimationParameters()

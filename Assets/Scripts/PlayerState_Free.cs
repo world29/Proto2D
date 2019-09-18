@@ -29,6 +29,8 @@ public class PlayerState_Free : IPlayerState
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
 
+        UpdateFacing();
+
         ////////////////////////////////////
         // PostUpdateMove
         ////////////////////////////////////
@@ -100,4 +102,23 @@ public class PlayerState_Free : IPlayerState
         velocity.y = Mathf.Clamp(velocity.y, -player.maxVelocity.y, player.maxVelocity.y);
     }
 
+    void UpdateFacing()
+    {
+        float inputX = input.directionalInput.x;
+        if (inputX != 0)
+        {
+            player.direction = Mathf.Sign(inputX);
+        }
+        else if (player.velocity.x == 0)
+        {
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 diff = targetPosition - player.gameObject.transform.position;
+
+            player.direction = Mathf.Sign(diff.x);
+        }
+
+        Vector3 scale = player.gameObject.transform.localScale;
+        scale.x = player.direction;
+        player.gameObject.transform.localScale = scale;
+    }
 }
