@@ -15,7 +15,7 @@ public class JumpAttackCursor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
