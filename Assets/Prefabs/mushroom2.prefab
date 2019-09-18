@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2294191870018802765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5999483903810187218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b7fb8274d6ab049ac8ddb1b9a1d4af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  receiver: {fileID: 8778643387317822647}
 --- !u!1 &8778643387317822647
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +14,7 @@ GameObject:
   - component: {fileID: 8778643387317822641}
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 793784305697190219}
-  - component: {fileID: 439724807625870644}
+  - component: {fileID: 1976084056991851050}
   m_Layer: 0
   m_Name: mushroom2
   m_TagString: Enemy
@@ -184,7 +171,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
---- !u!114 &439724807625870644
+--- !u!114 &1976084056991851050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,15 +180,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8778643387317822647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971477a4140d984781589a2f5116bb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b6c1ee5863dda24e86f86bda0f61380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: 20
   health: 1
-  damageDuration: 0.5
-  delayToDeath: 0.5
-  direction: 1
-  velocity: {x: 0, y: 0}
+  facing: 1
+  blinkInterval: 0.1
+  damageDuration: 3
+  behaviourTree: {fileID: 0}
+  groundDetectionTransform: {fileID: 0}
+  shotTransform: {fileID: 0}
+  viewAngle: 45
+  viewDistance: 0
 --- !u!1001 &5335596569922243949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -297,14 +288,13 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
---- !u!1 &5999483903810187218 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-    type: 3}
-  m_PrefabInstance: {fileID: 5335596569922243949}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5999483903810187055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
