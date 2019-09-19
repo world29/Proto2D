@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraShake : MonoBehaviour
+public class CameraShake : SingletonMonoBehaviour<CameraShake>
 {
     private Camera mainCamera;
     private float shakeAmount;
 
-    private void Awake()
+    private void Start()
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
