@@ -209,18 +209,20 @@ namespace Proto2D
 
         IEnumerator StartBlinking(float duration, float blinkInterval)
         {
-            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+            SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
 
             float endTime = Time.timeSinceLevelLoad + duration;
 
             while (Time.timeSinceLevelLoad < endTime)
             {
-                renderer.color = Color.white - renderer.color;
+                foreach (var renderer in renderers)
+                    renderer.color = Color.white - renderer.color;
 
                 yield return new WaitForSeconds(blinkInterval);
             }
 
-            renderer.color = Color.white;
+            foreach (var renderer in renderers)
+                renderer.color = Color.white;
         }
 
         private void OnDrawGizmos()
