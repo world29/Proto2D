@@ -195,13 +195,9 @@ namespace Proto2D
             if (health <= 0)
             {
                 health = 0;
+            }
 
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                ChangeState(new EnemyState_Damage());
-            }
+            ChangeState(new EnemyState_Damage());
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)

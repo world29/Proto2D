@@ -30,6 +30,11 @@ namespace Proto2D
         {
             if (Time.timeSinceLevelLoad >= timeToTransition)
             {
+                if (enemyBehaviour.health == 0)
+                {
+                    //MEMO: 仮実装として SetActive(false) している
+                    enemyBehaviour.gameObject.SetActive(false);
+                }
                 return new EnemyState_Idle();
             }
 
