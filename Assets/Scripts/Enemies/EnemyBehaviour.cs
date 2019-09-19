@@ -120,7 +120,14 @@ namespace Proto2D
 
         public virtual void Shot(Projectile prefab)
         {
-            Instantiate(prefab, shotTransform.position, shotTransform.rotation, gameObject.transform);
+            Projectile projectile = Instantiate(prefab, shotTransform.position, shotTransform.rotation) as Projectile;
+
+            // 向きを合わせる
+            if (facing == Facing.Left)
+            {
+                projectile.transform.localScale = gameObject.transform.localScale;
+                projectile.initialVelocity.x *= -1;
+            }
         }
 
         public virtual bool IsPlayerInSight()
