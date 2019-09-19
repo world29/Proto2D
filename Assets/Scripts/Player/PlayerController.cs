@@ -65,6 +65,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float shakeAmountOnStomp = 0;
     [Header("踏みつけ攻撃ヒット時のカメラ揺れ - 持続時間")]
     public float shakeLengthOnStomp = 0;
+    [Header("踏みつけ攻撃のヒットストップ")]
+    public float hitStopDurationOnStomp = 0;
+    [Header("踏みつけ攻撃ヒット時に跳ねる速さ")]
+    public float jumpSpeedOnStomp = 15;
 
     [Header("ジャンプアタックヒット時のエフェクト")]
     public GameObject attackEffectPrefab;
@@ -74,6 +78,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float shakeLengthOnJumpAttack = .1f;
     [Header("ジャンプアタックのヒットストップ")]
     public float hitStopDuration = 0;
+    [Header("ジャンプアタックヒット時に跳ねる速さ")]
+    public float jumpSpeedOnJumpAttack = 15;
 
     [HideInInspector]
     public Vector2 velocity;
@@ -224,25 +230,32 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         {
             case DamageType.Stomp:
                 {
-                    // 踏みつけの反動で跳ねる
-                    velocity.y = jumpSpeed;
-
-                    if (stompEffectPrefab)
+                    UnityAction action = () =>
                     {
-                        GameObject effect = Instantiate(stompEffectPrefab, transform.position, Quaternion.identity, null);
-                        Destroy(effect, 1);
-                    }
+                        // 踏みつけの反動で跳ねる
+                        velocity.y = jumpSpeedOnStomp;
 
-                    CameraShake.Instance.Shake(shakeAmountOnStomp, shakeLengthOnStomp);
+                        if (stompEffectPrefab)
+                        {
+                            GameObject effect = Instantiate(stompEffectPrefab, transform.position, Quaternion.identity, null);
+                            Destroy(effect, 1);
+                        }
+
+                        CameraShake.Instance.Shake(shakeAmountOnStomp, shakeLengthOnStomp);
+                    };
 
                     animator.SetTrigger("stomp");
+
+                    // ヒットストップ
+                    StartCoroutine(StartInvincible(.5f, false));
+                    StartCoroutine(StartHitStop(hitStopDurationOnStomp, action));
                 }
                 break;
             case DamageType.Attack:
                 {
                     UnityAction action = () => {
                         // ジャンプアタックの反動で跳ねる
-                        velocity.y = jumpSpeed;
+                        velocity.y = jumpSpeedOnJumpAttack;
 
                         if (attackEffectPrefab)
                         {
