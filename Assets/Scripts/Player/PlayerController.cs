@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
@@ -239,19 +240,22 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                 break;
             case DamageType.Attack:
                 {
-                    // ジャンプアタックの反動で跳ねる
-                    velocity.y = jumpSpeed;
+                    UnityAction action = () => {
+                        // ジャンプアタックの反動で跳ねる
+                        velocity.y = jumpSpeed;
 
-                    if (attackEffectPrefab)
-                    {
-                        GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
-                        Destroy(effect, 1);
-                    }
+                        if (attackEffectPrefab)
+                        {
+                            GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
+                            Destroy(effect, 1);
+                        }
 
-                    CameraShake.Instance.Shake(shakeAmountOnJumpAttack, shakeLengthOnJumpAttack);
+                        CameraShake.Instance.Shake(shakeAmountOnJumpAttack, shakeLengthOnJumpAttack);
+                    };
 
                     // ヒットストップ
-                    StartCoroutine(StartHitStop(hitStopDuration));
+                    StartCoroutine(StartInvincible(.5f, false));
+                    StartCoroutine(StartHitStop(hitStopDuration, action));
                 }
                 break;
         }
@@ -321,31 +325,43 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
     }
 
-    IEnumerator StartInvincible(float duration)
+    IEnumerator StartInvincible(float duration, bool blinking = true)
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-
-        float endTime = Time.timeSinceLevelLoad + duration;
-
         isInvincible = true;
 
-        while (Time.timeSinceLevelLoad < endTime)
+        if (blinking)
         {
-            renderer.color = Color.white - renderer.color;
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-            yield return new WaitForSeconds(invincibleBlinkInterval);
+            float endTime = Time.timeSinceLevelLoad + duration;
+            while (Time.timeSinceLevelLoad < endTime)
+            {
+                renderer.color = Color.white - renderer.color;
+
+                yield return new WaitForSeconds(invincibleBlinkInterval);
+            }
+            renderer.color = Color.white;
+        }
+        else
+        {
+            yield return new WaitForSeconds(duration);
         }
 
-        renderer.color = Color.white;
         isInvincible = false;
     }
 
-    IEnumerator StartHitStop(float duration)
+    IEnumerator StartHitStop(float duration, UnityAction onCompleted)
     {
+        float animationSpeed = animator.speed;
+
+        animator.speed = 0;
         isHitStop = true;
 
         yield return new WaitForSeconds(duration);
 
         isHitStop = false;
+        animator.speed = animationSpeed;
+
+        onCompleted();
     }
 }
