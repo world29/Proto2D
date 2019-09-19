@@ -181,7 +181,7 @@ public class PlayerState_Attack : IPlayerState
             // 方向キーの入力がない場合、速度は 0 に近づく
             if (Mathf.Abs(velocity.x) > 0)
             {
-                velocity.x += -velocity.x * player.attenuationAir;
+                velocity.x += -velocity.x * player.attenuationJumpAttack;
             }
 
             // 速度が十分小さいなら 0 とする
@@ -192,7 +192,7 @@ public class PlayerState_Attack : IPlayerState
         }
         else
         {
-            float acc = player.acceralationAirborne;
+            float acc = player.acceralationJumpAttack;
             acc *= Mathf.Sign(input.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;

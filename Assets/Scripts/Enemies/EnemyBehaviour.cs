@@ -120,7 +120,14 @@ namespace Proto2D
 
         public virtual void Shot(Projectile prefab)
         {
-            Instantiate(prefab, shotTransform.position, shotTransform.rotation, gameObject.transform);
+            Projectile projectile = Instantiate(prefab, shotTransform.position, shotTransform.rotation) as Projectile;
+
+            // 向きを合わせる
+            if (facing == Facing.Left)
+            {
+                projectile.transform.localScale = gameObject.transform.localScale;
+                projectile.initialVelocity.x *= -1;
+            }
         }
 
         public virtual bool IsPlayerInSight()
@@ -195,13 +202,9 @@ namespace Proto2D
             if (health <= 0)
             {
                 health = 0;
+            }
 
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                ChangeState(new EnemyState_Damage());
-            }
+            ChangeState(new EnemyState_Damage());
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)

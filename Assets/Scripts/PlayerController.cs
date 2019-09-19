@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float frictionGround = 1;
     [Header("空中での速度減衰係数"), Range(0, 1)]
     public float attenuationAir = .02f;
+    [Header("ジャンプアタック中の速度減衰係数"), Range(0, 1)]
+    public float attenuationJumpAttack = 0;
+    [Header("ジャンプアタック中に方向キーで与えられる加速度")]
+    public float acceralationJumpAttack = .5f;
 
     [Header("ノックバック中の操作不能時間")]
     public float knockbackDuration = .5f;
@@ -50,9 +54,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float jumpAttackBelowDirectionSpeed = 8f;
     [Header("ジャンプアタックの真下方向の速さ")]
     public float jumpAttackDiagonallyBelowDirectionSpeed = 5f;
-    //TODO:
-    //[Header("ジャンプアタック中に方向キーで与えられる加速度")]
-    //public float acceralationWhileJumpAttack = 1f;
 
     [Header("ホップ中に攻撃判定あり")]
     public bool enableHopAttackMode = true;
