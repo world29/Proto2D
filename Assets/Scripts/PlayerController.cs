@@ -60,8 +60,17 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     [Header("踏みつけ攻撃ヒット時のエフェクト")]
     public GameObject stompEffectPrefab;
+    [Header("踏みつけ攻撃ヒット時のカメラ揺れ - 大きさ")]
+    public float shakeAmountOnStomp = 0;
+    [Header("踏みつけ攻撃ヒット時のカメラ揺れ - 持続時間")]
+    public float shakeLengthOnStomp = 0;
+
     [Header("ジャンプアタックヒット時のエフェクト")]
     public GameObject attackEffectPrefab;
+    [Header("ジャンプアタックヒット時のカメラ揺れ - 大きさ")]
+    public float shakeAmountOnJumpAttack = .2f;
+    [Header("ジャンプアタックヒット時のカメラ揺れ - 持続時間")]
+    public float shakeLengthOnJumpAttack = .1f;
     [Header("ジャンプアタックのヒットストップ")]
     public float hitStopDuration = 0;
 
@@ -223,6 +232,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                         Destroy(effect, 1);
                     }
 
+                    CameraShake.Instance.Shake(shakeAmountOnStomp, shakeLengthOnStomp);
+
                     animator.SetTrigger("stomp");
                 }
                 break;
@@ -236,6 +247,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                         GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
                         Destroy(effect, 1);
                     }
+
+                    CameraShake.Instance.Shake(shakeAmountOnJumpAttack, shakeLengthOnJumpAttack);
 
                     // ヒットストップ
                     StartCoroutine(StartHitStop(hitStopDuration));
