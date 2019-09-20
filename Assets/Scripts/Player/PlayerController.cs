@@ -248,7 +248,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
                         if (stompEffectPrefab)
                         {
-                            GameObject effect = Instantiate(stompEffectPrefab, transform.position, Quaternion.identity, null);
+                            Vector3 efpos = (info.receiverPos + transform.position)/2;
+                            GameObject effect = Instantiate(stompEffectPrefab, efpos, Quaternion.identity, null);
                             Destroy(effect, 1);
                         }
 
@@ -270,7 +271,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
                         if (attackEffectPrefab)
                         {
-                            GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
+                            Vector3 efpos = (info.receiverPos + transform.position)/2;
+                            GameObject effect = Instantiate(attackEffectPrefab, efpos, Quaternion.identity, null);
                             Destroy(effect, 1);
                         }
 
@@ -399,6 +401,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         if (EffectPrefab)
         {
+           // transform.position = new Vector2 (transform.position.x + OffsetX, transform.position.y + OffsetY);
             GameObject effect = Instantiate(EffectPrefab, transform.position, Quaternion.identity, null);
             Destroy(effect, 1);
         }
