@@ -62,6 +62,7 @@ public class PlayerState_Climb : IPlayerState
         // 壁と反対方向のキー入力で壁からジャンプする
         if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
         {
+            player.PlaySE(player.jumpSE);
             velocity.x = player.wallJumpVelocity.x * -wallDirX;
             velocity.y = player.wallJumpVelocity.y;
         }
