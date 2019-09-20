@@ -2,6 +2,50 @@
 using UnityEngine;
 using UnityEditor;
 
+public class PhysicsBox
+{
+    Rect m_rect;
+    GameObject m_object;
+    public Rigidbody2D m_rigidbody;
+    BoxCollider2D m_collider;
+    int m_maxIteration = 1000;
+
+    public PhysicsBox(Rect rect)
+    {
+        m_rect = rect;
+
+        Init();
+    }
+
+    public void Init()
+    {
+        m_object = new GameObject("Boxies/PhysBox");
+        m_object.transform.position = new Vector3(m_rect.center.x, m_rect.center.y, 0);
+
+        m_rigidbody = m_object.AddComponent<Rigidbody2D>();
+        m_collider = m_object.AddComponent<BoxCollider2D>();
+        m_collider.size = m_rect.size;
+    }
+
+    public void RunSimulation()
+    {
+        Physics.autoSimulation = false;
+        for (int i = 0; i < m_maxIteration; i++)
+        {
+            Physics2D.Simulate(Time.fixedDeltaTime);
+
+        }
+        Physics.autoSimulation = true;
+    }
+
+    public void DrawBox()
+    {
+        GUI.backgroundColor = Color.blue;
+        GUI.Box(new Rect(m_object.transform.position, m_collider.size), "");
+        GUI.color = Color.white;
+    }
+}
+
 public struct Room
 {
     public Rect rect;
@@ -9,7 +53,7 @@ public struct Room
 
 public class MapGenerateWindow : ZoomTestWindow
 {
-    List<Room> m_rooms = new List<Room>();
+    List<PhysicsBox> m_rooms = new List<PhysicsBox>();
 
     float radius = 150;
 
@@ -52,11 +96,9 @@ public class MapGenerateWindow : ZoomTestWindow
         // 各部屋のサイズを指定するのに正規分布を使用する
         Vector2 size;
         size.x = m_random.Next(roomWidthAve, roomDistribSigma, true);
-        size.y = m_random.Next(roomWidthAve, roomDistribSigma, false);
+        size.y = m_random.Next(roomHeightAve, roomDistribSigma, false);
 
-        Room room = new Room();
-        room.rect = new Rect(center, size);
-
+        PhysicsBox room = new PhysicsBox(new Rect(center, size));
         m_rooms.Add(room);
     }
 
@@ -81,6 +123,16 @@ public class MapGenerateWindow : ZoomTestWindow
             OnGenerateRooms();
         }
 
+        if (GUILayout.RepeatButton("Simulate"))
+        {
+            Physics2D.autoSimulation = false;
+            //for (int i = 0; i < 1; i++)
+            {
+                Physics2D.Simulate(Time.fixedDeltaTime);
+            }
+            Physics2D.autoSimulation = true;
+        }
+
         GUI.backgroundColor = Color.green;
         GUI.Box(areaRect, m_rooms.Count.ToString());
         GUI.color = Color.white;
@@ -88,13 +140,9 @@ public class MapGenerateWindow : ZoomTestWindow
         EditorZoomArea.Begin(_zoom, areaRect);
         {
             //
-            foreach(Room room in m_rooms)
+            foreach(PhysicsBox room in m_rooms)
             {
-                Rect rect = new Rect(room.rect.center + areaCenter, room.rect.size);
-
-                GUI.backgroundColor = Color.blue;
-                GUI.Box(rect, "");
-                GUI.color = Color.white;
+                room.DrawBox();
             }
         }
         EditorZoomArea.End();
