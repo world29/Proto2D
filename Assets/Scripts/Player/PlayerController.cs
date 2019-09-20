@@ -81,6 +81,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("ジャンプアタックヒット時に跳ねる速さ")]
     public float jumpSpeedOnJumpAttack = 15;
 
+    [Header("ダメージをうけた時の効果音")]
+    public AudioClip damageSE;
+    AudioSource audioSource;
+
     [HideInInspector]
     public Vector2 velocity;
     [HideInInspector]
@@ -118,6 +122,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
         animator = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
@@ -376,5 +381,13 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         animator.speed = animationSpeed;
 
         onCompleted();
+    }
+
+    public void PlayDamageSE()
+    {
+        if (damageSE)
+        {
+            audioSource.PlayOneShot(damageSE);
+        }
     }
 }
