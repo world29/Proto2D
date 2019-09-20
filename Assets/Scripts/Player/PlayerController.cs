@@ -81,8 +81,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("ジャンプアタックヒット時に跳ねる速さ")]
     public float jumpSpeedOnJumpAttack = 15;
 
+    [Header("ジャンプ時の効果音")]
+    public AudioClip jumpSE;
     [Header("ダメージをうけた時の効果音")]
     public AudioClip damageSE;
+    [Header("ジャンプアタック中の効果音")]
+    public AudioClip jumpAttackSE;
+    [Header("ホップ中の効果音")]
+    public AudioClip hopSE;
     AudioSource audioSource;
 
     [HideInInspector]
@@ -382,12 +388,19 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         onCompleted();
     }
-
-    public void PlayDamageSE()
+    void PlaySE(AudioClip clip)
     {
-        if (damageSE)
+        if(clip)
         {
-            audioSource.PlayOneShot(damageSE);
+            audioSource.PlayOneShot(clip);
+        }
+    }
+    void PlayEffect(GameObject EffectPrefab)
+    {
+        if (EffectPrefab)
+        {
+            GameObject effect = Instantiate(EffectPrefab, transform.position, Quaternion.identity, null);
+            Destroy(effect, 1);
         }
     }
 }
