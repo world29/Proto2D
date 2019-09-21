@@ -30,9 +30,12 @@ namespace Proto2D
         private Vector2 velocity;
         private IEnemyState state;
         private GameObject player;
+        private AudioSource audioSource;
+        public GameObject effectSocket;
 
         void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2DEnemy>();
             player = GameObject.FindGameObjectWithTag("Player");
             behaviourTreeContext = new AI.BehaviourTreeContext(this);
@@ -225,6 +228,30 @@ namespace Proto2D
                 renderer.color = Color.white;
         }
 
+        public void PlaySE(AudioClip clip)
+        {
+            if(audioSource)
+            {
+                if(clip)
+                {
+                    audioSource.PlayOneShot(clip);
+                }
+            }
+
+        }
+        public void PlayEffect(GameObject EffectPrefab)
+        {
+            if (EffectPrefab)
+            {
+                Vector3 pos = transform.position;
+                if (effectSocket)
+                {
+                    pos = effectSocket.transform.position;
+                }
+                GameObject effect = Instantiate(EffectPrefab, pos, Quaternion.identity, null);
+                Destroy(effect, 1);
+            }
+        }
         private void OnDrawGizmos()
         {
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
@@ -271,4 +298,5 @@ namespace Proto2D
 
         public enum Facing { Right = 1, Left = -1 }
     }
+
 }
