@@ -14,6 +14,11 @@ namespace Proto2D
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
 
+        [Header("ダメージをうけた時の追加エフェクト")]
+        public GameObject damageEffectPrefab;
+        [Header("ダメージをうけた時の効果音")]
+        public AudioClip damageSE;
+
         // AI behaviour
         public AI.BehaviourTree behaviourTree;
         [HideInInspector]

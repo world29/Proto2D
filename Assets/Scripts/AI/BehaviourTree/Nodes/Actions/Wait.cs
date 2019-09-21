@@ -6,7 +6,8 @@ namespace Proto2D.AI
 {
     public class Wait : Action
     {
-        public float timeout = 1;
+        public Vector2 timeoutMinMax = new Vector2(1f,1.5f);
+        private float timeout;
 
 #if UNITY_EDITOR
         private float m_timeWaitStart = 0;
@@ -18,6 +19,7 @@ namespace Proto2D.AI
             WaitActionNodeContext nodeContext = context.dict.Get<WaitActionNodeContext>(GetInstanceID());
             if (nodeContext.nodeStatus != NodeStatus.RUNNING)
             {
+                timeout = Mathf.Lerp(timeoutMinMax.x, timeoutMinMax.y, Random.value);
                 nodeContext.nodeStatus = NodeStatus.READY;
             }
         }

@@ -15,6 +15,9 @@ namespace Proto2D
             animator = enemyBehaviour.gameObject.GetComponent<Animator>();
 
             animator.SetBool("damage", true);
+            
+            enemyBehaviour.PlaySE(enemyBehaviour.damageSE);
+            enemyBehaviour.PlayEffect(enemyBehaviour.damageEffectPrefab);
 
             enemyBehaviour.Blink(enemyBehaviour.damageDuration, enemyBehaviour.blinkInterval);
 
