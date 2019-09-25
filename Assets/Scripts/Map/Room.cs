@@ -14,7 +14,7 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
-            BoxCollider collider = GetComponent<BoxCollider>();
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
             if (collider.enabled)
             {
                 Gizmos.color = new Color(0, 0, 1, .3f);

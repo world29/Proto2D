@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 namespace Proto2D
 {
@@ -23,12 +24,11 @@ namespace Proto2D
             m_object = new GameObject("PhysicsBox");
             m_object.transform.position = new Vector3(m_rect.center.x, m_rect.center.y, 0);
 
-            Rigidbody rigidbody = m_object.AddComponent<Rigidbody>();
-            rigidbody.useGravity = false;
-            rigidbody.drag = .1f;
-            rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+            Rigidbody2D rigidbody = m_object.AddComponent<Rigidbody2D>();
+            rigidbody.gravityScale = 0;
+            rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-            BoxCollider collider = m_object.AddComponent<BoxCollider>();
+            BoxCollider2D collider = m_object.AddComponent<BoxCollider2D>();
             collider.size = new Vector3(m_rect.size.x, m_rect.size.y, 1);
 
             m_room = m_object.AddComponent<Room>();
@@ -91,14 +91,26 @@ namespace Proto2D
             m_rooms.Add(new PhysicsBox(new Rect(center, size)));
         }
 
-        void OnSimulate(int stepCount = 1)
+        void OnSimulate(int stepCount = 1000)
         {
-            Physics.autoSimulation = false;
+            Rigidbody2D[] simulatedBodies = GameObject.FindObjectsOfType<Rigidbody2D>();
+            foreach (var rb in simulatedBodies)
+            {
+                rb.AddForce(Vector2.up);
+            }
+
+            Physics2D.autoSimulation = false;
             for (int i = 0; i < stepCount; i++)
             {
-                Physics.Simulate(Time.fixedDeltaTime);
+                Physics2D.Simulate(Time.fixedDeltaTime);
+
+                if (simulatedBodies.All(item => item.IsSleeping()))
+                {
+                    Debug.Log(i);
+                    break;
+                }
             }
-            Physics.autoSimulation = true;
+            Physics2D.autoSimulation = true;
         }
 
         private void Update()
@@ -119,7 +131,7 @@ namespace Proto2D
             if (GUILayout.RepeatButton("Generate"))
                 OnGenerate();
 
-            if (GUILayout.RepeatButton("Simulate"))
+            if (GUILayout.Button("Simulate"))
                 OnSimulate();
         }
     }
