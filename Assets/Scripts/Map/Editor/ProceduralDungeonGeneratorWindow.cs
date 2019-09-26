@@ -48,9 +48,9 @@ namespace Proto2D
         float radius = 150;
 
         // 部屋の幅の平均値
-        float roomWidthAve = 50;
+        float roomWidthMean = 50;
         // 部屋の高さの平均値
-        float roomHeightAve = 50;
+        float roomHeightMean = 50;
         // 部屋の広さの分散
         float roomSigma = 1;
 
@@ -85,8 +85,8 @@ namespace Proto2D
 
             // 各部屋のサイズを指定するのに正規分布を使用する
             Vector2 size;
-            size.x = m_random.Next(roomWidthAve, roomSigma, true);
-            size.y = m_random.Next(roomHeightAve, roomSigma, false);
+            size.x = m_random.Next(roomWidthMean, roomSigma, true);
+            size.y = m_random.Next(roomHeightMean, roomSigma, false);
 
             m_rooms.Add(new PhysicsBox(new Rect(center, size)));
         }
@@ -121,8 +121,8 @@ namespace Proto2D
         void OnGUI()
         {
             radius = EditorGUILayout.Slider("radius", radius, 1, 50.0f);
-            roomWidthAve = EditorGUILayout.Slider("width", roomWidthAve, 1, 10.0f);
-            roomHeightAve = EditorGUILayout.Slider("height", roomHeightAve, 1, 10.0f);
+            roomWidthMean = EditorGUILayout.Slider("width", roomWidthMean, 1, 10.0f);
+            roomHeightMean = EditorGUILayout.Slider("height", roomHeightMean, 1, 10.0f);
             roomSigma = EditorGUILayout.Slider("sigma", roomSigma, 1, 10.0f);
 
             if (GUILayout.Button("Reset"))
