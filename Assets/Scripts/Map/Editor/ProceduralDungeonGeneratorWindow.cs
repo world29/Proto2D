@@ -8,9 +8,9 @@ namespace Proto2D
 {
     public class PhysicsBox
     {
-        Rect m_rect;
+        public Rect m_rect;
         GameObject m_object;
-        Room m_room;
+        public Room m_room;
 
         public PhysicsBox(Rect rect)
         {
@@ -53,6 +53,8 @@ namespace Proto2D
         float roomHeightMean = 50;
         // 部屋の広さの分散
         float roomSigma = 1;
+        // メインの部屋の広さ (平均値からの倍率)
+        float thresholdScalingForMainRoom = 1.25f;
 
         // 乱数生成器
         private RandomBoxMuller m_random;
@@ -113,6 +115,14 @@ namespace Proto2D
             Physics2D.autoSimulation = true;
         }
 
+        void OnSelect()
+        {
+            Vector2 minSize = new Vector2(roomWidthMean, roomHeightMean) * thresholdScalingForMainRoom;
+            List<PhysicsBox> selection = m_rooms.Where(item => item.m_rect.size.x > minSize.x && item.m_rect.size.y > minSize.y).ToList();
+            Debug.Log(selection.Count);
+            selection.ForEach(item => item.m_room.selected = true);
+        }
+
         private void Update()
         {
             Repaint();
@@ -133,6 +143,9 @@ namespace Proto2D
 
             if (GUILayout.Button("Simulate"))
                 OnSimulate();
+
+            if (GUILayout.Button("Select Rooms"))
+                OnSelect();
         }
     }
 }
