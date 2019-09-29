@@ -39,33 +39,6 @@ namespace Proto2D
             GameObject.DestroyImmediate(m_object);
         }
     }
-    
-    public static class DebugUtility
-    {
-        // https://forum.unity.com/threads/solved-debug-drawline-circle-ellipse-and-rotate-locally-with-offset.331397/#post-3184954
-        public static void DrawEllipse(Vector3 pos, Vector3 forward, Vector3 up, float radiusX, float radiusY, int segments, Color color, float duration = 0)
-        {
-            float angle = 0f;
-            Quaternion rot = Quaternion.LookRotation(forward, up);
-            Vector3 lastPoint = Vector3.zero;
-            Vector3 thisPoint = Vector3.zero;
-
-            for (int i = 0; i < segments + 1; i++)
-            {
-                thisPoint.x = Mathf.Sin(Mathf.Deg2Rad * angle) * radiusX;
-                thisPoint.y = Mathf.Cos(Mathf.Deg2Rad * angle) * radiusY;
-
-                if (i > 0)
-                {
-                    Debug.DrawLine(rot * lastPoint + pos, rot * thisPoint + pos, color, duration);
-                }
-
-                lastPoint = thisPoint;
-                angle += 360f / segments;
-            }
-        }
-    }
-
 
     public class ProceduralDungeonGeneratorWindow : EditorWindow
     {
@@ -86,7 +59,6 @@ namespace Proto2D
         // 乱数生成器
         private RandomBoxMuller m_random;
 
-
         [MenuItem("Window/ProceduralDungeonGenerator")]
         static void Open()
         {
@@ -98,8 +70,13 @@ namespace Proto2D
             m_random = new RandomBoxMuller();
 
             m_rooms.ForEach(item => item.Destroy());
-
             m_rooms.Clear();
+
+            Rigidbody2D[] simulatedBodies = GameObject.FindObjectsOfType<Rigidbody2D>();
+            foreach (var rb in simulatedBodies)
+            {
+                GameObject.DestroyImmediate(rb.gameObject);
+            }
         }
 
         void OnGenerate()
@@ -152,28 +129,16 @@ namespace Proto2D
 
         void OnTriangulate()
         {
-            // 初期化
-            Bounds bounds = new Bounds(Vector2.zero, new Vector2(100, 100));
-            var triangle = DelaunayTriangulation.GetHugeTriangle(bounds);
+            List<Vector2> points = m_rooms.Select(item => (Vector2)item.m_object.transform.position).ToList();
 
-            Debug.DrawLine(bounds.min, bounds.max, Color.red, 1);
-
-            Debug.DrawLine(triangle.vertices[0], triangle.vertices[1], Color.cyan, 1);
-            Debug.DrawLine(triangle.vertices[0], triangle.vertices[2], Color.cyan, 1);
-            Debug.DrawLine(triangle.vertices[1], triangle.vertices[2], Color.cyan, 1);
-
-            var circle = DelaunayTriangulation.GetCircumscribedCircleOfTriangle(triangle);
-
-            DebugUtility.DrawEllipse(circle.center, Vector3.forward, Vector3.up, circle.radius, circle.radius, 32, Color.magenta, 1);
-
-            IEnumerable<Vector3> points = m_rooms.Select(item => item.m_object.transform.position);
-
-            //
             foreach(Vector2 point in points)
             {
-                // 三角形分割に頂点を追加し、再度分割する
-
+                Debug.DrawLine(point, point + Vector2.one * .1f, Color.red, 1);
             }
+
+            var triangles = DelaunayTriangulation.Triangulation(points);
+
+            DrawTriangles(triangles);
         }
 
         private void Update()
@@ -202,6 +167,14 @@ namespace Proto2D
 
             if (GUILayout.Button("Triangulate"))
                 OnTriangulate();
+        }
+
+        public void DrawTriangles(List<DelaunayTriangulation.Triangle> triangles)
+        {
+            foreach(var tri in triangles)
+            {
+                tri.Draw(Color.cyan, 1);
+            }
         }
     }
 }
