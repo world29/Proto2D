@@ -92,10 +92,22 @@ namespace Proto2D
             public Vector2 start;
             public Vector2 end;
 
+            public List<Vector2> Vertices { get { return getVertices(); } }
+
             public Edge(Vector2 _start, Vector2 _end)
             {
                 start = _start;
                 end = _end;
+            }
+
+            private List<Vector2> getVertices()
+            {
+                var vertices = new List<Vector2>();
+
+                vertices.Add(start);
+                vertices.Add(end);
+
+                return vertices;
             }
         }
 

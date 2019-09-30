@@ -44,6 +44,8 @@ namespace Proto2D
     {
         List<PhysicsBox> m_rooms = new List<PhysicsBox>();
 
+        List<DelaunayTriangulation.Triangle> m_triangles;
+
         // 部屋を生成する空間の半径
         float radius = 150;
 
@@ -136,9 +138,20 @@ namespace Proto2D
                 Debug.DrawLine(point, point + Vector2.one * .1f, Color.red, 1);
             }
 
-            var triangles = DelaunayTriangulation.Calculate(points);
+            m_triangles = DelaunayTriangulation.Calculate(points);
 
-            DrawTriangles(triangles);
+            DrawTriangles(m_triangles);
+        }
+
+        void OnCalculateSpanningTree()
+        {
+            List<DelaunayTriangulation.Edge> edges = m_triangles.Aggregate(new List<DelaunayTriangulation.Edge>(), (sum, next) => sum.Concat(next.Edges).ToList());
+            var spanning_tree = KruskalSpanningTree.Calculate(edges);
+
+            spanning_tree.ForEach(edge =>
+            {
+                Debug.DrawLine(edge.start, edge.end, Color.red, 1);
+            });
         }
 
         private void Update()
@@ -167,6 +180,9 @@ namespace Proto2D
 
             if (GUILayout.Button("Triangulate"))
                 OnTriangulate();
+
+            if (GUILayout.Button("Calculate Spanning Tree"))
+                OnCalculateSpanningTree();
         }
 
         public void DrawTriangles(List<DelaunayTriangulation.Triangle> triangles)
