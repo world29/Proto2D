@@ -131,7 +131,11 @@ namespace Proto2D
 
         void OnTriangulate()
         {
-            List<Vector2> points = m_rooms.Select(item => (Vector2)item.m_object.transform.position).ToList();
+            //List<Vector2> points = m_rooms.Select(item => (Vector2)item.m_object.transform.position).ToList();
+            List<Vector2> points = m_rooms
+                .Where(item => item.m_room.selected)
+                .Select(item => (Vector2)item.m_object.transform.position)
+                .ToList();
 
             foreach(Vector2 point in points)
             {
