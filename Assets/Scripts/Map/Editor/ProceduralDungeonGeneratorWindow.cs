@@ -136,7 +136,7 @@ namespace Proto2D
                 Debug.DrawLine(point, point + Vector2.one * .1f, Color.red, 1);
             }
 
-            var triangles = DelaunayTriangulation.Triangulation(points);
+            var triangles = DelaunayTriangulation.Calculate(points);
 
             DrawTriangles(triangles);
         }
