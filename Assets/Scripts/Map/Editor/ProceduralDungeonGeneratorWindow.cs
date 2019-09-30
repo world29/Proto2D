@@ -144,7 +144,7 @@ namespace Proto2D
 
             m_triangles = DelaunayTriangulation.Calculate(points);
 
-            DrawTriangles(m_triangles);
+            //DrawTriangles(m_triangles);
         }
 
         void OnCalculateSpanningTree()
