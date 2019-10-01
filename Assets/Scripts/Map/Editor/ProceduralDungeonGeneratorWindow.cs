@@ -46,6 +46,8 @@ namespace Proto2D
 
         List<DelaunayTriangulation.Triangle> m_triangles;
 
+        List<DelaunayTriangulation.Edge> m_spanning_tree;
+
         // 部屋を生成する空間の半径
         float radius = 150;
 
@@ -150,11 +152,59 @@ namespace Proto2D
         void OnCalculateSpanningTree()
         {
             List<DelaunayTriangulation.Edge> edges = m_triangles.Aggregate(new List<DelaunayTriangulation.Edge>(), (sum, next) => sum.Concat(next.Edges).ToList());
-            var spanning_tree = KruskalSpanningTree.Calculate(edges);
+            m_spanning_tree = KruskalSpanningTree.Calculate(edges);
 
-            spanning_tree.ForEach(edge =>
+            m_spanning_tree.ForEach(edge =>
             {
                 Debug.DrawLine(edge.start, edge.end, Color.red, 1);
+            });
+        }
+
+        void OnGenerateHallways()
+        {
+            // 部屋をつなぐ廊下を作る
+
+            // 全域木に含まれる辺に関して、
+            // 辺の両端の部屋をつなぐラインを引く
+            // ラインは水平あるいは垂直方向にのみ伸びる。
+            // 部屋どうしの垂直/水平方向のズレが小さければ一本でよいが、そうでなければ二本。
+            var rooms = m_rooms.Where(item => item.m_room.selected).ToList();
+
+            // 両端の点を (a, b) とした場合
+            // (x, y, z, w) = (a.x, a.y, b.x, b.y)
+            List<Vector4> lines = new List<Vector4>();
+
+            m_spanning_tree.ForEach(edge =>
+            {
+                var A = rooms.Find(item => item.m_object.transform.position.Equals(edge.start));
+                var B = rooms.Find(item => item.m_object.transform.position.Equals(edge.end));
+
+                Rect rect_A = new Rect((Vector2)A.m_object.transform.position - A.m_rect.size/ 2, A.m_rect.size);
+                Rect rect_B = new Rect((Vector2)B.m_object.transform.position - B.m_rect.size / 2, B.m_rect.size);
+
+                // 中間点
+                var midpoint = (rect_A.center + rect_B.center) / 2;
+
+                // 垂直に並んでいる
+                if (midpoint.x > rect_A.xMin && midpoint.x < rect_A.xMax)
+                {
+                    lines.Add(new Vector4(midpoint.x, rect_A.center.y, midpoint.x, rect_B.center.y));
+                }
+                // 水平に並んでいる
+                else if (midpoint.y > rect_A.yMin && midpoint.y < rect_A.yMax)
+                {
+                    lines.Add(new Vector4(rect_A.center.x, midpoint.y, rect_B.center.x, midpoint.y));
+                }
+                else
+                {
+                    lines.Add(new Vector4(rect_A.center.x, rect_A.center.y, rect_A.center.x, rect_B.center.y));
+                    lines.Add(new Vector4(rect_B.center.x, rect_B.center.y, rect_A.center.x, rect_B.center.y));
+                }
+            });
+
+            lines.ForEach(line =>
+            {
+                Debug.DrawLine(new Vector2(line.x, line.y), new Vector2(line.z, line.w), Color.blue, 1);
             });
         }
 
@@ -187,6 +237,9 @@ namespace Proto2D
 
             if (GUILayout.Button("Calculate Spanning Tree"))
                 OnCalculateSpanningTree();
+
+            if (GUILayout.Button("Generate Hallways"))
+                OnGenerateHallways();
         }
 
         public void DrawTriangles(List<DelaunayTriangulation.Triangle> triangles)
