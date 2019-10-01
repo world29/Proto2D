@@ -68,6 +68,8 @@ namespace Proto2D
 
         private TileBase m_tile;
 
+        private Vector2Int m_tilemapSize;
+
         [MenuItem("Window/ProceduralDungeonGenerator")]
         static void Open()
         {
@@ -222,7 +224,14 @@ namespace Proto2D
                 Vector2 a = new Vector2(line.x, line.y);
                 Vector2 b = new Vector2(line.z, line.w);
 
-                return new Bounds((a + b) / 2, (b - a));
+                //TODO: 廊下の最小幅を設定する
+                float minWayWidth = 3;
+
+                Vector2 size = b - a;
+                size.x = Mathf.Max(minWayWidth, Mathf.Abs(size.x));
+                size.y = Mathf.Max(minWayWidth, Mathf.Abs(size.y));
+
+                return new Bounds((a + b) / 2, size);
             }).ToList();
 
             // メインでない部屋のうち、ラインと交差する部屋を廊下の一部とみなす
@@ -245,7 +254,7 @@ namespace Proto2D
 
         void OnRenderMap()
         {
-            int[,] map = GenerateArray(50, 200, false);
+            int[,] map = GenerateArray(m_tilemapSize.x, m_tilemapSize.y, false);
 
             // シーンにあらかじめ配置された Tilemap を取得
             Tilemap tilemap = FindObjectOfType<Tilemap>();
@@ -361,8 +370,9 @@ namespace Proto2D
             if (GUILayout.Button("Generate Hallways"))
                 OnGenerateHallways();
 
-            m_tile = EditorGUILayout.ObjectField(
-                "Tile", m_tile, typeof(TileBase), false) as TileBase;
+            m_tile = EditorGUILayout.ObjectField("Tile", m_tile, typeof(TileBase), false) as TileBase;
+            m_tilemapSize.x = EditorGUILayout.IntSlider("tilemap width", m_tilemapSize.x, 20, 200);
+            m_tilemapSize.y = EditorGUILayout.IntSlider("tilemap height", m_tilemapSize.y, 20, 500);
 
             if (GUILayout.Button("Render Map"))
                 OnRenderMap();
