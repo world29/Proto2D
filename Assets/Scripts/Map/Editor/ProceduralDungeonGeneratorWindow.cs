@@ -163,26 +163,27 @@ namespace Proto2D
         void OnGenerateHallways()
         {
             // 部屋をつなぐ廊下を作る
+            var mainRooms = m_rooms.Where(item => item.m_room.selected).ToList();
+            var subRooms = m_rooms.Where(item => !mainRooms.Contains(item)).ToList();
+
+            // 線分を表す Vector4
+            // 両端の点を (a, b) とした場合
+            // (x, y, z, w) = (a.x, a.y, b.x, b.y)
+            List<Vector4> lines = new List<Vector4>();
 
             // 全域木に含まれる辺に関して、
             // 辺の両端の部屋をつなぐラインを引く
             // ラインは水平あるいは垂直方向にのみ伸びる。
             // 部屋どうしの垂直/水平方向のズレが小さければ一本でよいが、そうでなければ二本。
-            var rooms = m_rooms.Where(item => item.m_room.selected).ToList();
-
-            // 両端の点を (a, b) とした場合
-            // (x, y, z, w) = (a.x, a.y, b.x, b.y)
-            List<Vector4> lines = new List<Vector4>();
-
             m_spanning_tree.ForEach(edge =>
             {
-                var A = rooms.Find(item => item.m_object.transform.position.Equals(edge.start));
-                var B = rooms.Find(item => item.m_object.transform.position.Equals(edge.end));
+                var A = mainRooms.Find(item => item.m_object.transform.position.Equals(edge.start));
+                var B = mainRooms.Find(item => item.m_object.transform.position.Equals(edge.end));
 
                 Rect rect_A = new Rect((Vector2)A.m_object.transform.position - A.m_rect.size/ 2, A.m_rect.size);
                 Rect rect_B = new Rect((Vector2)B.m_object.transform.position - B.m_rect.size / 2, B.m_rect.size);
 
-                // 中間点
+                // 中間点が部屋の境界を超えるならラインが二本必要
                 var midpoint = (rect_A.center + rect_B.center) / 2;
 
                 // 垂直に並んでいる
@@ -205,6 +206,27 @@ namespace Proto2D
             lines.ForEach(line =>
             {
                 Debug.DrawLine(new Vector2(line.x, line.y), new Vector2(line.z, line.w), Color.blue, 1);
+            });
+
+            var boundsList = lines.Select(line => {
+                Vector2 a = new Vector2(line.x, line.y);
+                Vector2 b = new Vector2(line.z, line.w);
+
+                return new Bounds((a + b) / 2, (b - a));
+            });
+
+            // メインでない部屋のうち、ラインと交差する部屋を廊下の一部とみなす
+            var hallways = subRooms.Where(room =>
+            {
+                Bounds bounds = new Bounds(room.m_object.transform.position, room.m_rect.size);
+                var result = boundsList.Where(item => item.Intersects(bounds));
+                return result.Count() > 0;
+            }).ToList();
+
+            hallways.ForEach(box =>
+            {
+                Rect rect = new Rect((Vector2)box.m_object.transform.position - box.m_rect.size / 2, box.m_rect.size);
+                Debug.DrawLine(rect.min, rect.max, Color.green, 1);
             });
         }
 
