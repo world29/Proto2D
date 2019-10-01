@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Tilemaps;
 using System.Linq;
 
 namespace Proto2D
@@ -48,6 +49,8 @@ namespace Proto2D
 
         List<DelaunayTriangulation.Edge> m_spanning_tree;
 
+        List<Bounds> m_boundsList = new List<Bounds>();
+
         // 部屋を生成する空間の半径
         float radius = 150;
 
@@ -63,6 +66,8 @@ namespace Proto2D
         // 乱数生成器
         private RandomBoxMuller m_random;
 
+        private TileBase m_tile;
+
         [MenuItem("Window/ProceduralDungeonGenerator")]
         static void Open()
         {
@@ -73,8 +78,8 @@ namespace Proto2D
         {
             m_random = new RandomBoxMuller();
 
-            m_rooms.ForEach(item => item.Destroy());
             m_rooms.Clear();
+            m_boundsList.Clear();
 
             Rigidbody2D[] simulatedBodies = GameObject.FindObjectsOfType<Rigidbody2D>();
             foreach (var rb in simulatedBodies)
@@ -129,6 +134,11 @@ namespace Proto2D
             List<PhysicsBox> selection = m_rooms.Where(item => item.m_rect.size.x > minSize.x && item.m_rect.size.y > minSize.y).ToList();
             Debug.Log(selection.Count);
             selection.ForEach(item => item.m_room.selected = true);
+
+            // メインの部屋を境界ボックスリストに追加
+            selection.ForEach(item => {
+                m_boundsList.Add(new Bounds(item.m_object.transform.position, item.m_rect.size));
+            });
         }
 
         void OnTriangulate()
@@ -164,7 +174,7 @@ namespace Proto2D
         {
             // 部屋をつなぐ廊下を作る
             var mainRooms = m_rooms.Where(item => item.m_room.selected).ToList();
-            var subRooms = m_rooms.Where(item => !mainRooms.Contains(item)).ToList();
+            var hallways = m_rooms.Where(item => !mainRooms.Contains(item)).ToList();
 
             // 線分を表す Vector4
             // 両端の点を (a, b) とした場合
@@ -208,26 +218,114 @@ namespace Proto2D
                 Debug.DrawLine(new Vector2(line.x, line.y), new Vector2(line.z, line.w), Color.blue, 1);
             });
 
-            var boundsList = lines.Select(line => {
+            var lineBoundsList = lines.Select(line => {
                 Vector2 a = new Vector2(line.x, line.y);
                 Vector2 b = new Vector2(line.z, line.w);
 
                 return new Bounds((a + b) / 2, (b - a));
-            });
-
-            // メインでない部屋のうち、ラインと交差する部屋を廊下の一部とみなす
-            var hallways = subRooms.Where(room =>
-            {
-                Bounds bounds = new Bounds(room.m_object.transform.position, room.m_rect.size);
-                var result = boundsList.Where(item => item.Intersects(bounds));
-                return result.Count() > 0;
             }).ToList();
 
-            hallways.ForEach(box =>
-            {
-                Rect rect = new Rect((Vector2)box.m_object.transform.position - box.m_rect.size / 2, box.m_rect.size);
-                Debug.DrawLine(rect.min, rect.max, Color.green, 1);
+            // メインでない部屋のうち、ラインと交差する部屋を廊下の一部とみなす
+            // それ以外の部屋は削除する
+            var roomsToDelete = hallways.FindAll(item => {
+                Bounds hallwaysBounds = new Bounds(item.m_object.transform.position, item.m_rect.size);
+                return lineBoundsList.FindIndex(bounds => bounds.Intersects(hallwaysBounds)) == -1;
             });
+            roomsToDelete.ForEach(item => {
+                item.Destroy();
+                hallways.Remove(item);
+            });
+
+            // 廊下を表すラインとサブの部屋を境界ボックスリストに追加
+            m_boundsList.AddRange(lineBoundsList);
+            hallways.ForEach(way => {
+                m_boundsList.Add(new Bounds(way.m_object.transform.position, way.m_rect.size));
+            });
+        }
+
+        void OnRenderMap()
+        {
+            int[,] map = GenerateArray(50, 200, false);
+
+            // シーンにあらかじめ配置された Tilemap を取得
+            Tilemap tilemap = FindObjectOfType<Tilemap>();
+            if (tilemap && m_tile)
+            {
+                RenderMap(map, tilemap, m_tile);
+
+                // 境界ボックスと衝突するタイルを消す
+                foreach (var position in tilemap.cellBounds.allPositionsWithin)
+                {
+                    if (tilemap.HasTile(position))
+                    {
+                        Bounds cellBounds = new Bounds(tilemap.GetCellCenterWorld(position), tilemap.cellSize);
+
+                        if (m_boundsList.FindIndex(bounds => bounds.Intersects(cellBounds)) >= 0)
+                        {
+                            map[position.x, position.y] = 0;
+                        }
+                    }
+                }
+
+                // map を更新
+                UpdateMap(map, tilemap);
+            }
+        }
+
+        public static int[,] GenerateArray(int width, int height, bool empty)
+        {
+            int[,] map = new int[width, height];
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    if (empty)
+                    {
+                        map[x, y] = 0;
+                    }
+                    else
+                    {
+                        map[x, y] = 1;
+                    }
+                }
+            }
+            return map;
+        }
+
+        public static void RenderMap(int[,] map, Tilemap tilemap, TileBase tile)
+        {
+            //マップをクリアする（重複しないようにする）
+            tilemap.ClearAllTiles();
+            //マップの幅の分、周回する
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                //マップの高さの分、周回する
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    // 1 = タイルあり、0 = タイルなし
+                    if (map[x, y] == 1)
+                    {
+                        tilemap.SetTile(new Vector3Int(x, y, 0), tile);
+                    }
+                }
+            }
+        }
+
+        public static void UpdateMap(int[,] map, Tilemap tilemap) //マップとタイルマップを取得し、null タイルを必要箇所に設定する
+        {
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    //再レンダリングではなく、マップの更新のみを行う
+                    //これは、それぞれのタイル（および衝突データ）を再描画するのに比べて
+                    //タイルを null に更新するほうが使用リソースが少なくて済むためです。
+                    if (map[x, y] == 0)
+                    {
+                        tilemap.SetTile(new Vector3Int(x, y, 0), null);
+                    }
+                }
+            }
         }
 
         private void Update()
@@ -262,6 +360,12 @@ namespace Proto2D
 
             if (GUILayout.Button("Generate Hallways"))
                 OnGenerateHallways();
+
+            m_tile = EditorGUILayout.ObjectField(
+                "Tile", m_tile, typeof(TileBase), false) as TileBase;
+
+            if (GUILayout.Button("Render Map"))
+                OnRenderMap();
         }
 
         public void DrawTriangles(List<DelaunayTriangulation.Triangle> triangles)
