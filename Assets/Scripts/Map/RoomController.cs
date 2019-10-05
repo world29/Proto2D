@@ -4,37 +4,67 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 
-public class RoomController : MonoBehaviour
+namespace Proto2D
 {
-    public Vector3Int Size { get { return primaryTilemap.size; } }
-    public Vector3 CellSize { get { return primaryTilemap.cellSize; } }
-    // タイルマップの左下端から (0,0) へのオフセット
-    public Vector3 OriginToCenter { get { return -primaryTilemap.CellToLocal(primaryTilemap.origin); } }
-
-    private Tilemap primaryTilemap;
-
-    private void Awake()
+    public class RoomController : MonoBehaviour
     {
-        Tilemap tilemap = GetComponentInChildren<Tilemap>();
-        if (tilemap)
+        public Transform enemySpawnPosition;
+        public EnemyBehaviour.Facing enemySpawnDirection = EnemyBehaviour.Facing.Right;
+        public List<EnemyBehaviour> enemyPrefabs;
+
+        [HideInInspector] public Vector3Int Size { get { return primaryTilemap.size; } }
+        [HideInInspector] public Vector3 CellSize { get { return primaryTilemap.cellSize; } }
+        // タイルマップの左下端から (0,0) へのオフセット
+        [HideInInspector] public Vector3 OriginToCenter { get { return -primaryTilemap.CellToLocal(primaryTilemap.origin); } }
+
+        private Tilemap primaryTilemap;
+
+        private void Awake()
         {
-            primaryTilemap = tilemap;
-            primaryTilemap.CompressBounds();
+            Tilemap tilemap = GetComponentInChildren<Tilemap>();
+            if (tilemap)
+            {
+                primaryTilemap = tilemap;
+                primaryTilemap.CompressBounds();
+            }
         }
-    }
 
-    private void OnDrawGizmos()
-    {
-        if (primaryTilemap)
+        public void SpawnEntities()
         {
-            var minWorld = primaryTilemap.CellToWorld(primaryTilemap.cellBounds.min);
-            var maxWorld = primaryTilemap.CellToWorld(primaryTilemap.cellBounds.max);
+            // 敵をランダムに選んでスポーン
+            EnemyBehaviour prefab = getRandomEnemy();
+            if (prefab)
+            {
+                Debug.Assert(enemySpawnPosition != null);
+                EnemyBehaviour enemy = GameObject.Instantiate(prefab, enemySpawnPosition);
+                enemy.facing = enemySpawnDirection;
+            }
+        }
 
-            Bounds bounds = new Bounds();
-            bounds.SetMinMax(minWorld, maxWorld);
+        private EnemyBehaviour getRandomEnemy()
+        {
+            if (enemyPrefabs.Count > 0)
+            {
+                int index = Random.Range(0, enemyPrefabs.Count);
+                return enemyPrefabs[index];
+            }
+            return null;
+        }
 
-            Gizmos.color = new Color(1, 1, 0, .3f);
-            Gizmos.DrawCube(bounds.center, bounds.size);
+        private void OnDrawGizmos()
+        {
+            if (primaryTilemap)
+            {
+                var minWorld = primaryTilemap.CellToWorld(primaryTilemap.cellBounds.min);
+                var maxWorld = primaryTilemap.CellToWorld(primaryTilemap.cellBounds.max);
+
+                Bounds bounds = new Bounds();
+                bounds.SetMinMax(minWorld, maxWorld);
+
+                Gizmos.color = new Color(1, 1, 0, .3f);
+                Gizmos.DrawCube(bounds.center, bounds.size);
+            }
         }
     }
 }
+
