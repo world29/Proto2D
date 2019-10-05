@@ -682,12 +682,12 @@ MonoBehaviour:
   frictionGround: 1
   attenuationAir: 0.1
   attenuationJumpAttack: 0
-  acceralationJumpAttack: 0.5
+  acceralationJumpAttack: 10
   knockbackDuration: 0.5
   knockbackVelocity: {x: 6, y: 6}
   invincibleDuration: 1
   invincibleBlinkInterval: 0.05
-  climbSpeed: 10
+  climbSpeed: 6
   wallJumpVelocity: {x: 6, y: 15}
   timeToEntryWallClimbing: 0.05
   jumpAttackSpeed: 15
@@ -698,10 +698,10 @@ MonoBehaviour:
   enableHopAttackMode: 1
   stompEffectPrefab: {fileID: 7615431906169996719, guid: b7ac704cad472ce4ebf012163fbd4841,
     type: 3}
-  shakeAmountOnStomp: 0
-  shakeLengthOnStomp: 0
+  shakeAmountOnStomp: 0.06
+  shakeLengthOnStomp: 0.05
   hitStopDurationOnStomp: 0
-  jumpSpeedOnStomp: 15
+  jumpSpeedOnStomp: 14
   attackEffectPrefab: {fileID: 7615431906169996719, guid: 509896ac4f0a38d4985c92d48a0a9009,
     type: 3}
   shakeAmountOnJumpAttack: 0.2
