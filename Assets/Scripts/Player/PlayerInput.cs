@@ -144,6 +144,11 @@ public class PlayerInput : MonoBehaviour
 
     void SetEnableJoystick(bool enabled)
     {
+        if (moveJoystick == null || actionJoystick == null)
+        {
+            return;
+        }
+
         if (enabled)
         {
             moveJoystick.enabled = true;
