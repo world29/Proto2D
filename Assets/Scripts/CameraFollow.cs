@@ -16,15 +16,30 @@ public class CameraFollow : MonoBehaviour
     FocusArea focusArea;
 
     float smoothVelocityY;
-    
+
     private void Start()
     {
-        focusArea = new FocusArea(target.collider.bounds, focusAreaSize);
+    }
+
+    private void Update()
+    {
+        if (target == null)
+        {
+            PlayerController pc = FindObjectOfType<PlayerController>();
+            if (pc)
+            {
+                target = pc.gameObject.GetComponent<Controller2D>();
+                focusArea = new FocusArea(target.collider.bounds, focusAreaSize);
+            }
+        }
     }
 
     private void LateUpdate()
     {
-        focusArea.Update(target.collider.bounds, followDownward);
+        if (target)
+        {
+            focusArea.Update(target.collider.bounds, followDownward);
+        }
 
         Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
 
