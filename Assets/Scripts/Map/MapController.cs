@@ -59,6 +59,12 @@ namespace Proto2D
             float roomHeight = room.Size.y * room.CellSize.y;
             room.gameObject.transform.Translate(0, m_edgePosition.y + room.OriginToCenter.y, 0);
 
+            if (room.flipEnabled)
+            {
+                float dirX = Mathf.Sign(Random.Range(-1, 1));
+                room.gameObject.transform.localScale = new Vector3(dirX, 1, 1);
+            }
+
             // 部屋を適切な位置に移動した後、スポーン処理を呼び出す。
             room.SpawnEntities();
 

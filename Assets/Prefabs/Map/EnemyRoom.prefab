@@ -703,7 +703,7 @@ Transform:
   m_GameObject: {fileID: 7305267822291991431}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.87, y: 2.77, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6609291727114985735}
   m_RootOrder: 1
@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 6609291727114985735}
   - component: {fileID: 8158235655175910608}
   m_Layer: 0
-  m_Name: NormalRoom
+  m_Name: EnemyRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d198a3504881b4bb545aec516bee66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flipEnabled: 1
   enemySpawnPosition: {fileID: 5794848912348520234}
-  enemySpawnDirection: -1
   enemyPrefabs:
   - {fileID: 6245465354517601074, guid: 8606a50bd5cf9ce4ea5dabedcdb87165, type: 3}
