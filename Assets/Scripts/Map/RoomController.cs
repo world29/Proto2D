@@ -8,8 +8,9 @@ namespace Proto2D
 {
     public class RoomController : MonoBehaviour
     {
+        public bool flipEnabled = false;
+
         public Transform enemySpawnPosition;
-        public EnemyBehaviour.Facing enemySpawnDirection = EnemyBehaviour.Facing.Right;
         public List<EnemyBehaviour> enemyPrefabs;
 
         [HideInInspector] public Vector3Int Size { get { return primaryTilemap.size; } }
@@ -37,7 +38,6 @@ namespace Proto2D
             {
                 Debug.Assert(enemySpawnPosition != null);
                 EnemyBehaviour enemy = GameObject.Instantiate(prefab, enemySpawnPosition);
-                enemy.facing = enemySpawnDirection;
             }
         }
 
