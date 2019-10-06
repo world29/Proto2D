@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8778643387317822647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.9, y: -2.479, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 5999483903810187055}
@@ -185,14 +185,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 20
   health: 1
-  facing: 1
   blinkInterval: 0.1
   damageDuration: 0.3
+  damageEffectPrefab: {fileID: 0}
+  damageSE: {fileID: 0}
   behaviourTree: {fileID: 0}
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 0}
   viewAngle: 45
   viewDistance: 0
+  effectSocket: {fileID: 0}
 --- !u!1001 &5335596569922243949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283,16 +285,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.99984384
       objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: receiver
       value: 
       objectReference: {fileID: 8778643387317822647}
+    - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &5999483903810187055 stripped
