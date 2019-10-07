@@ -200,8 +200,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         return wallClimbEntryTimer > timeToEntryWallClimbing;
     }
 
-    private void ChangeState(IPlayerState next)
+    private void ChangeState(IPlayerState next, bool force = false)
     {
+        //死んだら他の状態に遷移できなくなる
+        if (!force && state is PlayerState_Death)
+        {
+            return;
+        }
+
         if (state != next)
         {
             state.OnExit(gameObject);
@@ -287,7 +293,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     private void ConsumeDamage(DamageInfo info)
     {
-        if (isInvincible)
+        if (isInvincible || state is PlayerState_Death)
         {
             return;
         }
@@ -331,7 +337,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     public void OnPickupItem(ItemType type, GameObject sender)
     {
-        Debug.Log(sender);
+        Debug.Log(state);
+        // 死んだら拾えなくなる(死んでもKnockbackステートが終わるまではDeathステートにならないので、HPで判定)
+        if (health.Value == 0)
+        {
+            return;
+        }
         switch (type)
         {
             case ItemType.Hopper:

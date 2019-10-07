@@ -8,6 +8,7 @@ public class ItemController : MonoBehaviour
 {
     public ItemType itemType;
 
+    public bool once = true;
     public GameObject pickupEffectPrefab;
     public AudioClip pickupSound;
 
@@ -43,6 +44,10 @@ public class ItemController : MonoBehaviour
         {
             audioSource.PlayOneShot(pickupSound);
             delayToDestroy = pickupSound.length;
+        }
+
+        if (!once){
+            return;
         }
         Destroy(gameObject, delayToDestroy);
 
