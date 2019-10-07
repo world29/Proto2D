@@ -11,12 +11,15 @@ public class ItemController : MonoBehaviour
     public bool once = true;
     public GameObject pickupEffectPrefab;
     public AudioClip pickupSound;
+    [Header("取得時のアニメ(AnimationをLegacyにする必要あり)")]
+    public Animation pickupAnim;
 
     AudioSource audioSource;
 
     void Start () {
         //Componentを取得
         audioSource = GetComponent<AudioSource>();
+        pickupAnim = GetComponent<Animation>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,6 +47,10 @@ public class ItemController : MonoBehaviour
         {
             audioSource.PlayOneShot(pickupSound);
             delayToDestroy = pickupSound.length;
+        }
+        if (pickupAnim)
+        {
+            pickupAnim.Play();
         }
 
         if (!once){
