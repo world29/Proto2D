@@ -331,6 +331,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     public void OnPickupItem(ItemType type, GameObject sender)
     {
+        Debug.Log(sender);
         switch (type)
         {
             case ItemType.Hopper:
