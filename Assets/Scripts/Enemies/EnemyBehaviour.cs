@@ -89,6 +89,11 @@ namespace Proto2D
             return Mathf.Sign(transform.lossyScale.x);
         }
 
+        private float getFacingLocal()
+        {
+            return Mathf.Sign(transform.localScale.x);
+        }
+
         private void ChangeState(IEnemyState next)
         {
             if (state != next)
@@ -103,7 +108,7 @@ namespace Proto2D
         {
             if (CanMoveForward())
             {
-                velocity.x = moveSpeed;
+                velocity.x = moveSpeed * getFacingLocal();
             }
             else
             {
