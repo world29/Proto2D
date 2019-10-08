@@ -16,6 +16,8 @@ public class PlayerState_Hop : IPlayerState
         animator = context.GetComponent<Animator>();
         input = context.GetComponent<PlayerInput>();
 
+        player.PlaySE(player.hopSE);
+
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 

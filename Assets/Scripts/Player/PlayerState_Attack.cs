@@ -16,6 +16,12 @@ public class PlayerState_Attack : IPlayerState
         animator = context.GetComponent<Animator>();
         input = context.GetComponent<PlayerInput>();
 
+        // 効果音再生
+        if (!animator.GetBool("attack"))
+        {
+            player.PlaySE(player.jumpAttackSE);
+        }
+
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 

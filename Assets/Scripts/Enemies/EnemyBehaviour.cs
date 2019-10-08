@@ -10,9 +10,13 @@ namespace Proto2D
     {
         public float gravity = 20;
         public float health = 1;
-        public Facing facing = Facing.Right;
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
+
+        [Header("ダメージをうけた時の追加エフェクト")]
+        public GameObject damageEffectPrefab;
+        [Header("ダメージをうけた時の効果音")]
+        public AudioClip damageSE;
 
         // AI behaviour
         public AI.BehaviourTree behaviourTree;
@@ -30,9 +34,12 @@ namespace Proto2D
         private Vector2 velocity;
         private IEnemyState state;
         private GameObject player;
+        private AudioSource audioSource;
+        public GameObject effectSocket;
 
         void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2DEnemy>();
             player = GameObject.FindGameObjectWithTag("Player");
             behaviourTreeContext = new AI.BehaviourTreeContext(this);
@@ -51,7 +58,6 @@ namespace Proto2D
             ResetMovement();
             UpdateAI();
             UpdateMovement();
-            UpdateFacing();
         }
 
         void ResetMovement()
@@ -77,11 +83,15 @@ namespace Proto2D
             }
         }
 
-        void UpdateFacing()
+        // ワールド空間での向きを取得する
+        private float getFacingWorld()
         {
-            Vector3 scl = transform.localScale;
-            scl.x = Mathf.Abs(scl.x) * (float)facing;
-            transform.localScale = scl;
+            return Mathf.Sign(transform.lossyScale.x);
+        }
+
+        private float getFacingLocal()
+        {
+            return Mathf.Sign(transform.localScale.x);
         }
 
         private void ChangeState(IEnemyState next)
@@ -98,11 +108,11 @@ namespace Proto2D
         {
             if (CanMoveForward())
             {
-                velocity.x = moveSpeed * (float)facing;
+                velocity.x = moveSpeed * getFacingLocal();
             }
             else
             {
-                facing = (facing == Facing.Right) ? Facing.Left : Facing.Right;
+                Turn();
             }
         }
 
@@ -113,9 +123,15 @@ namespace Proto2D
             Debug.DrawRay(groundDetectionTransform.position, Vector2.down, Color.red);
 
             // 進行方向に障害物があるか調べる
-            bool obstacleInfo = facing == Facing.Right ? controller.collisions.right : controller.collisions.left;
+            bool obstacleInfo = getFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
 
             return groundInfo && !obstacleInfo;
+        }
+
+        public void Turn()
+        {
+            Vector3 scl = transform.localScale;
+            transform.localScale = new Vector3(scl.x * -1, scl.y, scl.z);
         }
 
         public virtual void Shot(Projectile prefab)
@@ -123,11 +139,8 @@ namespace Proto2D
             Projectile projectile = Instantiate(prefab, shotTransform.position, shotTransform.rotation) as Projectile;
 
             // 向きを合わせる
-            if (facing == Facing.Left)
-            {
-                projectile.transform.localScale = gameObject.transform.localScale;
-                projectile.initialVelocity.x *= -1;
-            }
+            projectile.transform.localScale = gameObject.transform.lossyScale;
+            projectile.initialVelocity.x *= getFacingWorld();
         }
 
         public virtual bool IsPlayerInSight()
@@ -139,10 +152,7 @@ namespace Proto2D
             }
 
             Vector3 toPlayer = player.transform.position - gameObject.transform.position;
-            if (facing == Facing.Left)
-            {
-                toPlayer.x *= -1;
-            }
+            toPlayer.x *= getFacingWorld();
 
             float angleDeg = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
             float distance = toPlayer.magnitude;
@@ -225,6 +235,30 @@ namespace Proto2D
                 renderer.color = Color.white;
         }
 
+        public void PlaySE(AudioClip clip)
+        {
+            if(audioSource)
+            {
+                if(clip)
+                {
+                    audioSource.PlayOneShot(clip);
+                }
+            }
+
+        }
+        public void PlayEffect(GameObject EffectPrefab)
+        {
+            if (EffectPrefab)
+            {
+                Vector3 pos = transform.position;
+                if (effectSocket)
+                {
+                    pos = effectSocket.transform.position;
+                }
+                GameObject effect = Instantiate(EffectPrefab, pos, Quaternion.identity, null);
+                Destroy(effect, 1);
+            }
+        }
         private void OnDrawGizmos()
         {
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
@@ -247,28 +281,19 @@ namespace Proto2D
                 UnityEditor.Handles.DrawSolidArc(
                     gameObject.transform.position,
                     Vector3.forward,
-                    Vector3.right * (float)facing,
+                    Vector3.right * getFacingWorld(),
                     angleHalf, viewDistance);
 
                 UnityEditor.Handles.DrawSolidArc(
                     gameObject.transform.position,
                     Vector3.forward,
-                    Vector3.right * (float)facing,
+                    Vector3.right * getFacingWorld(),
                     -angleHalf, viewDistance);
 
                 UnityEditor.Handles.color = Color.white;
             }
 #endif
-
-            // 向き
-            if (!Application.isPlaying)
-            {
-                Vector3 scl = transform.localScale;
-                scl.x = Mathf.Abs(scl.x) * (float)facing;
-                transform.localScale = scl;
-            }
         }
-
-        public enum Facing { Right = 1, Left = -1 }
     }
+
 }

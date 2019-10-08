@@ -92,6 +92,7 @@ public class PlayerState_Free : IPlayerState
         // 垂直方向の速度を算出
         if (grounded && input.isTouched)
         {
+            player.PlaySE(player.jumpSE);
             velocity.y = player.jumpSpeed;
             jumped = true;
         }

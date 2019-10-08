@@ -81,6 +81,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("ジャンプアタックヒット時に跳ねる速さ")]
     public float jumpSpeedOnJumpAttack = 15;
 
+    [Header("ジャンプ開始時の効果音")]
+    public AudioClip jumpSE;
+    [Header("ジャンプアタック開始時の効果音")]
+    public AudioClip jumpAttackSE;
+    [Header("ホップ開始時の効果音")]
+    public AudioClip hopSE;
+    AudioSource audioSource;
+
     [HideInInspector]
     public Vector2 velocity;
     [HideInInspector]
@@ -118,6 +126,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
         animator = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
@@ -191,8 +200,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         return wallClimbEntryTimer > timeToEntryWallClimbing;
     }
 
-    private void ChangeState(IPlayerState next)
+    private void ChangeState(IPlayerState next, bool force = false)
     {
+        //死んだら他の状態に遷移できなくなる
+        if (!force && state is PlayerState_Death)
+        {
+            return;
+        }
+
         if (state != next)
         {
             state.OnExit(gameObject);
@@ -237,7 +252,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
                         if (stompEffectPrefab)
                         {
-                            GameObject effect = Instantiate(stompEffectPrefab, transform.position, Quaternion.identity, null);
+                            Vector3 efpos = (info.receiverPos + transform.position)/2;
+                            GameObject effect = Instantiate(stompEffectPrefab, efpos, Quaternion.identity, null);
                             Destroy(effect, 1);
                         }
 
@@ -259,7 +275,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
                         if (attackEffectPrefab)
                         {
-                            GameObject effect = Instantiate(attackEffectPrefab, transform.position, Quaternion.identity, null);
+                            Vector3 efpos = (info.receiverPos + transform.position)/2;
+                            GameObject effect = Instantiate(attackEffectPrefab, efpos, Quaternion.identity, null);
                             Destroy(effect, 1);
                         }
 
@@ -276,7 +293,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     private void ConsumeDamage(DamageInfo info)
     {
-        if (isInvincible)
+        if (isInvincible || state is PlayerState_Death)
         {
             return;
         }
@@ -320,6 +337,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     public void OnPickupItem(ItemType type, GameObject sender)
     {
+        Debug.Log(state);
+        // 死んだら拾えなくなる(死んでもKnockbackステートが終わるまではDeathステートにならないので、HPで判定)
+        if (health.Value == 0)
+        {
+            return;
+        }
         switch (type)
         {
             case ItemType.Hopper:
@@ -376,5 +399,21 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         animator.speed = animationSpeed;
 
         onCompleted();
+    }
+    public void PlaySE(AudioClip clip)
+    {
+        if(clip)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+    public void PlayEffect(GameObject EffectPrefab)
+    {
+        if (EffectPrefab)
+        {
+           // transform.position = new Vector2 (transform.position.x + OffsetX, transform.position.y + OffsetY);
+            GameObject effect = Instantiate(EffectPrefab, transform.position, Quaternion.identity, null);
+            Destroy(effect, 1);
+        }
     }
 }
