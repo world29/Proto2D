@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8806861694332298746}
   - component: {fileID: 5598839992712617475}
   - component: {fileID: 3505603300724250839}
-  - component: {fileID: 5642193310257934486}
+  - component: {fileID: 4255205033312651060}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Enemy
@@ -171,7 +171,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5642193310257934486
+--- !u!114 &4255205033312651060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8806861694332298747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b6c1ee5863dda24e86f86bda0f61380, type: 3}
+  m_Script: {fileID: 11500000, guid: 41ede97b220fd6b4397cda97f4a4edd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   damageDuration: 0.5
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
-  behaviourTree: {fileID: 0}
+  behaviourTree: {fileID: 11400000, guid: a1f64c19204545a4e90c9adf492b3997, type: 2}
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 0}
   viewAngle: 45

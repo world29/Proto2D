@@ -30,7 +30,7 @@ namespace Proto2D
 
         float groundDetectionRayLength = .5f;
 
-        private Controller2DEnemy controller;
+        protected Controller2DEnemy controller;
         private Vector2 velocity;
         private IEnemyState state;
         private GameObject player;
@@ -84,12 +84,12 @@ namespace Proto2D
         }
 
         // ワールド空間での向きを取得する
-        private float getFacingWorld()
+        protected float getFacingWorld()
         {
             return Mathf.Sign(transform.lossyScale.x);
         }
 
-        private float getFacingLocal()
+        protected float getFacingLocal()
         {
             return Mathf.Sign(transform.localScale.x);
         }
@@ -104,7 +104,7 @@ namespace Proto2D
             }
         }
 
-        public virtual void MoveForward(float moveSpeed)
+        public void MoveForward(float moveSpeed)
         {
             if (CanMoveForward())
             {
@@ -116,7 +116,7 @@ namespace Proto2D
             }
         }
 
-        public bool CanMoveForward()
+        public virtual bool CanMoveForward()
         {
             // 進行方向に地面があるか調べる
             RaycastHit2D groundInfo = Physics2D.Raycast(groundDetectionTransform.position, Vector2.down, groundDetectionRayLength, controller.collisionMask);
