@@ -5,21 +5,16 @@ using UnityEditor;
 
 namespace Proto2D
 {
-    [ExecuteAlways]
-    public class Room : MonoBehaviour
+    public class MapGenerationSeed : MonoBehaviour
     {
-        public bool selected = false;
-
-        private void Update()
-        {
-        }
+        public bool room = false;
 
         private void OnDrawGizmos()
         {
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
             if (collider.enabled)
             {
-                if (selected)
+                if (room)
                 {
                     Gizmos.color = new Color(1, 0, 0, .3f);
                 }
