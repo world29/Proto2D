@@ -106,7 +106,10 @@ namespace Proto2D.AI
 
         public NodeStatus Evaluate(BehaviourTreeContext context)
         {
-            nodes.ForEach(item => (item as Node).PrepareForEvaluation(context));
+            nodes.ForEach(item => {
+                Debug.Assert(item is Node);
+                (item as Node).PrepareForEvaluation(context);
+            });
 
             return m_rootNode.Evaluate(context);
         }
