@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public enum ItemType
 {
     Hopper, // ホッパー
+    Coin,
 }
 
 public interface IItemReceiver : IEventSystemHandler
