@@ -29,7 +29,9 @@ public class Controller2DEnemy : RaycastController
 
     void HorizontalCollisions(ref Vector2 moveAmount)
     {
-        float directionX = Mathf.Sign(moveAmount.x);
+        // グローバル空間における向き (+X を正方向とする)
+        float directionX = Mathf.Sign(transform.lossyScale.x);
+
         float rayLength = Mathf.Abs(moveAmount.x) + skinWidth;
 
         if (Mathf.Abs(moveAmount.x) < skinWidth)
