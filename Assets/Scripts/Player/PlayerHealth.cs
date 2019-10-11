@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         // 初期化
+        slider.maxValue = initialHealth;
         OnChangeHealth(initialHealth);
     }
 
