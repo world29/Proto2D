@@ -70,6 +70,8 @@ namespace Proto2D
             {
                 // 幅と高さを持つ部屋を円の中にランダムに配置
                 Vector2 position = m_random.Source.insideUnitCircle * radius;
+                //HACK: 縦長の範囲に部屋を生成するための仮対応
+                position.y *= 4;
 
                 // 各部屋のサイズを指定するのに正規分布を使用する
                 Vector2 size;
