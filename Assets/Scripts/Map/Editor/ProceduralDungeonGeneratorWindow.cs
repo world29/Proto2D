@@ -16,6 +16,9 @@ namespace Proto2D
         private TileBase m_tile;
         private Vector2Int m_tilemapSize;
 
+        private GameObject m_startRoomPrefab;
+        private float m_mainHallwayWidth;
+
         [MenuItem("Window/ProceduralDungeonGenerator")]
         static void Open()
         {
@@ -36,10 +39,6 @@ namespace Proto2D
 
             MapGenerator gen = new MapGenerator();
             m_boundsList = gen.Generate(m_parameters);
-
-            // スタート部屋の生成
-
-            // プリセット部屋の生成
         }
 
         void OnRenderMap()
@@ -48,6 +47,26 @@ namespace Proto2D
             Tilemap tilemap = FindObjectOfType<Tilemap>();
             if (tilemap && m_tile)
             {
+                // タイルマップの下端にプリセット部屋 (PlayerStart) を生成
+                if (m_startRoomPrefab)
+                {
+                    RoomController rc = m_startRoomPrefab.GetComponent<RoomController>();
+                    float bottomY = -m_tilemapSize.y / 2;
+                    Vector3 spawnPosition = new Vector3(0, bottomY + rc.OriginToCenter.y, 0);
+                    GameObject.Instantiate(m_startRoomPrefab, spawnPosition, Quaternion.identity);
+
+                    //TODO: タイルマップの転写
+
+                    // 一番下の部屋からプリセット部屋へつづく通路を生成
+                    Bounds bottomRoom = m_boundsList.Aggregate((bottom, cur) => bottom.center.y < cur.center.y ? bottom : cur);
+                    Bounds startHallway = new Bounds();
+                    startHallway.SetMinMax(new Vector2(-m_mainHallwayWidth / 2, spawnPosition.y), new Vector2(m_mainHallwayWidth / 2, bottomRoom.center.y));
+                    m_boundsList.Add(startHallway);
+                }
+
+                //TODO: タイルマップの上端にプリセット部屋を生成
+
+                // タイルマップ更新
                 HashSet<Vector3Int> map = new HashSet<Vector3Int>();
                 for (int y = -m_tilemapSize.y / 2; y < m_tilemapSize.y / 2; y++)
                 {
@@ -131,6 +150,17 @@ namespace Proto2D
             m_tile = EditorGUILayout.ObjectField("Tile", m_tile, typeof(TileBase), false) as TileBase;
             m_tilemapSize.x = EditorGUILayout.IntSlider("tilemap width", m_tilemapSize.x, 20, 200);
             m_tilemapSize.y = EditorGUILayout.IntSlider("tilemap height", m_tilemapSize.y, 20, 500);
+
+            GameObject obj = EditorGUILayout.ObjectField("Start Room", m_startRoomPrefab, typeof(GameObject), false) as GameObject;
+            if (obj && obj.GetComponent<RoomController>())
+            {
+                m_startRoomPrefab = obj;
+            }
+            else
+            {
+                m_startRoomPrefab = null;
+            }
+            m_mainHallwayWidth = EditorGUILayout.Slider("main hallways width", m_mainHallwayWidth, 1, 10.0f);
 
             if (GUILayout.Button("Render Map"))
                 OnRenderMap();
