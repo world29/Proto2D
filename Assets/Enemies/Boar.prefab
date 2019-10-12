@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8114190860774668913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.763, y: -0.549, z: 0}
+  m_LocalPosition: {x: 1.17, y: -1.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 6043093250614405774}
   m_Layer: 0
   m_Name: Boar
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,6 +324,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: enemyHealth
