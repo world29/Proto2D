@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                         {
                             Vector3 efpos = (info.receiverPos + transform.position)/2;
                             GameObject effect = Instantiate(stompEffectPrefab, efpos, Quaternion.identity, null);
-                            Destroy(effect, 1);
+                            //Destroy(effect, 1);
                         }
 
                         CameraShake.Instance.Shake(shakeAmountOnStomp, shakeLengthOnStomp);
@@ -277,7 +277,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                         {
                             Vector3 efpos = (info.receiverPos + transform.position)/2;
                             GameObject effect = Instantiate(attackEffectPrefab, efpos, Quaternion.identity, null);
-                            Destroy(effect, 1);
+                            //Destroy(effect, 1);
                         }
 
                         CameraShake.Instance.Shake(shakeAmountOnJumpAttack, shakeLengthOnJumpAttack);

@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 771383454}
   - component: {fileID: 771383453}
   - component: {fileID: 771383455}
+  - component: {fileID: 771383456}
   m_Layer: 0
   m_Name: MapController
   m_TagString: Untagged
@@ -247,6 +248,9 @@ MonoBehaviour:
   - {fileID: 8158235655175910608, guid: 0045bda4c55cdc548810a3e9739f33ee, type: 3}
   - {fileID: 8158235655175910608, guid: 1011b1b0ff782a041a6544c78c581fed, type: 3}
   - {fileID: 8158235655175910608, guid: cb51cca5a965892419fcb3bb9f628a00, type: 3}
+  - {fileID: 8158235655175910608, guid: c5b9c194bb0da5442889266b81e62cf1, type: 3}
+  - {fileID: 8158235655175910608, guid: 92de41c3de0ef43429164303616b2cd6, type: 3}
+  - {fileID: 8158235655175910608, guid: 1bb6b27252a69f44185ad3b3451770f2, type: 3}
   playerPrefab: {fileID: 6503610203471954340, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
     type: 3}
   spawnAreaSize: {x: 11, y: 30}
@@ -279,6 +283,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replayText: {fileID: 2102198835}
   sceneNameToLoad: PresetScene
+--- !u!114 &771383456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771383452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31c7ecfe82254b418f649a8862fcb44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startRoomPrefabs:
+  - {fileID: 4465933680936766854, guid: 4e8d9b2aa26e24442a93d67e5a7bd930, type: 3}
+  normalRoomPrefabs:
+  - {fileID: 8158235655175910608, guid: 1bb6b27252a69f44185ad3b3451770f2, type: 3}
+  playerPrefab: {fileID: 6503610203471954340, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
+    type: 3}
+  spawnAreaSize: {x: 11, y: 30}
+  spawnAreaOffset: 5
 --- !u!1001 &1089785432
 PrefabInstance:
   m_ObjectHideFlags: 0
