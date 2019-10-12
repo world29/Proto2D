@@ -11,21 +11,19 @@ namespace Proto2D
     {
         List<Bounds> m_boundsList;
 
-        private const int kRandomSeedMax = 10000;
-
-        MapGenerator.Parameters parameters = new MapGenerator.Parameters();
-
+        private string m_parameters_path = "Assets/Sandbox/MapGenerationParameters.asset";
+        private MapGenerationParameters m_parameters;
         private TileBase m_tile;
-
         private Vector2Int m_tilemapSize;
 
         [MenuItem("Window/ProceduralDungeonGenerator")]
         static void Open()
         {
-            EditorWindow.GetWindow<ProceduralDungeonGeneratorWindow>("ProceduralDungeonGenerator");
+            EditorWindow window = EditorWindow.GetWindow<ProceduralDungeonGeneratorWindow>("ProceduralDungeonGenerator");
+            window.minSize = new Vector2(300f, 300f);
         }
 
-        void OnGenerate()
+        void OnGenerateRooms()
         {
             //Debug
             {
@@ -34,20 +32,14 @@ namespace Proto2D
                 {
                     tilemap.ClearAllTiles();
                 }
-
-                var objects = GameObject.FindObjectsOfType<MapGenerationSeed>();
-                foreach(var obj in objects)
-                {
-                    GameObject.DestroyImmediate(obj.gameObject);
-                }
             }
 
             MapGenerator gen = new MapGenerator();
-            m_boundsList = gen.Generate(parameters);
+            m_boundsList = gen.Generate(m_parameters);
 
-            m_boundsList.ForEach(bounds => {
-                Debug.DrawLine(bounds.min, bounds.max, Color.red, 1);
-            });
+            // スタート部屋の生成
+
+            // プリセット部屋の生成
         }
 
         void OnRenderMap()
@@ -86,6 +78,23 @@ namespace Proto2D
             }
         }
 
+        void LoadOrCreateParameters()
+        {
+            m_parameters = AssetDatabase.LoadAssetAtPath<MapGenerationParameters>(m_parameters_path);
+
+            if (m_parameters == null)
+            {
+                // ロードしてnullだったら存在しないので生成
+                m_parameters = ScriptableObject.CreateInstance<MapGenerationParameters>();
+                AssetDatabase.CreateAsset(m_parameters, m_parameters_path);
+            }
+        }
+
+        void SaveParameters()
+        {
+            EditorUtility.SetDirty(m_parameters);
+        }
+
         private void Update()
         {
             Repaint();
@@ -93,22 +102,31 @@ namespace Proto2D
 
         void OnGUI()
         {
-            parameters.seed = EditorGUILayout.IntSlider("seed", parameters.seed, 1, kRandomSeedMax);
-            parameters.simulationSteps = EditorGUILayout.IntSlider("simulation steps", parameters.simulationSteps, 1, 5000);
+            if (GUILayout.Button("Load or Create Parameters"))
+                LoadOrCreateParameters();
 
-            parameters.roomGenerationCount = EditorGUILayout.IntSlider("room gen count", parameters.roomGenerationCount, 1, 1000);
-            parameters.roomGenerationAreaRadius = EditorGUILayout.Slider("room gen area radius", parameters.roomGenerationAreaRadius, 1, 50.0f);
+            if (m_parameters)
+            {
+                m_parameters.seed = EditorGUILayout.IntSlider("seed", m_parameters.seed, 1, 10000);
+                m_parameters.simulationSteps = EditorGUILayout.IntSlider("simulation steps", m_parameters.simulationSteps, 1, 5000);
 
-            parameters.roomGenerationSizeMeanX = EditorGUILayout.Slider("room size mean x", parameters.roomGenerationSizeMeanX, 1, 10.0f);
-            parameters.roomGenerationSizeMeanY = EditorGUILayout.Slider("room size mean y", parameters.roomGenerationSizeMeanY, 1, 10.0f);
-            parameters.roomGenerationSizeSigma = EditorGUILayout.Slider("room size sigma", parameters.roomGenerationSizeSigma, 1, 10.0f);
+                m_parameters.roomGenerationCount = EditorGUILayout.IntSlider("room gen count", m_parameters.roomGenerationCount, 1, 1000);
+                m_parameters.roomGenerationAreaRadius = EditorGUILayout.Slider("room gen area radius", m_parameters.roomGenerationAreaRadius, 1, 50.0f);
 
-            parameters.mainRoomThresholdX = EditorGUILayout.Slider("room selection threshold x", parameters.mainRoomThresholdX, 1, 10.0f);
-            parameters.mainRoomThresholdY = EditorGUILayout.Slider("room selection threshold y", parameters.mainRoomThresholdY, 1, 10.0f);
-            parameters.hallwayWidth = EditorGUILayout.Slider("hallways width", parameters.hallwayWidth, 1, 10.0f);
+                m_parameters.roomGenerationSizeMeanX = EditorGUILayout.Slider("room size mean x", m_parameters.roomGenerationSizeMeanX, 1, 10.0f);
+                m_parameters.roomGenerationSizeMeanY = EditorGUILayout.Slider("room size mean y", m_parameters.roomGenerationSizeMeanY, 1, 10.0f);
+                m_parameters.roomGenerationSizeSigma = EditorGUILayout.Slider("room size sigma", m_parameters.roomGenerationSizeSigma, 1, 10.0f);
 
-            if (GUILayout.Button("Generate"))
-                OnGenerate();
+                m_parameters.mainRoomThresholdX = EditorGUILayout.Slider("room selection threshold x", m_parameters.mainRoomThresholdX, 1, 10.0f);
+                m_parameters.mainRoomThresholdY = EditorGUILayout.Slider("room selection threshold y", m_parameters.mainRoomThresholdY, 1, 10.0f);
+                m_parameters.hallwayWidth = EditorGUILayout.Slider("hallways width", m_parameters.hallwayWidth, 1, 10.0f);
+
+                if (GUILayout.Button("Save Parameters"))
+                    SaveParameters();
+
+                if (GUILayout.Button("Generate Rooms"))
+                    OnGenerateRooms();
+            }
 
             m_tile = EditorGUILayout.ObjectField("Tile", m_tile, typeof(TileBase), false) as TileBase;
             m_tilemapSize.x = EditorGUILayout.IntSlider("tilemap width", m_tilemapSize.x, 20, 200);
@@ -116,28 +134,6 @@ namespace Proto2D
 
             if (GUILayout.Button("Render Map"))
                 OnRenderMap();
-
-            if (GUILayout.Button("Simulation"))
-            {
-                var targets = GameObject.FindObjectsOfType<Rigidbody2D>();
-                foreach (var rb in targets)
-                {
-                    float sheta = Random.Range(0, 2 * Mathf.PI);
-                    rb.AddForce(new Vector2(Mathf.Cos(sheta), Mathf.Sin(sheta)));
-                }
-
-                Physics2D.autoSimulation = false;
-                for (int i = 0; i < parameters.simulationSteps; i++)
-                {
-                    Physics2D.Simulate(Time.fixedDeltaTime);
-
-                    if (targets.All(item => item.IsSleeping()))
-                    {
-                        break;
-                    }
-                }
-                Physics2D.autoSimulation = true;
-            }
         }
     }
 }

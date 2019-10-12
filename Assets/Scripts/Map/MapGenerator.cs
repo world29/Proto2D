@@ -7,30 +7,6 @@ namespace Proto2D
 {
     public class MapGenerator
     {
-        public struct Parameters
-        {
-            // 乱数シード値
-            public int seed;
-            // 物理シミュレーションのステップ数
-            public int simulationSteps;
-
-            // 部屋生成数
-            public int roomGenerationCount;
-            // 部屋を生成する空間の半径
-            public float roomGenerationAreaRadius;
-            // 部屋の幅の平均値
-            public float roomGenerationSizeMeanX;
-            // 部屋の高さの平均値
-            public float roomGenerationSizeMeanY;
-            // 部屋の広さの分散
-            public float roomGenerationSizeSigma;
-            // メイン部屋の最小サイズ
-            public float mainRoomThresholdX;
-            public float mainRoomThresholdY;
-            // 廊下の幅
-            public float hallwayWidth;
-        }
-
         private RandomBoxMuller m_random;
         private List<GameObject> m_rooms;
 
@@ -38,7 +14,7 @@ namespace Proto2D
         // - シードを生成する領域の半径 (r)
         // - シードの平均サイズと分散 (mean, sigma)
         // - 部屋の最小サイズ
-        public List<Bounds> Generate(Parameters parameters)
+        public List<Bounds> Generate(MapGenerationParameters parameters)
         {
             // 乱数の初期化
             m_random = new RandomBoxMuller(parameters.seed);
@@ -67,12 +43,7 @@ namespace Proto2D
             Vector2 mainRoomSize = new Vector2(parameters.mainRoomThresholdX, parameters.mainRoomThresholdY);
             List<Bounds> mainRooms = SelectRooms(boundsList, mainRoomSize);
             List<Bounds> otherRooms = boundsList.Except(mainRooms).ToList();
-            /*
-#if UNITY_EDITOR
-            var lst = rooms.Where(item => mainRooms.FindIndex(room => room.center.Equals(item.transform.position)) != -1).ToList();
-            lst.ForEach(item => item.GetComponent<MapGenerationSeed>().room = true);
-#endif
-*/
+
             // 三角化
             List<Vector3> vertices = mainRooms.Select(item => item.center).ToList();
             List<Triangle> triangles = Delaunay.Triangulate(vertices);
