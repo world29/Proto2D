@@ -73,6 +73,18 @@ public class CameraFollow : MonoBehaviour
 
         public void Update(Bounds targetBounds, bool followDownward)
         {
+            float shiftX = 0;
+            if (targetBounds.min.x < left)
+            {
+                shiftX = targetBounds.min.x - left;
+            }
+            else if (targetBounds.max.x > right)
+            {
+                shiftX = targetBounds.max.x - right;
+            }
+            left += shiftX;
+            right += shiftX;
+
             float shiftY = 0;
             if (targetBounds.min.y < bottom && followDownward)
             {
@@ -87,7 +99,6 @@ public class CameraFollow : MonoBehaviour
 
             centre = new Vector2((left + right) / 2, (top + bottom) / 2);
             velocity = new Vector2(0, shiftY);
-
         }
     }
 }
