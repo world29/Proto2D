@@ -47,11 +47,6 @@ namespace Proto2D
 
         void Start()
         {
-            // スタート部屋の上に通路を作る
-            spawnDungeon(ref m_spawnPosition);
-
-            // 通路の上に次の部屋を作る
-            spawnRoom(getRandomNormalRoom(), ref m_spawnPosition);
         }
 
         void LateUpdate()
@@ -60,6 +55,16 @@ namespace Proto2D
             if (player)
             {
                 m_spawnArea.Update(player.transform.position, spawnAreaOffset);
+            }
+
+            // プレイヤーの上方向に部屋を生成
+            while (m_spawnArea.IsIntersects(m_spawnPosition))
+            {
+                // スタート部屋の上に通路を作る
+                spawnDungeon(ref m_spawnPosition);
+
+                // 通路の上に次の部屋を作る
+                spawnRoom(getRandomNormalRoom(), ref m_spawnPosition);
             }
         }
 
