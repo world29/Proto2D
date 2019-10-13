@@ -14,6 +14,7 @@ namespace Proto2D
         public List<RoomController> normalRoomPrefabs;
 
         public Tilemap m_tilemap;
+        public Tilemap m_tilemapBackground;
         public TileBase m_tile;
 
         // 部屋の生成トリガーとなる範囲
@@ -68,7 +69,6 @@ namespace Proto2D
             Vector3 roomCenter = spawnPosition;
             roomCenter.y += roomOriginToCenterY;
 
-            //TODO: タイルマップの転写
             RoomController room = GameObject.Instantiate(prefab, roomCenter, Quaternion.identity);
 
             if (room.flipEnabled)
@@ -77,20 +77,59 @@ namespace Proto2D
                 room.gameObject.transform.localScale = new Vector3(dirX, 1, 1);
             }
 
+            // タイルの転写
+            copyRoomTiles(room, roomCenter);
+
             // 次の部屋を生成する高さ
             float roomHeight = prefab.Size.y * prefab.CellSize.y;
             spawnPosition.y += roomHeight;
         }
 
+        void copyRoomTiles(RoomController rc, Vector3 roomPosition)
+        {
+            Vector3Int offset = m_tilemap.WorldToCell(roomPosition);
+
+            foreach (Tilemap tilemap in rc.GetComponentsInChildren<Tilemap>())
+            {
+                // タイルマップに含まれるタイルを全てコピーする
+                Dictionary<Vector3Int, TileBase> map = new Dictionary<Vector3Int, TileBase>();
+                foreach (Vector3Int position in tilemap.cellBounds.allPositionsWithin)
+                {
+                    if (tilemap.HasTile(position))
+                    {
+                        map[position + offset] = tilemap.GetTile(position);
+                    }
+                }
+
+                // オブジェクト名からコピー先を決定する
+                switch (tilemap.gameObject.name)
+                {
+                    case "Tilemap":
+                        RenderMap(map, m_tilemap);
+                        break;
+                    case "Background":
+                        RenderMap(map, m_tilemapBackground);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unknown tilemap name: {0}", tilemap.gameObject.name);
+                        break;
+                }
+            }
+
+            // 部屋プレハブの全てのタイルマップをグリッドごと消す
+            Grid grid = rc.GetComponentInChildren<Grid>();
+            Debug.Assert(grid);
+            Destroy(grid.gameObject);
+        }
+
         void spawnDungeon(ref Vector3 spawnPosition)
         {
-            Vector3 targetAreaCenter = spawnPosition;
-            targetAreaCenter.y += dungeonSize.y / 2;
+            Vector3 targetAreaCenter = new Vector3(spawnPosition.x, spawnPosition.y + dungeonSize.y / 2);
             Bounds targetArea = new Bounds(targetAreaCenter, dungeonSize);
 
             MapGenerator gen = new MapGenerator();
             m_dungeonBounds = gen.Generate(m_parameters, targetArea.center);
-            
+
             if (m_tilemap && m_tile)
             {
                 // タイルマップ更新
@@ -101,7 +140,9 @@ namespace Proto2D
                     {
                         // 境界ボックスと衝突しないタイルを追加する
                         Vector3Int position = new Vector3Int(x, y, 0);
-                        Bounds cellBounds = new Bounds(m_tilemap.GetCellCenterWorld(position), m_tilemap.cellSize);
+                        //HACK: タイルマップ自体の z 座標がずれている場合に交差判定が機能しないため、厚みを持たせる
+                        Vector3 cellSize = new Vector3(m_tilemap.cellSize.x, m_tilemap.cellSize.y, 1);
+                        Bounds cellBounds = new Bounds(m_tilemap.GetCellCenterWorld(position), cellSize);
                         if (m_dungeonBounds.FindIndex(bounds => bounds.Intersects(cellBounds)) < 0)
                         {
                             map.Add(position);
@@ -122,13 +163,21 @@ namespace Proto2D
                     });
                 }
 
-                RenderMap(map, m_tilemap, m_tile);
+                RenderMapWithTile(map, m_tilemap, m_tile);
             }
 
             spawnPosition.y += targetArea.size.y;
         }
 
-        void RenderMap(HashSet<Vector3Int> map, Tilemap tilemap, TileBase tile)
+        void RenderMap(Dictionary<Vector3Int, TileBase> map, Tilemap tilemap)
+        {
+            foreach(var item in map)
+            {
+                tilemap.SetTile(item.Key, item.Value);
+            }
+        }
+
+        void RenderMapWithTile(HashSet<Vector3Int> map, Tilemap tilemap, TileBase tile)
         {
             //マップをクリアする（重複しないようにする）
             tilemap.ClearAllTiles();
