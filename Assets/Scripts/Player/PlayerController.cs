@@ -169,10 +169,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     public bool CheckEntryWallClimbing()
     {
-        if (state is PlayerState_Hop)
-        {
-            return false;
-        }
         if (controller.collisions.right || controller.collisions.left)
         {
             int wallDirX = controller.collisions.right ? 1 : -1;
