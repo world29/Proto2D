@@ -14,7 +14,7 @@ namespace Proto2D
         // - シードを生成する領域の半径 (r)
         // - シードの平均サイズと分散 (mean, sigma)
         // - 部屋の最小サイズ
-        public List<Bounds> Generate(MapGenerationParameters parameters)
+        public List<Bounds> Generate(MapGenerationParameters parameters, Vector3 position, List<Bounds> initBoundsList = null)
         {
             // 乱数の初期化
             m_random = new RandomBoxMuller(parameters.seed);
@@ -22,6 +22,7 @@ namespace Proto2D
             // 部屋生成
             List<GameObject> rooms = SpawnRooms(
                 parameters.roomGenerationCount,
+                position,
                 parameters.roomGenerationAreaRadius,
                 new Vector2(parameters.roomGenerationSizeMeanX, parameters.roomGenerationSizeMeanY),
                 parameters.roomGenerationSizeSigma);
@@ -44,6 +45,12 @@ namespace Proto2D
             List<Bounds> mainRooms = SelectRooms(boundsList, mainRoomSize);
             List<Bounds> otherRooms = boundsList.Except(mainRooms).ToList();
 
+            // 初期値を追加
+            if (initBoundsList != null)
+            {
+                mainRooms.AddRange(initBoundsList);
+            }
+
             // 三角化
             List<Vector3> vertices = mainRooms.Select(item => item.center).ToList();
             List<Triangle> triangles = Delaunay.Triangulate(vertices);
@@ -62,7 +69,7 @@ namespace Proto2D
             return mainRooms.Union(hallways).ToList();
         }
 
-        public List<GameObject> SpawnRooms(int count, float radius, Vector2 mean, float sigma)
+        public List<GameObject> SpawnRooms(int count, Vector2 center, float radius, Vector2 mean, float sigma)
         {
             List<GameObject> rooms = new List<GameObject>();
 
@@ -71,14 +78,14 @@ namespace Proto2D
                 // 幅と高さを持つ部屋を円の中にランダムに配置
                 Vector2 position = m_random.Source.insideUnitCircle * radius;
                 //HACK: 縦長の範囲に部屋を生成するための仮対応
-                position.y *= 4;
+                //position.y *= 3;
 
                 // 各部屋のサイズを指定するのに正規分布を使用する
                 Vector2 size;
                 size.x = m_random.Next(mean.x, sigma, true);
                 size.y = m_random.Next(mean.y, sigma, false);
 
-                rooms.Add(createRoomObject(position, size));
+                rooms.Add(createRoomObject(position + center, size));
             }
 
             return rooms;

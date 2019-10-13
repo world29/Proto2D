@@ -15,7 +15,9 @@ namespace Proto2D
 
         [HideInInspector] public Vector3Int Size { get { return getPrimaryTilemap().size; } }
         [HideInInspector] public Vector3 CellSize { get { return getPrimaryTilemap().cellSize; } }
+        [HideInInspector] public Vector3Int Origin { get { return getPrimaryTilemap().origin; } }
         // タイルマップの左下端から (0,0) へのオフセット
+        //deprecated: インスタンス化するまで CellToLocal 画適切な値を返さない
         [HideInInspector] public Vector3 OriginToCenter { get { return -getPrimaryTilemap().CellToLocal(getPrimaryTilemap().origin); } }
 
         private Tilemap m_primaryTilemap;

@@ -11,7 +11,7 @@ namespace Proto2D
     {
         List<Bounds> m_boundsList;
 
-        private string m_parameters_path = "Assets/Sandbox/MapGenerationParameters.asset";
+        private string m_parameters_path = "Assets/Resources/MapGenerationParameters.asset";
         private MapGenerationParameters m_parameters;
         private TileBase m_tile;
         private Vector2Int m_tilemapSize;
@@ -38,7 +38,7 @@ namespace Proto2D
             }
 
             MapGenerator gen = new MapGenerator();
-            m_boundsList = gen.Generate(m_parameters);
+            m_boundsList = gen.Generate(m_parameters, Vector3.zero);
         }
 
         void OnRenderMap()
