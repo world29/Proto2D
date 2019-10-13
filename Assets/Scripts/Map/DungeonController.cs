@@ -180,7 +180,7 @@ namespace Proto2D
         void RenderMapWithTile(HashSet<Vector3Int> map, Tilemap tilemap, TileBase tile)
         {
             //マップをクリアする（重複しないようにする）
-            tilemap.ClearAllTiles();
+            //tilemap.ClearAllTiles();
 
             foreach (Vector3Int position in map)
             {
@@ -203,7 +203,7 @@ namespace Proto2D
             if (normalRoomPrefabs.Count > 0)
             {
                 int index = Random.Range(0, normalRoomPrefabs.Count);
-                Debug.Log(index);
+                //Debug.Log(index);
                 return normalRoomPrefabs[index];
             }
             return null;

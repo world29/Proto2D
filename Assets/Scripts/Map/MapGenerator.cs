@@ -544,7 +544,7 @@ namespace Proto2D
             {
                 // 重みが最小の辺を取り出す
                 var e = E.Pop();
-                Debug.Log(Vector2.Distance(e.start, e.end));
+                //Debug.Log(Vector2.Distance(e.start, e.end));
 
                 // 辺 e につながっている頂点 u,v が所属する木を見つける
                 var tree_u = F.Where(tree => tree.HasVertex(e.start)).First();
