@@ -93,6 +93,7 @@ public class PlayerState_Free : IPlayerState
         if (grounded && input.isTouched)
         {
             player.PlaySE(player.jumpSE);
+            player.PlayEffect(player.jumpEffectPrefab);
             velocity.y = player.jumpSpeed;
             jumped = true;
         }

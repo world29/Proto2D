@@ -63,7 +63,9 @@ public class PlayerState_Hop : IPlayerState
             // 壁と反対方向のキー入力で壁からジャンプする
             if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
             {
-                player.PlaySE(player.jumpSE);
+                player.PlaySE(player.hopWallKickSE);
+                player.PlayEffect(player.jumpEffectPrefab);
+                player.PlayEffect(player.hopWallKickEffectPrefab);
                 player.velocity.x = player.wallJumpVelocity.x * -wallDirX;
                 player.velocity.y = player.wallJumpVelocity.y;
             }

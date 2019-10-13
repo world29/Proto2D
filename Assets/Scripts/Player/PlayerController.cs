@@ -81,8 +81,16 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("ジャンプアタックヒット時に跳ねる速さ")]
     public float jumpSpeedOnJumpAttack = 15;
 
-    [Header("ジャンプ開始時の効果音")]
+    [Header("壁ジャンプ時のエフェクト")]
+    public GameObject wallKickEffectPrefab;
+    [Header("ホップ時の壁ジャンプエフェクト")]
+    public GameObject hopWallKickEffectPrefab;
+    [Header("ジャンプ時のエフェクト")]
+    public GameObject jumpEffectPrefab;
+    [Header("ホップ開始時の効果音")]
     public AudioClip jumpSE;
+    [Header("ホップ時の壁ジャンプ開始時の効果音")]
+    public AudioClip hopWallKickSE;
     [Header("ジャンプアタック開始時の効果音")]
     public AudioClip jumpAttackSE;
     [Header("ホップ開始時の効果音")]
