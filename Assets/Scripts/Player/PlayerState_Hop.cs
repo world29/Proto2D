@@ -67,7 +67,7 @@ public class PlayerState_Hop : IPlayerState
                 player.PlayEffect(player.jumpEffectPrefab);
                 player.PlayEffect(player.hopWallKickEffectPrefab);
                 player.velocity.x = player.wallJumpVelocity.x * -wallDirX;
-                player.velocity.y = player.wallJumpVelocity.y;
+                player.velocity.y += player.wallJumpVelocity.y;
             }
         }
 
