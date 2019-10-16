@@ -7,6 +7,19 @@ using System.Linq;
 
 namespace Proto2D
 {
+    // シーンビューでデバッグ表示するためのコンポーネント
+    public class RoomDebug : MonoBehaviour
+    {
+        public Vector3 m_center;
+        public Vector3 m_size;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = new Color(0, 1, 1, .3f);
+            Gizmos.DrawCube(m_center, m_size);
+        }
+    }
+
     public class ProceduralDungeonGeneratorWindow : EditorWindow
     {
         List<Bounds> m_boundsList;
@@ -16,6 +29,7 @@ namespace Proto2D
         private TileBase m_tile;
         private Vector2Int m_tilemapSize;
 
+        private bool m_randomSeed = true;
         private GameObject m_startRoomPrefab;
         private float m_mainHallwayWidth;
 
@@ -28,17 +42,38 @@ namespace Proto2D
 
         void OnGenerateRooms()
         {
-            //Debug
             {
+                // タイルマップ初期化
                 Tilemap tilemap = FindObjectOfType<Tilemap>();
                 if (tilemap)
                 {
                     tilemap.ClearAllTiles();
                 }
+
+                // デバッグ表示用オブジェクトを削除
+                foreach(var room in GameObject.FindObjectsOfType<RoomDebug>())
+                {
+                    GameObject.DestroyImmediate(room.gameObject);
+                }
+            }
+
+            // シード値を乱数で設定
+            if (m_randomSeed)
+            {
+                m_parameters.seed = Random.Range(1, 10000);
             }
 
             MapGenerator gen = new MapGenerator();
             m_boundsList = gen.Generate(m_parameters, Vector3.zero);
+
+            // デバッグ表示用オブジェクトの作成
+            m_boundsList.ForEach(bounds =>
+            {
+                GameObject obj = new GameObject("RoomDebug");
+                RoomDebug room = obj.AddComponent<RoomDebug>();
+                room.m_center = bounds.center;
+                room.m_size = bounds.size;
+            });
         }
 
         void OnRenderMap()
@@ -130,7 +165,8 @@ namespace Proto2D
                 m_parameters.simulationSteps = EditorGUILayout.IntSlider("simulation steps", m_parameters.simulationSteps, 1, 5000);
 
                 m_parameters.roomGenerationCount = EditorGUILayout.IntSlider("room gen count", m_parameters.roomGenerationCount, 1, 1000);
-                m_parameters.roomGenerationAreaRadius = EditorGUILayout.Slider("room gen area radius", m_parameters.roomGenerationAreaRadius, 1, 50.0f);
+                m_parameters.roomGenerationAreaWidth = EditorGUILayout.Slider("room gen area width", m_parameters.roomGenerationAreaWidth, 1, 100.0f);
+                m_parameters.roomGenerationAreaHeight = EditorGUILayout.Slider("room gen area height", m_parameters.roomGenerationAreaHeight, 1, 100.0f);
 
                 m_parameters.roomGenerationSizeMeanX = EditorGUILayout.Slider("room size mean x", m_parameters.roomGenerationSizeMeanX, 1, 10.0f);
                 m_parameters.roomGenerationSizeMeanY = EditorGUILayout.Slider("room size mean y", m_parameters.roomGenerationSizeMeanY, 1, 10.0f);
@@ -151,6 +187,7 @@ namespace Proto2D
             m_tilemapSize.x = EditorGUILayout.IntSlider("tilemap width", m_tilemapSize.x, 20, 200);
             m_tilemapSize.y = EditorGUILayout.IntSlider("tilemap height", m_tilemapSize.y, 20, 500);
 
+            m_randomSeed = EditorGUILayout.Toggle("random seed", m_randomSeed);
             GameObject obj = EditorGUILayout.ObjectField("Start Room", m_startRoomPrefab, typeof(GameObject), false) as GameObject;
             if (obj && obj.GetComponent<RoomController>())
             {

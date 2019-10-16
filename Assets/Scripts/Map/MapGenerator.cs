@@ -11,20 +11,21 @@ namespace Proto2D
         private List<GameObject> m_rooms;
 
         // [生成パラメータ]
-        // - シードを生成する領域の半径 (r)
-        // - シードの平均サイズと分散 (mean, sigma)
-        // - 部屋の最小サイズ
-        public List<Bounds> Generate(MapGenerationParameters parameters, Vector3 position, List<Bounds> initBoundsList = null)
+        public List<Bounds> Generate(MapGenerationParameters parameters, Vector3 position)
         {
             // 乱数の初期化
             m_random = new RandomBoxMuller(parameters.seed);
 
             // 部屋生成
+            Bounds generationArea = new Bounds(position, new Vector3(parameters.roomGenerationAreaWidth, parameters.roomGenerationAreaHeight));
+            Bounds roomSpawnArea = generationArea;
+            //HACK: 物理シミュレーションによって全体的に外側に膨らむので、半分のエリアに生成する。
+            roomSpawnArea.Expand(.5f);
+            Vector2 roomSizeMean = new Vector2(parameters.roomGenerationSizeMeanX, parameters.roomGenerationSizeMeanY);
             List<GameObject> rooms = SpawnRooms(
                 parameters.roomGenerationCount,
-                position,
-                parameters.roomGenerationAreaRadius,
-                new Vector2(parameters.roomGenerationSizeMeanX, parameters.roomGenerationSizeMeanY),
+                roomSpawnArea,
+                roomSizeMean,
                 parameters.roomGenerationSizeSigma);
 
             // 物理シミュレーション
@@ -42,13 +43,21 @@ namespace Proto2D
 
             // 部屋とそれ以外に選別
             Vector2 mainRoomSize = new Vector2(parameters.mainRoomThresholdX, parameters.mainRoomThresholdY);
-            List<Bounds> mainRooms = SelectRooms(boundsList, mainRoomSize);
+            List<Bounds> mainRooms = SelectRooms(boundsList, generationArea, mainRoomSize);
             List<Bounds> otherRooms = boundsList.Except(mainRooms).ToList();
 
-            // 初期値を追加
-            if (initBoundsList != null)
+            // 部屋の配置が偏る場合があるので、位置を補正する
+            Vector3 centerOfRooms = mainRooms.Select(bounds => bounds.center - position).Aggregate((sum, cur) => sum + cur);
+            centerOfRooms /= mainRooms.Count;
+            for (int i = 0; i < mainRooms.Count; i++)
             {
-                mainRooms.AddRange(initBoundsList);
+                Bounds bounds = mainRooms[i];
+                mainRooms[i] = new Bounds(bounds.center - centerOfRooms, bounds.size);
+            }
+            for (int i = 0; i < otherRooms.Count; i++)
+            {
+                Bounds bounds = otherRooms[i];
+                otherRooms[i] = new Bounds(bounds.center - centerOfRooms, bounds.size);
             }
 
             // 三角化
@@ -69,23 +78,22 @@ namespace Proto2D
             return mainRooms.Union(hallways).ToList();
         }
 
-        public List<GameObject> SpawnRooms(int count, Vector2 center, float radius, Vector2 mean, float sigma)
+        public List<GameObject> SpawnRooms(int count, Bounds spawnArea, Vector2 sizeMean, float sigma)
         {
             List<GameObject> rooms = new List<GameObject>();
 
             for (int i = 0; i < count; i++)
             {
                 // 幅と高さを持つ部屋を円の中にランダムに配置
-                Vector2 position = m_random.Source.insideUnitCircle * radius;
-                //HACK: 縦長の範囲に部屋を生成するための仮対応
-                //position.y *= 3;
+                Vector2 pos = m_random.Source.insideUnitCircle;
+                Vector3 center = new Vector3(spawnArea.center.x + pos.x * spawnArea.extents.x, spawnArea.center.y + pos.y * spawnArea.extents.y);
 
                 // 各部屋のサイズを指定するのに正規分布を使用する
                 Vector2 size;
-                size.x = m_random.Next(mean.x, sigma, true);
-                size.y = m_random.Next(mean.y, sigma, false);
+                size.x = m_random.Next(sizeMean.x, sigma, true);
+                size.y = m_random.Next(sizeMean.y, sigma, false);
 
-                rooms.Add(createRoomObject(position + center, size));
+                rooms.Add(createRoomObject(center, size));
             }
 
             return rooms;
@@ -112,9 +120,12 @@ namespace Proto2D
             Physics2D.autoSimulation = true;
         }
 
-        public List<Bounds> SelectRooms(List<Bounds> seeds, Vector2 roomSize)
+        public List<Bounds> SelectRooms(List<Bounds> seeds, Bounds roomArea, Vector2 roomSize)
         {
-            return seeds.Where(item => item.size.x > roomSize.x && item.size.y > roomSize.y).ToList();
+            // 指定エリア内にあり、指定サイズ以上の部屋を選択する
+            return seeds
+                .Where(bounds => roomArea.Contains(bounds.min) && roomArea.Contains(bounds.max))
+                .Where(bounds => bounds.size.x >= roomSize.x && bounds.size.y >= roomSize.y).ToList();
         }
 
         public List<Bounds> CalculateHallways(List<Bounds> rooms, List<Edge> edges, List<Bounds> candidates, float hallwayWidth)

@@ -481,18 +481,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_parameters: {fileID: 11400000, guid: 0854c0dee421a8e4b9ba3249ec16ea79, type: 2}
-  startRoomPrefabs:
+  m_startRoomPrefabs:
   - {fileID: 4465933680936766854, guid: 4e8d9b2aa26e24442a93d67e5a7bd930, type: 3}
-  normalRoomPrefabs:
+  m_normalRoomPrefabs:
   - {fileID: 8158235655175910608, guid: c1f315bdb07ac9747b7b23c1d373d673, type: 3}
   - {fileID: 8158235655175910608, guid: 062fd10e5417c694a981e47d686b51c1, type: 3}
-  - {fileID: 8158235655175910608, guid: c69d94b6ed0c0c842ab353a1da1f92a2, type: 3}
   m_tilemap: {fileID: 614683416}
   m_tilemapBackground: {fileID: 270133377}
   m_tile: {fileID: 11400000, guid: 9fd53b96855479740b6ad5f9b466584d, type: 2}
-  spawnAreaSize: {x: 100, y: 100}
-  spawnAreaOffset: 10
-  dungeonSize: {x: 100, y: 120}
+  m_triggerAreaSize: {x: 15, y: 20}
+  m_triggerAreaOffset: 10
+  m_dungeonSize: {x: 100, y: 60}
 --- !u!4 &1305358305
 Transform:
   m_ObjectHideFlags: 0

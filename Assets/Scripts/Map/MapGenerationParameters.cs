@@ -20,9 +20,13 @@ namespace Proto2D
         [SerializeField]
         public int roomGenerationCount;
 
-        // 部屋を生成する空間の半径
+        // 部屋を生成する空間の幅
         [SerializeField]
-        public float roomGenerationAreaRadius;
+        public float roomGenerationAreaWidth;
+
+        // 部屋を生成する空間の高さ
+        [SerializeField]
+        public float roomGenerationAreaHeight;
 
         // 部屋の幅の平均値
         [SerializeField]

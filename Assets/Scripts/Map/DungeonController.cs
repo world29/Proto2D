@@ -10,20 +10,20 @@ namespace Proto2D
     {
         public MapGenerationParameters m_parameters;
 
-        public List<RoomController> startRoomPrefabs;
-        public List<RoomController> normalRoomPrefabs;
+        public List<RoomController> m_startRoomPrefabs;
+        public List<RoomController> m_normalRoomPrefabs;
 
         public Tilemap m_tilemap;
         public Tilemap m_tilemapBackground;
         public TileBase m_tile;
 
         // 部屋の生成トリガーとなる範囲
-        public Vector2 spawnAreaSize;
-        public float spawnAreaOffset = 10;
-        SpawnArea m_spawnArea;
+        public Vector2 m_triggerAreaSize;
+        public float m_triggerAreaOffset = 10;
+        TriggerArea m_triggerArea;
 
         // 通路の生成サイズ
-        public Vector2 dungeonSize = new Vector2(100, 120);
+        public Vector2 m_dungeonSize = new Vector2(100, 60);
 
         // 生成する部屋の下端となる位置
         Vector3 m_spawnPosition;
@@ -33,8 +33,8 @@ namespace Proto2D
 
         private void Awake()
         {
-            m_spawnArea = new SpawnArea(spawnAreaSize);
-            m_spawnArea.Update(Vector3.zero, spawnAreaOffset);
+            m_triggerArea = new TriggerArea(m_triggerAreaSize);
+            m_triggerArea.Update(Vector3.zero, m_triggerAreaOffset);
 
             m_spawnPosition = Vector3.zero;
 
@@ -54,11 +54,11 @@ namespace Proto2D
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player)
             {
-                m_spawnArea.Update(player.transform.position, spawnAreaOffset);
+                m_triggerArea.Update(player.transform.position, m_triggerAreaOffset);
             }
 
             // プレイヤーの上方向に部屋を生成
-            while (m_spawnArea.IsIntersects(m_spawnPosition))
+            while (m_triggerArea.IsIntersects(m_spawnPosition))
             {
                 // スタート部屋の上に通路を作る
                 spawnDungeon(ref m_spawnPosition);
@@ -129,49 +129,92 @@ namespace Proto2D
 
         void spawnDungeon(ref Vector3 spawnPosition)
         {
-            Vector3 targetAreaCenter = new Vector3(spawnPosition.x, spawnPosition.y + dungeonSize.y / 2);
-            Bounds targetArea = new Bounds(targetAreaCenter, dungeonSize);
+            Vector3 dungeonAreaCenter = new Vector3(spawnPosition.x, spawnPosition.y + m_dungeonSize.y / 2);
+            Bounds dungeonArea = new Bounds(dungeonAreaCenter, m_dungeonSize);
 
+            // パラメータを加工
+            MapGenerationParameters randomSeedParameters = m_parameters;
+            randomSeedParameters.seed = Random.Range(1, 10000);
+            randomSeedParameters.roomGenerationAreaWidth = dungeonArea.size.x * .8f;
+            randomSeedParameters.roomGenerationAreaHeight = dungeonArea.size.y * .8f;
+
+            // 生成
             MapGenerator gen = new MapGenerator();
-            m_dungeonBounds = gen.Generate(m_parameters, targetArea.center);
+            m_dungeonBounds = gen.Generate(randomSeedParameters, dungeonArea.center);
 
             if (m_tilemap && m_tile)
             {
-                // タイルマップ更新
-                HashSet<Vector3Int> map = new HashSet<Vector3Int>();
-                for (int y = (int)targetArea.min.y; y < (int)targetArea.max.y; y++)
+                // ダンジョンエリアのタイル座標を含むバウンディングを計算
+                BoundsInt cellBounds = new BoundsInt();
+                Vector3Int maxInt = m_tilemap.WorldToCell(dungeonArea.max);
+                cellBounds.SetMinMax(m_tilemap.WorldToCell(dungeonArea.min), new Vector3Int(maxInt.x, maxInt.y, 1));
+
+                // エリアをタイルで埋める
+                foreach (Vector3Int position in cellBounds.allPositionsWithin)
                 {
-                    for (int x = (int)targetArea.min.x; x < (int)targetArea.max.x; x++)
-                    {
-                        // 境界ボックスと衝突しないタイルを追加する
-                        Vector3Int position = new Vector3Int(x, y, 0);
-                        //HACK: タイルマップ自体の z 座標がずれている場合に交差判定が機能しないため、厚みを持たせる
-                        Vector3 cellSize = new Vector3(m_tilemap.cellSize.x, m_tilemap.cellSize.y, 1);
-                        Bounds cellBounds = new Bounds(m_tilemap.GetCellCenterWorld(position), cellSize);
-                        if (m_dungeonBounds.FindIndex(bounds => bounds.Intersects(cellBounds)) < 0)
-                        {
-                            map.Add(position);
-                        }
-                    }
+                    m_tilemap.SetTile(position, m_tile);
                 }
+
+                // ダンジョンの部屋および通路となるセルからタイルを削除する
+                m_dungeonBounds.ForEach(bounds => {
+                    BoundsInt roomCellBounds = new BoundsInt();
+                    Vector3Int max = m_tilemap.WorldToCell(bounds.max);
+                    roomCellBounds.SetMinMax(m_tilemap.WorldToCell(bounds.min), new Vector3Int(max.x, max.y, 1));
+
+                    foreach(Vector3Int position in roomCellBounds.allPositionsWithin)
+                    {
+                        m_tilemap.SetTile(position, null);
+                    }
+                });
 
                 // 上下の部屋と通路をつなぐ部分のタイルを削除する
                 {
-                    Bounds bottom = m_dungeonBounds.Aggregate((sum, cur) => sum.min.y < cur.min.y ? sum : cur);
-                    map.RemoveWhere(position => {
-                        return (m_tilemap.GetCellCenterWorld(position).y <= bottom.center.y) && (Mathf.Abs(position.x) <= 5);
-                    });
+                    Bounds hallwayBounds = new Bounds(dungeonArea.center, new Vector3(11, dungeonArea.size.y));
 
-                    Bounds top = m_dungeonBounds.Aggregate((sum, cur) => sum.max.y > cur.max.y ? sum : cur);
-                    map.RemoveWhere(position => {
-                        return (m_tilemap.GetCellCenterWorld(position).y >= top.center.y) && (Mathf.Abs(position.x) <= 5);
-                    });
+                    /* TODO:
+                    IEnumerable<Bounds> centerBounds = m_dungeonBounds.Where(bounds => mainHallway.Intersects(bounds));
+                    Bounds bottom = centerBounds.Aggregate((acc, cur) => acc.min.y < cur.min.y ? acc : cur);
+                    Bounds top = centerBounds.Aggregate((acc, cur) => acc.max.y > cur.max.y ? acc : cur);
+                    */
+
+                    BoundsInt hallwayCellBounds = new BoundsInt();
+                    Vector3Int max = m_tilemap.WorldToCell(hallwayBounds.max);
+                    hallwayCellBounds.SetMinMax(m_tilemap.WorldToCell(hallwayBounds.min), new Vector3Int(max.x, max.y, 1));
+
+                    foreach (Vector3Int position in hallwayCellBounds.allPositionsWithin)
+                    {
+                        m_tilemap.SetTile(position, null);
+                    }
                 }
 
-                RenderMapWithTile(map, m_tilemap, m_tile);
+                // 周囲をタイルで囲まれたセルについてはタイルを削除する (タイルコリジョンの更新負荷が高いため)
+                HashSet<Vector3Int> positionsToRemove = new HashSet<Vector3Int>();
+                foreach (Vector3Int position in cellBounds.allPositionsWithin)
+                {
+                    if (m_tilemap.HasTile(position))
+                    {
+                        Vector3Int[] arounds = {
+                            new Vector3Int(position.x-1, position.y-1, position.z),
+                            new Vector3Int(position.x, position.y-1, position.z),
+                            new Vector3Int(position.x+1, position.y-1, position.z),
+                            new Vector3Int(position.x-1, position.y, position.z),
+                            new Vector3Int(position.x+1, position.y, position.z),
+                            new Vector3Int(position.x-1, position.y+1, position.z),
+                            new Vector3Int(position.x, position.y+1, position.z),
+                            new Vector3Int(position.x+1, position.y+1, position.z) };
+                        if (arounds.All(pos => m_tilemap.HasTile(pos)))
+                        {
+                            positionsToRemove.Add(position);
+                        }
+                    }
+                }
+                foreach (Vector3Int position in positionsToRemove)
+                {
+                    m_tilemap.SetTile(position, null);
+                }
             }
 
-            spawnPosition.y += targetArea.size.y;
+            spawnPosition.y += dungeonArea.size.y;
         }
 
         void RenderMap(Dictionary<Vector3Int, TileBase> map, Tilemap tilemap)
@@ -182,34 +225,23 @@ namespace Proto2D
             }
         }
 
-        void RenderMapWithTile(HashSet<Vector3Int> map, Tilemap tilemap, TileBase tile)
-        {
-            //マップをクリアする（重複しないようにする）
-            //tilemap.ClearAllTiles();
-
-            foreach (Vector3Int position in map)
-            {
-                tilemap.SetTile(position, tile);
-            }
-        }
-
         RoomController getRandomStartRoom()
         {
-            if (startRoomPrefabs.Count > 0)
+            if (m_startRoomPrefabs.Count > 0)
             {
-                int index = Random.Range(0, startRoomPrefabs.Count);
-                return startRoomPrefabs[index];
+                int index = Random.Range(0, m_startRoomPrefabs.Count);
+                return m_startRoomPrefabs[index];
             }
             return null;
         }
 
         RoomController getRandomNormalRoom()
         {
-            if (normalRoomPrefabs.Count > 0)
+            if (m_normalRoomPrefabs.Count > 0)
             {
-                int index = Random.Range(0, normalRoomPrefabs.Count);
+                int index = Random.Range(0, m_normalRoomPrefabs.Count);
                 //Debug.Log(index);
-                return normalRoomPrefabs[index];
+                return m_normalRoomPrefabs[index];
             }
             return null;
         }
@@ -218,7 +250,7 @@ namespace Proto2D
         {
             // スポーン領域
             Gizmos.color = new Color(0, 0, 1, .2f);
-            Gizmos.DrawCube(m_spawnArea.bounds.center, m_spawnArea.bounds.size);
+            Gizmos.DrawCube(m_triggerArea.bounds.center, m_triggerArea.bounds.size);
 
             if (m_dungeonBounds != null)
             {
@@ -228,11 +260,11 @@ namespace Proto2D
             }
         }
 
-        struct SpawnArea
+        struct TriggerArea
         {
             public Bounds bounds;
 
-            public SpawnArea(Vector2 size)
+            public TriggerArea(Vector2 size)
             {
                 bounds = new Bounds(Vector3.zero, size);
             }
