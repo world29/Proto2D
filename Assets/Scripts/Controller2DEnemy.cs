@@ -6,6 +6,9 @@ public class Controller2DEnemy : RaycastController
 {
     public CollisionInfo collisions;
 
+    [Header("上り下りできる坂道の最大角度 (deg)")]
+    public float maxSlopeAngle = 60;
+
     public override void Start()
     {
         base.Start();
@@ -16,6 +19,11 @@ public class Controller2DEnemy : RaycastController
         UpdateRaycastOrigins();
 
         collisions.Reset();
+
+        if (moveAmount.y < 0)
+        {
+            DescendSlope(ref moveAmount);
+        }
 
         HorizontalCollisions(ref moveAmount);
 
@@ -54,11 +62,20 @@ public class Controller2DEnemy : RaycastController
                     continue;
                 }
 
-                moveAmount.x = (hit.distance - skinWidth) * directionX;
-                rayLength = hit.distance;
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (i == 0 && slopeAngle <= maxSlopeAngle)
+                {
+                    ClimbSlope(ref moveAmount, slopeAngle);
+                }
 
-                collisions.left = directionX == -1;
-                collisions.right = directionX == 1;
+                if (!collisions.climbingSlope && slopeAngle > maxSlopeAngle)
+                {
+                    moveAmount.x = (hit.distance - skinWidth) * directionX;
+                    rayLength = hit.distance;
+
+                    collisions.left = directionX == -1;
+                    collisions.right = directionX == 1;
+                }
             }
         }
     }
@@ -87,15 +104,69 @@ public class Controller2DEnemy : RaycastController
         }
     }
 
+    void ClimbSlope(ref Vector2 moveAmount, float slopeAngle)
+    {
+        float moveDistance = Mathf.Abs(moveAmount.x);
+        float climbAmountY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        if (moveAmount.y <= climbAmountY)
+        {
+            moveAmount.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(moveAmount.x);
+            moveAmount.y = climbAmountY;
+            collisions.below = true;
+            collisions.climbingSlope = true;
+            collisions.slopeAngle = slopeAngle;
+        }
+    }
+
+    void DescendSlope(ref Vector2 moveAmount)
+    {
+        float directionX = Mathf.Sign(moveAmount.x);
+        Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, -Vector2.up, Mathf.Infinity, collisionMask);
+
+        if (hit)
+        {
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+            if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle)
+            {
+                if (Mathf.Sign(hit.normal.x) == directionX)
+                {
+                    float moveDistance = Mathf.Abs(moveAmount.x);
+                    if (hit.distance - skinWidth <= Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Max(moveDistance, .1f))
+                    {
+                        float descendAmountY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+                        moveAmount.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(moveAmount.x);
+                        moveAmount.y -= descendAmountY;
+
+                        collisions.below = true;
+                        collisions.descendingSlope = true;
+                    }
+                }
+            }
+        }
+    }
+
     public struct CollisionInfo
     {
         public bool above, below;
         public bool left, right;
 
+        public bool climbingSlope;
+        public bool descendingSlope;
+        public float slopeAngle, slopeAngleOld;
+
         public void Reset()
         {
             above = below = false;
             left = right = false;
+
+            climbingSlope = false;
+            descendingSlope = false;
+
+            slopeAngleOld = slopeAngle;
+            slopeAngle = 0;
         }
     }
 }

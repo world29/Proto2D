@@ -28,7 +28,8 @@ namespace Proto2D
         public float viewAngle = 45;
         public float viewDistance = 3;
 
-        float groundDetectionRayLength = .5f;
+        [Header("地面判定におけるレイの長さ (坂や段差を通りたい場合は長め (> 1.0f))")]
+        public float groundDetectionRayLength = .5f;
 
         protected Controller2DEnemy controller;
         private Vector2 velocity;

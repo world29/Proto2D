@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8114190860774668913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.17, y: -0.765, z: 0}
+  m_LocalPosition: {x: 1.17, y: -0.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
@@ -256,6 +256,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  maxSlopeAngle: 60
 --- !u!95 &4716550983893284299
 Animator:
   serializedVersion: 3
@@ -298,6 +299,7 @@ MonoBehaviour:
   shotTransform: {fileID: 0}
   viewAngle: 70
   viewDistance: 8
+  groundDetectionRayLength: 2
   effectSocket: {fileID: 8408731061199161505}
 --- !u!212 &6043093250614405774
 SpriteRenderer:
@@ -334,7 +336,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -911777801
-  m_SortingLayer: 1
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5d2dae71c47f28f4c9e23c19b5a9c1c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
