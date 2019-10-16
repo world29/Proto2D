@@ -27,7 +27,6 @@ GameObject:
   - component: {fileID: 8778643387317822641}
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 793784305697190219}
-  - component: {fileID: 439724807625870644}
   m_Layer: 0
   m_Name: Alraune
   m_TagString: Enemy
@@ -84,8 +83,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -911777801
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fedf5e4138513fd46a815279753906bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -184,24 +183,6 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
---- !u!114 &439724807625870644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8778643387317822647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971477a4140d984781589a2f5116bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: 20
-  health: 15
-  damageDuration: 0.5
-  delayToDeath: 0.5
-  direction: 1
-  velocity: {x: 0, y: 0}
 --- !u!1001 &5335596569922243949
 PrefabInstance:
   m_ObjectHideFlags: 0

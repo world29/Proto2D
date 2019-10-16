@@ -52,19 +52,34 @@ public class PlayerState_Hop : IPlayerState
 
         UpdateFacing();
 
+        int wallDirX = controller.collisions.right ? 1 : -1;
+
         if (controller.collisions.below || controller.collisions.above)
         {
             player.velocity.y = 0;
         }
+        else if (controller.collisions.right || controller.collisions.left)
+        {
+            // 壁と反対方向のキー入力で壁からジャンプする
+            if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
+            {
+                player.PlaySE(player.hopWallKickSE);
+                player.PlayEffect(player.jumpEffectPrefab);
+                player.PlayEffect(player.hopWallKickEffectPrefab);
+                player.velocity.x = player.wallJumpVelocity.x * -wallDirX;
+                player.velocity.y += player.wallJumpVelocity.y;
+            }
+        }
+
 
         // 遷移
-        if (player.velocity.y < 0)
+        if (player.velocity.y < 0.05f)
         {
             return new PlayerState_Free();
         }
         else if (player.CheckEntryWallClimbing())
         {
-            return new PlayerState_Climb();
+            //return new PlayerState_Climb();
         }
 
         return this;

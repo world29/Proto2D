@@ -63,6 +63,8 @@ public class PlayerState_Climb : IPlayerState
         if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
         {
             player.PlaySE(player.jumpSE);
+            player.PlayEffect(player.jumpEffectPrefab);
+            player.PlayEffect(player.wallKickEffectPrefab);
             velocity.x = player.wallJumpVelocity.x * -wallDirX;
             velocity.y = player.wallJumpVelocity.y;
         }

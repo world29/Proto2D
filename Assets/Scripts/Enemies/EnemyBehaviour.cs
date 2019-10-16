@@ -28,10 +28,12 @@ namespace Proto2D
         public float viewAngle = 45;
         public float viewDistance = 3;
 
-        float groundDetectionRayLength = .5f;
+        [Header("地面判定におけるレイの長さ (坂や段差を通りたい場合は長め (> 1.0f))")]
+        public float groundDetectionRayLength = .5f;
 
         protected Controller2DEnemy controller;
         private Vector2 velocity;
+        private StompableBox stompables;
         private IEnemyState state;
         private GameObject player;
         private AudioSource audioSource;
@@ -41,6 +43,7 @@ namespace Proto2D
         {
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2DEnemy>();
+            stompables = GetComponentInChildren<StompableBox>();
             player = GameObject.FindGameObjectWithTag("Player");
             behaviourTreeContext = new AI.BehaviourTreeContext(this);
 
@@ -94,8 +97,9 @@ namespace Proto2D
             return Mathf.Sign(transform.localScale.x);
         }
 
-        private void ChangeState(IEnemyState next)
+        private void ChangeState(IEnemyState next,bool force = false)
         {
+
             if (state != next)
             {
                 state.OnExit(this);
@@ -198,9 +202,15 @@ namespace Proto2D
                 // 衝突ダメージのレシーバーは player gameObject
                 GameObject receiver = collision.gameObject;
 
-                // ヒットしたオブジェクトに衝突ダメージを与える
-                ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                    (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, 1, gameObject));
+                // 死んでいると処理を無視
+                if (health > 0)
+                {
+                    // ヒットしたオブジェクトに衝突ダメージを与える
+                    ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
+                        (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, 1, gameObject));
+                }
+
+
             }
         }
 
@@ -211,10 +221,16 @@ namespace Proto2D
 
         public void TakeDamage(float damageAmount)
         {
+            if( health <= 0)
+            {
+                return;
+            }
+
             health -= damageAmount;
             if (health <= 0)
             {
                 health = 0;
+                stompables.enabled = false;
             }
 
             ChangeState(new EnemyState_Damage());
@@ -254,12 +270,18 @@ namespace Proto2D
             if (EffectPrefab)
             {
                 Vector3 pos = transform.position;
+                Vector3 rot = new Vector3(0,0,0);
+                Vector3 scale = new Vector3(1,1,1);
                 if (effectSocket)
                 {
                     pos = effectSocket.transform.position;
+                    rot = effectSocket.transform.eulerAngles;
+                    scale = effectSocket.transform.localScale;
                 }
                 GameObject effect = Instantiate(EffectPrefab, pos, Quaternion.identity, null);
-                Destroy(effect, 1);
+                effect.transform.eulerAngles = rot;
+                effect.transform.localScale = scale;
+                //Destroy(effect, 1);
             }
         }
         private void OnDrawGizmos()

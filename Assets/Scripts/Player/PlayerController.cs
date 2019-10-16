@@ -81,8 +81,16 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("ジャンプアタックヒット時に跳ねる速さ")]
     public float jumpSpeedOnJumpAttack = 15;
 
-    [Header("ジャンプ開始時の効果音")]
+    [Header("壁ジャンプ時のエフェクト")]
+    public GameObject wallKickEffectPrefab;
+    [Header("ホップ時の壁ジャンプエフェクト")]
+    public GameObject hopWallKickEffectPrefab;
+    [Header("ジャンプ時のエフェクト")]
+    public GameObject jumpEffectPrefab;
+    [Header("ホップ開始時の効果音")]
     public AudioClip jumpSE;
+    [Header("ホップ時の壁ジャンプ開始時の効果音")]
+    public AudioClip hopWallKickSE;
     [Header("ジャンプアタック開始時の効果音")]
     public AudioClip jumpAttackSE;
     [Header("ホップ開始時の効果音")]
@@ -254,7 +262,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                         {
                             Vector3 efpos = (info.receiverPos + transform.position)/2;
                             GameObject effect = Instantiate(stompEffectPrefab, efpos, Quaternion.identity, null);
-                            Destroy(effect, 1);
+                            //Destroy(effect, 1);
                         }
 
                         CameraShake.Instance.Shake(shakeAmountOnStomp, shakeLengthOnStomp);
@@ -277,7 +285,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                         {
                             Vector3 efpos = (info.receiverPos + transform.position)/2;
                             GameObject effect = Instantiate(attackEffectPrefab, efpos, Quaternion.identity, null);
-                            Destroy(effect, 1);
+                            //Destroy(effect, 1);
                         }
 
                         CameraShake.Instance.Shake(shakeAmountOnJumpAttack, shakeLengthOnJumpAttack);

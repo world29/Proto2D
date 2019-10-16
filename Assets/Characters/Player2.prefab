@@ -556,8 +556,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1197227007
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 57c1f6d20700a654c9fcac6f10a1c465, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -689,7 +689,7 @@ MonoBehaviour:
   invincibleBlinkInterval: 0.05
   climbSpeed: 6
   wallJumpVelocity: {x: 6, y: 15}
-  timeToEntryWallClimbing: 0.05
+  timeToEntryWallClimbing: 0
   jumpAttackSpeed: 15
   jumpAttackAboveDirectionSpeed: 23
   jumpAttackDiagonallyAboveDirectionSpeed: 17
@@ -708,7 +708,14 @@ MonoBehaviour:
   shakeLengthOnJumpAttack: 0.1
   hitStopDuration: 0.05
   jumpSpeedOnJumpAttack: 15
+  wallKickEffectPrefab: {fileID: 7615431906169996719, guid: 39e6fc2f9874ba7499b9aa3e38394690,
+    type: 3}
+  hopWallKickEffectPrefab: {fileID: 7615431906169996719, guid: 74524ed1c2bcab6478b82c2464f0ac5a,
+    type: 3}
+  jumpEffectPrefab: {fileID: 1509154601807174269, guid: 420866a90ed2aaa41986fd2d96cfb75f,
+    type: 3}
   jumpSE: {fileID: 8300000, guid: ae573ca9d1b2f1649be67569a694c20a, type: 3}
+  hopWallKickSE: {fileID: 8300000, guid: 3a52064058c9af449a27da43fd83deb7, type: 3}
   jumpAttackSE: {fileID: 8300000, guid: 3dde23ce7eaa1cc468c833dbce36336d, type: 3}
   hopSE: {fileID: 0}
   velocity: {x: 0, y: 0}
@@ -919,7 +926,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1197227007
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &5683995765878132522
