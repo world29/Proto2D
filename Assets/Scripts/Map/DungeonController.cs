@@ -145,14 +145,17 @@ namespace Proto2D
             if (m_tilemap && m_tile)
             {
                 // ダンジョンエリアのタイル座標を含むバウンディングを計算
-                BoundsInt cellBounds = new BoundsInt();
+                BoundsInt dungeonCellBounds = new BoundsInt();
                 Vector3Int maxInt = m_tilemap.WorldToCell(dungeonArea.max);
-                cellBounds.SetMinMax(m_tilemap.WorldToCell(dungeonArea.min), new Vector3Int(maxInt.x, maxInt.y, 1));
+                dungeonCellBounds.SetMinMax(m_tilemap.WorldToCell(dungeonArea.min), new Vector3Int(maxInt.x, maxInt.y, 1));
+
+                HashSet<Vector3Int> map = new HashSet<Vector3Int>();
 
                 // エリアをタイルで埋める
-                foreach (Vector3Int position in cellBounds.allPositionsWithin)
+                foreach (Vector3Int position in dungeonCellBounds.allPositionsWithin)
                 {
-                    m_tilemap.SetTile(position, m_tile);
+                    //m_tilemap.SetTile(position, m_tile);
+                    map.Add(position);
                 }
 
                 // ダンジョンの部屋および通路となるセルからタイルを削除する
@@ -163,7 +166,8 @@ namespace Proto2D
 
                     foreach(Vector3Int position in roomCellBounds.allPositionsWithin)
                     {
-                        m_tilemap.SetTile(position, null);
+                        //m_tilemap.SetTile(position, null);
+                        map.Remove(position);
                     }
                 });
 
@@ -183,15 +187,16 @@ namespace Proto2D
 
                     foreach (Vector3Int position in hallwayCellBounds.allPositionsWithin)
                     {
-                        m_tilemap.SetTile(position, null);
+                        //m_tilemap.SetTile(position, null);
+                        map.Remove(position);
                     }
                 }
 
                 // 周囲をタイルで囲まれたセルについてはタイルを削除する (タイルコリジョンの更新負荷が高いため)
                 HashSet<Vector3Int> positionsToRemove = new HashSet<Vector3Int>();
-                foreach (Vector3Int position in cellBounds.allPositionsWithin)
+                foreach (Vector3Int position in dungeonCellBounds.allPositionsWithin)
                 {
-                    if (m_tilemap.HasTile(position))
+                    if (map.Contains(position))
                     {
                         Vector3Int[] arounds = {
                             new Vector3Int(position.x-1, position.y-1, position.z),
@@ -202,7 +207,7 @@ namespace Proto2D
                             new Vector3Int(position.x-1, position.y+1, position.z),
                             new Vector3Int(position.x, position.y+1, position.z),
                             new Vector3Int(position.x+1, position.y+1, position.z) };
-                        if (arounds.All(pos => m_tilemap.HasTile(pos)))
+                        if (arounds.All(pos => map.Contains(pos)))
                         {
                             positionsToRemove.Add(position);
                         }
@@ -210,8 +215,11 @@ namespace Proto2D
                 }
                 foreach (Vector3Int position in positionsToRemove)
                 {
-                    m_tilemap.SetTile(position, null);
+                    //m_tilemap.SetTile(position, null);
+                    map.Remove(position);
                 }
+
+                RenderMap(map, m_tilemap, m_tile);
             }
 
             spawnPosition.y += dungeonArea.size.y;
@@ -219,9 +227,28 @@ namespace Proto2D
 
         void RenderMap(Dictionary<Vector3Int, TileBase> map, Tilemap tilemap)
         {
-            foreach(var item in map)
+            StartCoroutine(UpdateTilesCoroutine(map, tilemap));
+        }
+
+        void RenderMap(HashSet<Vector3Int> positions, Tilemap tilemap, TileBase tile)
+        {
+            Dictionary<Vector3Int, TileBase> map = new Dictionary<Vector3Int, TileBase>();
+
+            foreach (Vector3Int position in positions)
+            {
+                map.Add(position, tile);
+            }
+
+            RenderMap(map, tilemap);
+        }
+
+        IEnumerator UpdateTilesCoroutine(Dictionary<Vector3Int, TileBase> map, Tilemap tilemap)
+        {
+            foreach (var item in map)
             {
                 tilemap.SetTile(item.Key, item.Value);
+
+                yield return new WaitForFixedUpdate();
             }
         }
 
