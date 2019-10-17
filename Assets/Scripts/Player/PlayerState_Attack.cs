@@ -121,60 +121,50 @@ public class PlayerState_Attack : IPlayerState
 
         float attackAngleStep = 45;
         float angleDeg = 0;
-        if (joystick == JoystickDirection.None)
-        {
-            // 方向キーの入力がない場合、前方の斜め上とする。
-            angleDeg = player.direction == 1 ? attackAngleStep : 180 - attackAngleStep;
-        }
-        else
-        {
-            switch (joystick)
-            {
-                case JoystickDirection.Up:
-                    // 真上方向に入力した場合の軌道を変更
-                    dir.x = player.direction == 1 ? 0.1f : -0.1f;
-                    break;
-                case JoystickDirection.UpLeft:
-                case JoystickDirection.UpRight:
-                    // 斜め上方向に入力した場合の軌道を変更
-                    dir.x *= 0.5f;
-                    break;
-                case JoystickDirection.Down:
-                case JoystickDirection.LeftDown:
-                case JoystickDirection.RightDown:
-                    // 下方向に入力した場合の軌道を変更
-                    dir.x = player.direction;
-                    dir.y = -0.0001f;
-                    break;
-            }
+        Vector2 resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
 
-            angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        }
-
-        float resultSpeed = player.jumpAttackSpeed;
-
-        // 真上に飛ぶ時は飛距離を変える
-        if (joystick == JoystickDirection.Up)
+        switch (joystick)
         {
-            resultSpeed = player.jumpAttackAboveDirectionSpeed;
-        }
-        else if (joystick == JoystickDirection.UpLeft || joystick == JoystickDirection.UpRight)
-        {
-            resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
+            case JoystickDirection.Up:
+                resultSpeed = player.jumpAttackAboveDirectionSpeed;
+                resultSpeed.x *= player.direction;
+                break;
+            case JoystickDirection.Left:
+                resultSpeed = player.jumpAttackSpeed;
+                resultSpeed.x *= -1;
+                break;
+            case JoystickDirection.Right:
+                resultSpeed = player.jumpAttackSpeed;
+                break;
+            case JoystickDirection.UpLeft:
+                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
+                resultSpeed.x *= -1;
+                break;
+            case JoystickDirection.UpRight:
+                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
+                break;
+            case JoystickDirection.Down:
+                resultSpeed = player.jumpAttackBelowDirectionSpeed;
+                resultSpeed.x *= player.direction;
+                break;
+            case JoystickDirection.LeftDown:
+                resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
+                resultSpeed.x *= -1;
+                break;
+            case JoystickDirection.RightDown:
+                resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
+                break;
         }
 
-        // 下・斜め下方向に飛ぶ時は飛距離を減らす
-        if (joystick == JoystickDirection.Down)
-        {
-            resultSpeed = player.jumpAttackBelowDirectionSpeed;
-        }
-        else if (joystick == JoystickDirection.LeftDown || joystick == JoystickDirection.RightDown)
-        {
-            resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
-        }
+        angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        velocity.x = Mathf.Cos(angleDeg * Mathf.Deg2Rad) * resultSpeed;
-        velocity.y = Mathf.Sin(angleDeg * Mathf.Deg2Rad) * resultSpeed;
+
+        //velocity.x = Mathf.Cos(angleDeg * Mathf.Deg2Rad) * resultSpeed;
+        //velocity.y = Mathf.Sin(angleDeg * Mathf.Deg2Rad) * resultSpeed+5;
+        velocity = resultSpeed;
+        
+
+
 
         player.direction = Mathf.Sign(velocity.x);
     }
@@ -203,7 +193,7 @@ public class PlayerState_Attack : IPlayerState
 
             velocity.x += acc * Time.deltaTime;
         }
-        velocity.x = Mathf.Clamp(velocity.x, -player.maxVelocity.x, player.maxVelocity.x);
+        //velocity.x = Mathf.Clamp(velocity.x, -player.maxVelocity.x, player.maxVelocity.x);
 
         // 垂直方向の速度を算出
         velocity.y -= player.gravity * Time.deltaTime;
