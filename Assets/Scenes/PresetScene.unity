@@ -147,6 +147,7 @@ MonoBehaviour:
   verticalSmoothTime: 0.1
   focusAreaSize: {x: 15, y: 2}
   followDownward: 1
+  followSideway: 0
 --- !u!20 &18178869
 Camera:
   m_ObjectHideFlags: 0
@@ -284,6 +285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replayText: {fileID: 2102198835}
   sceneNameToLoad: PresetScene
+  playerPrefab: {fileID: 6503610203471954336, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
+    type: 3}
 --- !u!114 &771383456
 MonoBehaviour:
   m_ObjectHideFlags: 0
