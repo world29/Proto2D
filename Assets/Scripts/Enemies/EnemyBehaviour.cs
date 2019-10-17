@@ -151,21 +151,24 @@ namespace Proto2D
         {
             if (player == null)
             {
-                Debug.Assert(false, "Player was not found");
-                return false;
+                player = GameObject.FindGameObjectWithTag("Player");
             }
 
-            Vector3 toPlayer = player.transform.position - gameObject.transform.position;
-            toPlayer.x *= getFacingWorld();
-
-            float angleDeg = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
-            float distance = toPlayer.magnitude;
-
-            float viewAngleHalf = viewAngle * .5f;
-            if (angleDeg <= viewAngleHalf && angleDeg >= -viewAngleHalf && distance <= viewDistance)
+            if (player)
             {
-                return true;
+                Vector3 toPlayer = player.transform.position - gameObject.transform.position;
+                toPlayer.x *= getFacingWorld();
+
+                float angleDeg = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
+                float distance = toPlayer.magnitude;
+
+                float viewAngleHalf = viewAngle * .5f;
+                if (angleDeg <= viewAngleHalf && angleDeg >= -viewAngleHalf && distance <= viewDistance)
+                {
+                    return true;
+                }
             }
+
             return false;
         }
 

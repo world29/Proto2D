@@ -13,21 +13,18 @@ namespace Proto2D
         public Transform enemySpawnPosition;
         public List<EnemyBehaviour> enemyPrefabs;
 
-        [HideInInspector] public Vector3Int Size { get { return primaryTilemap.size; } }
-        [HideInInspector] public Vector3 CellSize { get { return primaryTilemap.cellSize; } }
+        [HideInInspector] public Vector3Int Size { get { return getPrimaryTilemap().size; } }
+        [HideInInspector] public Vector3 CellSize { get { return getPrimaryTilemap().cellSize; } }
+        [HideInInspector] public Vector3Int Origin { get { return getPrimaryTilemap().origin; } }
         // タイルマップの左下端から (0,0) へのオフセット
-        [HideInInspector] public Vector3 OriginToCenter { get { return -primaryTilemap.CellToLocal(primaryTilemap.origin); } }
+        //deprecated: インスタンス化するまで CellToLocal 画適切な値を返さない
+        [HideInInspector] public Vector3 OriginToCenter { get { return -getPrimaryTilemap().CellToLocal(getPrimaryTilemap().origin); } }
 
-        private Tilemap primaryTilemap;
+        private Tilemap m_primaryTilemap;
 
         private void Awake()
         {
-            Tilemap tilemap = GetComponentInChildren<Tilemap>();
-            if (tilemap)
-            {
-                primaryTilemap = tilemap;
-                primaryTilemap.CompressBounds();
-            }
+            getPrimaryTilemap();
         }
 
         public void SpawnEntities()
@@ -39,6 +36,20 @@ namespace Proto2D
                 Debug.Assert(enemySpawnPosition != null);
                 EnemyBehaviour enemy = GameObject.Instantiate(prefab, enemySpawnPosition);
             }
+        }
+
+        private Tilemap getPrimaryTilemap()
+        {
+            if (m_primaryTilemap == null)
+            {
+                Tilemap tilemap = GetComponentInChildren<Tilemap>();
+                if (tilemap)
+                {
+                    m_primaryTilemap = tilemap;
+                    m_primaryTilemap.CompressBounds();
+                }
+            }
+            return m_primaryTilemap;
         }
 
         private EnemyBehaviour getRandomEnemy()
@@ -53,10 +64,10 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
-            if (primaryTilemap)
+            if (m_primaryTilemap)
             {
-                var minWorld = primaryTilemap.CellToWorld(primaryTilemap.cellBounds.min);
-                var maxWorld = primaryTilemap.CellToWorld(primaryTilemap.cellBounds.max);
+                var minWorld = m_primaryTilemap.CellToWorld(m_primaryTilemap.cellBounds.min);
+                var maxWorld = m_primaryTilemap.CellToWorld(m_primaryTilemap.cellBounds.max);
 
                 Bounds bounds = new Bounds();
                 bounds.SetMinMax(minWorld, maxWorld);

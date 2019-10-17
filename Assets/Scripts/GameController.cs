@@ -11,6 +11,9 @@ public class GameController : SingletonMonoBehaviour<GameController>
     [Header("ゲームオーバー時に読み込まれるシーン名")]
     public string sceneNameToLoad;
 
+    [Header("プレイヤー (再生時にスポーン)")]
+    public GameObject playerPrefab;
+
     private bool isGameOver;
     private bool isGameClear;
 
@@ -18,7 +21,20 @@ public class GameController : SingletonMonoBehaviour<GameController>
     {
         isGameOver = false;
         isGameClear = false;
-        replayText.text = "";
+        if (replayText)
+        {
+            replayText.text = "";
+        }
+
+        // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
+            if (playerSpawner)
+            {
+                GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
+            }
+        }
     }
 
     void Update()

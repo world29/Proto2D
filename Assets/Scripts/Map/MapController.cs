@@ -27,11 +27,6 @@ namespace Proto2D
         {
             // スタート部屋を生成
             spawnNextRoom(getRandomStartRoom());
-
-            // プレイヤーを生成
-            //TODO: プレイヤーは GameController で生成する
-            GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
-            GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
         }
 
         void LateUpdate()
