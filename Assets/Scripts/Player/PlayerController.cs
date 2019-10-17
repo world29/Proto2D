@@ -45,16 +45,17 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
     public float timeToEntryWallClimbing = .5f;
 
-    [Header("ジャンプアタックの速さ")]
-    public float jumpAttackSpeed = 10;
+    [Header("ジャンプアタックの真横の速さ")]
+    public Vector2 jumpAttackSpeed = new Vector2(15, 5);
     [Header("ジャンプアタックの真上方向の速さ")]
-    public float jumpAttackAboveDirectionSpeed = 15;
+    public Vector2 jumpAttackAboveDirectionSpeed = new Vector2(2, 25);
     [Header("ジャンプアタック斜め上方向の速さ")]
-    public float jumpAttackDiagonallyAboveDirectionSpeed = 11;
+    public Vector2 jumpAttackDiagonallyAboveDirectionSpeed = new Vector2(15, 15);
     [Header("ジャンプアタックの斜め下方向の速さ")]
-    public float jumpAttackBelowDirectionSpeed = 8f;
+    public Vector2 jumpAttackDiagonallyBelowDirectionSpeed = new Vector2(3, 5);
     [Header("ジャンプアタックの真下方向の速さ")]
-    public float jumpAttackDiagonallyBelowDirectionSpeed = 5f;
+    public Vector2 jumpAttackBelowDirectionSpeed = new Vector2(10, 6);
+    
 
     [Header("ホップ中に攻撃判定あり")]
     public bool enableHopAttackMode = true;
