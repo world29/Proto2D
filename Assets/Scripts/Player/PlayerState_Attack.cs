@@ -122,38 +122,74 @@ public class PlayerState_Attack : IPlayerState
         float attackAngleStep = 45;
         float angleDeg = 0;
         Vector2 resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
+        resultSpeed.x *= player.direction;
 
-        switch (joystick)
+        // switch (joystick)
+        // {
+        //     case JoystickDirection.Up:
+        //         dir = new Vector2(0,1);
+        //         break;
+        //     case JoystickDirection.Left:
+        //         dir = new Vector2(-1,0);
+        //         break;
+        //     case JoystickDirection.Right:
+        //         dir = new Vector2(1,0);
+        //         break;
+        //     case JoystickDirection.UpLeft:
+        //         dir = new Vector2(-1,1);
+        //         break;
+        //     case JoystickDirection.UpRight:
+        //         dir = new Vector2(1,1);
+        //         break;
+        //     case JoystickDirection.Down:
+        //         dir = new Vector2(0,-1);
+        //         break;
+        //     case JoystickDirection.LeftDown:
+        //         dir = new Vector2(-1,-1);
+        //         break;
+        //     case JoystickDirection.RightDown:
+        //         dir = new Vector2(1,-1);
+        //         break;
+        // }
+
+        if(Mathf.Abs(dir.x) < 0.1)
         {
-            case JoystickDirection.Up:
+            if(Mathf.Abs(dir.y) < 0.1)
+            {
+                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
+                resultSpeed.x *= player.direction;
+            }
+            else if(dir.y > 0)
+            {
                 resultSpeed = player.jumpAttackAboveDirectionSpeed;
                 resultSpeed.x *= player.direction;
-                break;
-            case JoystickDirection.Left:
-                resultSpeed = player.jumpAttackSpeed;
-                resultSpeed.x *= -1;
-                break;
-            case JoystickDirection.Right:
-                resultSpeed = player.jumpAttackSpeed;
-                break;
-            case JoystickDirection.UpLeft:
-                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
-                resultSpeed.x *= -1;
-                break;
-            case JoystickDirection.UpRight:
-                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
-                break;
-            case JoystickDirection.Down:
+            }
+            else if(dir.y < 0)
+            {
                 resultSpeed = player.jumpAttackBelowDirectionSpeed;
                 resultSpeed.x *= player.direction;
-                break;
-            case JoystickDirection.LeftDown:
+            }
+
+        }
+        else
+        {
+            int dirX = dir.x > 0 ? 1 : -1;
+            if(Mathf.Abs(dir.y) < 0.1)
+            {
+                resultSpeed = player.jumpAttackSpeed;
+                resultSpeed.x *= dirX;
+                Debug.Log("ggg");
+            }
+            else if(dir.y > 0)
+            {
+                resultSpeed = player.jumpAttackDiagonallyAboveDirectionSpeed;
+                resultSpeed.x *= dirX;
+            }
+            else if(dir.y < 0)
+            {
                 resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
-                resultSpeed.x *= -1;
-                break;
-            case JoystickDirection.RightDown:
-                resultSpeed = player.jumpAttackDiagonallyBelowDirectionSpeed;
-                break;
+                resultSpeed.x *= dirX;
+            }
         }
 
         angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
