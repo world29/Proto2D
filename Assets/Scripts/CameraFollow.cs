@@ -13,6 +13,9 @@ public class CameraFollow : MonoBehaviour
     [Header("下方向に追従")]
     public bool followDownward = true;
 
+    [Header("横方向に追従")]
+    public bool followSideway = false;
+
     FocusArea focusArea;
 
     float smoothVelocityY;
@@ -38,7 +41,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (target)
         {
-            focusArea.Update(target.collider.bounds, followDownward);
+            focusArea.Update(target.collider.bounds, followDownward, followSideway);
         }
 
         Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
@@ -71,19 +74,22 @@ public class CameraFollow : MonoBehaviour
             centre = new Vector2((left + right) / 2, (top + bottom) / 2);
         }
 
-        public void Update(Bounds targetBounds, bool followDownward)
+        public void Update(Bounds targetBounds, bool followDownward, bool followSideway)
         {
-            float shiftX = 0;
-            if (targetBounds.min.x < left)
+            if (followSideway)
             {
-                shiftX = targetBounds.min.x - left;
+                float shiftX = 0;
+                if (targetBounds.min.x < left)
+                {
+                    shiftX = targetBounds.min.x - left;
+                }
+                else if (targetBounds.max.x > right)
+                {
+                    shiftX = targetBounds.max.x - right;
+                }
+                left += shiftX;
+                right += shiftX;
             }
-            else if (targetBounds.max.x > right)
-            {
-                shiftX = targetBounds.max.x - right;
-            }
-            left += shiftX;
-            right += shiftX;
 
             float shiftY = 0;
             if (targetBounds.min.y < bottom && followDownward)
