@@ -8,9 +8,9 @@ namespace Proto2D.AI
     {
         public Projectile projectilePrefab;
 
-        public override NodeStatus Evaluate(BehaviourTreeContext context)
+        public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
-            context.enemy.Shot(projectilePrefab);
+            enemyBehaviour.Shot(projectilePrefab);
 
             return NodeStatus.SUCCESS;
         }

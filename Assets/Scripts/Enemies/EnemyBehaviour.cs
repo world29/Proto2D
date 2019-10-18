@@ -23,8 +23,7 @@ namespace Proto2D
 
         // AI behaviour
         public AI.BehaviourTree behaviourTree;
-        [HideInInspector]
-        public AI.BehaviourTreeContext behaviourTreeContext;
+        public bool behaviourTreeDebug = false;
         public Transform groundDetectionTransform;
         public Transform shotTransform;
         [Range(0, 360)]
@@ -49,11 +48,18 @@ namespace Proto2D
             controller = GetComponent<Controller2DEnemy>();
             stompables = GetComponentInChildren<StompableBox>();
             player = GameObject.FindGameObjectWithTag("Player");
-            behaviourTreeContext = new AI.BehaviourTreeContext(this);
             m_progressController = FindObjectOfType<GameProgressController>();
 
             if (behaviourTree)
             {
+                // BehaviourTree は ScriptableObject なのでシングルインスタンス。
+                // BehaviourTree の状態を他のオブジェクトと共有したくないのでコピーする。
+                // エディタ上で各ノードの状態をリアルタイムに確認したい場合は、behaviourTreeDebug を true に設定し、
+                // シングルインスタンスの状態を直接参照・編集するようにする。
+                if (!behaviourTreeDebug)
+                {
+                    behaviourTree = Instantiate(behaviourTree);
+                }
                 behaviourTree.Init();
             }
 
@@ -64,7 +70,7 @@ namespace Proto2D
         void Update()
         {
             ResetMovement();
-            UpdateAI();
+            UpdateStateMachine();
             UpdateMovement();
         }
 
@@ -73,10 +79,18 @@ namespace Proto2D
             velocity.x = 0;
         }
 
-        void UpdateAI()
+        void UpdateStateMachine()
         {
             IEnemyState next = state.OnUpdate(this);
             ChangeState(next);
+        }
+
+        public void UpdateBehaviourTree()
+        {
+            if (behaviourTree)
+            {
+                behaviourTree.Evaluate(this);
+            }
         }
 
         void UpdateMovement()

@@ -10,72 +10,34 @@ namespace Proto2D.AI
         // うまくいかなかったのでtimeoutをpublicのまま直接指定
         public float timeout = 1;
 
-#if UNITY_EDITOR
         private float m_timeWaitStart = 0;
-        private NodeStatus m_nodeStatus = NodeStatus.SUCCESS;
-#endif
 
-        public override void PrepareForEvaluation(BehaviourTreeContext context)
+        public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
-            WaitActionNodeContext nodeContext = context.dict.Get<WaitActionNodeContext>(GetInstanceID());
-            if (nodeContext.nodeStatus != NodeStatus.RUNNING)
+            if (m_nodeStatus == NodeStatus.READY)
             {
-                // 乱数うまくいかなかった
-                //timeout = Mathf.Lerp(timeoutMinMax.x, timeoutMinMax.y, Random.value);
-                nodeContext.nodeStatus = NodeStatus.READY;
+                m_timeWaitStart = Time.timeSinceLevelLoad;
+
+                m_nodeStatus = NodeStatus.RUNNING;
             }
+            else if ((Time.timeSinceLevelLoad - m_timeWaitStart) >= timeout)
+            {
+                m_nodeStatus = NodeStatus.SUCCESS;
+            }
+
+            return m_nodeStatus;
         }
 
-        public override NodeStatus Evaluate(BehaviourTreeContext context)
+        public override void Abort()
         {
-            WaitActionNodeContext nodeContext = context.dict.Get<WaitActionNodeContext>(GetInstanceID());
+            base.Abort();
 
-            if (nodeContext.nodeStatus == NodeStatus.READY)
-            {
-                nodeContext.timeWaitStart = Time.timeSinceLevelLoad;
-
-                nodeContext.nodeStatus = NodeStatus.RUNNING;
-            }
-            else if ((Time.timeSinceLevelLoad - nodeContext.timeWaitStart) >= timeout)
-            {
-                nodeContext.nodeStatus = NodeStatus.SUCCESS;
-            }
-
-            context.dict.Store(GetInstanceID(), nodeContext);
-
-#if UNITY_EDITOR
-        m_timeWaitStart = nodeContext.timeWaitStart;
-        m_nodeStatus = nodeContext.nodeStatus;
-#endif
-
-            return nodeContext.nodeStatus;
-        }
-
-        public override void Abort(BehaviourTreeContext context)
-        {
-            context.dict.Remove(GetInstanceID());
+            m_timeWaitStart = 0;
         }
 
         public override float GetProgress()
         {
             return (Time.timeSinceLevelLoad - m_timeWaitStart) / timeout;
-        }
-
-#if UNITY_EDITOR
-        public override NodeStatus GetStatus()
-        {
-            return m_nodeStatus;
-        }
-#endif
-
-        protected class WaitActionNodeContext : NodeContext
-        {
-            public float timeWaitStart;
-
-            public WaitActionNodeContext()
-            {
-                timeWaitStart = 0;
-            }
         }
     }
 }

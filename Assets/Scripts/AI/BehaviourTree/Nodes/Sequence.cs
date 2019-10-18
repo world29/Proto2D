@@ -10,9 +10,7 @@ namespace Proto2D.AI
 
         private List<Node> m_nodes = new List<Node>();
 
-#if UNITY_EDITOR
-        private NodeStatus m_nodeStatus = NodeStatus.SUCCESS;
-#endif
+        private int m_nodeIndex;
 
         protected override void Init()
         {
@@ -34,32 +32,21 @@ namespace Proto2D.AI
             }
         }
 
-        public override void PrepareForEvaluation(BehaviourTreeContext context)
+        public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
-            SequenceNodeContext nodeContext = context.dict.Get<SequenceNodeContext>(GetInstanceID());
-            if (nodeContext.nodeStatus != NodeStatus.RUNNING)
-            {
-                nodeContext.nodeStatus = NodeStatus.READY;
-            }
-        }
-
-        public override NodeStatus Evaluate(BehaviourTreeContext context)
-        {
-            SequenceNodeContext nodeContext = context.dict.Get<SequenceNodeContext>(GetInstanceID());
-
-            int i = nodeContext.nodeIndex;
+            int i = m_nodeIndex;
             for (; i < m_nodes.Count; i++)
             {
-                nodeContext.nodeStatus = m_nodes[i].Evaluate(context);
-                switch (nodeContext.nodeStatus)
+                m_nodeStatus = m_nodes[i].Evaluate(enemyBehaviour);
+                switch (m_nodeStatus)
                 {
                     case NodeStatus.FAILURE:
                         // 次回の評価は先頭ノードから開始する
-                        nodeContext.nodeIndex = 0;
+                        m_nodeIndex = 0;
                         break;
                     case NodeStatus.RUNNING:
                         // 次回の評価はこのノードから開始する
-                        nodeContext.nodeIndex = i;
+                        m_nodeIndex = i;
                         break;
                     case NodeStatus.SUCCESS:
                         break;
@@ -69,47 +56,26 @@ namespace Proto2D.AI
                 }
 
                 // SUCCESS の場合のみ、次のノードを評価する
-                if (nodeContext.nodeStatus != NodeStatus.SUCCESS)
+                if (m_nodeStatus != NodeStatus.SUCCESS)
                 {
                     break;
                 }
             }
 
             // 末尾ノードが SUCCESS なら、次回の評価は先頭ノードから開始する
-            if (i == m_nodes.Count && nodeContext.nodeStatus == NodeStatus.SUCCESS)
+            if (i == m_nodes.Count && m_nodeStatus == NodeStatus.SUCCESS)
             {
-                nodeContext.nodeIndex = 0;
+                m_nodeIndex = 0;
             }
 
-            context.dict.Store(GetInstanceID(), nodeContext);
-
-#if UNITY_EDITOR
-            m_nodeStatus = nodeContext.nodeStatus;
-#endif
-
-            return nodeContext.nodeStatus;
-        }
-
-        public override void Abort(BehaviourTreeContext context)
-        {
-            context.dict.Remove(GetInstanceID());
-        }
-
-#if UNITY_EDITOR
-        public override NodeStatus GetStatus()
-        {
             return m_nodeStatus;
         }
-#endif
 
-        protected class SequenceNodeContext : NodeContext
+        public override void Abort()
         {
-            public int nodeIndex;
+            base.Abort();
 
-            public SequenceNodeContext()
-            {
-                nodeIndex = 0;
-            }
+            m_nodeIndex = 0;
         }
     }
 }

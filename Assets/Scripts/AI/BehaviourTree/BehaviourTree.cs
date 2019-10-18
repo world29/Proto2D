@@ -6,83 +6,52 @@ namespace Proto2D.AI
 {
     public enum NodeStatus { READY, FAILURE, SUCCESS, RUNNING }
 
-    public class BehaviourTreeContext
-    {
-        public EnemyBehaviour enemy;
-        public NodeContextDictionary dict;
-
-        public BehaviourTreeContext(EnemyBehaviour _enemy)
-        {
-            enemy = _enemy;
-            dict = new NodeContextDictionary();
-        }
-
-        public class NodeContextDictionary
-        {
-            private Dictionary<int, object> dict = new Dictionary<int, object>();
-
-            public void Store<T>(int key, T context)
-            {
-                Remove(key);
-                dict.Add(key, context);
-            }
-
-            public T Get<T>(int key) where T : new()
-            {
-                if (!dict.ContainsKey(key))
-                {
-                    dict.Add(key, new T());
-                }
-                return (T)dict[key];
-            }
-
-            public void Remove(int key)
-            {
-                if (dict.ContainsKey(key))
-                {
-                    dict.Remove(key);
-                }
-            }
-        }
-    }
-
     public abstract class Node : XNode.Node
     {
         [Input] public Node parent;
 
-        public Node() { }
+        protected NodeStatus m_nodeStatus;
 
+        // コンストラクタ
+        public Node()
+        {
+            m_nodeStatus = NodeStatus.READY;
+        }
+
+        // ルートノードの判定
         public bool IsRoot()
         {
             XNode.NodePort inPort = GetInputPort("parent");
             return !inPort.IsConnected;
         }
 
-        public virtual void PrepareForEvaluation(BehaviourTreeContext context) { }
+        // Evaluate() の前に呼ばれ、RUNNING じゃないノードのステータスを READY にする
+        public virtual void ResetStatus()
+        {
+            if (m_nodeStatus != NodeStatus.RUNNING)
+            {
+                m_nodeStatus = NodeStatus.READY;
+            }
+        }
 
-        public abstract NodeStatus Evaluate(BehaviourTreeContext context);
+        // ノードの評価
+        public abstract NodeStatus Evaluate(EnemyBehaviour enemyBehaviour);
 
-        public virtual void Abort(BehaviourTreeContext context) { }
+        // 中断
+        public virtual void Abort()
+        {
+            m_nodeStatus = NodeStatus.READY;
+        }
 
-#if UNITY_EDITOR
+        // ステータスの取得
         public virtual NodeStatus GetStatus()
         {
             return NodeStatus.SUCCESS;
         }
-#endif
 
         public override object GetValue(XNode.NodePort port)
         {
             return null;
-        }
-
-        protected class NodeContext {
-            public NodeStatus nodeStatus;
-
-            public NodeContext()
-            {
-                nodeStatus = NodeStatus.READY;
-            }
         }
     }
 
@@ -104,19 +73,19 @@ namespace Proto2D.AI
             }
         }
 
-        public NodeStatus Evaluate(BehaviourTreeContext context)
+        public NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
             nodes.ForEach(item => {
                 Debug.Assert(item is Node);
-                (item as Node).PrepareForEvaluation(context);
+                (item as Node).ResetStatus();
             });
 
-            return m_rootNode.Evaluate(context);
+            return m_rootNode.Evaluate(enemyBehaviour);
         }
 
-        public void Abort(BehaviourTreeContext context)
+        public void Abort()
         {
-            nodes.ForEach(item => (item as Node).Abort(context));
+            nodes.ForEach(item => (item as Node).Abort());
         }
     }
 }

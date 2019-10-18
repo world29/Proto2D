@@ -14,16 +14,13 @@ namespace Proto2D
         {
             if (enemyBehaviour.behaviourTree)
             {
-                enemyBehaviour.behaviourTree.Abort(enemyBehaviour.behaviourTreeContext);
+                enemyBehaviour.behaviourTree.Abort();
             }
         }
 
         public IEnemyState OnUpdate(EnemyBehaviour enemyBehaviour)
         {
-            if (enemyBehaviour.behaviourTree)
-            {
-                enemyBehaviour.behaviourTree.Evaluate(enemyBehaviour.behaviourTreeContext);
-            }
+            enemyBehaviour.UpdateBehaviourTree();
 
             return this;
         }
