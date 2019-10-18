@@ -15,6 +15,8 @@ namespace Proto2D
 
         public Tilemap m_tilemap;
         public Tilemap m_tilemapBackground;
+        public Tilemap m_tilemapBackground_Deco;
+        public Tilemap m_tilemapBackground_Add;
         public TileBase m_tile;
 
         // 部屋の生成トリガーとなる範囲
@@ -76,21 +78,23 @@ namespace Proto2D
 
             RoomController room = GameObject.Instantiate(prefab, roomCenter, Quaternion.identity);
 
+            bool flipped = false;
             if (room.flipEnabled)
             {
                 float dirX = Mathf.Sign(Random.Range(-1, 1));
                 room.gameObject.transform.localScale = new Vector3(dirX, 1, 1);
+                flipped = true;
             }
 
             // タイルの転写
-            copyRoomTiles(room, roomCenter);
+            copyRoomTiles(room, roomCenter, flipped);
 
             // 次の部屋を生成する高さ
             float roomHeight = prefab.Size.y * prefab.CellSize.y;
             spawnPosition.y += roomHeight;
         }
 
-        void copyRoomTiles(RoomController rc, Vector3 roomPosition)
+        void copyRoomTiles(RoomController rc, Vector3 roomPosition, bool flipped)
         {
             Vector3Int offset = m_tilemap.WorldToCell(roomPosition);
 
@@ -102,7 +106,12 @@ namespace Proto2D
                 {
                     if (tilemap.HasTile(position))
                     {
-                        map[position + offset] = tilemap.GetTile(position);
+                        Vector3Int destPos = position;
+                        if (flipped)
+                        {
+                            destPos.x *= -1;
+                        }
+                        map[destPos + offset] = tilemap.GetTile(position);
                     }
                 }
 
@@ -114,6 +123,12 @@ namespace Proto2D
                         break;
                     case "Background":
                         RenderMap(map, m_tilemapBackground);
+                        break;
+                    case "Background_Deco":
+                        RenderMap(map, m_tilemapBackground_Deco);
+                        break;
+                    case "Background_Add":
+                        RenderMap(map, m_tilemapBackground_Add);
                         break;
                     default:
                         Debug.LogWarningFormat("Unknown tilemap name: {0}", tilemap.gameObject.name);
