@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [CreateNodeMenu("BehaviourTree/Action/Shot")]
     public class Shot : Action
     {
         public Projectile projectilePrefab;

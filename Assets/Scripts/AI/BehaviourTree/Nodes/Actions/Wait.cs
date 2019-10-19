@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [CreateNodeMenu("BehaviourTree/Action/Wait")]
     public class Wait : Action
     {
         //public Vector2 timeoutMinMax = new Vector2(1f,1.5f);

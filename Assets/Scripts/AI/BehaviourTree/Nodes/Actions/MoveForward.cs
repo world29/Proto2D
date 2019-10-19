@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [CreateNodeMenu("BehaviourTree/Action/MoveForward")]
     public class MoveForward : Action
     {
         public float speed = 1;

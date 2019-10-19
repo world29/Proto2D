@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [CreateNodeMenu("BehaviourTree/Action/SetAnimationParameter")]
     public class SetAnimationParameter : Action
     {
         public AnimatorControllerParameterType paramType = AnimatorControllerParameterType.Int;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [CreateNodeMenu("BehaviourTree/Sequence")]
     public class Sequence : Node
     {
         [Output] public List<Node> children;

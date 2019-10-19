@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [CreateNodeMenu("BehaviourTree/Decorator/IsPlayerInSight")]
     public class IsPlayerInSight : Decorator
     {
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
