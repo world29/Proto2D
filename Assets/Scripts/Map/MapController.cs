@@ -27,6 +27,8 @@ namespace Proto2D
         {
             // スタート部屋を生成
             spawnNextRoom(getRandomStartRoom());
+
+            GameController.Instance.OnMapInitialized();
         }
 
         void LateUpdate()

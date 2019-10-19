@@ -13,6 +13,9 @@ namespace Proto2D
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
 
+        [Header("倒したときに得られる進捗ポイント")]
+        public float progressValue = 3;
+
         [Header("ダメージをうけた時の追加エフェクト")]
         public GameObject damageEffectPrefab;
         [Header("ダメージをうけた時の効果音")]
@@ -230,10 +233,18 @@ namespace Proto2D
             if (health <= 0)
             {
                 health = 0;
-                stompables.enabled = false;
+
+                OnDeath();
             }
 
             ChangeState(new EnemyState_Damage());
+        }
+
+        public void OnDeath()
+        {
+            GameController.Instance.AddProgressValue(progressValue);
+
+            stompables.enabled = false;
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)

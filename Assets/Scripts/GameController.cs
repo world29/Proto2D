@@ -14,26 +14,21 @@ public class GameController : SingletonMonoBehaviour<GameController>
     [Header("プレイヤー (再生時にスポーン)")]
     public GameObject playerPrefab;
 
+    [HideInInspector]
+    public NotificationObject<float> m_progress;
+
     private bool isGameOver;
     private bool isGameClear;
 
     void Start()
     {
+        m_progress = new NotificationObject<float>(0);
+
         isGameOver = false;
         isGameClear = false;
         if (replayText)
         {
             replayText.text = "";
-        }
-
-        // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
-        if (GameObject.FindGameObjectWithTag("Player") == null)
-        {
-            GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
-            if (playerSpawner)
-            {
-                GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
-            }
         }
     }
 
@@ -54,6 +49,26 @@ public class GameController : SingletonMonoBehaviour<GameController>
         {
             ReloadScene();
         }
+    }
+
+    // マップの初期化が終了したときに、MapController から呼ばれる
+    // プレイヤーのスポーン位置がマップ生成に依存するため。
+    public void OnMapInitialized()
+    {
+        // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
+            if (playerSpawner)
+            {
+                GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
+            }
+        }
+    }
+
+    public void AddProgressValue(float value)
+    {
+        m_progress.Value += value;
     }
 
     public bool IsGameOver()
