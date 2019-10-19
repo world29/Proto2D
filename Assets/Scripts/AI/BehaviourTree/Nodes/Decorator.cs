@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
+    [NodeTint(1f, 0.5f, 0.5f)]
     public abstract class Decorator : Node
     {
         [Output] public Node child;

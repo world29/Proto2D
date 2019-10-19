@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
-    [CreateNodeMenu("BehaviourTree/Selector")]
+    [CreateNodeMenu("BehaviourTree/Selector"), NodeTint(0.5f, 0.5f, 1f)]
     public class Selector : Node
     {
         [Output] public List<Node> children;
