@@ -8,12 +8,17 @@ namespace Proto2D.AI
     {
         [Output] public Node child;
 
-        [SerializeField] protected Node m_node;
+        protected Node m_node;
 
         // override XNode.Init()
         protected override void Init()
         {
             base.Init();
+        }
+
+        public override void Setup()
+        {
+            base.Setup();
 
             XNode.NodePort outPort = GetOutputPort("child");
             if (!outPort.IsConnected)
