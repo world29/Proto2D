@@ -64,6 +64,8 @@ namespace Proto2D
             {
                 ReloadScene();
             }
+
+            OnMapInitialized();
         }
 
         // マップの初期化が終了したときに、MapController から呼ばれる
