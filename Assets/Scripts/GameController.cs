@@ -14,8 +14,14 @@ public class GameController : SingletonMonoBehaviour<GameController>
     [Header("プレイヤー (再生時にスポーン)")]
     public GameObject playerPrefab;
 
+    [Header("10m登るたび増える進捗度")]
+    public float m_progressPerTenMeter = 1;
+
     [HideInInspector]
     public NotificationObject<float> m_progress;
+
+    private GameObject m_player;
+    private float m_nextHightToProgress;
 
     private bool isGameOver;
     private bool isGameClear;
@@ -23,6 +29,8 @@ public class GameController : SingletonMonoBehaviour<GameController>
     void Start()
     {
         m_progress = new NotificationObject<float>(0);
+
+        m_nextHightToProgress = 10;
 
         isGameOver = false;
         isGameClear = false;
@@ -51,17 +59,33 @@ public class GameController : SingletonMonoBehaviour<GameController>
         }
     }
 
+    private void LateUpdate()
+    {
+        if (m_player)
+        {
+            if (m_player.transform.position.y > m_nextHightToProgress)
+            {
+                Debug.LogFormat("player got progress point :{0} meter", m_nextHightToProgress);
+
+                AddProgressValue(m_progressPerTenMeter);
+
+                m_nextHightToProgress += 10;
+            }
+        }
+    }
+
     // マップの初期化が終了したときに、MapController から呼ばれる
     // プレイヤーのスポーン位置がマップ生成に依存するため。
     public void OnMapInitialized()
     {
         // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
-        if (GameObject.FindGameObjectWithTag("Player") == null)
+        m_player = GameObject.FindGameObjectWithTag("Player");
+        if (m_player == null)
         {
             GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
             if (playerSpawner)
             {
-                GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
+                m_player = GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
             }
         }
     }
