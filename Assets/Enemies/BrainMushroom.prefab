@@ -603,6 +603,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  maxSlopeAngle: 60
 --- !u!114 &1976084056991851050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,7 +626,8 @@ MonoBehaviour:
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 3331330493215708624}
   viewAngle: 360
-  viewDistance: 3
+  viewDistance: 2.8
+  groundDetectionRayLength: 0.5
   effectSocket: {fileID: 8327686832175237264}
 --- !u!82 &7310902008407165966
 AudioSource:
@@ -738,16 +740,6 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -812,6 +804,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.99984384
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
