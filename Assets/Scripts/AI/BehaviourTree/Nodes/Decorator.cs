@@ -10,6 +10,7 @@ namespace Proto2D.AI
 
         [SerializeField] protected Node m_node;
 
+        // override XNode.Init()
         protected override void Init()
         {
             base.Init();

@@ -12,8 +12,10 @@ namespace Proto2D.AI
 
         protected NodeStatus m_nodeStatus;
 
-        // コンストラクタ
-        public Node()
+        // override XNode.Init()
+        // MEMO: ノード (ScriptableObject) がインスタンス化されたとき呼ばれる。
+        //       ノードがコピーされた場合、接続をつなぎなおす前に呼ばれるため、NodePort にアクセスすることは避ける。
+        protected override void Init()
         {
             m_nodeStatus = NodeStatus.READY;
         }
@@ -24,6 +26,10 @@ namespace Proto2D.AI
             XNode.NodePort inPort = GetInputPort("parent");
             return !inPort.IsConnected;
         }
+
+        // BehaviourTree の使用を開始する前に一度だけ呼ばれる。
+        // NodePort にアクセスする処理はここで行う。
+        public virtual void Setup() { }
 
         // Evaluate() の前に呼ばれ、RUNNING じゃないノードのステータスを READY にする
         public virtual void ResetStatus()
@@ -46,7 +52,7 @@ namespace Proto2D.AI
         // ステータスの取得
         public virtual NodeStatus GetStatus()
         {
-            return NodeStatus.SUCCESS;
+            return m_nodeStatus;
         }
 
         public override object GetValue(XNode.NodePort port)
@@ -60,10 +66,12 @@ namespace Proto2D.AI
     {
         private Node m_rootNode;
 
-        // ルートノードを検索する
-        // 最初に呼ぶ必要がある
-        public void Init()
+        public void Setup()
         {
+            // 全ノードのセットアップ
+            nodes.ForEach(node => (node as Node).Setup());
+
+            // ルートノードを検索する
             if (m_rootNode == null)
             {
                 XNode.Node root = nodes.Find(item => (item as Node).IsRoot());

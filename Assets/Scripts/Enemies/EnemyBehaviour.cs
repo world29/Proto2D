@@ -42,7 +42,7 @@ namespace Proto2D
         public GameObject effectSocket;
         private GameProgressController m_progressController;
 
-        void Start()
+        private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2DEnemy>();
@@ -58,10 +58,18 @@ namespace Proto2D
                 // シングルインスタンスの状態を直接参照・編集するようにする。
                 if (!behaviourTreeDebug)
                 {
-                    behaviourTree = Instantiate(behaviourTree);
+                    behaviourTree = behaviourTree.Copy() as AI.BehaviourTree;
                 }
-                behaviourTree.Init();
+                behaviourTree.Setup();
             }
+        }
+
+        void Start()
+        {
+            audioSource = GetComponent<AudioSource>();
+            controller = GetComponent<Controller2DEnemy>();
+            stompables = GetComponentInChildren<StompableBox>();
+            player = GameObject.FindGameObjectWithTag("Player");
 
             state = new EnemyState_Idle();
             state.OnEnter(this);

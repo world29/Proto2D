@@ -9,7 +9,15 @@ namespace Proto2D.AI
         public float speed = 1;
         public float timeout = 1;
 
-        private float m_timeWaitStart = 0;
+        private float m_timeWaitStarted;
+
+        // override XNode.Init()
+        protected override void Init()
+        {
+            base.Init();
+
+            m_timeWaitStarted = 0;
+        }
 
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
@@ -17,11 +25,11 @@ namespace Proto2D.AI
 
             if (m_nodeStatus == NodeStatus.READY)
             {
-                m_timeWaitStart = Time.timeSinceLevelLoad;
+                m_timeWaitStarted = Time.timeSinceLevelLoad;
 
                 m_nodeStatus = NodeStatus.RUNNING;
             }
-            else if ((Time.timeSinceLevelLoad - m_timeWaitStart) >= timeout)
+            else if ((Time.timeSinceLevelLoad - m_timeWaitStarted) >= timeout)
             {
                 m_nodeStatus = NodeStatus.SUCCESS;
             }
@@ -33,12 +41,12 @@ namespace Proto2D.AI
         {
             base.Abort();
 
-            m_timeWaitStart = 0;
+            m_timeWaitStarted = 0;
         }
 
         public override float GetProgress()
         {
-            return (Time.timeSinceLevelLoad - m_timeWaitStart) / timeout;
+            return (Time.timeSinceLevelLoad - m_timeWaitStarted) / timeout;
         }
     }
 }
