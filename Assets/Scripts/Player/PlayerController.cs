@@ -312,7 +312,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         if (health.Value == 0)
         {
             // ノックバックした後、Death ステートに遷移する
-            GameController.Instance.GameOver();
+            Proto2D.GameController.Instance.GameOver();
         }
 
         // ノックバック

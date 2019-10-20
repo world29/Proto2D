@@ -41,6 +41,7 @@ namespace Proto2D
         private GameObject player;
         private AudioSource audioSource;
         public GameObject effectSocket;
+        private GameProgressController m_progressController;
 
         void Start()
         {
@@ -49,6 +50,7 @@ namespace Proto2D
             stompables = GetComponentInChildren<StompableBox>();
             player = GameObject.FindGameObjectWithTag("Player");
             behaviourTreeContext = new AI.BehaviourTreeContext(this);
+            m_progressController = FindObjectOfType<GameProgressController>();
 
             if (behaviourTree)
             {
@@ -242,7 +244,7 @@ namespace Proto2D
 
         public void OnDeath()
         {
-            GameController.Instance.AddProgressValue(progressValue);
+            m_progressController.AddProgressValue(progressValue);
 
             stompables.enabled = false;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoalArea : MonoBehaviour
 {
-    public GameController gameController;
+    public Proto2D.GameController gameController;
 
     // Start is called before the first frame update
     void Start()

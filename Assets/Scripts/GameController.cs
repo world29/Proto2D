@@ -4,149 +4,137 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : SingletonMonoBehaviour<GameController>
+namespace Proto2D
 {
-    public Text replayText;
-
-    [Header("ゲームオーバー時に読み込まれるシーン名")]
-    public string sceneNameToLoad;
-
-    [Header("プレイヤー (再生時にスポーン)")]
-    public GameObject playerPrefab;
-
-    [Header("10m登るたび増える進捗度")]
-    public float m_progressPerTenMeter = 1;
-
-    [HideInInspector]
-    public NotificationObject<float> m_progress;
-
-    // 進捗度の最大値
-    // この値に達するとステージクリアとする。
-    private float m_maxProgress;
-
-    private GameObject m_player;
-    private float m_nextHightToProgress;
-
-    private bool isGameOver;
-    private bool isGameClear;
-
-    void Start()
+    public class GameController : SingletonMonoBehaviour<GameController>
     {
-        m_progress = new NotificationObject<float>(0);
-        m_progress.OnChanged = OnProgressChanged;
-        m_maxProgress = 200;
+        public Text replayText;
 
-        m_nextHightToProgress = 10;
+        [Header("ゲームオーバー時に読み込まれるシーン名")]
+        public string sceneNameToLoad;
 
-        isGameOver = false;
-        isGameClear = false;
-        if (replayText)
+        [Header("プレイヤー (再生時にスポーン)")]
+        public GameObject playerPrefab;
+
+        [Header("カメラ階層のルートオブジェクト")]
+        public GameObject m_cameraRoot;
+
+        private bool isGameOver;
+        private bool isGameClear;
+        private GameObject m_player;
+        private GameProgressController m_progressController;
+
+        void Start()
         {
-            replayText.text = "";
-        }
-    }
+            m_progressController = GameObject.FindObjectOfType<GameProgressController>();
+            m_progressController.m_progressLevel.OnChanged = OnProgressLevelChanged;
 
-    void Update()
-    {
-        // デバッグビルド時、R キーを押すとシーンをリロードする
-        if (Debug.isDebugBuild && Input.GetKey(KeyCode.R))
-        {
-            ReloadScene();
-        }
-
-        if (!isGameOver && !isGameClear)
-        {
-            return;
-        }
-
-        if (Input.touchCount > 0)
-        {
-            ReloadScene();
-        }
-    }
-
-    private void LateUpdate()
-    {
-        if (m_player)
-        {
-            if (m_player.transform.position.y > m_nextHightToProgress)
+            isGameOver = false;
+            isGameClear = false;
+            if (replayText)
             {
-                Debug.LogFormat("player got progress point :{0} meter", m_nextHightToProgress);
-
-                AddProgressValue(m_progressPerTenMeter);
-
-                m_nextHightToProgress += 10;
+                replayText.text = "";
             }
         }
-    }
 
-    // マップの初期化が終了したときに、MapController から呼ばれる
-    // プレイヤーのスポーン位置がマップ生成に依存するため。
-    public void OnMapInitialized()
-    {
-        // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
-        m_player = GameObject.FindGameObjectWithTag("Player");
-        if (m_player == null)
+        void Update()
         {
-            GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
-            if (playerSpawner)
+            // デバッグビルド時、R キーを押すとシーンをリロードする
+            if (Debug.isDebugBuild && Input.GetKey(KeyCode.R))
             {
-                m_player = GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
+                ReloadScene();
+            }
+
+            if (!isGameOver && !isGameClear)
+            {
+                return;
+            }
+
+            if (Input.touchCount > 0)
+            {
+                ReloadScene();
             }
         }
-    }
 
-    public void AddProgressValue(float value)
-    {
-        m_progress.Value += value;
-    }
-
-    public void Pause()
-    {
-        Time.timeScale = 0;
-    }
-
-    public void Resume()
-    {
-        Time.timeScale = 1;
-    }
-
-    public bool IsGameOver()
-    {
-        return isGameOver;
-    }
-
-    public bool IsGameClear()
-    {
-        return isGameClear;
-    }
-
-    public void GameOver()
-    {
-        isGameOver = true;
-        replayText.text = "You died.\nPress \'R\' to replay!";
-    }
-
-    public void GameClear()
-    {
-        isGameClear = true;
-        replayText.text = "Congratulations!\nPress \'R\' to replay!";
-
-        Pause();
-    }
-
-    void OnProgressChanged(float value)
-    {
-        if (value >= m_maxProgress)
+        // マップの初期化が終了したときに、MapController から呼ばれる
+        // プレイヤーのスポーン位置がマップ生成に依存するため。
+        public void OnMapInitialized()
         {
-            GameClear();
+            // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
+            m_player = GameObject.FindGameObjectWithTag("Player");
+            if (m_player == null)
+            {
+                GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
+                if (playerSpawner)
+                {
+                    m_player = GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
+                }
+            }
         }
-    }
 
-    private void ReloadScene()
-    {
-        SceneManager.LoadScene(sceneNameToLoad);
+        public void Pause()
+        {
+            Time.timeScale = 0;
+        }
 
-        Resume();
+        public void Resume()
+        {
+            Time.timeScale = 1;
+        }
+
+        public bool IsGameOver()
+        {
+            return isGameOver;
+        }
+
+        public bool IsGameClear()
+        {
+            return isGameClear;
+        }
+
+        public void GameOver()
+        {
+            isGameOver = true;
+            replayText.text = "You died.\nPress \'R\' to replay!";
+        }
+
+        public void GameClear()
+        {
+            isGameClear = true;
+            replayText.text = "Congratulations!\nPress \'R\' to replay!";
+
+            Pause();
+        }
+
+        void OnProgressLevelChanged(int value)
+        {
+            if (value >= m_progressController.m_maxProgressLevel)
+            {
+                GameClear();
+            }
+            else
+            {
+                Debug.Assert(m_cameraRoot);
+
+                //MEMO: 仮実装として、進捗の段階が上がったときに強制スクロール用のカメラに切り替える
+                CameraFollow cf = m_cameraRoot.GetComponent<CameraFollow>();
+                if (cf)
+                {
+                    cf.enabled = false;
+                }
+                CameraAutoScroll cas = m_cameraRoot.GetComponent<CameraAutoScroll>();
+                if (cas)
+                {
+                    cas.enabled = true;
+                }
+            }
+        }
+
+        private void ReloadScene()
+        {
+            SceneManager.LoadScene(sceneNameToLoad);
+
+            Resume();
+        }
     }
 }
