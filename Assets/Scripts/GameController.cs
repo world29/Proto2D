@@ -20,6 +20,10 @@ public class GameController : SingletonMonoBehaviour<GameController>
     [HideInInspector]
     public NotificationObject<float> m_progress;
 
+    // 進捗度の最大値
+    // この値に達するとステージクリアとする。
+    private float m_maxProgress;
+
     private GameObject m_player;
     private float m_nextHightToProgress;
 
@@ -29,6 +33,8 @@ public class GameController : SingletonMonoBehaviour<GameController>
     void Start()
     {
         m_progress = new NotificationObject<float>(0);
+        m_progress.OnChanged = OnProgressChanged;
+        m_maxProgress = 200;
 
         m_nextHightToProgress = 10;
 
@@ -95,6 +101,16 @@ public class GameController : SingletonMonoBehaviour<GameController>
         m_progress.Value += value;
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+    }
+
     public bool IsGameOver()
     {
         return isGameOver;
@@ -108,17 +124,29 @@ public class GameController : SingletonMonoBehaviour<GameController>
     public void GameOver()
     {
         isGameOver = true;
-        replayText.text = "Hit Enter to replay!";
+        replayText.text = "You died.\nPress \'R\' to replay!";
     }
 
     public void GameClear()
     {
         isGameClear = true;
-        replayText.text = "Congratulations!\nHit Enter to replay!";
+        replayText.text = "Congratulations!\nPress \'R\' to replay!";
+
+        Pause();
+    }
+
+    void OnProgressChanged(float value)
+    {
+        if (value >= m_maxProgress)
+        {
+            GameClear();
+        }
     }
 
     private void ReloadScene()
     {
         SceneManager.LoadScene(sceneNameToLoad);
+
+        Resume();
     }
 }
