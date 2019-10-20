@@ -10,10 +10,11 @@ namespace Proto2D
         public GameProgressController m_progressController;
 
         public Slider m_progressSlider;
-        //public Image m_progressSliderBackground;
+        public Image m_progressSliderBackground;
         public Image m_progressSliderFill;
 
-        public Sprite[] m_progressSliderSprites;
+        public Sprite m_progressSliderBackgroundSprite;
+        public Sprite[] m_progressSliderFillSprites;
 
         void Start()
         {
@@ -34,10 +35,10 @@ namespace Proto2D
         void OnProgressLevelChanged(int level)
         {
             // 進捗レベルに応じたゲージ用スプライトが設定されていることを保障
-            Debug.Assert(m_progressSliderSprites.Length > level);
+            Debug.Assert(m_progressSliderFillSprites.Length > level);
 
-            //TODO: バックグラウンド
-            m_progressSliderFill.sprite = m_progressSliderSprites[level];
+            m_progressSliderBackground.sprite = m_progressSliderBackgroundSprite;
+            m_progressSliderFill.sprite = m_progressSliderFillSprites[level];
         }
 
         void UpdateUI()

@@ -240,6 +240,18 @@ MonoBehaviour:
   m_maxProgressValue: 100
   m_maxProgressLevel: 2
   m_progressPerTenMeter: 1
+--- !u!114 &356736628 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 992645503052646231, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+    type: 3}
+  m_PrefabInstance: {fileID: 1552722621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &588505615
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +749,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3471144840389554136, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+        type: 3}
+      propertyPath: m_ShowMaskGraphic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8969ae16e4aedd94c83c774bcea4cc09, type: 3}
 --- !u!114 &1739202853 stripped
@@ -898,8 +915,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_progressController: {fileID: 143383626}
   m_progressSlider: {fileID: 1739202853}
+  m_progressSliderBackground: {fileID: 356736628}
   m_progressSliderFill: {fileID: 988391477}
-  m_progressSliderSprites:
+  m_progressSliderBackgroundSprite: {fileID: 21300008, guid: ee1a6d938687e77429f627ca22c61ba7,
+    type: 3}
+  m_progressSliderFillSprites:
   - {fileID: 21300014, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
   - {fileID: 21300016, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
   - {fileID: 21300028, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
