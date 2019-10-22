@@ -36,8 +36,11 @@ namespace Proto2D
         void Start()
         {
             m_progressController = GameObject.FindObjectOfType<GameProgressController>();
-            m_progressController.m_progress.OnChanged = OnProgressChanged;
-            m_progressController.m_stagePhase.OnChanged = OnPhaseChanged;
+            if (m_progressController)
+            {
+                m_progressController.m_progress.OnChanged = OnProgressChanged;
+                m_progressController.m_stagePhase.OnChanged = OnPhaseChanged;
+            }
 
             isGameOver = false;
             isGameClear = false;
@@ -45,6 +48,8 @@ namespace Proto2D
             {
                 replayText.text = "";
             }
+
+            OnMapInitialized();
         }
 
         void Update()
@@ -64,8 +69,6 @@ namespace Proto2D
             {
                 ReloadScene();
             }
-
-            OnMapInitialized();
         }
 
         // マップの初期化が終了したときに、MapController から呼ばれる
