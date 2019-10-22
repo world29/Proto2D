@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -264,11 +264,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
-    - target: {fileID: 5325095712304685803, guid: d670051a183802c409714330820ba5d6,
-        type: 3}
-      propertyPath: m_Name
-      value: ComboText
-      objectReference: {fileID: 0}
     - target: {fileID: 5325095712304685802, guid: d670051a183802c409714330820ba5d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -374,6 +369,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5325095712304685803, guid: d670051a183802c409714330820ba5d6,
+        type: 3}
+      propertyPath: m_Name
+      value: ComboText
+      objectReference: {fileID: 0}
     - target: {fileID: 5325095712304685801, guid: d670051a183802c409714330820ba5d6,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -404,21 +404,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
-    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
-        type: 3}
-      propertyPath: m_Name
-      value: Floating Joystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_Name
-      value: MoveJoystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: m_RootOrder
@@ -504,6 +489,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_Name
+      value: MoveJoystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7272750636445303540, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: deadZone
@@ -563,6 +558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
+        type: 3}
+      propertyPath: m_Name
+      value: Floating Joystick
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
@@ -684,21 +684,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
-    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
-        type: 3}
-      propertyPath: m_Name
-      value: Floating Joystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_Name
-      value: ActionJoystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: m_RootOrder
@@ -784,6 +769,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_Name
+      value: ActionJoystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7272750636445303540, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: deadZone
@@ -823,6 +818,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
+        type: 3}
+      propertyPath: m_Name
+      value: Floating Joystick
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
@@ -944,11 +944,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
-    - target: {fileID: 5118736011812008716, guid: e7ecd50b82650f5468da731a5a63a891,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_Status
-      objectReference: {fileID: 0}
     - target: {fileID: 997119855823024304, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1054,6 +1049,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5118736011812008716, guid: e7ecd50b82650f5468da731a5a63a891,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626334610178690364, guid: e7ecd50b82650f5468da731a5a63a891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.39996338
+      objectReference: {fileID: 0}
     - target: {fileID: 526429009930686166, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1064,12 +1069,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7986962706876689357, guid: e7ecd50b82650f5468da731a5a63a891,
+    - target: {fileID: 4034532489764552275, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7986962706876689357, guid: e7ecd50b82650f5468da731a5a63a891,
+    - target: {fileID: 4034532489764552275, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1079,12 +1084,12 @@ PrefabInstance:
       propertyPath: m_Value
       value: 0.524
       objectReference: {fileID: 0}
-    - target: {fileID: 4034532489764552275, guid: e7ecd50b82650f5468da731a5a63a891,
+    - target: {fileID: 7986962706876689357, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4034532489764552275, guid: e7ecd50b82650f5468da731a5a63a891,
+    - target: {fileID: 7986962706876689357, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
