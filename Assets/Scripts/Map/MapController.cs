@@ -8,12 +8,15 @@ namespace Proto2D
     {
         public List<RoomController> startRoomPrefabs;
         public List<RoomController> normalRoomPrefabs;
+        public List<RoomController> additionalNormalRoomPrefabs;
 
         public Vector2 spawnAreaSize;
         public float spawnAreaOffset = 10;
 
         private Vector2 m_edgePosition = Vector2.zero;
         private SpawnArea m_spawnArea;
+
+        private GameProgressController m_gameProgressController;
 
         private void Awake()
         {
@@ -27,6 +30,8 @@ namespace Proto2D
             spawnNextRoom(getRandomStartRoom());
 
             GameController.Instance.OnMapInitialized();
+
+            m_gameProgressController = GameObject.FindObjectOfType<GameProgressController>();
         }
 
         void LateUpdate()
@@ -78,11 +83,19 @@ namespace Proto2D
 
         RoomController getRandomNormalRoom()
         {
-            if (normalRoomPrefabs.Count > 0)
+            List<RoomController> candidates = new List<RoomController>(normalRoomPrefabs);
+
+            // 進捗レベルが一段階上がっていたら、選出される部屋の候補を増やす
+            if (m_gameProgressController.m_progressLevel.Value > 0)
             {
-                int index = Random.Range(0, normalRoomPrefabs.Count);
+                candidates.AddRange(additionalNormalRoomPrefabs);
+            }
+
+            if (candidates.Count > 0)
+            {
+                int index = Random.Range(0, candidates.Count);
                 Debug.Log(index);
-                return normalRoomPrefabs[index];
+                return candidates[index];
             }
             return null;
         }
