@@ -20,7 +20,7 @@ namespace Proto2D
         {
             m_progressSlider.maxValue = m_progressController.m_maxProgressValue;
             m_progressController.m_progress.OnChanged += OnProgressChanged;
-            m_progressController.m_progressLevel.OnChanged += OnProgressLevelChanged;
+            m_progressController.m_stagePhase.OnChanged += OnPhaseChanged;
         }
 
         void Update()
@@ -32,13 +32,13 @@ namespace Proto2D
             m_progressSlider.value = value;
         }
 
-        void OnProgressLevelChanged(int level)
+        void OnPhaseChanged(StagePhase level)
         {
             // 進捗レベルに応じたゲージ用スプライトが設定されていることを保障
-            Debug.Assert(m_progressSliderFillSprites.Length > level);
+            Debug.Assert(m_progressSliderFillSprites.Length > (int)level);
 
             m_progressSliderBackground.sprite = m_progressSliderBackgroundSprite;
-            m_progressSliderFill.sprite = m_progressSliderFillSprites[level];
+            m_progressSliderFill.sprite = m_progressSliderFillSprites[(int)level];
         }
 
         void UpdateUI()

@@ -9,8 +9,8 @@ namespace Proto2D
         [Header("進捗度の最大値 (この値を超えると一段階アップ)")]
         public float m_maxProgressValue = 100;
 
-        [Header("進捗の段階の最大値")]
-        public int m_maxProgressLevel = 2;
+        [Header("進捗の段階の上限")]
+        public StagePhase m_stagePhaseLimit = StagePhase.Phase2;
 
         [Header("10m登るたび増える進捗度")]
         public float m_progressPerTenMeter = 1;
@@ -18,7 +18,7 @@ namespace Proto2D
         [HideInInspector]
         public NotificationObject<float> m_progress;
         [HideInInspector]
-        public NotificationObject<int> m_progressLevel;
+        public NotificationObject<StagePhase> m_stagePhase;
 
         private GameObject m_player;
         private float m_nextHightToProgress;
@@ -26,7 +26,7 @@ namespace Proto2D
         private void Awake()
         {
             m_progress = new NotificationObject<float>(0);
-            m_progressLevel = new NotificationObject<int>(0);
+            m_stagePhase = new NotificationObject<StagePhase>(StagePhase.Phase1);
         }
 
         void Start()
@@ -62,11 +62,10 @@ namespace Proto2D
 
             if (nextValue >= m_maxProgressValue)
             {
-                // 進捗レベルは最大値 - 1 までしか上げられない
-                if (m_progressLevel.Value < (m_maxProgressLevel - 1))
+                if (m_stagePhase.Value < m_stagePhaseLimit)
                 {
                     // 進捗度を一段階上げる
-                    m_progressLevel.Value++;
+                    m_stagePhase.Value++;
 
                     nextValue -= m_maxProgressValue;
                 }

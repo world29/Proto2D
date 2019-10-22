@@ -86,7 +86,7 @@ namespace Proto2D
             List<RoomController> candidates = new List<RoomController>(normalRoomPrefabs);
 
             // 進捗レベルが一段階上がっていたら、選出される部屋の候補を増やす
-            if (m_gameProgressController.m_progressLevel.Value > 0)
+            if (m_gameProgressController.m_stagePhase.Value > 0)
             {
                 candidates.AddRange(additionalNormalRoomPrefabs);
             }

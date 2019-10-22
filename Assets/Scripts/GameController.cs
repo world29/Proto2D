@@ -6,6 +6,15 @@ using UnityEngine.UI;
 
 namespace Proto2D
 {
+    // 名称について
+    //
+    // Game
+    //   Stage (Unity における Scene に対応する。レベルと同義)
+    //     Phase (ステージ内での進捗度に応じた段階)
+    //
+
+    public enum StagePhase { Phase1, Phase2, Phase3 }
+
     public class GameController : SingletonMonoBehaviour<GameController>
     {
         public Text replayText;
@@ -27,7 +36,8 @@ namespace Proto2D
         void Start()
         {
             m_progressController = GameObject.FindObjectOfType<GameProgressController>();
-            m_progressController.m_progressLevel.OnChanged = OnProgressLevelChanged;
+            m_progressController.m_progress.OnChanged = OnProgressChanged;
+            m_progressController.m_stagePhase.OnChanged = OnPhaseChanged;
 
             isGameOver = false;
             isGameClear = false;
@@ -106,27 +116,31 @@ namespace Proto2D
             Pause();
         }
 
-        void OnProgressLevelChanged(int value)
+        void OnProgressChanged(float progress)
         {
-            if (value >= m_progressController.m_maxProgressLevel)
+            bool isPhaseMax = m_progressController.m_stagePhase.Value == m_progressController.m_stagePhaseLimit;
+            bool isProgressMax = m_progressController.m_progress.Value == m_progressController.m_maxProgressValue;
+
+            if (isPhaseMax && isProgressMax)
             {
                 GameClear();
             }
-            else
-            {
-                Debug.Assert(m_cameraRoot);
+        }
 
-                //MEMO: 仮実装として、進捗の段階が上がったときに強制スクロール用のカメラに切り替える
-                CameraFollow cf = m_cameraRoot.GetComponent<CameraFollow>();
-                if (cf)
-                {
-                    cf.enabled = false;
-                }
-                CameraAutoScroll cas = m_cameraRoot.GetComponent<CameraAutoScroll>();
-                if (cas)
-                {
-                    cas.enabled = true;
-                }
+        void OnPhaseChanged(StagePhase phase)
+        {
+            Debug.Assert(m_cameraRoot);
+
+            //MEMO: 仮実装として、進捗の段階が上がったときに強制スクロール用のカメラに切り替える
+            CameraFollow cf = m_cameraRoot.GetComponent<CameraFollow>();
+            if (cf)
+            {
+                cf.enabled = false;
+            }
+            CameraAutoScroll cas = m_cameraRoot.GetComponent<CameraAutoScroll>();
+            if (cas)
+            {
+                cas.enabled = true;
             }
         }
 
