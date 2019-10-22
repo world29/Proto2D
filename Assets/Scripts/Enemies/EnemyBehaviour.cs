@@ -55,7 +55,7 @@ namespace Proto2D
                 // BehaviourTree は ScriptableObject なのでシングルインスタンス。
                 // BehaviourTree の状態を他のオブジェクトと共有したくないのでコピーする。
                 // エディタ上で各ノードの状態をリアルタイムに確認したい場合は、behaviourTreeDebug を true に設定し、
-                // シングルインスタンスの状態を直接参照・編集するようにする。
+                // シングルインスタンスの状態を直接参照・編集する。
                 if (!behaviourTreeDebug)
                 {
                     behaviourTree = behaviourTree.Copy() as AI.BehaviourTree;
@@ -70,6 +70,7 @@ namespace Proto2D
             controller = GetComponent<Controller2DEnemy>();
             stompables = GetComponentInChildren<StompableBox>();
             player = GameObject.FindGameObjectWithTag("Player");
+            m_progressController = GameObject.FindObjectOfType<GameProgressController>();
 
             state = new EnemyState_Idle();
             state.OnEnter(this);
@@ -84,7 +85,10 @@ namespace Proto2D
 
         void ResetMovement()
         {
-            velocity.x = 0;
+            if (IsOnGround())
+            {
+                velocity.x = 0;
+            }
         }
 
         void UpdateStateMachine()
@@ -147,6 +151,11 @@ namespace Proto2D
             }
         }
 
+        public virtual bool IsOnGround()
+        {
+            return controller.collisions.below;
+        }
+
         public virtual bool CanMoveForward()
         {
             // 進行方向に地面があるか調べる
@@ -163,6 +172,14 @@ namespace Proto2D
         {
             Vector3 scl = transform.localScale;
             transform.localScale = new Vector3(scl.x * -1, scl.y, scl.z);
+        }
+
+        public virtual void Jump(Vector2 jumpVelocity)
+        {
+            Vector2 v = jumpVelocity;
+            v.x *= getFacingLocal();
+
+            velocity = v;
         }
 
         public virtual void Shot(Projectile prefab)
