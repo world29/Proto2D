@@ -9,8 +9,6 @@ namespace Proto2D
         public List<RoomController> startRoomPrefabs;
         public List<RoomController> normalRoomPrefabs;
 
-        public PlayerController playerPrefab;
-
         public Vector2 spawnAreaSize;
         public float spawnAreaOffset = 10;
 
