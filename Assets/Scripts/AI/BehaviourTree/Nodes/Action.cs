@@ -8,7 +8,7 @@ namespace Proto2D.AI
     {
         public virtual float GetProgress()
         {
-            return 1;
+            return 0;
         }
     }
 }

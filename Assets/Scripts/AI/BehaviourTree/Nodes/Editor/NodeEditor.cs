@@ -31,17 +31,5 @@ namespace Proto2D.AI
             GUILayout.Label(title, XNodeEditor.NodeEditorResources.styles.nodeHeader, GUILayout.Height(30));
             GUI.color = Color.white;
         }
-
-        public override void OnBodyGUI()
-        {
-            base.OnBodyGUI();
-            Node node = target as Node;
-
-            Action actionNode = node as Action;
-            if (actionNode && actionNode.GetStatus() == NodeStatus.RUNNING)
-            {
-                EditorGUI.ProgressBar(new Rect(3, 0, GetWidth() - 6, 5), actionNode.GetProgress(), "");
-            }
-        }
     }
 }

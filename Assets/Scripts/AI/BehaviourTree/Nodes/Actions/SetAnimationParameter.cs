@@ -38,10 +38,5 @@ namespace Proto2D.AI
 
             return NodeStatus.SUCCESS;
         }
-
-        public override float GetProgress()
-        {
-            return 1;
-        }
     }
 }

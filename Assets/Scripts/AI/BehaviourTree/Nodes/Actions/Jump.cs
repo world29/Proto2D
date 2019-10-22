@@ -27,6 +27,7 @@ namespace Proto2D.AI
 
         public override float GetProgress()
         {
+            // 着地するまでの時間を算出できないため常に 1 とする
             return 1;
         }
     }
