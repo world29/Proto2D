@@ -6,6 +6,9 @@ namespace Proto2D.AI
 {
     public abstract class Action : Node
     {
-        public abstract float GetProgress();
+        public virtual float GetProgress()
+        {
+            return 1;
+        }
     }
 }
