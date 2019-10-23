@@ -7,10 +7,9 @@ namespace Proto2D.AI
     [CreateNodeMenu("BehaviourTree/Action/Wait")]
     public class Wait : Action
     {
-        //public Vector2 timeoutMinMax = new Vector2(1f,1.5f);
-        // うまくいかなかったのでtimeoutをpublicのまま直接指定
-        public float timeout = 1;
+        public RandomValue m_timeout;
 
+        private float m_timeToWait;
         private float m_timeWaitStarted;
 
         // override XNode.Init()
@@ -18,6 +17,7 @@ namespace Proto2D.AI
         {
             base.Init();
 
+            m_timeToWait = 0;
             m_timeWaitStarted = 0;
         }
 
@@ -25,11 +25,15 @@ namespace Proto2D.AI
         {
             if (m_nodeStatus == NodeStatus.READY)
             {
+                // タイムアウト時間を設定
+                m_timeToWait = m_timeout.Value;
+                Debug.LogFormat("Wait timeout = {0}", m_timeToWait);
+
                 m_timeWaitStarted = Time.timeSinceLevelLoad;
 
                 m_nodeStatus = NodeStatus.RUNNING;
             }
-            else if ((Time.timeSinceLevelLoad - m_timeWaitStarted) >= timeout)
+            else if ((Time.timeSinceLevelLoad - m_timeWaitStarted) >= m_timeToWait)
             {
                 m_nodeStatus = NodeStatus.SUCCESS;
             }
@@ -41,12 +45,13 @@ namespace Proto2D.AI
         {
             base.Abort();
 
+            m_timeToWait = 0;
             m_timeWaitStarted = 0;
         }
 
         public override float GetProgress()
         {
-            return (Time.timeSinceLevelLoad - m_timeWaitStarted) / timeout;
+            return (Time.timeSinceLevelLoad - m_timeWaitStarted) / m_timeToWait;
         }
     }
 }

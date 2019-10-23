@@ -13,9 +13,9 @@ namespace Proto2D.AI
         {
             base.OnBodyGUI();
 
+            //　プログレスバーで progress を表示
             EditorGUILayout.Space();
 
-            //　プログレスバーで progress を表示
             float progress = 0;
             Action actionNode = target as Action;
             if (actionNode.GetStatus() == NodeStatus.RUNNING)
