@@ -414,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 3395466810593108261, guid: c4a3f23bf06f2664591d176e9c9be6d7,
         type: 3}
       propertyPath: behaviourTreeDebug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1213931508302480163, guid: c4a3f23bf06f2664591d176e9c9be6d7,
         type: 3}
@@ -678,7 +678,7 @@ MonoBehaviour:
   sceneNameToLoad: EnemyList
   playerPrefab: {fileID: 6503610203471954336, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
     type: 3}
-  m_progressPerTenMeter: 1
+  m_cameraRoot: {fileID: 1629068074}
 --- !u!4 &563707539
 Transform:
   m_ObjectHideFlags: 0
@@ -767,6 +767,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b539f8f61b0be2b4b9e427b82f5eae20, type: 3}
+--- !u!1001 &1060343107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6245465354517601081, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_Name
+      value: SnakeLizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245465354517601086, guid: 8606a50bd5cf9ce4ea5dabedcdb87165,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8606a50bd5cf9ce4ea5dabedcdb87165, type: 3}
 --- !u!1 &1361085554
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,8 +1034,14 @@ PrefabInstance:
     - target: {fileID: 8694923957803438080, guid: 777bff2b516785b448c2b106c4fa9fee,
         type: 3}
       propertyPath: behaviourTreeDebug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8694923957803438080, guid: 777bff2b516785b448c2b106c4fa9fee,
+        type: 3}
+      propertyPath: behaviourTree
+      value: 
+      objectReference: {fileID: 11400000, guid: 095dd3a8a9a3f7e4b937b0d54b330311,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 777bff2b516785b448c2b106c4fa9fee, type: 3}
 --- !u!1001 &1419334442
