@@ -139,6 +139,15 @@ namespace Proto2D
             }
         }
 
+        public void LookAt(Transform target)
+        {
+            float facingTarget = Mathf.Sign(target.position.x - transform.position.x);
+            if (getFacingWorld() != facingTarget)
+            {
+                Turn();
+            }
+        }
+
         public void MoveForward(float moveSpeed)
         {
             if (CanMoveForward())
