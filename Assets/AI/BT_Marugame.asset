@@ -21,6 +21,43 @@ MonoBehaviour:
   - {fileID: 114238679338956922}
   - {fileID: 114519514175464180}
   - {fileID: 114186734394802590}
+  - {fileID: 114116594749571748}
+  - {fileID: 114955855962643846}
+  - {fileID: 114760650399825720}
+  - {fileID: 114440854791757504}
+  - {fileID: 114190521889008500}
+--- !u!114 &114116594749571748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a414d97f2fedd3445aafe5310808b3d9, type: 3}
+  m_Name: Jump
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 520, y: 408}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114116594749571748}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  jumpVelocity: {x: 10, y: 10}
 --- !u!114 &114186734394802590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +107,40 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   children: []
+--- !u!114 &114190521889008500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b90c29e48791046908f6b6edf6396a, type: 3}
+  m_Name: Set Animation Parameter
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 504, y: 136}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114190521889008500}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  paramType: 4
+  paramName: run
+  paramValue: false
 --- !u!114 &114227030322683050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +171,21 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114651455221895184}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114190521889008500}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114955855962643846}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114116594749571748}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114760650399825720}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114440854791757504}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -155,7 +241,7 @@ MonoBehaviour:
     m_type: 1
     m_min: 0
     m_max: 0
-    m_value: 1
+    m_value: 0
 --- !u!114 &114423833206302538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +287,42 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   child: {fileID: 0}
+--- !u!114 &114440854791757504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 536, y: 648}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114440854791757504}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_timeout:
+    m_type: 0
+    m_min: 0.5
+    m_max: 2
+    m_value: 1
 --- !u!114 &114519514175464180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +370,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 504, y: 88}
+  position: {x: 520, y: 24}
   ports:
     keys:
     - parent
@@ -317,6 +439,40 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   children: []
+--- !u!114 &114760650399825720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b90c29e48791046908f6b6edf6396a, type: 3}
+  m_Name: Set Animation Parameter
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 536, y: 504}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114760650399825720}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  paramType: 4
+  paramName: attack
+  paramValue: false
 --- !u!114 &114825565676623034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +486,7 @@ MonoBehaviour:
   m_Name: Set Animation Parameter
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 504, y: -56}
+  position: {x: 504, y: -104}
   ports:
     keys:
     - parent
@@ -351,3 +507,37 @@ MonoBehaviour:
   paramType: 4
   paramName: run
   paramValue: false
+--- !u!114 &114955855962643846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b90c29e48791046908f6b6edf6396a, type: 3}
+  m_Name: Set Animation Parameter
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 520, y: 264}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114955855962643846}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  paramType: 4
+  paramName: attack
+  paramValue: true
