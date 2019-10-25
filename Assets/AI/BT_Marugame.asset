@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 114760650399825720}
   - {fileID: 114440854791757504}
   - {fileID: 114190521889008500}
+  - {fileID: 114495928284875768}
 --- !u!114 &114116594749571748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,7 +40,7 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 520, y: 408}
+  position: {x: 520, y: 520}
   ports:
     keys:
     - parent
@@ -179,6 +180,9 @@ MonoBehaviour:
         node: {fileID: 114955855962643846}
         reroutePoints: []
       - fieldName: parent
+        node: {fileID: 114495928284875768}
+        reroutePoints: []
+      - fieldName: parent
         node: {fileID: 114116594749571748}
         reroutePoints: []
       - fieldName: parent
@@ -300,7 +304,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 536, y: 648}
+  position: {x: 536, y: 760}
   ports:
     keys:
     - parent
@@ -322,6 +326,42 @@ MonoBehaviour:
     m_type: 0
     m_min: 0.5
     m_max: 2
+    m_value: 1
+--- !u!114 &114495928284875768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 520, y: 392}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114495928284875768}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_timeout:
+    m_type: 0
+    m_min: 0.3
+    m_max: 0.5
     m_value: 1
 --- !u!114 &114519514175464180
 MonoBehaviour:
@@ -389,9 +429,9 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_timeout:
-    m_type: 1
-    m_min: 0
-    m_max: 0
+    m_type: 0
+    m_min: 0.1
+    m_max: 0.3
     m_value: 0.5
 --- !u!114 &114681649308610486
 MonoBehaviour:
@@ -452,7 +492,7 @@ MonoBehaviour:
   m_Name: Set Animation Parameter
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 536, y: 504}
+  position: {x: 536, y: 616}
   ports:
     keys:
     - parent
