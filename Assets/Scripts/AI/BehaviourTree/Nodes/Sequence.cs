@@ -1,12 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Proto2D.AI
 {
     [CreateNodeMenu("BehaviourTree/Sequence")]
     public class Sequence : Composite
     {
+        public override void Setup()
+        {
+            base.Setup();
+
+            SetupNodesOrderByPriority();
+        }
+
+        protected override void OnReady()
+        {
+            m_nodeIndex = 0;
+        }
+
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
             int i = m_nodeIndex;
@@ -17,7 +30,7 @@ namespace Proto2D.AI
                 if (m_nodeStatus == NodeStatus.FAILURE)
                 {
                     // 次回の評価は先頭ノードから開始する
-                    m_nodeIndex = 0;
+                    //m_nodeIndex = 0;
 
                     // 次のノードを評価しない
                     break;
@@ -33,10 +46,12 @@ namespace Proto2D.AI
                 else if (m_nodeStatus == NodeStatus.SUCCESS)
                 {
                     // 末尾ノードが SUCCESS なら、次回の評価は先頭ノードから開始する
+                    /*
                     if (i == m_nodes.Count - 1)
                     {
                         m_nodeIndex = 0;
                     }
+                    */
 
                     // 次のノードを評価する
                     continue;
@@ -51,11 +66,26 @@ namespace Proto2D.AI
             return m_nodeStatus;
         }
 
-        public override void Abort()
+        public override void OnCreateConnection(XNode.NodePort from, XNode.NodePort to)
         {
-            base.Abort();
+            base.OnCreateConnection(from, to);
 
-            m_nodeIndex = 0;
+            // children detached
+            if (Outputs.Contains(from) || Outputs.Contains(to))
+            {
+                SetupNodesOrderByPriority();
+            }
+        }
+
+        public override void OnRemoveConnection(XNode.NodePort port)
+        {
+            base.OnRemoveConnection(port);
+
+            // children detached
+            if (Outputs.Contains(port))
+            {
+                SetupNodesOrderByPriority();
+            }
         }
     }
 }

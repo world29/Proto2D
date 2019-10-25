@@ -19,18 +19,10 @@ namespace Proto2D.AI
             base.Init();
 
             m_nodes = new List<Node>();
-            m_nodeIndex = 0;
+            m_nodeIndex = -1;
         }
 
-        public override void Setup()
-        {
-            base.Setup();
-
-            RefreshNodes();
-        }
-
-        [ContextMenu("Refresh Nodes")]
-        public void RefreshNodes()
+        protected void SetupNodesOrderByPriority()
         {
             m_nodes.Clear();
 
@@ -52,24 +44,11 @@ namespace Proto2D.AI
             }
         }
 
-        public override void OnCreateConnection(XNode.NodePort from, XNode.NodePort to)
+        public override void Abort()
         {
-            // children detached
-            if (Outputs.Contains(from) || Outputs.Contains(to))
-            {
-                RefreshNodes();
-            }
-        }
+            base.Abort();
 
-        public override void OnRemoveConnection(XNode.NodePort port)
-        {
-            base.OnRemoveConnection(port);
-
-            // children detached
-            if (Outputs.Contains(port))
-            {
-                RefreshNodes();
-            }
+            m_nodeIndex = -1;
         }
     }
 }

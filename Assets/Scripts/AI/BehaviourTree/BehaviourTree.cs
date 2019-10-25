@@ -24,7 +24,8 @@ namespace Proto2D.AI
         //       ノードがコピーされた場合、接続をつなぎなおす前に呼ばれるため、NodePort にアクセスすることは避ける。
         protected override void Init()
         {
-            m_nodeStatus = NodeStatus.READY;
+            // 初回に OnReady が呼ばれて欲しいので初期値を SUCCESS or FAILURE にしておく
+            m_nodeStatus = NodeStatus.SUCCESS;
         }
 
         // ルートノードの判定
@@ -40,7 +41,7 @@ namespace Proto2D.AI
 
         // ノードの状態が READY にリセットされた際に呼ばれる。
         // 乱数の生成など、ノード評価のたびに実行したい処理を記述する。
-        public virtual void OnReady() { }
+        protected virtual void OnReady() { }
 
         // Evaluate() の前に呼ばれ、RUNNING じゃないノードのステータスを READY にする
         public virtual void ResetStatus()
