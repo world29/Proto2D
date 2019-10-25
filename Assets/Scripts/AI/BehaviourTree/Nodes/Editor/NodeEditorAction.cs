@@ -18,7 +18,7 @@ namespace Proto2D.AI
 
             float progress = 0;
             Action actionNode = target as Action;
-            if (actionNode.GetStatus() == NodeStatus.RUNNING)
+            if (actionNode.Status == NodeStatus.RUNNING)
             {
                 progress = actionNode.GetProgress();
             }

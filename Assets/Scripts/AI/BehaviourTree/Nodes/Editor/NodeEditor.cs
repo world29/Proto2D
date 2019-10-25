@@ -12,7 +12,7 @@ namespace Proto2D.AI
         {
             GUI.color = Color.white;
             Node node = target as Node;
-            switch (node.GetStatus())
+            switch (node.Status)
             {
                 case NodeStatus.READY:
                     GUI.color = Color.yellow;
@@ -28,6 +28,10 @@ namespace Proto2D.AI
                     break;
             }
             string title = target.name;
+            if (node.EvaluationOrder > 0)
+            {
+                title = string.Format("#{0} {1}", node.EvaluationOrder, target.name);
+            }
             GUILayout.Label(title, XNodeEditor.NodeEditorResources.styles.nodeHeader, GUILayout.Height(30));
             GUI.color = Color.white;
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Proto2D.AI
 {
@@ -8,9 +9,15 @@ namespace Proto2D.AI
 
     public abstract class Node : XNode.Node
     {
-        [Input] public Node parent;
+        [Input(ShowBackingValue.Never, ConnectionType.Override)] public Node parent;
+
+        public NodeStatus Status { get { return m_nodeStatus; } }
+        public int Priority { get { return m_priority; } }
+        public int EvaluationOrder { get { return m_evaluationOrder; } set { m_evaluationOrder = value; } }
 
         protected NodeStatus m_nodeStatus;
+        public int m_priority; // 個々のノードが持つ優先度
+        protected int m_evaluationOrder; // コンポジット系ノードにおける評価順 (優先度に応じて決定される)
 
         // override XNode.Init()
         // MEMO: ノード (ScriptableObject) がインスタンス化されたとき呼ばれる。
@@ -31,12 +38,19 @@ namespace Proto2D.AI
         // NodePort にアクセスする処理はここで行う。
         public virtual void Setup() { }
 
+        // ノードの状態が READY にリセットされた際に呼ばれる。
+        // 乱数の生成など、ノード評価のたびに実行したい処理を記述する。
+        public virtual void OnReady() { }
+
         // Evaluate() の前に呼ばれ、RUNNING じゃないノードのステータスを READY にする
         public virtual void ResetStatus()
         {
+            if (m_nodeStatus == NodeStatus.READY) return;
+
             if (m_nodeStatus != NodeStatus.RUNNING)
             {
                 m_nodeStatus = NodeStatus.READY;
+                OnReady();
             }
         }
 
@@ -49,15 +63,17 @@ namespace Proto2D.AI
             m_nodeStatus = NodeStatus.READY;
         }
 
-        // ステータスの取得
-        public virtual NodeStatus GetStatus()
-        {
-            return m_nodeStatus;
-        }
-
         public override object GetValue(XNode.NodePort port)
         {
             return null;
+        }
+
+        public override void OnRemoveConnection(XNode.NodePort port)
+        {
+            if (Inputs.Contains(port))
+            {
+                m_evaluationOrder = -1;
+            }
         }
     }
 

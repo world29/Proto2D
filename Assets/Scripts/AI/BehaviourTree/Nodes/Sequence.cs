@@ -4,42 +4,9 @@ using UnityEngine;
 
 namespace Proto2D.AI
 {
-    [CreateNodeMenu("BehaviourTree/Sequence"), NodeTint(0.5f, 1f, 0.5f)]
-    public class Sequence : Node
+    [CreateNodeMenu("BehaviourTree/Sequence")]
+    public class Sequence : Composite
     {
-        [Output] public List<Node> children;
-
-        private List<Node> m_nodes = new List<Node>();
-
-        private int m_nodeIndex;
-
-        // override XNode.Init()
-        protected override void Init()
-        {
-            base.Init();
-
-            m_nodeIndex = 0;
-        }
-
-        public override void Setup()
-        {
-            base.Setup();
-
-            m_nodes.Clear();
-
-            XNode.NodePort outPort = GetOutputPort("children");
-            if (!outPort.IsConnected)
-            {
-                return;
-            }
-
-            List<XNode.NodePort> connections = outPort.GetConnections();
-            foreach (XNode.NodePort port in connections)
-            {
-                m_nodes.Add(port.node as Node);
-            }
-        }
-
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
             int i = m_nodeIndex;
