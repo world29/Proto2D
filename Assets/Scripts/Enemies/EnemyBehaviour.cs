@@ -27,8 +27,10 @@ namespace Proto2D
         public Transform groundDetectionTransform;
         public Transform shotTransform;
         [Range(0, 360)]
-        public float viewAngle = 45;
+        public float viewAngle = 45; // fov
         public float viewDistance = 3;
+        [Range(-180, 180)]
+        public float viewAngleOffset = 0;
 
         [Header("地面判定におけるレイの長さ (坂や段差を通りたい場合は長め (> 1.0f))")]
         public float groundDetectionRayLength = .5f;
@@ -215,6 +217,8 @@ namespace Proto2D
                 float angleDeg = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
                 float distance = toPlayer.magnitude;
 
+                angleDeg -= viewAngleOffset;
+
                 float viewAngleHalf = viewAngle * .5f;
                 if (angleDeg <= viewAngleHalf && angleDeg >= -viewAngleHalf && distance <= viewDistance)
                 {
@@ -364,16 +368,19 @@ namespace Proto2D
                     UnityEditor.Handles.color = new Color(1, 0, 0, .2f);
                 }
 
+                float angleOffset = getFacingWorld() > 0 ? viewAngleOffset : -viewAngleOffset;
+                Vector3 from = Quaternion.Euler(0, 0, angleOffset) * Vector3.right;
+
                 UnityEditor.Handles.DrawSolidArc(
                     gameObject.transform.position,
                     Vector3.forward,
-                    Vector3.right * getFacingWorld(),
+                    from * getFacingWorld(),
                     angleHalf, viewDistance);
 
                 UnityEditor.Handles.DrawSolidArc(
                     gameObject.transform.position,
                     Vector3.forward,
-                    Vector3.right * getFacingWorld(),
+                    from * getFacingWorld(),
                     -angleHalf, viewDistance);
 
                 UnityEditor.Handles.color = Color.white;
