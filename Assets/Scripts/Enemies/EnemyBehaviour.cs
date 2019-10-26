@@ -26,11 +26,14 @@ namespace Proto2D
         public bool behaviourTreeDebug = false;
         public Transform groundDetectionTransform;
         public Transform shotTransform;
+        /*
         [Range(0, 360)]
         public float viewAngle = 45; // fov
         public float viewDistance = 3;
         [Range(-180, 180)]
         public float viewAngleOffset = 0;
+        */
+        public List<EnemySight> sights = new List<EnemySight>();
 
         [Header("地面判定におけるレイの長さ (坂や段差を通りたい場合は長め (> 1.0f))")]
         public float groundDetectionRayLength = .5f;
@@ -120,7 +123,7 @@ namespace Proto2D
         }
 
         // ワールド空間での向きを取得する
-        protected float getFacingWorld()
+        public float GetFacingWorld()
         {
             return Mathf.Sign(transform.lossyScale.x);
         }
@@ -144,7 +147,7 @@ namespace Proto2D
         public void LookAt(Transform target)
         {
             float facingTarget = Mathf.Sign(target.position.x - transform.position.x);
-            if (getFacingWorld() != facingTarget)
+            if (GetFacingWorld() != facingTarget)
             {
                 Turn();
             }
@@ -174,7 +177,7 @@ namespace Proto2D
             Debug.DrawRay(groundDetectionTransform.position, Vector2.down, Color.red);
 
             // 進行方向に障害物があるか調べる
-            bool obstacleInfo = getFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
+            bool obstacleInfo = GetFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
 
             return groundInfo && !obstacleInfo;
         }
@@ -199,10 +202,19 @@ namespace Proto2D
 
             // 向きを合わせる
             projectile.transform.localScale = gameObject.transform.lossyScale;
-            projectile.initialVelocity.x *= getFacingWorld();
+            projectile.initialVelocity.x *= GetFacingWorld();
         }
 
-        public virtual bool IsPlayerInSight()
+        public virtual bool IsPlayerInSight(int sightIndex = 0)
+        {
+            if (sightIndex < sights.Count)
+            {
+                return IsPlayerInSight(sights[sightIndex]);
+            }
+            return false;
+        }
+
+        public bool IsPlayerInSight(EnemySight sight)
         {
             if (player == null)
             {
@@ -211,19 +223,7 @@ namespace Proto2D
 
             if (player)
             {
-                Vector3 toPlayer = player.transform.position - gameObject.transform.position;
-                toPlayer.x *= getFacingWorld();
-
-                float angleDeg = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
-                float distance = toPlayer.magnitude;
-
-                angleDeg -= viewAngleOffset;
-
-                float viewAngleHalf = viewAngle * .5f;
-                if (angleDeg <= viewAngleHalf && angleDeg >= -viewAngleHalf && distance <= viewDistance)
-                {
-                    return true;
-                }
+                return sight.IsInSight(transform, player.transform, GetFacingWorld() < 0);
             }
 
             return false;
@@ -349,44 +349,79 @@ namespace Proto2D
                 //Destroy(effect, 1);
             }
         }
+
         private void OnDrawGizmos()
         {
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
             Gizmos.color = new Color(1, 1, 0, .3f);
             Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
 
-#if UNITY_EDITOR
+            for (int i = 0; i < sights.Count; i++)
             {
-                float angleHalf = viewAngle * .5f;
-
-                if (Application.isPlaying && IsPlayerInSight())
-                {
-                    UnityEditor.Handles.color = new Color(0, 1, 0, .2f);
-                }
-                else
-                {
-                    UnityEditor.Handles.color = new Color(1, 0, 0, .2f);
-                }
-
-                float angleOffset = getFacingWorld() > 0 ? viewAngleOffset : -viewAngleOffset;
-                Vector3 from = Quaternion.Euler(0, 0, angleOffset) * Vector3.right;
-
-                UnityEditor.Handles.DrawSolidArc(
-                    gameObject.transform.position,
-                    Vector3.forward,
-                    from * getFacingWorld(),
-                    angleHalf, viewDistance);
-
-                UnityEditor.Handles.DrawSolidArc(
-                    gameObject.transform.position,
-                    Vector3.forward,
-                    from * getFacingWorld(),
-                    -angleHalf, viewDistance);
-
-                UnityEditor.Handles.color = Color.white;
+                sights[i].DrawGizmo(this, i);
             }
-#endif
         }
     }
 
+    [System.Serializable]
+    public struct EnemySight {
+        [Range(0, 360)]
+        public float fov;
+        public float viewDistance;
+        [Range(-180, 180)]
+        public float angleOffset;
+
+        public bool IsInSight(Transform self, Transform target, bool flipX = false)
+        {
+            Vector3 toTarget = target.position - self.position;
+            if (flipX)
+                toTarget.x *= -1;
+
+            float angleDeg = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg;
+            angleDeg -= angleOffset;
+
+            float distance = toTarget.magnitude;
+
+            float fovHalf = fov * .5f;
+            if (angleDeg <= fovHalf && angleDeg >= -fovHalf && distance <= viewDistance)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void DrawGizmo(EnemyBehaviour context, int colorIndex = 0)
+        {
+#if UNITY_EDITOR
+            float fovHalf = fov * .5f;
+
+            if (Application.isPlaying && context.IsPlayerInSight(this))
+            {
+                UnityEditor.Handles.color = new Color(0, 1, 0, .2f);
+            }
+            else
+            {
+                Color color = Color.HSVToRGB((float)colorIndex / 5, 1, 1);
+                UnityEditor.Handles.color = new Color(color.r, color.g, color.b, .1f);
+            }
+
+            float angleOffsetGlobal = context.GetFacingWorld() > 0 ? angleOffset : -angleOffset;
+            Vector3 from = Quaternion.Euler(0, 0, angleOffsetGlobal) * Vector3.right;
+
+            UnityEditor.Handles.DrawSolidArc(
+                context.transform.position,
+                Vector3.forward,
+                from * context.GetFacingWorld(),
+                fovHalf, viewDistance);
+
+            UnityEditor.Handles.DrawSolidArc(
+                context.transform.position,
+                Vector3.forward,
+                from * context.GetFacingWorld(),
+                -fovHalf, viewDistance);
+
+            UnityEditor.Handles.color = Color.white;
+#endif
+        }
+    }
 }

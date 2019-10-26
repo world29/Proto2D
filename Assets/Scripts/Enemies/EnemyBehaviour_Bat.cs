@@ -10,7 +10,7 @@ namespace Proto2D
         public override bool CanMoveForward()
         {
             // 進行方向に障害物があるか調べる
-            bool obstacleInfo = getFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
+            bool obstacleInfo = GetFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
 
             return !obstacleInfo;
         }
