@@ -25,7 +25,7 @@ namespace Proto2D.AI
             }
             else
             {
-                m_nodeStatus = NodeStatus.FAILURE;
+                m_nodeStatus = NodeStatus.SUCCESS;
             }
 
             return m_nodeStatus;
