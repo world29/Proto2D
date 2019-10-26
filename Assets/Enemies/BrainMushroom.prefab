@@ -618,15 +618,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 20
   health: 1
+  superArmor: 0
   blinkInterval: 0.1
   damageDuration: 0.3
+  progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: f603d11d53ef12e47ad7abde4acf797a, type: 2}
+  behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 3331330493215708624}
-  viewAngle: 360
-  viewDistance: 2.8
+  sights:
+  - fov: 360
+    viewDistance: 3.5
+    angleOffset: 0
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 8327686832175237264}
 --- !u!82 &7310902008407165966
@@ -740,6 +745,16 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -804,16 +819,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.99984384
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
