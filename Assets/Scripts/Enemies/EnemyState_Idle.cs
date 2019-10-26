@@ -12,10 +12,6 @@ namespace Proto2D
 
         public void OnExit(EnemyBehaviour enemyBehaviour)
         {
-            if (enemyBehaviour.behaviourTree)
-            {
-                enemyBehaviour.behaviourTree.Abort();
-            }
         }
 
         public IEnemyState OnUpdate(EnemyBehaviour enemyBehaviour)

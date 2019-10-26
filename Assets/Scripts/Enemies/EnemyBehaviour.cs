@@ -10,6 +10,8 @@ namespace Proto2D
     {
         public float gravity = 20;
         public float health = 1;
+        [Tooltip("スーパーアーマー。ダメージを受けても行動がキャンセルされない")]
+        public bool superArmor = false;
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
 
@@ -235,7 +237,7 @@ namespace Proto2D
             {
                 case DamageType.Stomp:
                 case DamageType.Attack:
-                    TakeDamage(damage);
+                    OnTakeDamage(damage);
                     break;
                 default:
                     break;
@@ -276,7 +278,7 @@ namespace Proto2D
             StartCoroutine(StartBlinking(duration, blinkInterval));
         }
 
-        public void TakeDamage(float damageAmount)
+        public virtual void OnTakeDamage(float damageAmount)
         {
             if( health <= 0)
             {
@@ -296,7 +298,10 @@ namespace Proto2D
 
         public void OnDeath()
         {
-            m_progressController.AddProgressValue(progressValue);
+            if (m_progressController)
+            {
+                m_progressController.AddProgressValue(progressValue);
+            }
 
             stompables.enabled = false;
         }

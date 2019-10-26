@@ -12,6 +12,14 @@ namespace Proto2D
 
         public void OnEnter(EnemyBehaviour enemyBehaviour)
         {
+            if (!enemyBehaviour.superArmor)
+            {
+                if (enemyBehaviour.behaviourTree)
+                {
+                    enemyBehaviour.behaviourTree.Abort();
+                }
+            }
+
             animator = enemyBehaviour.gameObject.GetComponent<Animator>();
 
             animator.SetBool("damage", true);
@@ -39,6 +47,11 @@ namespace Proto2D
                     enemyBehaviour.gameObject.SetActive(false);
                 }
                 return new EnemyState_Idle();
+            }
+
+            if (enemyBehaviour.superArmor)
+            {
+                enemyBehaviour.UpdateBehaviourTree();
             }
 
             return this;

@@ -61,7 +61,7 @@ namespace Proto2D.AI
         // 中断
         public virtual void Abort()
         {
-            m_nodeStatus = NodeStatus.READY;
+            m_nodeStatus = NodeStatus.FAILURE;
         }
 
         public override object GetValue(XNode.NodePort port)
