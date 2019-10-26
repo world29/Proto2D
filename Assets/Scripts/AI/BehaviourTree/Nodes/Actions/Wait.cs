@@ -21,14 +21,18 @@ namespace Proto2D.AI
             m_timeWaitStarted = 0;
         }
 
+        protected override void OnReady()
+        {
+            base.OnReady();
+
+            // タイムアウト値を更新
+            m_timeToWait = m_timeout.Value;
+        }
+
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
             if (m_nodeStatus == NodeStatus.READY)
             {
-                // タイムアウト時間を設定
-                m_timeToWait = m_timeout.Value;
-                Debug.LogFormat("Wait timeout = {0}", m_timeToWait);
-
                 m_timeWaitStarted = Time.timeSinceLevelLoad;
 
                 m_nodeStatus = NodeStatus.RUNNING;

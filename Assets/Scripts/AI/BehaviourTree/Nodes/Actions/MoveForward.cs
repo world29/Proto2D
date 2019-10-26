@@ -8,6 +8,7 @@ namespace Proto2D.AI
     public class MoveForward : Action
     {
         public float m_speed = 1;
+        public bool m_autoTurn = true;
 
         public RandomValue m_timeout;
 
@@ -23,15 +24,20 @@ namespace Proto2D.AI
             m_timeWaitStarted = 0;
         }
 
+        protected override void OnReady()
+        {
+            base.OnReady();
+
+            // タイムアウト値を更新
+            m_timeToWait = m_timeout.Value;
+        }
+
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
-            enemyBehaviour.MoveForward(m_speed);
+            enemyBehaviour.MoveForward(m_speed, m_autoTurn);
 
             if (m_nodeStatus == NodeStatus.READY)
             {
-                m_timeToWait = m_timeout.Value;
-                Debug.LogFormat("MoveForward timeout = {0}", m_timeToWait);
-
                 m_timeWaitStarted = Time.timeSinceLevelLoad;
 
                 m_nodeStatus = NodeStatus.RUNNING;

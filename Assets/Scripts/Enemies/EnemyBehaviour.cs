@@ -148,13 +148,13 @@ namespace Proto2D
             }
         }
 
-        public void MoveForward(float moveSpeed)
+        public void MoveForward(float moveSpeed, bool autoTurn = true)
         {
             if (CanMoveForward())
             {
                 velocity.x = moveSpeed * getFacingLocal();
             }
-            else
+            else if (autoTurn)
             {
                 Turn();
             }
