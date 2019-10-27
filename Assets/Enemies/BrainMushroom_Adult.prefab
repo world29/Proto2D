@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -911777801
-  m_SortingLayer: 1
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 06477dcca2009664aa3e555925a0f98a, type: 3}
   m_Color: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
@@ -173,6 +173,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  maxSlopeAngle: 60
 --- !u!114 &1976084056991851050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,15 +188,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 20
   health: 3
+  superArmor: 0
   blinkInterval: 0.1
   damageDuration: 0.3
+  progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: f603d11d53ef12e47ad7abde4acf797a, type: 2}
+  behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 4039053248995742876}
-  viewAngle: 360
-  viewDistance: 5
+  sights:
+  - fov: 360
+    viewDistance: 4.5
+    angleOffset: 6
+  groundDetectionRayLength: 0.5
   effectSocket: {fileID: 9034467475115540370}
 --- !u!82 &1338861685068491501
 AudioSource:

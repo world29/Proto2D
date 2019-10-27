@@ -197,6 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 40
   health: 1
+  superArmor: 0
   blinkInterval: 0.1
   damageDuration: 0.2
   progressValue: 3
@@ -206,8 +207,10 @@ MonoBehaviour:
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4656553412495861962}
   shotTransform: {fileID: 0}
-  viewAngle: 172
-  viewDistance: 5
+  sights:
+  - fov: 82
+    viewDistance: 5
+    angleOffset: 17
   groundDetectionRayLength: 3
   effectSocket: {fileID: 0}
 --- !u!50 &5003093254777090256

@@ -55,10 +55,11 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   m_timeout:
     m_type: 0
     m_min: 0.7
@@ -85,9 +86,8 @@ MonoBehaviour:
     values:
     - _fieldName: children
       _node: {fileID: 114186734394802590}
-      _typeQualifiedName: System.Collections.Generic.List`1[[Proto2D.AI.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
       connections:
       - fieldName: parent
         node: {fileID: 114519514175464180}
@@ -108,11 +108,12 @@ MonoBehaviour:
         node: {fileID: 114681649308610486}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  children: []
+  m_priority: 0
+  children: {fileID: 0}
 --- !u!114 &114227030322683050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,9 +135,8 @@ MonoBehaviour:
     values:
     - _fieldName: children
       _node: {fileID: 114227030322683050}
-      _typeQualifiedName: System.Collections.Generic.List`1[[Proto2D.AI.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
       connections:
       - fieldName: parent
         node: {fileID: 114843995024589978}
@@ -175,11 +175,12 @@ MonoBehaviour:
         node: {fileID: 114423833206302538}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  children: []
+  m_priority: 0
+  children: {fileID: 0}
 --- !u!114 &114238679338956922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,11 +208,13 @@ MonoBehaviour:
         node: {fileID: 114186734394802590}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   m_speed: 2
+  m_autoTurn: 1
   m_timeout:
     m_type: 0
     m_min: 0
@@ -233,21 +236,9 @@ MonoBehaviour:
   position: {x: -24, y: -56}
   ports:
     keys:
-    - child
     - parent
+    - child
     values:
-    - _fieldName: child
-      _node: {fileID: 114423833206302538}
-      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: parent
-        node: {fileID: 114227030322683050}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
     - _fieldName: parent
       _node: {fileID: 114423833206302538}
       _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -257,11 +248,25 @@ MonoBehaviour:
         node: {fileID: 114681649308610486}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: child
+      _node: {fileID: 114423833206302538}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: parent
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   child: {fileID: 0}
+  m_sightIndex: 0
 --- !u!114 &114436234476139848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,10 +294,11 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   paramType: 4
   paramName: attack2
   paramValue: false
@@ -320,10 +326,11 @@ MonoBehaviour:
         PublicKeyToken=null
       connections: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   m_timeout:
     m_type: 0
     m_min: 1.2
@@ -356,10 +363,11 @@ MonoBehaviour:
         node: {fileID: 114186734394802590}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   paramType: 4
   paramName: run
   paramValue: true
@@ -390,10 +398,11 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   paramType: 4
   paramName: attack
   paramValue: false
@@ -424,10 +433,11 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   paramType: 4
   paramName: attack2
   paramValue: true
@@ -452,9 +462,8 @@ MonoBehaviour:
     values:
     - _fieldName: children
       _node: {fileID: 114681649308610486}
-      _typeQualifiedName: System.Collections.Generic.List`1[[Proto2D.AI.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
       connections:
       - fieldName: parent
         node: {fileID: 114423833206302538}
@@ -472,11 +481,12 @@ MonoBehaviour:
         PublicKeyToken=null
       connections: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  children: []
+  m_priority: 0
+  children: {fileID: 0}
 --- !u!114 &114752478650930738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,11 +514,13 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   m_speed: 0
+  m_autoTurn: 1
   m_timeout:
     m_type: 0
     m_min: 0.5
@@ -541,11 +553,13 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   m_speed: 15
+  m_autoTurn: 1
   m_timeout:
     m_type: 0
     m_min: 0.34
@@ -578,10 +592,11 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   paramType: 4
   paramName: attack
   paramValue: true
@@ -612,10 +627,11 @@ MonoBehaviour:
         node: {fileID: 114227030322683050}
         reroutePoints: []
       _direction: 0
-      _connectionType: 0
+      _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  m_priority: 0
   paramType: 4
   paramName: run
   paramValue: false
