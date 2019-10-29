@@ -282,16 +282,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 0
   health: 1
+  superArmor: 0
   blinkInterval: 0.1
   damageDuration: 0.2
   progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: 403bd2aba7839174eb85cb1658e11049, type: 2}
+  behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 0}
-  viewAngle: 45
-  viewDistance: 3
+  sights: []
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 0}
 --- !u!1001 &4638098443246195337
@@ -371,6 +372,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.945846
       objectReference: {fileID: 0}
+    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: receiver
+      value: 
+      objectReference: {fileID: 8806861694332298747}
     - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: enemyHealth
