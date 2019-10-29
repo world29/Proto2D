@@ -12,10 +12,10 @@ namespace Proto2D.AI
         {
             GUI.color = Color.white;
             Node node = target as Node;
-            switch (node.Status)
+            switch (node.PrevStatus)
             {
                 case NodeStatus.READY:
-                    GUI.color = Color.yellow;
+                    GUI.color = Color.white;
                     break;
                 case NodeStatus.RUNNING:
                     GUI.color = Color.blue;
@@ -25,6 +25,9 @@ namespace Proto2D.AI
                     break;
                 case NodeStatus.FAILURE:
                     GUI.color = Color.red;
+                    break;
+                case NodeStatus.ABORTED:
+                    GUI.color = Color.black;
                     break;
             }
             string title = target.name;

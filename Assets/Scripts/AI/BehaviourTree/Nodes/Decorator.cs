@@ -29,5 +29,15 @@ namespace Proto2D.AI
 
             m_node = outPort.Connection.node as Node;
         }
+
+        protected override void OnAbort()
+        {
+            m_node.Abort();
+        }
+
+        public override void CollectConditionals(ref List<Conditional> conditionalNodes)
+        {
+            m_node.CollectConditionals(ref conditionalNodes);
+        }
     }
 }

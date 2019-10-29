@@ -50,10 +50,8 @@ namespace Proto2D.AI
             return m_nodeStatus;
         }
 
-        public override void Abort()
+        protected override void OnAbort()
         {
-            base.Abort();
-
             m_timeToWait = 0;
             m_timeWaitStarted = 0;
         }

@@ -5,17 +5,19 @@ using System.Linq;
 
 namespace Proto2D.AI
 {
-    public enum NodeStatus { READY, FAILURE, SUCCESS, RUNNING }
+    public enum NodeStatus { READY, FAILURE, SUCCESS, RUNNING, ABORTED }
 
     public abstract class Node : XNode.Node
     {
         [Input(ShowBackingValue.Never, ConnectionType.Override)] public Node parent;
 
         public NodeStatus Status { get { return m_nodeStatus; } }
+        public NodeStatus PrevStatus { get { return getPreviousStatus(); } }
         public int Priority { get { return m_priority; } }
         public int EvaluationOrder { get { return m_evaluationOrder; } set { m_evaluationOrder = value; } }
 
         protected NodeStatus m_nodeStatus;
+        private NodeStatus m_prevStatus;
         public int m_priority; // 個々のノードが持つ優先度
         protected int m_evaluationOrder; // コンポジット系ノードにおける評価順 (優先度に応じて決定される)
 
@@ -43,25 +45,42 @@ namespace Proto2D.AI
         // 乱数の生成など、ノード評価のたびに実行したい処理を記述する。
         protected virtual void OnReady() { }
 
+        // ノードの実行が中断された際に呼ばれる。
+        protected virtual void OnAbort() { }
+
+        // ノードの評価
+        public abstract NodeStatus Evaluate(EnemyBehaviour enemyBehaviour);
+
+        // Conditional Abort の対象となる Conditional ノードを集める
+        // Conditional ノード再評価のタイミングで Composite 系ノードから子ノードに対して再帰的に呼ばれる。
+        public virtual void CollectConditionals(ref List<Conditional> conditionalNodes) { }
+
         // Evaluate() の前に呼ばれ、RUNNING じゃないノードのステータスを READY にする
-        public virtual void ResetStatus()
+        public void ResetStatus()
         {
             if (m_nodeStatus == NodeStatus.READY) return;
 
             if (m_nodeStatus != NodeStatus.RUNNING)
             {
+                // デバッグ用に直前の評価結果を保存しておく
+                m_prevStatus = m_nodeStatus;
                 m_nodeStatus = NodeStatus.READY;
+
                 OnReady();
             }
         }
 
-        // ノードの評価
-        public abstract NodeStatus Evaluate(EnemyBehaviour enemyBehaviour);
-
         // 中断
-        public virtual void Abort()
+        public void Abort()
         {
-            m_nodeStatus = NodeStatus.FAILURE;
+            m_nodeStatus = NodeStatus.ABORTED;
+
+            OnAbort();
+        }
+
+        private NodeStatus getPreviousStatus()
+        {
+            return m_nodeStatus != NodeStatus.READY ? m_nodeStatus : m_prevStatus;
         }
 
         public override object GetValue(XNode.NodePort port)

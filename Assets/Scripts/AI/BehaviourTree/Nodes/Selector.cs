@@ -15,13 +15,11 @@ namespace Proto2D.AI
             SetupNodesOrderByPriority();
         }
 
-        protected override void OnReady()
-        {
-            m_nodeIndex = 0;
-        }
-
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
+            // Conditional ノードの再評価
+            ReevaluateConditionals(enemyBehaviour);
+
             for (int i = m_nodeIndex; i < m_nodes.Count; i++)
             {
                 m_nodeStatus = m_nodes[i].Evaluate(enemyBehaviour);
