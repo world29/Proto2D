@@ -63,6 +63,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 0
   jumpVelocity: {x: 10, y: 10}
+  m_continueUntilGrounded: 1
 --- !u!114 &114186734394802590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +112,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_abortType: 0
   children: {fileID: 0}
 --- !u!114 &114190521889008500
 MonoBehaviour:
@@ -198,6 +200,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_abortType: 0
   children: {fileID: 0}
 --- !u!114 &114227030322683050
 MonoBehaviour:
@@ -250,6 +253,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_abortType: 0
   children: {fileID: 0}
 --- !u!114 &114238679338956922
 MonoBehaviour:
@@ -264,7 +268,7 @@ MonoBehaviour:
   m_Name: Move Forward
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -24, y: -200}
+  position: {x: -8, y: -248}
   ports:
     keys:
     - parent
@@ -334,7 +338,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  m_priority: 0
+  m_priority: 4
   child: {fileID: 0}
   m_sightIndex: 0
 --- !u!114 &114440854791757504
@@ -424,7 +428,7 @@ MonoBehaviour:
   m_Name: Set Animation Parameter
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -8, y: -360}
+  position: {x: -8, y: -392}
   ports:
     keys:
     - parent
@@ -494,6 +498,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_abortType: 0
   children: {fileID: 0}
 --- !u!114 &114651455221895184
 MonoBehaviour:
@@ -577,6 +582,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_abortType: 0
   children: {fileID: 0}
 --- !u!114 &114756185394485422
 MonoBehaviour:
@@ -629,6 +635,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_abortType: 0
   children: {fileID: 0}
 --- !u!114 &114760650399825720
 MonoBehaviour:
