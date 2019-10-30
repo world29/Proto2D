@@ -40,5 +40,13 @@ namespace Proto2D.AI
 
             return m_nodeStatus;
         }
+
+        //TODO: Decorator 基底クラスに移動する
+        public override void CollectConditionals(ref List<Conditional> conditionalNodes)
+        {
+            base.CollectConditionals(ref conditionalNodes);
+
+            conditionalNodes.Add(m_conditionNode as Conditional);
+        }
     }
 }
