@@ -9,6 +9,7 @@ public enum DamageType
     Stomp,      // 踏みつけ
     Attack,     // ジャンプアタック
     Projectile, // 弾
+    FrailtyProjectile, // ジャンプアタック中は無効になる弾
 }
 
 public interface IDamageSender : IEventSystemHandler

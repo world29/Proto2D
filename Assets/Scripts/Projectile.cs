@@ -16,6 +16,16 @@ public class Projectile : MonoBehaviour
 
     public Vector3 initialVelocity;
 
+    [Header("ジャンプアタック中はダメージ無効にされるかどうか")]
+    public bool DisabledDuringJumpAttack = false;
+    [Header("さらに、ジャンプアタック中は反射されるかどうか")]
+    public bool ReflectedDuringJumpAttack = false;
+
+    [Header("速度によって回転するかどうか")]
+    public bool RotateVelocity = false;
+    public GameObject RotateObject;
+    public float OffsetRotate = 0f;
+
     private Vector3 velocity;
     private float lifeTimer;
 
@@ -42,9 +52,22 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        transform.rotation = Quaternion.identity;
         velocity.y -= gravity * Time.deltaTime;
 
         transform.Translate(velocity * Time.deltaTime);
+
+        if(RotateVelocity && RotateObject)
+        {
+            float angleDeg = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            float offset = OffsetRotate;
+            if (transform.localScale.x < 0)
+            {
+                offset -= 180;
+            }
+            RotateObject.transform.Rotate(0,0, transform.localScale.x * (angleDeg + offset - RotateObject.transform.rotation.eulerAngles.z));
+        }
+
 
         if (lifespan != 0)
         {
@@ -62,16 +85,31 @@ public class Projectile : MonoBehaviour
         {
             GameObject receiver = collision.gameObject;
 
-            // ヒットしたオブジェクトに衝突ダメージを与える
+            DamageType dt = DamageType.Projectile;
+            if (DisabledDuringJumpAttack)
+            {
+                dt = DamageType.FrailtyProjectile;
+            }
+
+            // WISH : ダメージが適用されたかどうか取得したい
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                (target, eventTarget) => target.OnReceiveDamage(DamageType.Projectile, damage, gameObject));
+                (target, eventTarget) => target.OnReceiveDamage(dt, damage, gameObject));
+
 
             PlaySE(hitSE);
             PlayEffect(hitEffectPrefab);
-            hideAllSprites();
 
-            // 自分を削除する
-            Destroy(gameObject,hitSE.length);
+            if (!ReflectedDuringJumpAttack)
+            {
+                hideAllSprites();
+                // 自分を削除する
+                Destroy(gameObject, hitSE.length);
+            }
+            transform.localScale = new Vector3(transform.localScale.x*-1, transform.localScale.y, transform.localScale.z);
+            velocity.x *= -1;
+            velocity.y *= .5f;
+
+
         }
     }
 

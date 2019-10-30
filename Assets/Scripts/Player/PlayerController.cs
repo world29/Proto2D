@@ -341,7 +341,13 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         info.damage = damage;
         info.senderPos = sender.transform.position;
 
+        if (info.type == DamageType.FrailtyProjectile && state is PlayerState_Attack)
+        {
+            return ;
+        }
+
         damageQueue.Enqueue(info);
+
     }
 
     public void OnPickupItem(ItemType type, GameObject sender)
