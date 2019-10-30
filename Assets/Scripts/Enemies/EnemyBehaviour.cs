@@ -12,6 +12,8 @@ namespace Proto2D
         public float health = 1;
         [Tooltip("スーパーアーマー。ダメージを受けても行動がキャンセルされない")]
         public bool superArmor = false;
+        [Tooltip("一時停止。位置の更新を停止する")]
+        public bool suspended = false;
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
 
@@ -114,6 +116,11 @@ namespace Proto2D
 
         void UpdateMovement()
         {
+            if (suspended)
+            {
+                return;
+            }
+
             velocity.y -= gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
