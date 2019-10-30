@@ -162,6 +162,11 @@ namespace Proto2D
             }
         }
 
+        public void SetVelocity(Vector2 moveVelocity)
+        {
+            velocity = moveVelocity;
+        }
+
         public void MoveForward(float moveSpeed, bool autoTurn = true)
         {
             if (CanMoveForward())
