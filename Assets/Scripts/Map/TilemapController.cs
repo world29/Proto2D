@@ -30,10 +30,11 @@ namespace Proto2D
         {
             Vector2 cameraPosition = Camera.main.transform.position;
             m_tilemapBoundary.center = cameraPosition;
+
+            DeleteOutsideTiles();
         }
 
         // CopyTilesImmediate
-
         public void CopyTilesImmediate(Tilemap sourceTilemap, Vector3Int destPos, bool flip)
         {
             Dictionary<Vector3Int, TileBase> tiles = new Dictionary<Vector3Int, TileBase>();
@@ -70,6 +71,33 @@ namespace Proto2D
                 default:
                     Debug.Assert(false, "tilemap has unexpected sorting layer");
                     break;
+            }
+        }
+
+        private void DeleteOutsideTiles()
+        {
+            // 画面外のタイルを削除する
+            Tilemap[] tilemapArray = { m_tilemapObstacles, m_tilemapBackground, m_tilemapBackgroundDeco, m_tilemapBackgroundAdd };
+
+            foreach (Tilemap tilemap in tilemapArray)
+            {
+                foreach (Vector3Int position in tilemap.cellBounds.allPositionsWithin)
+                {
+                    if (tilemap.CellToWorld(position).y > m_tilemapBoundary.center.y)
+                    {
+                        // Boundary 中心より上部のタイルは処理の対象外
+                        continue;
+                    }
+
+                    if (tilemap.HasTile(position))
+                    {
+                        Bounds tileBounds = new Bounds(tilemap.GetCellCenterWorld(position), tilemap.cellSize);
+                        if (!m_tilemapBoundary.Intersects(tileBounds))
+                        {
+                            tilemap.SetTile(position, null);
+                        }
+                    }
+                }
             }
         }
 
