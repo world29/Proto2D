@@ -34,7 +34,7 @@ namespace Proto2D
 
         // CopyTilesImmediate
 
-        public void CopyTilesImmediate(Tilemap sourceTilemap, Vector3Int destPos)
+        public void CopyTilesImmediate(Tilemap sourceTilemap, Vector3Int destPos, bool flip)
         {
             Dictionary<Vector3Int, TileBase> tiles = new Dictionary<Vector3Int, TileBase>();
 
@@ -42,7 +42,12 @@ namespace Proto2D
             {
                 if (sourceTilemap.HasTile(position))
                 {
-                    tiles.Add(destPos + position, sourceTilemap.GetTile(position));
+                    Vector3Int p = position;
+                    if (flip)
+                    {
+                        p.x *= -1;
+                    }
+                    tiles.Add(destPos + p, sourceTilemap.GetTile(position));
                 }
             }
 

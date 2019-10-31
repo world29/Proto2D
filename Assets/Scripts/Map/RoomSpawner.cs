@@ -43,13 +43,13 @@ namespace Proto2D
             Debug.Assert(m_roomPrefabs.Count > 0);
 
             int roomIndex = Random.Range(0, m_roomPrefabs.Count);
-            RoomController rc = m_roomPrefabs[roomIndex];
+            RoomController prefab = m_roomPrefabs[roomIndex];
 
             // タイルマップ原点が部屋の中心軸上にあるかチェック
-            Tilemap tilemap = rc.PrimaryTilemap;
+            Tilemap tilemap = prefab.PrimaryTilemap;
             if (Mathf.Abs(tilemap.origin.x) != (tilemap.size.x / 2))
             {
-                Debug.LogWarningFormat("horizontal center of tilemap must be zero. {0}", rc.gameObject.name);
+                Debug.LogWarningFormat("horizontal center of tilemap must be zero. {0}", prefab.gameObject.name);
             }
 
             // 生成済みの部屋の上端とつながるように新たな部屋を生成する
@@ -57,30 +57,31 @@ namespace Proto2D
             Vector3 spawnPosition = new Vector3(0, bottomToCenterY, 0);
             spawnPosition += transform.position;
 
+            bool flip = false;
+            if (prefab.flipEnabled && Random.value < .5f)
+            {
+                flip = true;
+            }
+
             // タイルをシーンにコピーしてから、部屋インスタンスを生成する
             Vector3Int copyPos = new Vector3Int(Mathf.FloorToInt(spawnPosition.x / tilemap.cellSize.x), Mathf.FloorToInt(spawnPosition.y / tilemap.cellSize.y), 0);
-            foreach (Tilemap tm in rc.GetComponentsInChildren<Tilemap>())
+            foreach (Tilemap tm in prefab.GetComponentsInChildren<Tilemap>())
             {
-                m_tilemapController.CopyTilesImmediate(tm, copyPos);
+                m_tilemapController.CopyTilesImmediate(tm, copyPos, flip);
             }
 
             //HACK: コピー元の Grid 位置をコピー先の Grid 位置にあわせる
             //spawnPosition += new Vector3(.5f, .5f, 0);
 
-            //Destroy(rc.GetComponentInChildren<Grid>().gameObject);
-            var spawnedRoom = GameObject.Instantiate(rc, spawnPosition, Quaternion.identity);
+            RoomController spawnedRoom = GameObject.Instantiate(prefab, spawnPosition, Quaternion.identity);
+            //MEMO: localScale の初期値が (-1, 1, 1) の場合があるため、フリップしない場合も明示的に localScale を設定する (要調査)
+            Vector3 localScale = spawnedRoom.gameObject.transform.localScale;
+            localScale.x = flip ? -1 : 1;
+            spawnedRoom.transform.localScale = localScale;
             Destroy(spawnedRoom.GetComponentInChildren<Grid>().gameObject);
 
             //TODO:
-            spawnedRoom.SpawnEntities();
-
-            /* TODO:
-            if (room.flipEnabled)
-            {
-                float dirX = Mathf.Sign(Random.Range(-1, 1));
-                room.gameObject.transform.localScale = new Vector3(dirX, 1, 1);
-            }
-            */
+            //spawnedRoom.SpawnEntities();
 
             float roomHeight = tilemap.size.y * tilemap.cellSize.y;
             transform.Translate(0, roomHeight, 0);
