@@ -13,6 +13,7 @@ namespace Proto2D
         public Transform enemySpawnPosition;
         public List<EnemyBehaviour> enemyPrefabs;
 
+        [HideInInspector] public Tilemap PrimaryTilemap { get { return getPrimaryTilemap(); } }
         [HideInInspector] public Vector3Int Size { get { return getPrimaryTilemap().size; } }
         [HideInInspector] public Vector3 CellSize { get { return getPrimaryTilemap().cellSize; } }
         [HideInInspector] public Vector3Int Origin { get { return getPrimaryTilemap().origin; } }
