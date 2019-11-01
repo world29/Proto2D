@@ -13,24 +13,12 @@ namespace Proto2D
         public Tilemap m_tilemapBackgroundDeco;
         public Tilemap m_tilemapBackgroundAdd;
 
-        //TODO: GameController.WorldBoundary プロパティとする
-        public Bounds m_tilemapBoundary;
-
-        public PlayerController m_playerPrefab;
-
         private void Start()
         {
-            if (m_playerPrefab)
-            {
-                Instantiate(m_playerPrefab);
-            }
         }
 
         private void LateUpdate()
         {
-            Vector2 cameraPosition = Camera.main.transform.position;
-            m_tilemapBoundary.center = cameraPosition;
-
             DeleteOutsideTiles();
         }
 
@@ -83,7 +71,7 @@ namespace Proto2D
             {
                 foreach (Vector3Int position in tilemap.cellBounds.allPositionsWithin)
                 {
-                    if (tilemap.CellToWorld(position).y > m_tilemapBoundary.center.y)
+                    if (tilemap.CellToWorld(position).y > GameController.Instance.WorldBoundary.center.y)
                     {
                         // Boundary 中心より上部のタイルは処理の対象外
                         continue;
@@ -92,19 +80,13 @@ namespace Proto2D
                     if (tilemap.HasTile(position))
                     {
                         Bounds tileBounds = new Bounds(tilemap.GetCellCenterWorld(position), tilemap.cellSize);
-                        if (!m_tilemapBoundary.Intersects(tileBounds))
+                        if (!GameController.Instance.WorldBoundary.Intersects(tileBounds))
                         {
                             tilemap.SetTile(position, null);
                         }
                     }
                 }
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = new Color(0, 1, 1, .2f);
-            Gizmos.DrawCube(m_tilemapBoundary.center, m_tilemapBoundary.size);
         }
     }
 }
