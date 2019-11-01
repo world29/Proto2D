@@ -22,11 +22,17 @@ namespace Proto2D
         [Header("ゲームオーバー時に読み込まれるシーン名")]
         public string sceneNameToLoad;
 
+        [Tooltip("ワールドの境界")]
+        public Bounds m_worldBoundary;
+
         [Header("プレイヤー (再生時にスポーン)")]
         public GameObject playerPrefab;
 
         [Header("カメラ階層のルートオブジェクト")]
         public GameObject m_cameraRoot;
+
+        [HideInInspector]
+        public Bounds WorldBoundary { get { return m_worldBoundary; } }
 
         private bool isGameOver;
         private bool isGameClear;
@@ -69,6 +75,11 @@ namespace Proto2D
             {
                 ReloadScene();
             }
+        }
+
+        private void LateUpdate()
+        {
+            m_worldBoundary.center = (Vector2)m_cameraRoot.gameObject.transform.position;
         }
 
         // マップの初期化が終了したときに、MapController から呼ばれる
@@ -154,6 +165,12 @@ namespace Proto2D
             SceneManager.LoadScene(sceneNameToLoad);
 
             Resume();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = new Color(0, 1, 1, .2f);
+            Gizmos.DrawCube(m_worldBoundary.center, m_worldBoundary.size);
         }
     }
 }
