@@ -58,7 +58,7 @@ namespace Proto2D
             spawnPosition += transform.position;
 
             bool flip = false;
-            if (prefab.flipEnabled && Random.value < .5f)
+            if (prefab.flipEnabled && (Random.Range(0, 2) == 0))
             {
                 flip = true;
             }
@@ -70,14 +70,22 @@ namespace Proto2D
                 m_tilemapController.CopyTilesImmediate(tm, copyPos, flip);
             }
 
-            //HACK: コピー元の Grid 位置をコピー先の Grid 位置にあわせる
-            //spawnPosition += new Vector3(.5f, .5f, 0);
-
             RoomController spawnedRoom = GameObject.Instantiate(prefab, spawnPosition, Quaternion.identity);
             //MEMO: localScale の初期値が (-1, 1, 1) の場合があるため、フリップしない場合も明示的に localScale を設定する (要調査)
             Vector3 localScale = spawnedRoom.gameObject.transform.localScale;
             localScale.x = flip ? -1 : 1;
             spawnedRoom.transform.localScale = localScale;
+
+            // タイル座標とのズレを補正する
+            if (flip)
+            {
+                spawnedRoom.gameObject.transform.Translate(.5f, 0, 0);
+            }
+            else
+            {
+                spawnedRoom.gameObject.transform.Translate(-.5f, 0, 0);
+            }
+
             Destroy(spawnedRoom.GetComponentInChildren<Grid>().gameObject);
 
             //TODO:
