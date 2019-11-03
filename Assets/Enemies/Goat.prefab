@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793496531398173164}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7248445, y: 0.48124665, z: 0}
+  m_LocalPosition: {x: -0.7370001, y: 0.41499996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 8120357894497675145}
@@ -457,7 +457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2908356957733599250}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3408444, y: 0.44924667, z: 0}
+  m_LocalPosition: {x: -0.353, y: 0.383, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 8120357894497675145}
@@ -1210,7 +1210,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7237903057413190731}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.15115562, y: 0.1052467, z: 0}
+  m_LocalPosition: {x: 0.1511556, y: 0.1052467, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 6823982083516829366}
@@ -1786,14 +1786,17 @@ MonoBehaviour:
   progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
-  behaviourTree: {fileID: 11400000, guid: b112e45657d2066469ade2c586fa7c5c, type: 2}
+  behaviourTree: {fileID: 11400000, guid: a6d152c53694d71409ae7713db1df50d, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4656553412495861962}
   shotTransform: {fileID: 0}
   sights:
-  - fov: 82
-    viewDistance: 5
+  - fov: 360
+    viewDistance: 10
     angleOffset: 17
+  - fov: 236
+    viewDistance: 7
+    angleOffset: -180
   groundDetectionRayLength: 3
   effectSocket: {fileID: 0}
 --- !u!50 &5003093254777090256
