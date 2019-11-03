@@ -199,7 +199,6 @@ GameObject:
   - component: {fileID: 8414890324411613421}
   - component: {fileID: 113306735536017392}
   - component: {fileID: 3295572491149585420}
-  - component: {fileID: 214202097353100533}
   m_Layer: 0
   m_Name: Head Sprite
   m_TagString: Untagged
@@ -298,19 +297,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1894913, y: 0.7829616}
   m_EdgeRadius: 0
---- !u!114 &214202097353100533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2955873353452969287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
 --- !u!1 &5288541521685160093
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,6 +886,7 @@ MonoBehaviour:
   gravity: 20
   health: 1
   superArmor: 0
+  suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.2
   progressValue: 3
