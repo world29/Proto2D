@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6245465354011956536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.23, y: 0, z: 0}
+  m_LocalPosition: {x: 1.249, y: -0.342, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6245465354517601086}
@@ -168,7 +168,7 @@ SpriteRenderer:
   m_SortingLayerID: -911777801
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 013e29ba362f043409e2cb9e90dd29ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: defe95cf91133b240be6a145960fe27f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -187,9 +187,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6245465354517601081}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fedfb18449941454798cc9abdf15c0c0, type: 2}
+  m_Controller: {fileID: 9100000, guid: fbe37f09bfdb7a64fa70102fee2e899b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -232,18 +232,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.06}
+  m_Offset: {x: -0.1062192, y: -0.24883395}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6875, y: 1.40625}
+    oldSize: {x: 2.65625, y: 1.875}
     newSize: {x: 0.96875, y: 1.1875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.3}
+  m_Size: {x: 1.0875616, y: 1.3472083}
   m_EdgeRadius: 0
 --- !u!114 &6245465354517601082
 MonoBehaviour:
@@ -281,18 +281,19 @@ MonoBehaviour:
   gravity: 20
   health: 1
   superArmor: 0
+  suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.5
   progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 8300000, guid: 42245de78853f974192c9f8e89c68732, type: 3}
-  behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
+  behaviourTree: {fileID: 11400000, guid: a79830d7572ed8d4bbdb447565408921, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
   shotTransform: {fileID: 6245465354011956537}
   sights:
-  - fov: 90
-    viewDistance: 7
+  - fov: 134
+    viewDistance: 8
     angleOffset: 0
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 5901655702425256809}
@@ -407,12 +408,12 @@ PrefabInstance:
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.097
+      value: -0.139
       objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.333
+      value: 0.144
       objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
