@@ -213,6 +213,7 @@ namespace Proto2D
         public virtual void Shot(Projectile prefab)
         {
             Projectile projectile = Instantiate(prefab, shotTransform.position, shotTransform.rotation) as Projectile;
+            projectile.initialVelocity = Quaternion.Euler(0, 0, shotTransform.rotation.eulerAngles.z) * projectile.initialVelocity * shotTransform.transform.localScale.x;
 
             // 向きを合わせる
             projectile.transform.localScale = gameObject.transform.lossyScale;
