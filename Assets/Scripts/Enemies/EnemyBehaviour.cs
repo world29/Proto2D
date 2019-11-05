@@ -92,11 +92,16 @@ namespace Proto2D
             UpdateMovement();
         }
 
-        void ResetMovement()
+        public void ResetMovement(bool forceResetX = false, bool forceResetY = false)
         {
-            if (IsOnGround())
+            if (IsOnGround() || forceResetX)
             {
                 velocity.x = 0;
+            }
+
+            if (forceResetY)
+            {
+                velocity.y = 0;
             }
         }
 
@@ -162,6 +167,18 @@ namespace Proto2D
             }
         }
 
+        public void MoveTowards(Vector3 targetPosition, float moveSpeed)
+        {
+            Vector2 toTarget = targetPosition - transform.position;
+            velocity = toTarget.normalized * moveSpeed;
+
+            if (getFacingLocal() != GetFacingWorld())
+            {
+                velocity.x *= -1;
+            }
+        }
+
+        // deprecated
         public void SetVelocity(Vector2 moveVelocity)
         {
             velocity = moveVelocity;

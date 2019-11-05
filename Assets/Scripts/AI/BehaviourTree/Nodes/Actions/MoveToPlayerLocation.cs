@@ -72,6 +72,8 @@ namespace Proto2D.AI
 
                 if (!moveTo(enemyBehaviour, m_targetPosition))
                 {
+                    enemyBehaviour.ResetMovement(true, true);
+
                     m_nodeStatus = NodeStatus.SUCCESS;
                 }
             }
@@ -88,7 +90,7 @@ namespace Proto2D.AI
                 return false;
             }
 
-            enemyBehaviour.SetVelocity(toTarget.normalized * m_speed);
+            enemyBehaviour.MoveTowards(targetPosition, m_speed);
 
             return true;
         }
