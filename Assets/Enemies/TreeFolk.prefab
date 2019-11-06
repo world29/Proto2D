@@ -47,8 +47,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1, y: 1}
-  - {x: 0.8, y: 1}
+  - {x: -1, y: 0.7}
+  - {x: 0.8, y: 0.7}
 --- !u!1 &8750121458296811069
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +267,7 @@ MonoBehaviour:
   gravity: 20
   health: 2
   superArmor: 0
+  suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.3
   progressValue: 3
