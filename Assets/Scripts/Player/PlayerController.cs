@@ -341,9 +341,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         info.damage = damage;
         info.senderPos = sender.transform.position;
 
-        if (info.type == DamageType.FrailtyProjectile && state is PlayerState_Attack)
+        if (info.type == DamageType.FrailtyProjectile )
         {
-            return ;
+            if (state is PlayerState_Hop  || state is PlayerState_Attack)
+            {
+                return;
+            }
         }
 
         damageQueue.Enqueue(info);
