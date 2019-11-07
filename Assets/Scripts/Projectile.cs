@@ -16,6 +16,9 @@ public class Projectile : MonoBehaviour
 
     public Vector3 initialVelocity;
 
+    [Tooltip("指定したレイヤーに対してのみ衝突します (プレイヤーはこの設定によらず衝突します)")]
+    public LayerMask layerMaskToCollide;
+
     [Header("ジャンプアタック中はダメージ無効にされるかどうか")]
     public bool DisabledDuringJumpAttack = false;
     [Header("さらに、ジャンプアタック中は反射されるかどうか")]
@@ -94,23 +97,31 @@ public class Projectile : MonoBehaviour
             // WISH : ダメージが適用されたかどうか取得したい
             ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
                 (target, eventTarget) => target.OnReceiveDamage(dt, damage, gameObject));
-
-
-            PlaySE(hitSE);
-            PlayEffect(hitEffectPrefab);
-
-            if (!ReflectedDuringJumpAttack)
-            {
-                hideAllSprites();
-                // 自分を削除する
-                Destroy(gameObject, hitSE.length);
-            }
-            transform.localScale = new Vector3(transform.localScale.x*-1, transform.localScale.y, transform.localScale.z);
-            velocity.x *= -1;
-            velocity.y *= .5f;
-
-
         }
+        else
+        {
+            // 指定されたレイヤー以外のオブジェクトとの衝突を無視する
+            LayerMask layerMask = 0x1 << collision.gameObject.layer;
+            if ((layerMask & layerMaskToCollide) == 0)
+            {
+                return;
+            }
+        }
+
+        // プレイヤーか、layerMaskToCollide と衝突していた場合はここに到達する
+
+        PlaySE(hitSE);
+        PlayEffect(hitEffectPrefab);
+
+        if (!ReflectedDuringJumpAttack)
+        {
+            hideAllSprites();
+            // 自分を削除する
+            Destroy(gameObject, hitSE.length);
+        }
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        velocity.x *= -1;
+        velocity.y *= .5f;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
