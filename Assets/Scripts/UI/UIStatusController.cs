@@ -9,6 +9,7 @@ namespace Proto2D
     {
         public GameProgressController m_progressController;
 
+        [Header("Progress")]
         public Slider m_progressSlider;
         public Image m_progressSliderBackground;
         public Image m_progressSliderFill;
@@ -16,6 +17,10 @@ namespace Proto2D
         public Sprite m_progressSliderBackgroundSprite;
         public Sprite[] m_progressSliderFillSprites;
 
+        [Header("Health")]
+        public Slider m_healthSlider;
+
+        private bool m_healthCallbackRegistered = false;
         void Start()
         {
             m_progressSlider.maxValue = m_progressController.m_maxProgressValue;
@@ -23,8 +28,22 @@ namespace Proto2D
             m_progressController.m_stagePhase.OnChanged += OnPhaseChanged;
         }
 
-        void Update()
+        void LateUpdate()
         {
+            if (!m_healthCallbackRegistered)
+            {
+                GameObject go = GameObject.FindGameObjectWithTag("Player");
+                if (go)
+                {
+                    PlayerController pc = go.GetComponent<PlayerController>();
+
+                    m_healthSlider.maxValue = pc.initialHealth;
+                    m_healthSlider.value = pc.initialHealth;
+                    pc.health.OnChanged += OnPlayerHealthChanged;
+
+                    m_healthCallbackRegistered = true;
+                }
+            }
         }
 
         void OnProgressChanged(float value)
@@ -39,6 +58,11 @@ namespace Proto2D
 
             m_progressSliderBackground.sprite = m_progressSliderBackgroundSprite;
             m_progressSliderFill.sprite = m_progressSliderFillSprites[(int)level];
+        }
+
+        void OnPlayerHealthChanged(float healthValue)
+        {
+            m_healthSlider.value = healthValue;
         }
 
         void UpdateUI()
