@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 namespace Proto2D
 {
@@ -14,11 +15,13 @@ namespace Proto2D
         public Bounds Boundary { get { return new Bounds(transform.position, m_localBounds.size); } }
         private Bounds m_localBounds = new Bounds(Vector3.zero, Vector3.one);
 
+        private Dictionary<Bounds, RoomController> m_spawnedRooms;
         private TilemapController m_tilemapController;
         private GameProgressController m_gameProgressController;
 
         private void Awake()
         {
+            m_spawnedRooms = new Dictionary<Bounds, RoomController>();
             m_tilemapController = GameObject.FindObjectOfType<TilemapController>();
             m_gameProgressController = GameObject.FindObjectOfType<GameProgressController>();
         }
@@ -38,6 +41,7 @@ namespace Proto2D
 
         void LateUpdate()
         {
+            // 新しく部屋をスポーンする
             if (GameController.Instance.WorldBoundary.Intersects(Boundary))
             {
                 List<RoomController> candidates = new List<RoomController>(m_normalRoomPrefabs);
@@ -53,6 +57,15 @@ namespace Proto2D
                     int index = Random.Range(0, candidates.Count);
                     spawnNextRoom(candidates[index]);
                 }
+            }
+
+            // スポーンされた部屋の削除
+            var items = m_spawnedRooms.Where(item => !GameController.Instance.WorldBoundary.Intersects(item.Key));
+            if (items.Count() > 0)
+            {
+                var item = items.ElementAt(0);
+                GameObject.Destroy(item.Value.gameObject);
+                m_spawnedRooms.Remove(item.Key);
             }
         }
 
@@ -89,6 +102,10 @@ namespace Proto2D
             Vector3 localScale = spawnedRoom.gameObject.transform.localScale;
             localScale.x = flip ? -1 : 1;
             spawnedRoom.transform.localScale = localScale;
+
+            // 部屋オブジェクトとその境界を保存
+            Vector3 roomSize = new Vector3(tilemap.size.x * tilemap.cellSize.x, tilemap.size.y * tilemap.cellSize.y);
+            m_spawnedRooms.Add(new Bounds(spawnPosition, roomSize), spawnedRoom);
 
             // タイル座標とのズレを補正する
             if (flip)
