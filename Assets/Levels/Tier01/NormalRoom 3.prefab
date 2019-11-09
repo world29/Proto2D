@@ -2668,6 +2668,20 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &4774641165172845343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502173936478635024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e447295abeddc4e844b04848474b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stagePhaseFlags: 7
+  m_percentage: 51
 --- !u!1 &9003618658740304383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,6 +2734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flipEnabled: 1
+  m_stagePhaseFlag: 7
   enemySpawnPosition: {fileID: 0}
   enemyPrefabs: []
 --- !u!1001 &928198622130910415
@@ -2941,6 +2956,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f26ae666568d31446ad04b89f4a4dcd0, type: 3}
+--- !u!1 &8502173936478635024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5094549006741499098, guid: f26ae666568d31446ad04b89f4a4dcd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 3697089647596382410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5235668488813652946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8927937327635890968, guid: f26ae666568d31446ad04b89f4a4dcd0,
