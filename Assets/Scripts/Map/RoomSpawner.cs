@@ -6,14 +6,46 @@ using System.Linq;
 
 namespace Proto2D
 {
+    public class RandomRoomSelector
+    {
+        IEnumerable<RoomController> m_roomCandidates;
+
+        List<RoomController> m_pool;
+
+        public RandomRoomSelector(IEnumerable<RoomController> rooms)
+        {
+            m_roomCandidates = rooms;
+
+            m_pool = m_roomCandidates.ToList();
+        }
+
+        public RoomController Next()
+        {
+            int index = Random.Range(0, m_pool.Count);
+            RoomController result = m_pool[index];
+
+            // 次回の抽選のための更新
+            m_pool.RemoveAt(index);
+            if (m_pool.Count == 0)
+            {
+                m_pool = m_roomCandidates.ToList();
+            }
+
+            return result;
+        }
+    }
+
     public class RoomSpawner : MonoBehaviour
     {
         public List<RoomController> m_startRoomPrefabs;
         public List<RoomController> m_normalRoomPrefabs;
+        [Tooltip("このパラメータは使用されていません")]
         public List<RoomController> m_additionalNormalRoomPrefabs;
 
         public Bounds Boundary { get { return new Bounds(transform.position, m_localBounds.size); } }
         private Bounds m_localBounds = new Bounds(Vector3.zero, Vector3.one);
+
+        private Dictionary<StagePhase, RandomRoomSelector> m_roomSelectors;
 
         private Dictionary<Bounds, RoomController> m_spawnedRooms;
         private TilemapController m_tilemapController;
@@ -21,6 +53,7 @@ namespace Proto2D
 
         private void Awake()
         {
+            m_roomSelectors = new Dictionary<StagePhase, RandomRoomSelector>();
             m_spawnedRooms = new Dictionary<Bounds, RoomController>();
             m_tilemapController = GameObject.FindObjectOfType<TilemapController>();
             m_gameProgressController = GameObject.FindObjectOfType<GameProgressController>();
@@ -28,6 +61,16 @@ namespace Proto2D
 
         void Start()
         {
+            // 各段階ごとに出現する部屋を振り分け、ランダムセレクタを初期化する
+            List<StagePhase> phases = new List<StagePhase> { StagePhase.Phase1, StagePhase.Phase2, StagePhase.Phase3 };
+            foreach (var phase in phases)
+            {
+                StagePhaseFlag phaseFlag = (StagePhaseFlag)(0x1 << (int)phase);
+                IEnumerable<RoomController> pool = m_normalRoomPrefabs.Where(item => (item.m_stagePhaseFlag & phaseFlag) > 0);
+                m_roomSelectors.Add(phase, new RandomRoomSelector(pool));
+            }
+
+            // スタート部屋をスポーンする
             Debug.Assert(m_startRoomPrefabs.Count > 0);
 
             if (m_startRoomPrefabs.Count > 0)
@@ -44,19 +87,9 @@ namespace Proto2D
             // 新しく部屋をスポーンする
             if (GameController.Instance.WorldBoundary.Intersects(Boundary))
             {
-                List<RoomController> candidates = new List<RoomController>(m_normalRoomPrefabs);
-
-                // 進捗レベルが一段階上がっていたら、選出される部屋の候補を増やす
-                if (m_gameProgressController.m_stagePhase.Value > 0)
-                {
-                    candidates.AddRange(m_additionalNormalRoomPrefabs);
-                }
-
-                if (candidates.Count > 0)
-                {
-                    int index = Random.Range(0, candidates.Count);
-                    spawnNextRoom(candidates[index]);
-                }
+                StagePhase currentPhase = m_gameProgressController.m_stagePhase.Value;
+                RandomRoomSelector roomSelector = m_roomSelectors[currentPhase];
+                spawnNextRoom(roomSelector.Next());
             }
 
             // スポーンされた部屋の削除

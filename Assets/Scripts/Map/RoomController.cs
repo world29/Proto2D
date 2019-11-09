@@ -9,6 +9,8 @@ namespace Proto2D
     public class RoomController : MonoBehaviour
     {
         public bool flipEnabled = false;
+        [EnumFlags]
+        public StagePhaseFlag m_stagePhaseFlag = StagePhaseFlag.Phase1 | StagePhaseFlag.Phase2 | StagePhaseFlag.Phase3;
 
         public Transform enemySpawnPosition;
         public List<EnemyBehaviour> enemyPrefabs;
