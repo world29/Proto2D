@@ -92,8 +92,8 @@ namespace Proto2D
                 spawnNextRoom(roomSelector.Next());
             }
 
-            // スポーンされた部屋の削除
-            var items = m_spawnedRooms.Where(item => !GameController.Instance.WorldBoundary.Intersects(item.Key));
+            // スクロールアウトした部屋の削除
+            var items = m_spawnedRooms.Where(item => item.Key.max.y < GameController.Instance.WorldBoundary.min.y);
             if (items.Count() > 0)
             {
                 var item = items.ElementAt(0);
