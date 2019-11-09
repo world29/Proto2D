@@ -39,8 +39,6 @@ namespace Proto2D
     {
         public List<RoomController> m_startRoomPrefabs;
         public List<RoomController> m_normalRoomPrefabs;
-        [Tooltip("このパラメータは使用されていません")]
-        public List<RoomController> m_additionalNormalRoomPrefabs;
 
         public Bounds Boundary { get { return new Bounds(transform.position, m_localBounds.size); } }
         private Bounds m_localBounds = new Bounds(Vector3.zero, Vector3.one);
