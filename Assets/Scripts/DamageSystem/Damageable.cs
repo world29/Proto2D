@@ -8,12 +8,7 @@ namespace Proto2D
     public class Damageable : MonoBehaviour
     {
         [EnumFlags]
-        public DamageTypeFlag m_damageTypeFlag = 
-            DamageTypeFlag.Contact |
-            DamageTypeFlag.Stomp |
-            DamageTypeFlag.Attack |
-            DamageTypeFlag.Projectile |
-            DamageTypeFlag.FrailtyProjectile;
+        public DamageTypeFlag m_damageTypeFlag;
 
         public GameObject m_receiver;
 
