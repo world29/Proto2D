@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerState_Free : IPlayerState
 {
@@ -13,6 +14,14 @@ public class PlayerState_Free : IPlayerState
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         input = context.GetComponent<PlayerInput>();
+
+        // ジャンプアタックの攻撃判定を無効化
+        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Attack);
+        if (attackers.Count() > 0)
+        {
+            attackers.First().enabled = false;
+        }
     }
 
     public void OnExit(GameObject context)

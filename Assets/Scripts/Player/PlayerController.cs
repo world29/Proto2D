@@ -146,13 +146,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         // 初期ステート
         state = new PlayerState_Free();
         state.OnEnter(gameObject);
-
-        // 攻撃判定を無効化
-        Attacker attacker = GetComponentInChildren<Attacker>();
-        if (attacker)
-        {
-            attacker.enabled = false;
-        }
     }
 
     void Update()
@@ -369,14 +362,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             default:
                 break;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        BoxCollider2D collider = GetComponent<BoxCollider2D>();
-
-        Gizmos.color = new Color(1, 1, 0, .3f);
-        Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
     }
 
     IEnumerator StartInvincible(float duration, bool blinking = true)

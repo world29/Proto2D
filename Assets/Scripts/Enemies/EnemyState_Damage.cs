@@ -29,12 +29,24 @@ namespace Proto2D
 
             enemyBehaviour.Blink(enemyBehaviour.damageDuration, enemyBehaviour.blinkInterval);
 
+            Damageable[] damageables = enemyBehaviour.GetComponentsInChildren<Damageable>();
+            foreach (var damageable in damageables)
+            {
+                damageable.enabled = false;
+            }
+
             timeToTransition = Time.timeSinceLevelLoad + enemyBehaviour.damageDuration;
         }
 
         public void OnExit(EnemyBehaviour enemyBehaviour)
         {
             animator.SetBool("damage", false);
+
+            Damageable[] damageables = enemyBehaviour.GetComponentsInChildren<Damageable>();
+            foreach (var damageable in damageables)
+            {
+                damageable.enabled = true;
+            }
         }
 
         public IEnemyState OnUpdate(EnemyBehaviour enemyBehaviour)

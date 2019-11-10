@@ -216,4 +216,14 @@ public class Controller2D : RaycastController
             slopeAngle = 0;
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        if (collider.enabled)
+        {
+            Gizmos.color = new Color(1, 1, 1, .2f);
+            Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
+        }
+    }
 }
