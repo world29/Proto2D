@@ -5,11 +5,21 @@ using UnityEngine.EventSystems;
 
 public enum DamageType
 {
-    Collision,  // 接触
+    Contact,  // 接触
     Stomp,      // 踏みつけ
     Attack,     // ジャンプアタック
     Projectile, // 弾
     FrailtyProjectile, // ジャンプアタック中は無効になる弾
+}
+
+[System.Flags]
+public enum DamageTypeFlag
+{
+    Contact           = 0x1 << DamageType.Contact,
+    Stomp             = 0x1 << DamageType.Stomp,
+    Attack            = 0x1 << DamageType.Attack,
+    Projectile        = 0x1 << DamageType.Projectile,
+    FrailtyProjectile = 0x1 << DamageType.FrailtyProjectile,
 }
 
 public interface IDamageSender : IEventSystemHandler
