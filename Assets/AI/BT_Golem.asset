@@ -25,6 +25,10 @@ MonoBehaviour:
   - {fileID: 114242389362610460}
   - {fileID: 114382449372822480}
   - {fileID: 114853618629340196}
+  - {fileID: 114315327162937002}
+  - {fileID: 114327882281242268}
+  - {fileID: 114554684683987458}
+  - {fileID: 114784057782544054}
 --- !u!114 &114061163372742142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +98,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114382449372822480}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114315327162937002}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -181,8 +188,8 @@ MonoBehaviour:
   m_priority: 0
   m_timeout:
     m_type: 0
-    m_min: 0.7
-    m_max: 1.2
+    m_min: 1.2
+    m_max: 1.5
     m_value: 0
 --- !u!114 &114266728598912442
 MonoBehaviour:
@@ -231,6 +238,88 @@ MonoBehaviour:
   m_priority: 0
   m_abortType: 0
   children: {fileID: 0}
+--- !u!114 &114315327162937002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa30d6702f94ddf46a61f596ecf12f30, type: 3}
+  m_Name: Is Player In Sight
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 8, y: 552}
+  ports:
+    keys:
+    - parent
+    - child
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114315327162937002}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114152842766793800}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: child
+      _node: {fileID: 114315327162937002}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: parent
+        node: {fileID: 114554684683987458}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 1
+  child: {fileID: 0}
+  m_sightIndex: 2
+--- !u!114 &114327882281242268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b90c29e48791046908f6b6edf6396a, type: 3}
+  m_Name: Set Animation Parameter
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 568, y: 760}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114327882281242268}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114554684683987458}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  paramType: 9
+  paramName: attack3
+  paramValue: 
 --- !u!114 &114382449372822480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +402,56 @@ MonoBehaviour:
   paramType: 9
   paramName: attack
   paramValue: 
+--- !u!114 &114554684683987458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9455c601b0d89342bddb45926de46d9, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 248, y: 840}
+  ports:
+    keys:
+    - children
+    - parent
+    values:
+    - _fieldName: children
+      _node: {fileID: 114554684683987458}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: parent
+        node: {fileID: 114327882281242268}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114784057782544054}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: parent
+      _node: {fileID: 114554684683987458}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: child
+        node: {fileID: 114315327162937002}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  m_abortType: 0
+  children: {fileID: 0}
 --- !u!114 &114650305560412566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +499,43 @@ MonoBehaviour:
   m_priority: 2
   child: {fileID: 0}
   m_sightIndex: 0
+--- !u!114 &114784057782544054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 568, y: 920}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114784057782544054}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114554684683987458}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  m_timeout:
+    m_type: 0
+    m_min: 0.7
+    m_max: 1.2
+    m_value: 0
 --- !u!114 &114853618629340196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +549,7 @@ MonoBehaviour:
   m_Name: Look At Player
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 520, y: 680}
+  position: {x: 568, y: 664}
   ports:
     keys:
     - parent
@@ -455,7 +631,7 @@ MonoBehaviour:
   m_Name: Sequence
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 264, y: 472}
+  position: {x: 264, y: 424}
   ports:
     keys:
     - children
