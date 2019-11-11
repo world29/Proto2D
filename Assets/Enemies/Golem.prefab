@@ -2320,14 +2320,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 40
   health: 3
-  superArmor: 0
+  superArmor: 1
   suspended: 0
   blinkInterval: 0.1
-  damageDuration: 0.5
+  damageDuration: 0.3
   progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
-  behaviourTree: {fileID: 11400000, guid: 392c3b39d4f94514ab6d774a3761b55a, type: 2}
+  behaviourTree: {fileID: 11400000, guid: de63afc8091ea894da3e7b1c4d481ac4, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4656553412495861962}
   shotTransform: {fileID: 6989717490569475386}
@@ -2335,6 +2335,9 @@ MonoBehaviour:
   - fov: 102
     viewDistance: 7
     angleOffset: 25
+  - fov: 96
+    viewDistance: 6
+    angleOffset: 109
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 458384500198427716}
 --- !u!82 &4974927026796974366
