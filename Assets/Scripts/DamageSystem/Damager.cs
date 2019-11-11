@@ -26,6 +26,8 @@ namespace Proto2D
 
         void ProcessTrigger(Collider2D collision)
         {
+            if (!enabled) return;
+
             Damageable damageable = collision.GetComponent<Damageable>();
             if (damageable && damageable.enabled)
             {
