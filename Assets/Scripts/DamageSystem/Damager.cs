@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public class Damager : MonoBehaviour
     {
         public DamageType m_damageType = DamageType.Attack;
@@ -13,16 +13,6 @@ namespace Proto2D
         public float damage = 1;
 
         public GameObject sender;
-
-        private void OnEnable()
-        {
-            GetComponent<BoxCollider2D>().enabled = true;
-        }
-
-        private void OnDisable()
-        {
-            GetComponent<BoxCollider2D>().enabled = false;
-        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -37,7 +27,7 @@ namespace Proto2D
         void ProcessTrigger(Collider2D collision)
         {
             Damageable damageable = collision.GetComponent<Damageable>();
-            if (damageable)
+            if (damageable && damageable.enabled)
             {
                 DamageTypeFlag flag = (DamageTypeFlag)(0x1 << (int)m_damageType);
                 if ((flag & damageable.m_damageTypeFlag) == 0)
@@ -59,6 +49,8 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
+            if (!enabled) return;
+
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
             if (collider.enabled)
             {

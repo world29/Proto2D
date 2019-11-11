@@ -4,23 +4,13 @@ using UnityEngine;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public class Damageable : MonoBehaviour
     {
         [EnumFlags]
         public DamageTypeFlag m_damageTypeFlag;
 
         public GameObject m_receiver;
-
-        private void OnEnable()
-        {
-            GetComponent<BoxCollider2D>().enabled = true;
-        }
-
-        private void OnDisable()
-        {
-            GetComponent<BoxCollider2D>().enabled = false;
-        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -29,6 +19,8 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
+            if (!enabled) return;
+
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
             if (collider.enabled)
             {
