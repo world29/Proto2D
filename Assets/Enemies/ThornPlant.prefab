@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 967355547676575294}
   - component: {fileID: 9100498875927662697}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8562094482475146156}
   - component: {fileID: 7252414259336783152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5361948975488168097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectSocket
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 113306735536017392}
   - component: {fileID: 3295572491149585420}
   - component: {fileID: 214202097353100533}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_damageType: 2
   damage: 1
+  sender: {fileID: 0}
 --- !u!1 &5288541521685160093
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2859479833042770766}
   - component: {fileID: 7386749126074676020}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5258206054256949161}
   - component: {fileID: 362396414261123636}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ThornPlant_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8362908748000599837}
   - component: {fileID: 985223843932027763}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7222085156166757525}
   - component: {fileID: 2446725278484151564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3456207395631030822}
   - component: {fileID: 1349751737627260984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8086025054881993694}
   - component: {fileID: 5121832266584691550}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leg Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,8 +805,10 @@ GameObject:
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 793784305697190219}
   - component: {fileID: 1846819741723289012}
+  - component: {fileID: 2530863392895871106}
+  - component: {fileID: 7939328574629843909}
   - component: {fileID: 7453558116312180146}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ThornPlant
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -996,6 +1000,35 @@ MonoBehaviour:
     angleOffset: 17
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 2432236702630269230}
+--- !u!114 &2530863392895871106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageTypeFlag: 4
+  m_receiver: {fileID: 8778643387317822647}
+--- !u!114 &7939328574629843909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageType: 0
+  damage: 1
+  sender: {fileID: 8778643387317822647}
 --- !u!82 &7453558116312180146
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1117,6 +1150,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1182,11 +1220,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.99984384
       objectReference: {fileID: 0}
-    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: receiver
-      value: 
-      objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 1822174567075259069, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_Enabled
@@ -1197,6 +1230,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
+    - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &5999483903810187055 stripped
