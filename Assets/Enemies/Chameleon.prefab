@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 814175553422943848}
   - component: {fileID: 5886904209270670428}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8060711578492382192}
   - component: {fileID: 6054015887768255985}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2289216750698097982}
   - component: {fileID: 1980297249767024434}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6706989545331632543}
   - component: {fileID: 4649360284203561861}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8682448153295555733}
   - component: {fileID: 7479338621218155537}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5924030836525415317}
   - component: {fileID: 7002778228326984421}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1806648393121650486}
   - component: {fileID: 7644341809633762044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5189528024088192879}
   - component: {fileID: 372281248813562474}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chameleon_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -647,7 +647,9 @@ GameObject:
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 793784305697190219}
   - component: {fileID: 1976084056991851050}
-  m_Layer: 0
+  - component: {fileID: 6395660309957013219}
+  - component: {fileID: 4271402548956939676}
+  m_Layer: 10
   m_Name: Chameleon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -826,17 +828,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 0
   health: 1
+  superArmor: 0
+  suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.3
+  progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 0}
+  behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 0}
-  viewAngle: 45
-  viewDistance: 0
+  sights: []
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 0}
+--- !u!114 &6395660309957013219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageTypeFlag: 4
+  m_receiver: {fileID: 8778643387317822647}
+--- !u!114 &4271402548956939676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageType: 0
+  damage: 1
+  sender: {fileID: 8778643387317822647}
 --- !u!1001 &5335596569922243949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -861,6 +895,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
@@ -927,16 +966,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.5374161
       objectReference: {fileID: 0}
-    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: receiver
-      value: 
-      objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
+    - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &5999483903810187055 stripped
