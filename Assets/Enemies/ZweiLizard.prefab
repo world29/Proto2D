@@ -105,6 +105,8 @@ GameObject:
   - component: {fileID: 6245465354517601083}
   - component: {fileID: 6245465354517601082}
   - component: {fileID: 6245465354517601074}
+  - component: {fileID: 4173143939854621475}
+  - component: {fileID: 1812263560753376501}
   - component: {fileID: 8667336193306619030}
   m_Layer: 0
   m_Name: ZweiLizard
@@ -297,6 +299,35 @@ MonoBehaviour:
     angleOffset: 14
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 5901655702425256809}
+--- !u!114 &4173143939854621475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354517601081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageTypeFlag: 4
+  m_receiver: {fileID: 6245465354517601081}
+--- !u!114 &1812263560753376501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354517601081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageType: 0
+  damage: 1
+  sender: {fileID: 6245465354517601081}
 --- !u!82 &8667336193306619030
 AudioSource:
   m_ObjectHideFlags: 0
@@ -478,6 +509,11 @@ PrefabInstance:
     - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: receiver
+      value: 
+      objectReference: {fileID: 6245465354517601081}
+    - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_receiver
       value: 
       objectReference: {fileID: 6245465354517601081}
     m_RemovedComponents: []

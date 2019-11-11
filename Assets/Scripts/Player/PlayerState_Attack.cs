@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerState_Attack : IPlayerState
 {
@@ -25,18 +26,20 @@ public class PlayerState_Attack : IPlayerState
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 
-        // 攻撃判定を有効化
-        Attacker attacker = context.GetComponentInChildren<Attacker>();
-        if (attacker)
+        // ジャンプアタックの攻撃判定を有効化
+        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Attack);
+        if (attackers.Count() > 0)
         {
-            attacker.enabled = true;
+            attackers.First().enabled = true;
         }
 
         // 踏みつけ判定を無効化
-        StomperBox stomper = context.GetComponentInChildren<StomperBox>();
-        if (stomper)
+        var stompers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Stomp);
+        if (stompers.Count() > 0)
         {
-            stomper.enabled = false;
+            stompers.First().enabled = false;
         }
 
         animator.SetBool("attack", true);
@@ -44,18 +47,20 @@ public class PlayerState_Attack : IPlayerState
 
     public void OnExit(GameObject context)
     {
-        // 攻撃判定を無効化
-        Attacker attacker = context.GetComponentInChildren<Attacker>();
-        if (attacker)
+        // ジャンプアタックの攻撃判定を無効化
+        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Attack);
+        if (attackers.Count() > 0)
         {
-            attacker.enabled = false;
+            attackers.First().enabled = false;
         }
 
         // 踏みつけ判定を有効化
-        StomperBox stomper = context.GetComponentInChildren<StomperBox>();
-        if (stomper)
+        var stompers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Stomp);
+        if (stompers.Count() > 0)
         {
-            stomper.enabled = true;
+            stompers.First().enabled = true;
         }
 
         animator.SetBool("attack", false);

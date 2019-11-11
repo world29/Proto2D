@@ -44,7 +44,6 @@ namespace Proto2D
 
         protected Controller2DEnemy controller;
         private Vector2 velocity;
-        private StompableBox stompables;
         private IEnemyState state;
         private GameObject player;
         private AudioSource audioSource;
@@ -55,7 +54,6 @@ namespace Proto2D
         {
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2DEnemy>();
-            stompables = GetComponentInChildren<StompableBox>();
             player = GameObject.FindGameObjectWithTag("Player");
             m_progressController = FindObjectOfType<GameProgressController>();
 
@@ -77,7 +75,6 @@ namespace Proto2D
         {
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2DEnemy>();
-            stompables = GetComponentInChildren<StompableBox>();
             player = GameObject.FindGameObjectWithTag("Player");
             m_progressController = GameObject.FindObjectOfType<GameProgressController>();
 
@@ -277,35 +274,6 @@ namespace Proto2D
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            ProcessTrigger(collision);
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            ProcessTrigger(collision);
-        }
-
-        private void ProcessTrigger(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                // 衝突ダメージのレシーバーは player gameObject
-                GameObject receiver = collision.gameObject;
-
-                // 死んでいると処理を無視
-                if (health > 0)
-                {
-                    // ヒットしたオブジェクトに衝突ダメージを与える
-                    ExecuteEvents.Execute<IDamageReceiver>(receiver, null,
-                        (target, eventTarget) => target.OnReceiveDamage(DamageType.Collision, 1, gameObject));
-                }
-
-
-            }
-        }
-
         public void Blink(float duration, float blinkInterval)
         {
             StartCoroutine(StartBlinking(duration, blinkInterval));
@@ -335,8 +303,6 @@ namespace Proto2D
             {
                 m_progressController.AddProgressValue(progressValue);
             }
-
-            stompables.enabled = false;
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)
@@ -390,10 +356,6 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
-            Gizmos.color = new Color(1, 1, 0, .3f);
-            Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);
-
             for (int i = 0; i < sights.Count; i++)
             {
                 sights[i].DrawGizmo(this, i);
