@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 967355547676575294}
   - component: {fileID: 9100498875927662697}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8562094482475146156}
   - component: {fileID: 7252414259336783152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,6 +158,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1938027436569437473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2398323998903133895}
+  - component: {fileID: 7688414277463018454}
+  - component: {fileID: 244292412069278802}
+  m_Layer: 10
+  m_Name: Stompable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2398323998903133895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938027436569437473}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8778643387317822643}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &7688414277463018454
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938027436569437473}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.61384964}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.6205306}
+  m_EdgeRadius: 0
+--- !u!114 &244292412069278802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938027436569437473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageTypeFlag: 6
+  m_receiver: {fileID: 8778643387317822647}
 --- !u!1 &2432236702630269230
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5361948975488168097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectSocket
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -198,8 +270,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8414890324411613421}
   - component: {fileID: 113306735536017392}
+  - component: {fileID: 2705392243691181901}
   - component: {fileID: 3295572491149585420}
-  m_Layer: 0
+  - component: {fileID: 8618610279147388618}
+  - component: {fileID: 6812522184971175612}
+  m_Layer: 10
   m_Name: Head Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,6 +346,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &2705392243691181901
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955873353452969287}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &3295572491149585420
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -281,7 +377,7 @@ BoxCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.094745755, y: -0.08896507}
@@ -297,6 +393,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1894913, y: 0.7829616}
   m_EdgeRadius: 0
+--- !u!114 &8618610279147388618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955873353452969287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageType: 0
+  damage: 1
+  sender: {fileID: 8778643387317822647}
+--- !u!114 &6812522184971175612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955873353452969287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageTypeFlag: 4
+  m_receiver: {fileID: 8778643387317822647}
 --- !u!1 &5288541521685160093
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2859479833042770766}
   - component: {fileID: 7386749126074676020}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8362908748000599837}
   - component: {fileID: 985223843932027763}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7222085156166757525}
   - component: {fileID: 2446725278484151564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant_AnimSprites_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3456207395631030822}
   - component: {fileID: 1349751737627260984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8086025054881993694}
   - component: {fileID: 5121832266584691550}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leg Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,8 +834,9 @@ GameObject:
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 793784305697190219}
   - component: {fileID: 1846819741723289012}
+  - component: {fileID: 3597578367839251747}
   - component: {fileID: 7453558116312180146}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BerryPlant
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -728,7 +854,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
-  - {fileID: 5999483903810187055}
+  - {fileID: 2398323998903133895}
   - {fileID: 8414890324411613421}
   - {fileID: 8086025054881993694}
   - {fileID: 3456207395631030822}
@@ -902,6 +1028,21 @@ MonoBehaviour:
     angleOffset: 0
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 2432236702630269230}
+--- !u!114 &3597578367839251747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageType: 0
+  damage: 1
+  sender: {fileID: 8778643387317822647}
 --- !u!82 &7453558116312180146
 AudioSource:
   m_ObjectHideFlags: 0
@@ -998,111 +1139,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &5335596569922243949
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8778643387317822643}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: enemyHealth
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5120702
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.99984384
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: receiver
-      value: 
-      objectReference: {fileID: 8778643387317822647}
-    - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
---- !u!4 &5999483903810187055 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-    type: 3}
-  m_PrefabInstance: {fileID: 5335596569922243949}
-  m_PrefabAsset: {fileID: 0}
