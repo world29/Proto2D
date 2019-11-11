@@ -8,7 +8,7 @@ namespace Proto2D
     [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public class Damager : MonoBehaviour
     {
-        public DamageType m_damageType = DamageType.Attack;
+        public DamageType m_damageType = DamageType.Contact;
 
         public float damage = 1;
 
