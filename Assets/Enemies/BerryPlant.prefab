@@ -835,6 +835,7 @@ GameObject:
   - component: {fileID: 793784305697190219}
   - component: {fileID: 1846819741723289012}
   - component: {fileID: 3597578367839251747}
+  - component: {fileID: 7349206133920488757}
   - component: {fileID: 7453558116312180146}
   m_Layer: 10
   m_Name: BerryPlant
@@ -1043,6 +1044,20 @@ MonoBehaviour:
   m_damageType: 0
   damage: 1
   sender: {fileID: 8778643387317822647}
+--- !u!114 &7349206133920488757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageTypeFlag: 4
+  m_receiver: {fileID: 8778643387317822647}
 --- !u!82 &7453558116312180146
 AudioSource:
   m_ObjectHideFlags: 0
