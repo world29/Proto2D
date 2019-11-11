@@ -6,24 +6,24 @@ namespace Proto2D
 {
     public class EnemyState_Damage : IEnemyState
     {
-        private Animator animator;
+        private Animator m_animator;
 
         private float timeToTransition;
 
         public void OnEnter(EnemyBehaviour enemyBehaviour)
         {
+            m_animator = enemyBehaviour.gameObject.GetComponent<Animator>();
+
             if (!enemyBehaviour.superArmor)
             {
                 if (enemyBehaviour.behaviourTree)
                 {
                     enemyBehaviour.behaviourTree.Abort();
                 }
+
+                m_animator.SetBool("damage", true);
             }
 
-            animator = enemyBehaviour.gameObject.GetComponent<Animator>();
-
-            animator.SetBool("damage", true);
-            
             enemyBehaviour.PlaySE(enemyBehaviour.damageSE);
             enemyBehaviour.PlayEffect(enemyBehaviour.damageEffectPrefab);
 
@@ -40,7 +40,10 @@ namespace Proto2D
 
         public void OnExit(EnemyBehaviour enemyBehaviour)
         {
-            animator.SetBool("damage", false);
+            if (!enemyBehaviour.superArmor)
+            {
+                m_animator.SetBool("damage", false);
+            }
 
             Damageable[] damageables = enemyBehaviour.GetComponentsInChildren<Damageable>();
             foreach (var damageable in damageables)
