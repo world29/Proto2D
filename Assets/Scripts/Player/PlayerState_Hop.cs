@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerState_Hop : IPlayerState
 {
@@ -21,11 +22,12 @@ public class PlayerState_Hop : IPlayerState
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 
-        // 攻撃判定を有効化
-        Attacker attacker = context.GetComponentInChildren<Attacker>();
-        if (attacker && player.enableHopAttackMode)
+        // ジャンプアタックの攻撃判定を有効化
+        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Attack);
+        if (attackers.Count() > 0)
         {
-            attacker.enabled = true;
+            attackers.First().enabled = true;
         }
 
         animator.SetBool("hop", true);
@@ -34,10 +36,11 @@ public class PlayerState_Hop : IPlayerState
     public void OnExit(GameObject context)
     {
         // 攻撃判定を無効化
-        Attacker attacker = context.GetComponentInChildren<Attacker>();
-        if (attacker && player.enableHopAttackMode)
+        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Attack);
+        if (attackers.Count() > 0)
         {
-            attacker.enabled = false;
+            attackers.First().enabled = false;
         }
 
         animator.SetBool("hop", false);

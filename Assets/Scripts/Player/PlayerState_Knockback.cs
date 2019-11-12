@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerState_Knockback : IPlayerState
 {
@@ -21,10 +22,11 @@ public class PlayerState_Knockback : IPlayerState
         animator = context.GetComponent<Animator>();
 
         // 踏みつけ判定を無効化
-        StomperBox stomper = context.GetComponentInChildren<StomperBox>();
-        if (stomper)
+        var stompers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Stomp);
+        if (stompers.Count() > 0)
         {
-            stomper.enabled = false;
+            stompers.First().enabled = false;
         }
 
         timer = 0;
@@ -34,10 +36,11 @@ public class PlayerState_Knockback : IPlayerState
     public void OnExit(GameObject context)
     {
         // 踏みつけ判定を有効化
-        StomperBox stomper = context.GetComponentInChildren<StomperBox>();
-        if (stomper)
+        var stompers = context.GetComponentsInChildren<Proto2D.Damager>()
+            .Where(item => item.m_damageType == DamageType.Stomp);
+        if (stompers.Count() > 0)
         {
-            stomper.enabled = true;
+            stompers.First().enabled = true;
         }
 
         animator.SetBool("knockback", false);
