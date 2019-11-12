@@ -175,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2093459466522694364
 Transform:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160039622784347859}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2457,11 +2457,11 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.3
-  progressValue: 3
+  progressValue: 10
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: de63afc8091ea894da3e7b1c4d481ac4, type: 2}
-  behaviourTreeDebug: 1
+  behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4656553412495861962}
   shotTransform: {fileID: 6989717490569475386}
   sights:
