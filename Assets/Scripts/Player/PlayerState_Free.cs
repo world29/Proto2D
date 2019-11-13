@@ -36,7 +36,7 @@ public class PlayerState_Free : IPlayerState
         CalculateVelocity(ref player.velocity, ref normalJumped);
 
         // 座標更新
-        controller.Move(player.velocity * Time.deltaTime, false);
+        controller.Move(player.velocity * Time.deltaTime, input.directionalInput, false);
 
         UpdateFacing();
 
