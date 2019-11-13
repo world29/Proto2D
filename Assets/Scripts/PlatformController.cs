@@ -138,6 +138,7 @@ public class PlatformController : RaycastController
                 }
             }
         }
+#if false
         // horizontally moving platform
         if (velocity.x != 0)
         {
@@ -164,6 +165,7 @@ public class PlatformController : RaycastController
                 }
             }
         }
+#endif
         // Passenger on top of a horizontally or downward moving platform
         if (directionY == -1 || velocity.y == 0 && velocity.x != 0)
         {
