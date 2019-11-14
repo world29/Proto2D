@@ -131,10 +131,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private void Awake()
     {
         health = new NotificationObject<float>(initialHealth);
-    }
 
-    void Start()
-    {
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
         animator = GetComponent<Animator>();
@@ -142,7 +139,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         hitQueue = new Queue<HitInfo>();
         damageQueue = new Queue<DamageInfo>();
+    }
 
+    void Start()
+    {
         // 初期ステート
         state = new PlayerState_Free();
         state.OnEnter(gameObject);
