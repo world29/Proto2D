@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3695806071682226587}
   - component: {fileID: 8778643387317822641}
   - component: {fileID: 8778643387317822646}
-  - component: {fileID: 793784305697190219}
+  - component: {fileID: 5255316590259821864}
   - component: {fileID: 1976084056991851050}
   - component: {fileID: 8971311794921826413}
   - component: {fileID: 8094451705977233986}
@@ -153,7 +153,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.7024655}
   m_EdgeRadius: 0
---- !u!114 &793784305697190219
+--- !u!114 &5255316590259821864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8778643387317822647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d0555cceb1f65a42b4bc667cc3819a7, type: 3}
+  m_Script: {fileID: 11500000, guid: ca98975ca6b7b224d9bb0658ca58a0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collisionMask:
@@ -173,7 +173,8 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
-  maxSlopeAngle: 60
+  m_maxSlopeAngle: 60
+  m_input: {x: 0, y: 0}
 --- !u!114 &1976084056991851050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,21 +247,6 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,6 +317,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: receiver
@@ -341,11 +347,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_receiver
-      value: 
-      objectReference: {fileID: 8778643387317822647}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &5999483903810187055 stripped

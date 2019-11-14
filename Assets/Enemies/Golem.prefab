@@ -2416,7 +2416,7 @@ GameObject:
   - component: {fileID: 8778643387317822643}
   - component: {fileID: 8778643387317822646}
   - component: {fileID: 3011064776329446700}
-  - component: {fileID: 7800044511435336299}
+  - component: {fileID: 9205910297081972511}
   - component: {fileID: 85398754629147428}
   - component: {fileID: 5137105001093596734}
   - component: {fileID: 8404941144390627390}
@@ -2496,7 +2496,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7800044511435336299
+--- !u!114 &9205910297081972511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2505,7 +2505,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8778643387317822647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d0555cceb1f65a42b4bc667cc3819a7, type: 3}
+  m_Script: {fileID: 11500000, guid: ca98975ca6b7b224d9bb0658ca58a0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collisionMask:
@@ -2516,7 +2516,8 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
-  maxSlopeAngle: 60
+  m_maxSlopeAngle: 60
+  m_input: {x: 0, y: 0}
 --- !u!95 &85398754629147428
 Animator:
   serializedVersion: 3

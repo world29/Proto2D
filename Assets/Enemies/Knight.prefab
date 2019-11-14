@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8778643387317822643}
   - component: {fileID: 8778643387317822646}
-  - component: {fileID: 7800044511435336299}
+  - component: {fileID: 658999500117670914}
   - component: {fileID: 1760207532774646350}
   - component: {fileID: 277865818913550649}
   m_Layer: 10
@@ -413,7 +413,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8034116}
   m_EdgeRadius: 0
---- !u!114 &7800044511435336299
+--- !u!114 &658999500117670914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8778643387317822647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d0555cceb1f65a42b4bc667cc3819a7, type: 3}
+  m_Script: {fileID: 11500000, guid: ca98975ca6b7b224d9bb0658ca58a0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collisionMask:
@@ -433,7 +433,8 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
-  maxSlopeAngle: 60
+  m_maxSlopeAngle: 60
+  m_input: {x: 0, y: 0}
 --- !u!95 &1760207532774646350
 Animator:
   serializedVersion: 3
