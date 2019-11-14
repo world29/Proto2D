@@ -7,19 +7,20 @@ public class Controller2D : RaycastController
 {
     public CollisionInfo collisions;
 
-    [HideInInspector]
-    public float maxSlopeAngle = 60;
+    [Tooltip("上り下りできる坂道の最大角度 (deg)")]
+    public float m_maxSlopeAngle = 60;
 
     [HideInInspector]
-    public Vector2 playerInput;
+    public Vector2 m_input;
 
     public override void Start()
     {
         base.Start();
+
         collisions.faceDir = 1;
     }
 
-    public void Move(Vector2 moveAmount, bool standingOnPlatform)
+    public void Move(Vector2 moveAmount, bool standingOnPlatform = false)
     {
         Move(moveAmount, Vector2.zero, standingOnPlatform);
     }
@@ -29,7 +30,7 @@ public class Controller2D : RaycastController
         UpdateRaycastOrigins();
 
         collisions.Reset();
-        playerInput = input;
+        m_input = input;
 
         if (moveAmount.x != 0)
         {
@@ -82,12 +83,12 @@ public class Controller2D : RaycastController
                 }
 
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-                if (i == 0 && slopeAngle <= maxSlopeAngle)
+                if (i == 0 && slopeAngle <= m_maxSlopeAngle)
                 {
                     ClimbSlope(ref moveAmount, slopeAngle);
                 }
 
-                if (!collisions.climbingSlope && slopeAngle > maxSlopeAngle)
+                if (!collisions.climbingSlope && slopeAngle > m_maxSlopeAngle)
                 {
                     moveAmount.x = (hit.distance - skinWidth) * directionX;
                     rayLength = hit.distance;
@@ -126,7 +127,7 @@ public class Controller2D : RaycastController
                         continue;
                     }
 
-                    if (playerInput.y == -1)
+                    if (m_input.y == -1)
                     {
                         collisions.fallingThroughPlatform = true;
                         Invoke("ResetFallingThroughPlatform", .5f);
@@ -169,7 +170,7 @@ public class Controller2D : RaycastController
         if (hit)
         {
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-            if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle)
+            if (slopeAngle != 0 && slopeAngle <= m_maxSlopeAngle)
             {
                 if (Mathf.Sign(hit.normal.x) == directionX)
                 {

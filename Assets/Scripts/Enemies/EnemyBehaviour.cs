@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(Controller2DEnemy), typeof(Animator))]
+    [RequireComponent(typeof(Controller2D), typeof(Animator))]
     public class EnemyBehaviour : MonoBehaviour, IDamageReceiver
     {
         public float gravity = 20;
@@ -42,7 +42,7 @@ namespace Proto2D
         [Header("地面判定におけるレイの長さ (坂や段差を通りたい場合は長め (> 1.0f))")]
         public float groundDetectionRayLength = .5f;
 
-        protected Controller2DEnemy controller;
+        protected Controller2D controller;
         private Vector2 velocity;
         private IEnemyState state;
         private GameObject player;
@@ -53,7 +53,7 @@ namespace Proto2D
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-            controller = GetComponent<Controller2DEnemy>();
+            controller = GetComponent<Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
             m_progressController = FindObjectOfType<GameProgressController>();
 
@@ -74,7 +74,7 @@ namespace Proto2D
         void Start()
         {
             audioSource = GetComponent<AudioSource>();
-            controller = GetComponent<Controller2DEnemy>();
+            controller = GetComponent<Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
             m_progressController = GameObject.FindObjectOfType<GameProgressController>();
 
