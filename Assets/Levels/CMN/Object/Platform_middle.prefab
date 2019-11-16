@@ -49,8 +49,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.0015616119}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.56}
-    oldSize: {x: 2.75, y: 1.40625}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.78125, y: 1.65625}
     newSize: {x: 3.8125, y: 1.46875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -79,15 +79,14 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
-  passengerMask:
+  m_passengerMask:
     serializedVersion: 2
-    m_Bits: 256
-  localWaypoints:
-  - {x: 0, y: 0, z: 0}
-  speed: 2
-  cyclic: 1
-  waitTime: 0
-  easeAmount: 2
+    m_Bits: 0
+  m_localWaypoints: []
+  m_speed: 0
+  m_cyclic: 0
+  m_waitTime: 0
+  m_easeAmount: 0
 --- !u!212 &4110490103573342350
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,7 +124,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: e48bf72d45530974b899ab348fd38913, type: 3}
+  m_Sprite: {fileID: 21300020, guid: 0730ffc07365006499420ca2cda77e34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
