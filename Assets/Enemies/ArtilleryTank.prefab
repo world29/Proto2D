@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 4629093845887955846}
   - component: {fileID: 2140778506968783181}
   - component: {fileID: 3436190217947649152}
+  - component: {fileID: 1926237925122826983}
   m_Layer: 11
   m_Name: ArtilleryTank
   m_TagString: Enemy
@@ -482,3 +483,24 @@ MonoBehaviour:
   sights: []
   groundDetectionRayLength: 0.5
   effectSocket: {fileID: 0}
+--- !u!50 &1926237925122826983
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
