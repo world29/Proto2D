@@ -34,7 +34,7 @@ public class Controller2D : RaycastController
 
         if (moveAmount.x != 0)
         {
-            collisions.faceDir = (int)Mathf.Sign(moveAmount.x);
+            collisions.faceDir = (int)(Mathf.Sign(moveAmount.x) * Mathf.Sign(transform.localScale.x) * Mathf.Sign(transform.lossyScale.x));
         }
 
         if (moveAmount.y < 0)
