@@ -90,6 +90,10 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (blockUpdate)
+        {
+            return;
+        }
         if (collision.gameObject.CompareTag("Player"))
         {
             GameObject receiver = collision.gameObject;
