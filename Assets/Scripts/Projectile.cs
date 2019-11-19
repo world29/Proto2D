@@ -45,6 +45,8 @@ public class Projectile : MonoBehaviour
     public GameObject hitEffectPrefab;
     private AudioSource audioSource;
 
+    private bool blockUpdate = false;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -55,6 +57,10 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        if(blockUpdate)
+        {
+            return;
+        }
         transform.rotation = Quaternion.identity;
         velocity.y -= gravity * Time.deltaTime;
 
@@ -115,7 +121,8 @@ public class Projectile : MonoBehaviour
 
         if (!ReflectedDuringJumpAttack)
         {
-            hideAllSprites();
+            blockUpdate = true;
+            HideAllSprites();
             // 自分を削除する
             Destroy(gameObject, hitSE.length);
         }
@@ -132,7 +139,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void hideAllSprites()
+    void HideAllSprites()
     {
         SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < sprites.GetLength(0); i++)
