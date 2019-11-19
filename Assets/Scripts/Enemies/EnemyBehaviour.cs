@@ -43,7 +43,7 @@ namespace Proto2D
         public float groundDetectionRayLength = .5f;
 
         protected Controller2D controller;
-        private Vector2 velocity;
+        public Vector2 velocity;
         private IEnemyState state;
         private GameObject player;
         private AudioSource audioSource;
@@ -71,7 +71,7 @@ namespace Proto2D
             }
         }
 
-        void Start()
+        protected virtual void Start()
         {
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2D>();
@@ -82,7 +82,7 @@ namespace Proto2D
             state.OnEnter(this);
         }
 
-        void Update()
+        protected virtual void Update()
         {
             ResetMovement();
             UpdateStateMachine();
@@ -144,9 +144,8 @@ namespace Proto2D
             return Mathf.Sign(transform.localScale.x);
         }
 
-        private void ChangeState(IEnemyState next,bool force = false)
+        protected void ChangeState(IEnemyState next,bool force = false)
         {
-
             if (state != next)
             {
                 state.OnExit(this);

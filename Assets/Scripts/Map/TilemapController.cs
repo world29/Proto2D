@@ -88,5 +88,62 @@ namespace Proto2D
                 }
             }
         }
+
+        // 大きめの敵がテレポートするのに十分な空間を探し、その位置を返す
+        public Vector3[] QueryPositionsForTeleportation()
+        {
+            m_tilemapObstacles.CompressBounds();
+
+            List<Vector3> results = new List<Vector3>();
+
+            // タイルが配置されていない 3x3 の領域を見つける
+            foreach (Vector3Int position in m_tilemapObstacles.cellBounds.allPositionsWithin)
+            {
+                if (m_tilemapObstacles.HasTile(position))
+                {
+                    continue;
+                }
+
+                Vector3Int[] aroundPositions = {
+                    new Vector3Int(position.x - 1, position.y - 1, position.z),
+                    new Vector3Int(position.x,     position.y - 1, position.z),
+                    new Vector3Int(position.x + 1, position.y - 1, position.z),
+                    new Vector3Int(position.x - 1, position.y,     position.z),
+                    new Vector3Int(position.x + 1, position.y,     position.z),
+                    new Vector3Int(position.x - 1, position.y + 1, position.z),
+                    new Vector3Int(position.x,     position.y + 1, position.z),
+                    new Vector3Int(position.x + 1, position.y + 1, position.z),
+                };
+
+                if (aroundPositions.All(pos => !m_tilemapObstacles.HasTile(pos)))
+                {
+                    results.Add(m_tilemapObstacles.CellToLocal(position));
+                }
+            }
+
+            // 地面との距離が一定以上なら除外する
+            float rayLength = 2;
+            LayerMask collisionMask = LayerMask.GetMask("Obstacle");
+            results.RemoveAll(position => {
+                RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down, rayLength, collisionMask);
+                return !(bool)hit;
+            });
+
+            return results.ToArray();
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (Application.isPlaying)
+            {
+                Vector3[] positions = QueryPositionsForTeleportation();
+
+                foreach (Vector3 position in positions)
+                {
+                    Gizmos.color = new Color(1, 1, 0, .6f);
+                    Gizmos.DrawCube(position, Vector3.one * 3);
+                }
+            }
+        }
     }
 }
