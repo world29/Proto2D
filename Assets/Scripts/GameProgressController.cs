@@ -12,6 +12,9 @@ namespace Proto2D
         [Header("進捗の段階の上限")]
         public StagePhase m_stagePhaseLimit = StagePhase.Phase2;
 
+        [Header("開始する段階")]
+        public StagePhase m_startStagePhase = StagePhase.Phase1;
+
         [Header("10m登るたび増える進捗度")]
         public float m_progressPerTenMeter = 1;
 
@@ -26,7 +29,7 @@ namespace Proto2D
         private void Awake()
         {
             m_progress = new NotificationObject<float>(0);
-            m_stagePhase = new NotificationObject<StagePhase>(StagePhase.Phase1);
+            m_stagePhase = new NotificationObject<StagePhase>(m_startStagePhase);
         }
 
         void Start()
