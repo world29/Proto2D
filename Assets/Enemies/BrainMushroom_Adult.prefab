@@ -206,6 +206,7 @@ MonoBehaviour:
     viewDistance: 4.5
     angleOffset: 6
   groundDetectionRayLength: 0.5
+  velocity: {x: 0, y: 0}
   effectSocket: {fileID: 9034467475115540370}
 --- !u!114 &5691432366180477460
 MonoBehaviour:
@@ -342,7 +343,7 @@ Transform:
   m_GameObject: {fileID: 9034467475115540370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0390209, y: -0.21456963, z: -0}
-  m_LocalScale: {x: 2, y: 2, z: 0}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 0}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
   m_RootOrder: 1
@@ -361,6 +362,21 @@ PrefabInstance:
     - target: {fileID: 0}
       propertyPath: enemy
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
@@ -431,21 +447,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
