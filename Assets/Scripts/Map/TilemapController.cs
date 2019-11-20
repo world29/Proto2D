@@ -140,7 +140,7 @@ namespace Proto2D
 
                 foreach (Vector3 position in positions)
                 {
-                    Gizmos.color = new Color(1, 1, 0, .6f);
+                    Gizmos.color = new Color(1, 1, 0, .2f);
                     Gizmos.DrawCube(position, Vector3.one * 3);
                 }
             }
