@@ -48,6 +48,10 @@ namespace Proto2D
                 m_progressController.m_stagePhase.OnChanged = OnPhaseChanged;
             }
 
+            // 初期設定のため、明示的に呼び出す
+            OnProgressChanged(m_progressController.m_progress.Value);
+            OnPhaseChanged(m_progressController.m_stagePhase.Value);
+
             isGameOver = false;
             isGameClear = false;
             if (replayText)
@@ -147,16 +151,24 @@ namespace Proto2D
         {
             Debug.Assert(m_cameraRoot);
 
-            //MEMO: 仮実装として、進捗の段階が上がったときに強制スクロール用のカメラに切り替える
-            CameraFollow cf = m_cameraRoot.GetComponent<CameraFollow>();
-            if (cf)
+            switch (phase)
             {
-                cf.enabled = false;
-            }
-            CameraAutoScroll cas = m_cameraRoot.GetComponent<CameraAutoScroll>();
-            if (cas)
-            {
-                cas.enabled = true;
+                case StagePhase.Phase1:
+                    // CameraController の初期設定に従う
+                    break;
+                case StagePhase.Phase2:
+                    {
+                        // 自動スクロールを有効化する
+                        //MEMO: 下方向の追従を OFF にしないと自動スクロールが正しく動かない
+                        CameraController cc = m_cameraRoot.GetComponent<CameraController>();
+                        Debug.Assert(cc);
+                        cc.m_autoScrollEnabled = true;
+                        cc.m_followDownward = false;
+                    }
+                    break;
+                case StagePhase.Phase3:
+                    //TODO:
+                    break;
             }
         }
 
