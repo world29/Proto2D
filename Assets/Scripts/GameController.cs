@@ -19,8 +19,8 @@ namespace Proto2D
     {
         public Text replayText;
 
-        [Header("ゲームオーバー時に読み込まれるシーン名")]
-        public string sceneNameToLoad;
+        [Tooltip("遷移先のシーン名 (デバッグ時、N キーで遷移)")]
+        public string m_nextSceneName;
 
         [Tooltip("ワールドの境界")]
         public Bounds m_worldBoundary;
@@ -38,6 +38,7 @@ namespace Proto2D
         private bool isGameClear;
         private GameObject m_player;
         private GameProgressController m_progressController;
+        private bool m_isSceneLoading = false;
 
         void Start()
         {
@@ -65,9 +66,13 @@ namespace Proto2D
         void Update()
         {
             // デバッグビルド時、R キーを押すとシーンをリロードする
-            if (Debug.isDebugBuild && Input.GetKey(KeyCode.R))
+            if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.R))
             {
-                ReloadScene();
+                LoadScene(SceneManager.GetActiveScene().name);
+            }
+            if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.N))
+            {
+                LoadScene(m_nextSceneName);
             }
 
             if (!isGameOver && !isGameClear)
@@ -77,7 +82,7 @@ namespace Proto2D
 
             if (Input.touchCount > 0)
             {
-                ReloadScene();
+                LoadScene(SceneManager.GetActiveScene().name);
             }
         }
 
@@ -172,11 +177,49 @@ namespace Proto2D
             }
         }
 
-        private void ReloadScene()
+        void LoadScene(string sceneName)
         {
-            SceneManager.LoadScene(sceneNameToLoad);
+            if (!m_isSceneLoading)
+            {
+                m_isSceneLoading = true;
 
-            Resume();
+                StartCoroutine(LoadSceneAsync(sceneName));
+            }
+        }
+
+        IEnumerator LoadSceneAsync(string sceneName)
+        {
+            Pause();
+
+            yield return FadeController.Instance.FadeOut();
+
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+            Debug.Assert(operation != null);
+
+            operation.allowSceneActivation = false;
+            while (true)
+            {
+                Debug.Log(operation.progress + "%");
+
+                // allowSceneActivation = false の場合、progress は 0.9f までしか更新されない
+                //https://docs.unity3d.com/jp/540/ScriptReference/AsyncOperation-allowSceneActivation.html
+                if (operation.progress >= .9f)
+                {
+                    break;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            operation.completed += (asyncOperation) =>
+            {
+                Resume();
+            };
+            operation.allowSceneActivation = true;
+
+            yield return FadeController.Instance.FadeIn();
+
+            m_isSceneLoading = false;
         }
 
         private void OnDrawGizmos()

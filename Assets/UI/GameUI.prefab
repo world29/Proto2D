@@ -36,6 +36,7 @@ RectTransform:
   - {fileID: 8642202898253584167}
   - {fileID: 2103656353887850427}
   - {fileID: 4278422947419095936}
+  - {fileID: 1641006768968196673}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -183,6 +184,94 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Replay?
+--- !u!1 &6442684174504521415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641006768968196673}
+  - component: {fileID: 5997916119205909784}
+  - component: {fileID: 4254988929111159465}
+  - component: {fileID: 3345148180292331787}
+  m_Layer: 5
+  m_Name: Fade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1641006768968196673
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442684174504521415}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 472159057501782705}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5997916119205909784
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442684174504521415}
+  m_CullTransparentMesh: 0
+--- !u!114 &4254988929111159465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442684174504521415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!114 &3345148180292331787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442684174504521415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5431515d040b874ead1a0bd2896f1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_duration: 1
 --- !u!1 &8569172604408608655
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +353,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
+    - target: {fileID: 5325095712304685803, guid: d670051a183802c409714330820ba5d6,
+        type: 3}
+      propertyPath: m_Name
+      value: ComboText
+      objectReference: {fileID: 0}
     - target: {fileID: 5325095712304685802, guid: d670051a183802c409714330820ba5d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -369,11 +463,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5325095712304685803, guid: d670051a183802c409714330820ba5d6,
-        type: 3}
-      propertyPath: m_Name
-      value: ComboText
-      objectReference: {fileID: 0}
     - target: {fileID: 5325095712304685801, guid: d670051a183802c409714330820ba5d6,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -404,6 +493,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
+    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
+        type: 3}
+      propertyPath: m_Name
+      value: Floating Joystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_Name
+      value: MoveJoystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: m_RootOrder
@@ -489,16 +593,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_Name
-      value: MoveJoystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7272750636445303540, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: deadZone
@@ -558,11 +652,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
-        type: 3}
-      propertyPath: m_Name
-      value: Floating Joystick
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
@@ -684,6 +773,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
+    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
+        type: 3}
+      propertyPath: m_Name
+      value: Floating Joystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_Name
+      value: ActionJoystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: m_RootOrder
@@ -769,16 +873,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_Name
-      value: ActionJoystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: ce472b2a1eea704469618bb1b6094ea5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7272750636445303540, guid: ce472b2a1eea704469618bb1b6094ea5,
         type: 3}
       propertyPath: deadZone
@@ -818,11 +912,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8170153791668043269, guid: 0d230cc8be529a542a08cb878ab14b18,
-        type: 3}
-      propertyPath: m_Name
-      value: Floating Joystick
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
@@ -944,6 +1033,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 472159057501782705}
     m_Modifications:
+    - target: {fileID: 5118736011812008716, guid: e7ecd50b82650f5468da731a5a63a891,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_Status
+      objectReference: {fileID: 0}
     - target: {fileID: 997119855823024304, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1048,11 +1142,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118736011812008716, guid: e7ecd50b82650f5468da731a5a63a891,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_Status
       objectReference: {fileID: 0}
     - target: {fileID: 7626334610178690364, guid: e7ecd50b82650f5468da731a5a63a891,
         type: 3}
