@@ -199,7 +199,6 @@ GameObject:
   - component: {fileID: 8414890324411613421}
   - component: {fileID: 113306735536017392}
   - component: {fileID: 3295572491149585420}
-  - component: {fileID: 214202097353100533}
   m_Layer: 10
   m_Name: Head Sprite
   m_TagString: Untagged
@@ -298,21 +297,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1894913, y: 0.7829616}
   m_EdgeRadius: 0
---- !u!114 &214202097353100533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2955873353452969287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_damageType: 2
-  damage: 1
-  sender: {fileID: 0}
 --- !u!1 &5288541521685160093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +984,7 @@ MonoBehaviour:
     viewDistance: 6
     angleOffset: 17
   groundDetectionRayLength: 0.5
+  velocity: {x: 0, y: 0}
   effectSocket: {fileID: 2432236702630269230}
 --- !u!114 &2530863392895871106
 MonoBehaviour:
@@ -1226,17 +1211,17 @@ PrefabInstance:
       propertyPath: m_receiver
       value: 
       objectReference: {fileID: 8778643387317822647}
-    - target: {fileID: 1822174567075259069, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: receiver
       value: 
       objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 1822174567075259070, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259069, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_Enabled
       value: 1
