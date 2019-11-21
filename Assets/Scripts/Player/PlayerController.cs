@@ -419,7 +419,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         {
            // transform.position = new Vector2 (transform.position.x + OffsetX, transform.position.y + OffsetY);
             GameObject effect = Instantiate(EffectPrefab, transform.position, Quaternion.identity, null);
-            effect.transform.localScale = transform.localScale;
+            effect.transform.localScale.Scale(transform.localScale);
             Destroy(effect, 1);
         }
     }
