@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [Header("地上で壁に密着時、クライム状態に移行するのに必要なキー入力の時間")]
     public float timeToEntryWallClimbing = .5f;
 
+    [Header("ジャンプアタック時の軌跡")]
+    public TrailRenderer jumpAttackTrail;
     [Header("ジャンプアタックの真横の速さ")]
     public Vector2 jumpAttackSpeed = new Vector2(15, 5);
     [Header("ジャンプアタックの真上方向の速さ")]
@@ -55,8 +57,9 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public Vector2 jumpAttackDiagonallyBelowDirectionSpeed = new Vector2(3, 5);
     [Header("ジャンプアタックの真下方向の速さ")]
     public Vector2 jumpAttackBelowDirectionSpeed = new Vector2(10, 6);
-    
 
+    [Header("ホップ時の軌跡")]
+    public TrailRenderer hopTrail;
     [Header("ホップ中に攻撃判定あり")]
     public bool enableHopAttackMode = true;
 

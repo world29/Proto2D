@@ -9,6 +9,7 @@ public class PlayerState_Attack : IPlayerState
     private Controller2D controller;
     private Animator animator;
     private PlayerInput input;
+    private TrailRenderer trail;
 
     public void OnEnter(GameObject context)
     {
@@ -16,6 +17,11 @@ public class PlayerState_Attack : IPlayerState
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
         input = context.GetComponent<PlayerInput>();
+        trail = player.jumpAttackTrail;
+
+        // Trail 有効化
+        trail.emitting = true;
+           
 
         // 効果音再生
         if (!animator.GetBool("attack"))
@@ -47,6 +53,8 @@ public class PlayerState_Attack : IPlayerState
 
     public void OnExit(GameObject context)
     {
+        trail.emitting = false;
+
         // ジャンプアタックの攻撃判定を無効化
         var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
             .Where(item => item.m_damageType == DamageType.Attack);

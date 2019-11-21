@@ -9,6 +9,7 @@ public class PlayerState_Hop : IPlayerState
     private Controller2D controller;
     private Animator animator;
     private PlayerInput input;
+    private TrailRenderer trail;
 
     public void OnEnter(GameObject context)
     {
@@ -16,6 +17,10 @@ public class PlayerState_Hop : IPlayerState
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
         input = context.GetComponent<PlayerInput>();
+        trail = player.hopTrail;
+
+        // Trail 有効化
+        trail.emitting = true;
 
         player.PlaySE(player.hopSE);
 
@@ -35,6 +40,8 @@ public class PlayerState_Hop : IPlayerState
 
     public void OnExit(GameObject context)
     {
+        trail.emitting = false;
+
         // 攻撃判定を無効化
         var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
             .Where(item => item.m_damageType == DamageType.Attack);
