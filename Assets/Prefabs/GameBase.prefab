@@ -69,7 +69,6 @@ MonoBehaviour:
   - {fileID: 8158235655175910608, guid: 2d20c3ddd7770b141876fa7ce3ea0ea4, type: 3}
   - {fileID: 8158235655175910608, guid: b83249874616a5e4ea2d7bbf3a6a3fbb, type: 3}
   - {fileID: 8158235655175910608, guid: 95955bf8c9beca343a527bc53274d3c0, type: 3}
-  m_additionalNormalRoomPrefabs: []
 --- !u!1 &1178256104022290511
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,8 +705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3763611368824960927}
-  - component: {fileID: 3763611368824960925}
-  - component: {fileID: 3763611368824960926}
+  - component: {fileID: 7961028125091741916}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -730,7 +728,7 @@ Transform:
   m_Father: {fileID: 3763611367022188154}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3763611368824960925
+--- !u!114 &7961028125091741916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -739,28 +737,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3763611368824960922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61e2f2fea4a81a947864a307fda32f1b, type: 3}
+  m_Script: {fileID: 11500000, guid: a25a4d1a5b5312b4181d038e60f88ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  verticalOffset: 0
-  verticalSmoothTime: 0.1
-  focusAreaSize: {x: 15, y: 2}
-  followDownward: 1
-  followSideway: 0
---- !u!114 &3763611368824960926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3763611368824960922}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 536f02af5aff1a5488028c9bdb5f416c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_scrollSpeed: 2
+  m_followUpward: 1
+  m_followDownward: 1
+  m_followSideway: 0
+  m_followSmoothTime: 0.1
+  m_focusBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 10, y: 1, z: 0}
+  m_autoScrollEnabled: 0
+  m_autoScrollSpeed: 1
 --- !u!1 &3763611368950876398
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,6 +795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxProgressValue: 100
   m_stagePhaseLimit: 1
+  m_startStagePhase: 0
   m_progressPerTenMeter: 1
 --- !u!114 &3763611368950876385
 MonoBehaviour:
