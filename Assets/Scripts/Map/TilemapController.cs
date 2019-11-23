@@ -11,7 +11,9 @@ namespace Proto2D
         public Tilemap m_tilemapObstacles;
         public Tilemap m_tilemapBackground;
         public Tilemap m_tilemapBackgroundDeco;
+        public Tilemap m_tilemapBackgroundShade;
         public Tilemap m_tilemapBackgroundAdd;
+        public Tilemap m_tilemapFront;
 
         private void Start()
         {
@@ -53,6 +55,12 @@ namespace Proto2D
                 case "BackgroundDecorationTile":
                     m_tilemapBackgroundDeco.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
                     break;
+                case "BackgroundShadeTile":
+                    m_tilemapBackgroundShade.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
+                    break;
+                case "DecorationTile":
+                    m_tilemapFront.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
+                    break;
                 case "BackgroundTile2":
                     m_tilemapBackgroundAdd.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
                     break;
@@ -65,7 +73,7 @@ namespace Proto2D
         private void DeleteOutsideTiles()
         {
             // 画面外のタイルを削除する
-            Tilemap[] tilemapArray = { m_tilemapObstacles, m_tilemapBackground, m_tilemapBackgroundDeco, m_tilemapBackgroundAdd };
+            Tilemap[] tilemapArray = { m_tilemapObstacles, m_tilemapBackground, m_tilemapBackgroundDeco, m_tilemapBackgroundAdd,m_tilemapBackgroundShade,m_tilemapFront };
 
             foreach (Tilemap tilemap in tilemapArray)
             {
