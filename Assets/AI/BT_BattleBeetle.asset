@@ -52,6 +52,7 @@ MonoBehaviour:
   - {fileID: 114780075408879120}
   - {fileID: 114349166683360584}
   - {fileID: 114740621930339414}
+  - {fileID: 114405292529407664}
 --- !u!114 &114053986491828842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,7 +543,7 @@ MonoBehaviour:
   m_Name: Set Animation Parameter
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 248, y: 168}
+  position: {x: 296, y: 520}
   ports:
     keys:
     - parent
@@ -668,10 +669,7 @@ MonoBehaviour:
       _node: {fileID: 114349166683360584}
       _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: children
-        node: {fileID: 114681649308610486}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 1
       _typeConstraint: 0
@@ -717,6 +715,43 @@ MonoBehaviour:
     m_min: 0
     m_max: 0
     m_value: 0.1
+--- !u!114 &114405292529407664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 312, y: 344}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114405292529407664}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114653183356549972}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  m_timeout:
+    m_type: 1
+    m_min: 0
+    m_max: 0
+    m_value: 0.2
 --- !u!114 &114415204384602768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,7 +911,7 @@ MonoBehaviour:
   m_Name: Set Animation Parameter
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 264, y: 344}
+  position: {x: 312, y: 696}
   ports:
     keys:
     - parent
@@ -1109,6 +1144,12 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: parent
+        node: {fileID: 114776652442901168}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114405292529407664}
+        reroutePoints: []
+      - fieldName: parent
         node: {fileID: 114264386517306806}
         reroutePoints: []
       - fieldName: parent
@@ -1205,9 +1246,6 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114131142642247520}
-        reroutePoints: []
-      - fieldName: parent
-        node: {fileID: 114349166683360584}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -1360,7 +1398,7 @@ MonoBehaviour:
   m_Name: Set Animation Parameter
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 296, y: 872}
+  position: {x: 296, y: 184}
   ports:
     keys:
     - parent
@@ -1369,7 +1407,10 @@ MonoBehaviour:
       _node: {fileID: 114776652442901168}
       _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: children
+        node: {fileID: 114653183356549972}
+        reroutePoints: []
       _direction: 0
       _connectionType: 1
       _typeConstraint: 0
