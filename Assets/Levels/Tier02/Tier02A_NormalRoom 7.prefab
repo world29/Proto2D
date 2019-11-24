@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1323497323641749422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389297710155132309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e447295abeddc4e844b04848474b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stagePhaseFlags: 7
+  m_percentage: 50
 --- !u!1 &987357030038359860
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,7 +2272,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1514270637
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -2282,6 +2296,20 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+--- !u!114 &7856914381536188381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745553419937139067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e447295abeddc4e844b04848474b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stagePhaseFlags: 7
+  m_percentage: 50
 --- !u!1 &2755216900955025919
 GameObject:
   m_ObjectHideFlags: 0
@@ -4134,6 +4162,20 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &6025795996775359850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246274278637267194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e447295abeddc4e844b04848474b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stagePhaseFlags: 7
+  m_percentage: 50
 --- !u!1 &7658787247640846578
 GameObject:
   m_ObjectHideFlags: 0
@@ -5391,6 +5433,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3421390992559590477}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6246274278637267194 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8778643387317822647, guid: e578a0b2b92ad30468452fdc3c613b84,
+    type: 3}
+  m_PrefabInstance: {fileID: 3421390992559590477}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3441855132137271574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5768,6 +5816,12 @@ PrefabInstance:
 --- !u!4 &2728616246911598207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1916518855517748505, guid: 7d00abb42599b844bbc3d3f9d1058edb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4559096084038632294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &389297710155132309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4188973893313375987, guid: 7d00abb42599b844bbc3d3f9d1058edb,
     type: 3}
   m_PrefabInstance: {fileID: 4559096084038632294}
   m_PrefabAsset: {fileID: 0}
@@ -6293,6 +6347,12 @@ PrefabInstance:
 --- !u!4 &2745553419937139071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8778643387317822643, guid: b7784c75a3d654c4491a7a7c1aeadb4f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6903503587354045900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2745553419937139067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8778643387317822647, guid: b7784c75a3d654c4491a7a7c1aeadb4f,
     type: 3}
   m_PrefabInstance: {fileID: 6903503587354045900}
   m_PrefabAsset: {fileID: 0}
