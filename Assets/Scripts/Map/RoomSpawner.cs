@@ -75,8 +75,6 @@ namespace Proto2D
             {
                 int roomIndex = Random.Range(0, m_startRoomPrefabs.Count);
                 spawnNextRoom(m_startRoomPrefabs[roomIndex]);
-
-                GameController.Instance.OnMapInitialized();
             }
         }
 

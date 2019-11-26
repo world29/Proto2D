@@ -7,8 +7,6 @@ namespace Proto2D
 {
     public class UIStatusController : MonoBehaviour
     {
-        public GameProgressController m_progressController;
-
         [Header("Progress")]
         public Slider m_progressSlider;
         public Image m_progressSliderBackground;
@@ -21,11 +19,14 @@ namespace Proto2D
         public Slider m_healthSlider;
 
         private bool m_healthCallbackRegistered = false;
+
         void Start()
         {
+            /*
             m_progressSlider.maxValue = m_progressController.m_maxProgressValue;
             m_progressController.m_progress.OnChanged += OnProgressChanged;
             m_progressController.m_stagePhase.OnChanged += OnPhaseChanged;
+            */
         }
 
         void LateUpdate()

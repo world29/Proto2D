@@ -24,17 +24,13 @@ namespace Proto2D
         {
             bool activated = false;
 
-            GameProgressController progressController = GameObject.FindObjectOfType<GameProgressController>();
-            if (progressController)
+            StagePhaseFlag flags = (StagePhaseFlag)(0x1 << (int)GameController.Instance.Stage.Phase);
+            if ((flags & m_stagePhaseFlags) > 0)
             {
-                StagePhaseFlag flags = (StagePhaseFlag)(0x1 << (int)progressController.m_stagePhase.Value);
-                if ((flags & m_stagePhaseFlags) > 0)
+                if (Random.Range(0, 100) < m_percentage)
                 {
-                    if (Random.Range(0, 100) < m_percentage)
-                    {
-                        // 進捗度と出現確率の条件を満たした場合のみ
-                        activated = true;
-                    }
+                    // 進捗度と出現確率の条件を満たした場合のみ
+                    activated = true;
                 }
             }
 

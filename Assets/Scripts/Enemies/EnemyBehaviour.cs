@@ -48,14 +48,12 @@ namespace Proto2D
         private GameObject player;
         private AudioSource audioSource;
         public GameObject effectSocket;
-        private GameProgressController m_progressController;
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
-            m_progressController = FindObjectOfType<GameProgressController>();
 
             if (behaviourTree)
             {
@@ -76,7 +74,6 @@ namespace Proto2D
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
-            m_progressController = GameObject.FindObjectOfType<GameProgressController>();
 
             state = new EnemyState_Idle();
             state.OnEnter(this);
@@ -298,10 +295,7 @@ namespace Proto2D
 
         public void OnDeath()
         {
-            if (m_progressController)
-            {
-                m_progressController.AddProgressValue(progressValue);
-            }
+            GameController.Instance.Stage.AddProgressValue(progressValue);
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)

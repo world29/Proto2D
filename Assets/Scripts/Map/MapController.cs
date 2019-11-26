@@ -29,7 +29,7 @@ namespace Proto2D
             // スタート部屋を生成
             spawnNextRoom(getRandomStartRoom());
 
-            GameController.Instance.OnMapInitialized();
+            //GameController.Instance.OnMapInitialized();
 
             m_gameProgressController = GameObject.FindObjectOfType<GameProgressController>();
         }

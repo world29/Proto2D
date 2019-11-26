@@ -12,6 +12,9 @@ namespace Proto2D
     //   Stage (Unity における Scene に対応する。レベルと同義)
     //     Phase (ステージ内での進捗度に応じた段階)
     //
+    // ステージの API には GameController 経由でのみアクセス可能。
+    // GameController.Instance.Stage.Progress;
+    // GameController.Instance.Stage.Phase;
 
     public enum StagePhase { Phase1, Phase2, Phase3 }
 
@@ -25,6 +28,12 @@ namespace Proto2D
         [Tooltip("ワールドの境界")]
         public Bounds m_worldBoundary;
 
+        [Tooltip("部屋生成位置")]
+        public Transform m_roomSpawnTransform;
+
+        [Tooltip("ステージ")]
+        public List<StageController> m_stages;
+
         [Header("プレイヤー (再生時にスポーン)")]
         public GameObject playerPrefab;
 
@@ -34,25 +43,21 @@ namespace Proto2D
         [HideInInspector]
         public Bounds WorldBoundary { get { return m_worldBoundary; } }
 
+        [HideInInspector]
+        public StageController Stage {
+            get {
+                return m_stageIndex >= 0 ? m_stages[m_stageIndex] : null;
+            }
+        }
+
         private bool isGameOver;
         private bool isGameClear;
         private GameObject m_player;
-        private GameProgressController m_progressController;
         private bool m_isSceneLoading = false;
+        private int m_stageIndex = -1;
 
         void Start()
         {
-            m_progressController = GameObject.FindObjectOfType<GameProgressController>();
-            if (m_progressController)
-            {
-                m_progressController.m_progress.OnChanged = OnProgressChanged;
-                m_progressController.m_stagePhase.OnChanged = OnPhaseChanged;
-            }
-
-            // 初期設定のため、明示的に呼び出す
-            OnProgressChanged(m_progressController.m_progress.Value);
-            OnPhaseChanged(m_progressController.m_stagePhase.Value);
-
             isGameOver = false;
             isGameClear = false;
             if (replayText)
@@ -60,7 +65,16 @@ namespace Proto2D
                 replayText.text = "";
             }
 
-            OnMapInitialized();
+            LoadStage(0);
+
+            // スタート部屋とプレイヤーをスポーンする
+            RoomController rc = Stage.SpawnStartRoom(m_roomSpawnTransform.position);
+            UnityEngine.Tilemaps.Tilemap tilemap = rc.PrimaryTilemap;
+            float roomHeight = tilemap.size.y * tilemap.cellSize.y;
+            m_roomSpawnTransform.Translate(0, roomHeight, 0);
+
+            GameObject spawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
+            SpawnPlayer(spawner.transform.position);
         }
 
         void Update()
@@ -89,21 +103,38 @@ namespace Proto2D
         private void LateUpdate()
         {
             m_worldBoundary.center = (Vector2)m_cameraRoot.gameObject.transform.position;
+
+            // 新しく部屋をスポーンする
+            Bounds bounds = new Bounds(m_roomSpawnTransform.position, Vector3.one);
+            if (WorldBoundary.Intersects(bounds))
+            {
+                RoomController rc = Stage.SpawnRoom(m_roomSpawnTransform.position);
+                UnityEngine.Tilemaps.Tilemap tilemap = rc.PrimaryTilemap;
+                float roomHeight = tilemap.size.y * tilemap.cellSize.y;
+                m_roomSpawnTransform.Translate(0, roomHeight, 0);
+            }
         }
 
-        // マップの初期化が終了したときに、MapController から呼ばれる
-        // プレイヤーのスポーン位置がマップ生成に依存するため。
-        public void OnMapInitialized()
+        private void LoadStage(int stageIndex)
         {
-            // 再生時にプレイヤーが存在しなければ、スポーナーの位置にプレイヤーを生成
-            m_player = GameObject.FindGameObjectWithTag("Player");
+            Debug.Assert(stageIndex >= 0 && stageIndex < m_stages.Count);
+
+            if (Stage)
+            {
+                Stage.OnCompleted -= OnStageCompleted;
+                Stage.m_phase.OnChanged -= OnPhaseChanged;
+            }
+
+            m_stageIndex = stageIndex;
+            Stage.OnCompleted += OnStageCompleted;
+            Stage.m_phase.OnChanged += OnPhaseChanged;
+        }
+
+        public void SpawnPlayer(Vector3 position)
+        {
             if (m_player == null)
             {
-                GameObject playerSpawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
-                if (playerSpawner)
-                {
-                    m_player = GameObject.Instantiate(playerPrefab, playerSpawner.transform.position, Quaternion.identity);
-                }
+                m_player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
             }
         }
 
@@ -141,12 +172,13 @@ namespace Proto2D
             Pause();
         }
 
-        void OnProgressChanged(float progress)
+        public void OnStageCompleted()
         {
-            bool isPhaseMax = m_progressController.m_stagePhase.Value == m_progressController.m_stagePhaseLimit;
-            bool isProgressMax = m_progressController.m_progress.Value == m_progressController.m_maxProgressValue;
-
-            if (isPhaseMax && isProgressMax)
+            if (m_stageIndex < m_stages.Count - 1)
+            {
+                LoadStage(m_stageIndex + 1);
+            }
+            else
             {
                 GameClear();
             }
@@ -159,7 +191,13 @@ namespace Proto2D
             switch (phase)
             {
                 case StagePhase.Phase1:
-                    // CameraController の初期設定に従う
+                    {
+                        // 自動スクロールを無効化する
+                        CameraController cc = m_cameraRoot.GetComponent<CameraController>();
+                        Debug.Assert(cc);
+                        cc.m_autoScrollEnabled = false;
+                        cc.m_followDownward = true;
+                    }
                     break;
                 case StagePhase.Phase2:
                     {
@@ -226,6 +264,12 @@ namespace Proto2D
         {
             Gizmos.color = new Color(0, 1, 1, .2f);
             Gizmos.DrawCube(m_worldBoundary.center, m_worldBoundary.size);
+
+            if (m_roomSpawnTransform)
+            {
+                Gizmos.color = new Color(1, 0, 0, .5f);
+                Gizmos.DrawCube(m_roomSpawnTransform.position, Vector3.one);
+            }
         }
     }
 }
