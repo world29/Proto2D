@@ -30,7 +30,9 @@ public class PlatformController : RaycastController
         m_globalWaypoints = new Vector3[m_localWaypoints.Length];
         for (int i = 0; i < m_localWaypoints.Length; i++)
         {
-            m_globalWaypoints[i] = m_localWaypoints[i] + transform.position;
+            m_globalWaypoints[i] = (transform.lossyScale.x > 0) 
+                ? transform.position + m_localWaypoints[i]
+                : transform.position - m_localWaypoints[i];
         }
     }
 
@@ -44,7 +46,7 @@ public class PlatformController : RaycastController
         CalculatePassengerMovement(velocity);
 
         MovePassengers(true);
-        transform.Translate(velocity);
+        transform.Translate(velocity, Space.World);
         MovePassengers(false);
     }
 
