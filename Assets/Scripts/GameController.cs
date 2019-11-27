@@ -119,6 +119,8 @@ namespace Proto2D
         {
             Debug.Assert(stageIndex >= 0 && stageIndex < m_stages.Count);
 
+            StageController prevStage = Stage;
+
             if (Stage)
             {
                 Stage.OnCompleted -= OnStageCompleted;
@@ -128,6 +130,16 @@ namespace Proto2D
             m_stageIndex = stageIndex;
             Stage.OnCompleted += OnStageCompleted;
             Stage.m_phase.OnChanged += OnPhaseChanged;
+
+            // UI 設定
+            UIStatusController ui = GameObject.FindObjectOfType<UIStatusController>();
+            if (ui)
+            {
+                ui.ResetStage(prevStage, Stage);
+            }
+
+            // 明示的に呼び出してリセットする
+            OnPhaseChanged(Stage.Phase);
         }
 
         public void SpawnPlayer(Vector3 position)

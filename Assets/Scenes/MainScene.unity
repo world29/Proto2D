@@ -234,11 +234,50 @@ PrefabInstance:
       propertyPath: m_nextSceneName
       value: MainScene
       objectReference: {fileID: 0}
+    - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_worldBoundary.m_Extent.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_worldBoundary.m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1014128333924375267, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3763611366877880249, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_progressSliderBackgroundSprites.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763611366877880249, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_progressSliderBackgroundSprite
+      value: 
+      objectReference: {fileID: 21300008, guid: ee1a6d938687e77429f627ca22c61ba7,
+        type: 3}
+    - target: {fileID: 3763611366877880249, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_progressSliderBackgroundSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300018, guid: ee1a6d938687e77429f627ca22c61ba7,
+        type: 3}
+    - target: {fileID: 3763611366877880249, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_progressSliderBackgroundSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300008, guid: ee1a6d938687e77429f627ca22c61ba7,
+        type: 3}
+    - target: {fileID: 3763611366877880249, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_progressSliderBackgroundSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300018, guid: ee1a6d938687e77429f627ca22c61ba7,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 3763611368950876387, guid: f3e2032529fd24c4e8914754081bbcac, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f3e2032529fd24c4e8914754081bbcac, type: 3}
@@ -294,7 +333,7 @@ MonoBehaviour:
   - {fileID: 8158235655175910608, guid: 840b0fed1a8de6541810f172f77a8c25, type: 3}
   - {fileID: 8158235655175910608, guid: 99332fe45cf80d348b7e1088e9d07338, type: 3}
   - {fileID: 8158235655175910608, guid: 529fd8a0369e9b94db26daa9b3134fed, type: 3}
-  m_progressPerPhase: 100
+  m_progressPerPhase: 30
   m_phaseLimit: 1
 --- !u!114 &1562497236
 MonoBehaviour:
@@ -334,7 +373,7 @@ MonoBehaviour:
   - {fileID: 8158235655175910608, guid: 2d20c3ddd7770b141876fa7ce3ea0ea4, type: 3}
   - {fileID: 8158235655175910608, guid: b83249874616a5e4ea2d7bbf3a6a3fbb, type: 3}
   - {fileID: 8158235655175910608, guid: 95955bf8c9beca343a527bc53274d3c0, type: 3}
-  m_progressPerPhase: 100
+  m_progressPerPhase: 30
   m_phaseLimit: 1
 --- !u!1 &2119437575
 GameObject:

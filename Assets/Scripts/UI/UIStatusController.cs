@@ -12,21 +12,17 @@ namespace Proto2D
         public Image m_progressSliderBackground;
         public Image m_progressSliderFill;
 
-        public Sprite m_progressSliderBackgroundSprite;
+        public Sprite[] m_progressSliderBackgroundSprites;
         public Sprite[] m_progressSliderFillSprites;
 
         [Header("Health")]
         public Slider m_healthSlider;
 
         private bool m_healthCallbackRegistered = false;
+        private StageController m_stage;
 
         void Start()
         {
-            /*
-            m_progressSlider.maxValue = m_progressController.m_maxProgressValue;
-            m_progressController.m_progress.OnChanged += OnProgressChanged;
-            m_progressController.m_stagePhase.OnChanged += OnPhaseChanged;
-            */
         }
 
         void LateUpdate()
@@ -47,9 +43,29 @@ namespace Proto2D
             }
         }
 
+        public void ResetStage(StageController prevStage, StageController nextStage)
+        {
+            if (prevStage)
+            {
+                prevStage.m_progress.OnChanged -= OnProgressChanged;
+                prevStage.m_phase.OnChanged -= OnPhaseChanged;
+            }
+
+            m_progressSlider.maxValue = nextStage.m_progressPerPhase;
+
+            nextStage.m_progress.OnChanged += OnProgressChanged;
+            nextStage.m_phase.OnChanged += OnPhaseChanged;
+
+            m_stage = nextStage;
+
+            // 明示的に呼び出してリセットする
+            OnProgressChanged(nextStage.Progress);
+            OnPhaseChanged(nextStage.Phase);
+        }
+
         void OnProgressChanged(float value)
         {
-            m_progressSlider.value = value;
+            m_progressSlider.value = value % m_stage.m_progressPerPhase;
         }
 
         void OnPhaseChanged(StagePhase level)
@@ -57,7 +73,7 @@ namespace Proto2D
             // 進捗レベルに応じたゲージ用スプライトが設定されていることを保障
             Debug.Assert(m_progressSliderFillSprites.Length > (int)level);
 
-            m_progressSliderBackground.sprite = m_progressSliderBackgroundSprite;
+            m_progressSliderBackground.sprite = m_progressSliderBackgroundSprites[(int)level];
             m_progressSliderFill.sprite = m_progressSliderFillSprites[(int)level];
         }
 
