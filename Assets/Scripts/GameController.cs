@@ -23,9 +23,6 @@ namespace Proto2D
     {
         public Text replayText;
 
-        [Tooltip("遷移先のシーン名 (デバッグ時、N キーで遷移)")]
-        public string m_nextSceneName;
-
         [Tooltip("ワールドの境界")]
         public Bounds m_worldBoundary;
 
@@ -84,10 +81,6 @@ namespace Proto2D
             if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.R))
             {
                 LoadScene(SceneManager.GetActiveScene().name);
-            }
-            if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.N))
-            {
-                LoadScene(m_nextSceneName);
             }
 
             if (!isGameOver && !isGameClear)

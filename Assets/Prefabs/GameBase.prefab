@@ -759,7 +759,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3763611368950876384}
-  - component: {fileID: 3763611368950876387}
   - component: {fileID: 3763611368950876385}
   m_Layer: 0
   m_Name: GameController
@@ -783,22 +782,6 @@ Transform:
   m_Father: {fileID: 3763611367022188154}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3763611368950876387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3763611368950876398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a0271faf3b41474684523b88443ae29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_maxProgressValue: 100
-  m_stagePhaseLimit: 1
-  m_startStagePhase: 0
-  m_progressPerTenMeter: 1
 --- !u!114 &3763611368950876385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -812,11 +795,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   replayText: {fileID: 3654243045989336355}
-  m_nextSceneName: 
   m_worldBoundary:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 10, y: 30, z: 5}
-  m_roomSpawnTransform: {fileID: 0}
+  m_roomSpawnTransform: {fileID: 883206938731264134}
   m_stages: []
   m_initialStageIndex: 0
   playerPrefab: {fileID: 6503610203471954336, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
