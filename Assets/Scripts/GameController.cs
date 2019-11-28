@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace Proto2D
 {
@@ -59,6 +60,8 @@ namespace Proto2D
         private bool m_isSceneLoading = false;
         private int m_stageIndex = -1;
 
+        private Dictionary<Bounds, RoomController> m_spawnedRooms = new Dictionary<Bounds, RoomController>();
+
         void Start()
         {
             isGameOver = false;
@@ -107,9 +110,17 @@ namespace Proto2D
             if (WorldBoundary.Intersects(bounds))
             {
                 RoomController rc = Stage.SpawnRoom(m_roomSpawnTransform.position);
-                UnityEngine.Tilemaps.Tilemap tilemap = rc.PrimaryTilemap;
-                float roomHeight = tilemap.size.y * tilemap.cellSize.y;
-                m_roomSpawnTransform.Translate(0, roomHeight, 0);
+                updateSpawnPosition(rc);
+                registerRoom(rc);
+            }
+
+            // スクロールアウトした部屋の削除
+            var items = m_spawnedRooms.Where(item => item.Key.max.y < GameController.Instance.WorldBoundary.min.y);
+            if (items.Count() > 0)
+            {
+                var item = items.ElementAt(0);
+                GameObject.Destroy(item.Value.gameObject);
+                m_spawnedRooms.Remove(item.Key);
             }
         }
 
@@ -141,9 +152,8 @@ namespace Proto2D
 
             // スタート部屋をスポーン
             RoomController rc = Stage.SpawnStartRoom(m_roomSpawnTransform.position);
-            UnityEngine.Tilemaps.Tilemap tilemap = rc.PrimaryTilemap;
-            float roomHeight = tilemap.size.y * tilemap.cellSize.y;
-            m_roomSpawnTransform.Translate(0, roomHeight, 0);
+            updateSpawnPosition(rc);
+            registerRoom(rc);
         }
 
         public void SpawnPlayer(Vector3 position)
@@ -152,6 +162,20 @@ namespace Proto2D
             {
                 m_player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
             }
+        }
+
+        private void updateSpawnPosition(RoomController spawnedRoom)
+        {
+            UnityEngine.Tilemaps.Tilemap tilemap = spawnedRoom.PrimaryTilemap;
+            float roomHeight = tilemap.size.y * tilemap.cellSize.y;
+            m_roomSpawnTransform.Translate(0, roomHeight, 0);
+        }
+
+        private void registerRoom(RoomController spawnedRoom)
+        {
+            UnityEngine.Tilemaps.Tilemap tilemap = spawnedRoom.PrimaryTilemap;
+            Vector3 roomSize = new Vector3(tilemap.size.x * tilemap.cellSize.x, tilemap.size.y * tilemap.cellSize.y);
+            m_spawnedRooms.Add(new Bounds(spawnedRoom.transform.position, roomSize), spawnedRoom);
         }
 
         public void Pause()

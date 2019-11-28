@@ -124,12 +124,6 @@ namespace Proto2D
             localScale.x = flip ? -1 : 1;
             spawnedRoom.transform.localScale = localScale;
 
-            /*
-            // 部屋オブジェクトとその境界を保存
-            Vector3 roomSize = new Vector3(tilemap.size.x * tilemap.cellSize.x, tilemap.size.y * tilemap.cellSize.y);
-            m_spawnedRooms.Add(new Bounds(spawnPosition, roomSize), spawnedRoom);
-            */
-
             // タイル座標とのズレを補正する
             if (flip)
             {
@@ -141,11 +135,6 @@ namespace Proto2D
             }
 
             Destroy(spawnedRoom.GetComponentInChildren<Grid>().gameObject);
-
-            /*
-            float roomHeight = tilemap.size.y * tilemap.cellSize.y;
-            position += new Vector3(0, roomHeight, 0);
-            */
 
             return spawnedRoom;
         }
