@@ -67,12 +67,7 @@ namespace Proto2D
 
             LoadStage(0);
 
-            // スタート部屋とプレイヤーをスポーンする
-            RoomController rc = Stage.SpawnStartRoom(m_roomSpawnTransform.position);
-            UnityEngine.Tilemaps.Tilemap tilemap = rc.PrimaryTilemap;
-            float roomHeight = tilemap.size.y * tilemap.cellSize.y;
-            m_roomSpawnTransform.Translate(0, roomHeight, 0);
-
+            // プレイヤーをスポーンする
             GameObject spawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
             SpawnPlayer(spawner.transform.position);
         }
@@ -140,6 +135,12 @@ namespace Proto2D
 
             // 明示的に呼び出してリセットする
             OnPhaseChanged(Stage.Phase);
+
+            // スタート部屋をスポーン
+            RoomController rc = Stage.SpawnStartRoom(m_roomSpawnTransform.position);
+            UnityEngine.Tilemaps.Tilemap tilemap = rc.PrimaryTilemap;
+            float roomHeight = tilemap.size.y * tilemap.cellSize.y;
+            m_roomSpawnTransform.Translate(0, roomHeight, 0);
         }
 
         public void SpawnPlayer(Vector3 position)
