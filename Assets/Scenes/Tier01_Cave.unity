@@ -286,6 +286,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1ad61455046bc8409d24c2f3db8d2bf, type: 3}
+--- !u!1 &248258020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3763611368950876398, guid: f3e2032529fd24c4e8914754081bbcac,
+    type: 3}
+  m_PrefabInstance: {fileID: 3763611368809010345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &248258023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248258020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de2232a283a8b94abbef88b44f131ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_startRooms:
+  - {fileID: 4465933680936766854, guid: 4e8d9b2aa26e24442a93d67e5a7bd930, type: 3}
+  m_normalRooms:
+  - {fileID: 8158235655175910608, guid: 90146faed073d0c4faf96950e64a5d6d, type: 3}
+  - {fileID: 8158235655175910608, guid: c1f315bdb07ac9747b7b23c1d373d673, type: 3}
+  - {fileID: 8158235655175910608, guid: 062fd10e5417c694a981e47d686b51c1, type: 3}
+  - {fileID: 8158235655175910608, guid: c69d94b6ed0c0c842ab353a1da1f92a2, type: 3}
+  - {fileID: 8158235655175910608, guid: 3e83d5a341203f64d98d9c9dc81f781a, type: 3}
+  - {fileID: 8158235655175910608, guid: 2bec0d11c5830744da742ee828aec3de, type: 3}
+  - {fileID: 8158235655175910608, guid: 412e0001be86e5c439694db63d7269c4, type: 3}
+  - {fileID: 8158235655175910608, guid: 0045bda4c55cdc548810a3e9739f33ee, type: 3}
+  - {fileID: 8158235655175910608, guid: 1011b1b0ff782a041a6544c78c581fed, type: 3}
+  - {fileID: 8158235655175910608, guid: cb51cca5a965892419fcb3bb9f628a00, type: 3}
+  - {fileID: 8158235655175910608, guid: c5b9c194bb0da5442889266b81e62cf1, type: 3}
+  - {fileID: 8158235655175910608, guid: 92de41c3de0ef43429164303616b2cd6, type: 3}
+  - {fileID: 8158235655175910608, guid: 1bb6b27252a69f44185ad3b3451770f2, type: 3}
+  - {fileID: 8158235655175910608, guid: 3e2d3ef6ff425c74f99ee6a4cbac2be4, type: 3}
+  - {fileID: 8158235655175910608, guid: 20564c2d1e242c24fa83820452bbbe5d, type: 3}
+  - {fileID: 8158235655175910608, guid: c299931312ea44040965818175ef9720, type: 3}
+  - {fileID: 8158235655175910608, guid: 9ebfae8b2e381ff43ac577baca89f080, type: 3}
+  - {fileID: 8158235655175910608, guid: a72b04f76ae9ded42a1494486ab018a0, type: 3}
+  - {fileID: 8158235655175910608, guid: fafc4ffdd16c9b841b2eeeca78e62896, type: 3}
+  - {fileID: 8158235655175910608, guid: ba5a01f9a47eb41478b4946aab2fd019, type: 3}
+  - {fileID: 8158235655175910608, guid: 2d20c3ddd7770b141876fa7ce3ea0ea4, type: 3}
+  - {fileID: 8158235655175910608, guid: b83249874616a5e4ea2d7bbf3a6a3fbb, type: 3}
+  - {fileID: 8158235655175910608, guid: 95955bf8c9beca343a527bc53274d3c0, type: 3}
+  m_progressPerPhase: 100
+  m_phaseLimit: 1
+  m_backgroundSprite: {fileID: 21300000, guid: 0d2755b299efe5347888c2ebd180c438, type: 3}
+--- !u!4 &449078186 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 883206938731264134, guid: f3e2032529fd24c4e8914754081bbcac,
+    type: 3}
+  m_PrefabInstance: {fileID: 3763611368809010345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &761795763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -665,13 +718,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
+      propertyPath: m_stages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
       propertyPath: m_worldBoundary.m_Extent.x
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
       propertyPath: m_worldBoundary.m_Extent.y
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
@@ -688,6 +746,36 @@ PrefabInstance:
       propertyPath: m_nextSceneName
       value: Tier02_Wind
       objectReference: {fileID: 0}
+    - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_stages.Array.data[0]
+      value: 
+      objectReference: {fileID: 248258023}
+    - target: {fileID: 3763611368950876385, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_roomSpawnTransform
+      value: 
+      objectReference: {fileID: 449078186}
+    - target: {fileID: 1014128333924375267, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305032271497896281, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305032271497896281, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9137742982157774250, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1511836508195805532, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
       propertyPath: m_Color.r
@@ -698,10 +786,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.85399145
       objectReference: {fileID: 0}
-    - target: {fileID: 9137742982157774250, guid: f3e2032529fd24c4e8914754081bbcac,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3763611368950876387, guid: f3e2032529fd24c4e8914754081bbcac, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f3e2032529fd24c4e8914754081bbcac, type: 3}
