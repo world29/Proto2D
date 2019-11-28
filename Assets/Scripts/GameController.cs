@@ -34,6 +34,9 @@ namespace Proto2D
         [Tooltip("ステージ")]
         public List<StageController> m_stages;
 
+        [Tooltip("開始ステージのインデクス")]
+        public int m_initialStageIndex = 0;
+
         [Header("プレイヤー (再生時にスポーン)")]
         public GameObject playerPrefab;
 
@@ -65,7 +68,7 @@ namespace Proto2D
                 replayText.text = "";
             }
 
-            LoadStage(0);
+            LoadStage(m_initialStageIndex);
 
             // プレイヤーをスポーンする
             GameObject spawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
