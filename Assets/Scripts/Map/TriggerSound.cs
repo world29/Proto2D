@@ -8,6 +8,7 @@ namespace Proto2D
     public class TriggerSound : MonoBehaviour
     {
         public AudioClip m_sound;
+        public float m_fadeTime = 1;
 
         private GameController m_gameController;
 
@@ -27,10 +28,36 @@ namespace Proto2D
                 AudioSource audioSource = m_gameController.GetComponent<AudioSource>();
                 if (audioSource)
                 {
-                    audioSource.Stop();
-                    audioSource.clip = m_sound;
-                    audioSource.Play();
+                    StartCoroutine(ChangeAudio(audioSource, m_sound, m_fadeTime));
                 }
+
+                // BGM の変更は一度だけ行う
+                GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+
+        IEnumerator ChangeAudio(AudioSource source, AudioClip clipToPlay, float fadeTime)
+        {
+            // フェードアウト
+            float timeEndFadeOut = Time.timeSinceLevelLoad + fadeTime;
+            while (Time.timeSinceLevelLoad < timeEndFadeOut)
+            {
+                source.volume = (timeEndFadeOut - Time.timeSinceLevelLoad) / fadeTime;
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            source.Stop();
+            source.clip = clipToPlay;
+            source.Play();
+
+            // フェードイン
+            float timeEndFadeIn = Time.timeSinceLevelLoad + fadeTime;
+            while (Time.timeSinceLevelLoad < timeEndFadeIn)
+            {
+                source.volume = 1 - ((timeEndFadeIn - Time.timeSinceLevelLoad) / fadeTime);
+
+                yield return new WaitForEndOfFrame();
             }
         }
     }
