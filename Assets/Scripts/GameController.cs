@@ -35,6 +35,9 @@ namespace Proto2D
         [Tooltip("開始ステージのインデクス")]
         public int m_initialStageIndex = 0;
 
+        [Tooltip("ステージの間の部屋")]
+        public RoomController m_bridgeRoom;
+
         [Header("プレイヤー (再生時にスポーン)")]
         public GameObject playerPrefab;
 
@@ -150,10 +153,20 @@ namespace Proto2D
             // 明示的に呼び出してリセットする
             OnPhaseChanged(Stage.Phase);
 
+            // 初期ステージ以外なら、スタート部屋の前に中間部屋を経由する
+            if (prevStage)
+            {
+                RoomController rc = Stage.SpawnNextRoom(m_bridgeRoom, m_roomSpawnTransform.position);
+                updateSpawnPosition(rc);
+                registerRoom(rc);
+            }
+
             // スタート部屋をスポーン
-            RoomController rc = Stage.SpawnStartRoom(m_roomSpawnTransform.position);
-            updateSpawnPosition(rc);
-            registerRoom(rc);
+            {
+                RoomController rc = Stage.SpawnStartRoom(m_roomSpawnTransform.position);
+                updateSpawnPosition(rc);
+                registerRoom(rc);
+            }
         }
 
         public void SpawnPlayer(Vector3 position)

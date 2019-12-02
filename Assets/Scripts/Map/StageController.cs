@@ -73,7 +73,7 @@ namespace Proto2D
         public RoomController SpawnRoom(Vector3 position)
         {
             RandomRoomSelector roomSelector = m_roomSelectors[Phase];
-            return spawnNextRoom(roomSelector.Next(), position);
+            return SpawnNextRoom(roomSelector.Next(), position);
         }
 
         public RoomController SpawnStartRoom(Vector3 position)
@@ -81,7 +81,7 @@ namespace Proto2D
             Debug.Assert(m_startRooms.Count > 0);
 
             int roomIndex = Random.Range(0, m_startRooms.Count);
-            return spawnNextRoom(m_startRooms[roomIndex], position);
+            return SpawnNextRoom(m_startRooms[roomIndex], position);
         }
 
         // 
@@ -109,7 +109,7 @@ namespace Proto2D
             }
         }
 
-        private RoomController spawnNextRoom(RoomController roomPrefab, Vector3 position)
+        public RoomController SpawnNextRoom(RoomController roomPrefab, Vector3 position)
         {
             // タイルマップ原点が部屋の中心軸上にあるかチェック
             Tilemap tilemap = roomPrefab.PrimaryTilemap;
