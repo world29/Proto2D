@@ -38,10 +38,7 @@ namespace Proto2D
         private void Awake()
         {
             m_tilemapController = GameObject.FindObjectOfType<TilemapController>();
-        }
 
-        private void Start()
-        {
             // 各フェーズごとに出現する部屋を振り分け、ランダムセレクタを初期化する
             m_roomSelectors = new Dictionary<StagePhase, RandomRoomSelector>();
             List<StagePhase> phases = new List<StagePhase> { StagePhase.Phase1, StagePhase.Phase2, StagePhase.Phase3 };
@@ -51,13 +48,25 @@ namespace Proto2D
                 IEnumerable<RoomController> pool = m_normalRooms.Where(item => (item.m_stagePhaseFlag & phaseFlag) > 0);
                 m_roomSelectors.Add(phase, new RandomRoomSelector(pool));
             }
+        }
 
+        private void Start()
+        {
+        }
+
+        public void EnterStage()
+        {
             // 背景スプライトを変更
             Background bg = GameObject.FindObjectOfType<Background>();
             if (bg)
             {
                 bg.GetComponent<SpriteRenderer>().sprite = m_backgroundSprite;
             }
+        }
+
+        public void ExitStage()
+        {
+
         }
 
         // 
