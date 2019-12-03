@@ -13,6 +13,8 @@ namespace Proto2D
     {
         AudioSource m_audioSource;
 
+        private Coroutine m_fadeOutCoroutine;
+
         private void Start()
         {
             m_audioSource = GetComponent<AudioSource>();
@@ -20,6 +22,11 @@ namespace Proto2D
 
         public void Play(AudioClip audioClip)
         {
+            if (m_fadeOutCoroutine != null)
+            {
+                StopCoroutine(m_fadeOutCoroutine);
+            }
+
             m_audioSource.clip = audioClip;
             m_audioSource.Play();
             m_audioSource.volume = 1;
@@ -27,7 +34,7 @@ namespace Proto2D
 
         public void Stop(float fadeDuration)
         {
-            StartCoroutine(FadeOut(fadeDuration));
+            m_fadeOutCoroutine = StartCoroutine(FadeOut(fadeDuration));
         }
 
         private IEnumerator FadeOut(float duration)
