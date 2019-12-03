@@ -16,8 +16,6 @@ namespace Proto2D
         public float m_progressPerPhase = 100;
         public StagePhase m_phaseLimit = StagePhase.Phase3;
 
-        public Sprite m_backgroundSprite;
-
         // public field
         [HideInInspector]
         public float Progress { get { return m_progress.Value; } set { m_progress.Value = value; } }
@@ -52,21 +50,6 @@ namespace Proto2D
 
         private void Start()
         {
-        }
-
-        public void EnterStage()
-        {
-            // 背景スプライトを変更
-            Background bg = GameObject.FindObjectOfType<Background>();
-            if (bg)
-            {
-                bg.GetComponent<SpriteRenderer>().sprite = m_backgroundSprite;
-            }
-        }
-
-        public void ExitStage()
-        {
-
         }
 
         // 

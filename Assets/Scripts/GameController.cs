@@ -129,16 +129,12 @@ namespace Proto2D
 
             if (prevStage)
             {
-                prevStage.ExitStage();
-
                 prevStage.OnCompleted -= OnStageCompleted;
                 prevStage.m_phase.OnChanged -= OnPhaseChanged;
             }
 
             if (Stage)
             {
-                Stage.EnterStage();
-
                 Stage.OnCompleted += OnStageCompleted;
                 Stage.m_phase.OnChanged += OnPhaseChanged;
             }
