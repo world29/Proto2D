@@ -295,7 +295,7 @@ namespace Proto2D
 
         public void OnDeath()
         {
-            GameController.Instance.Stage.AddProgressValue(progressValue);
+            GameController.Instance.AddProgressValue(progressValue);
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)

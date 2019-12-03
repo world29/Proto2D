@@ -71,7 +71,10 @@ namespace Proto2D
                 replayText.text = "";
             }
 
-            LoadStage(m_initialStageIndex);
+            if (m_initialStageIndex < m_stages.Count)
+            {
+                LoadStage(m_initialStageIndex);
+            }
 
             // プレイヤーをスポーンする
             GameObject spawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
@@ -99,24 +102,27 @@ namespace Proto2D
 
         private void LateUpdate()
         {
-            m_worldBoundary.center = (Vector2)m_cameraRoot.gameObject.transform.position;
-
-            // 新しく部屋をスポーンする
-            Bounds bounds = new Bounds(m_roomSpawnTransform.position, Vector3.one);
-            if (WorldBoundary.Intersects(bounds))
+            if (m_stageIndex >= 0 && m_stageIndex < m_stages.Count)
             {
-                RoomController rc = Stage.SpawnRoom(m_roomSpawnTransform.position);
-                updateSpawnPosition(rc);
-                registerRoom(rc);
-            }
+                m_worldBoundary.center = (Vector2)m_cameraRoot.gameObject.transform.position;
 
-            // スクロールアウトした部屋の削除
-            var items = m_spawnedRooms.Where(item => item.Key.max.y < GameController.Instance.WorldBoundary.min.y);
-            if (items.Count() > 0)
-            {
-                var item = items.ElementAt(0);
-                GameObject.Destroy(item.Value.gameObject);
-                m_spawnedRooms.Remove(item.Key);
+                // 新しく部屋をスポーンする
+                Bounds bounds = new Bounds(m_roomSpawnTransform.position, Vector3.one);
+                if (WorldBoundary.Intersects(bounds))
+                {
+                    RoomController rc = Stage.SpawnRoom(m_roomSpawnTransform.position);
+                    updateSpawnPosition(rc);
+                    registerRoom(rc);
+                }
+
+                // スクロールアウトした部屋の削除
+                var items = m_spawnedRooms.Where(item => item.Key.max.y < GameController.Instance.WorldBoundary.min.y);
+                if (items.Count() > 0)
+                {
+                    var item = items.ElementAt(0);
+                    GameObject.Destroy(item.Value.gameObject);
+                    m_spawnedRooms.Remove(item.Key);
+                }
             }
         }
 
@@ -170,6 +176,14 @@ namespace Proto2D
             if (m_player == null)
             {
                 m_player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
+            }
+        }
+
+        public void AddProgressValue(float progress)
+        {
+            if (m_stageIndex >= 0 && m_stageIndex < m_stages.Count)
+            {
+                Stage.AddProgressValue(progress);
             }
         }
 
