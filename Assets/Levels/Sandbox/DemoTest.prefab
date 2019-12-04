@@ -4086,7 +4086,6 @@ GameObject:
   - component: {fileID: 694769870163113230}
   - component: {fileID: 1248643621967328065}
   - component: {fileID: 8626251355420776156}
-  - component: {fileID: 6261581273706076696}
   m_Layer: 0
   m_Name: TriggerSound
   m_TagString: Untagged
@@ -4155,20 +4154,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16, y: 8}
   m_EdgeRadius: 0
---- !u!114 &6261581273706076696
-MonoBehaviour:
+--- !u!320 &5712388426515075682
+PlayableDirector:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6231705633650205929}
+  m_GameObject: {fileID: 649080557910584252}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a59774ae60797c345b06f4a2b73ef9e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sound: {fileID: 8300000, guid: 3654289ebdce3094f9943df1ccc4673b, type: 3}
-  m_fadeTime: 0
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: f8226195b6dfa49d881eba8f5fcf0324, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114809982733085284, guid: f8226195b6dfa49d881eba8f5fcf0324, type: 2}
+    value: {fileID: 4872854081320752784}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &8916984473485260605
 GameObject:
   m_ObjectHideFlags: 0
@@ -5082,8 +5086,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6609291727114985735}
   - component: {fileID: 4465933680936766854}
+  - component: {fileID: 4555154639529975791}
+  - component: {fileID: 8697285338000733198}
   m_Layer: 0
-  m_Name: StartRoom
+  m_Name: DemoTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5144,6 +5150,46 @@ MonoBehaviour:
   m_stagePhaseFlag: 7
   enemySpawnPosition: {fileID: 0}
   enemyPrefabs: []
+--- !u!320 &4555154639529975791
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003618658740304383}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: a7c285c21805c46feb28c085047f1b29, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 1
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114231839376915156, guid: a7c285c21805c46feb28c085047f1b29, type: 2}
+    value: {fileID: 649080557910584252}
+  - key: {fileID: 114320583961661904, guid: a7c285c21805c46feb28c085047f1b29, type: 2}
+    value: {fileID: 4872854081320752784}
+  m_ExposedReferences:
+    m_References: []
+--- !u!95 &8697285338000733198
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003618658740304383}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &277404618132084566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6563,9 +6609,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcce6c875329c124bb51d5ba3ff4f2f6, type: 3}
+--- !u!95 &4872854081320752784 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3695806071682226587, guid: fcce6c875329c124bb51d5ba3ff4f2f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8130685019002130187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &649080557910584248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8778643387317822643, guid: fcce6c875329c124bb51d5ba3ff4f2f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8130685019002130187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &649080557910584252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8778643387317822647, guid: fcce6c875329c124bb51d5ba3ff4f2f6,
     type: 3}
   m_PrefabInstance: {fileID: 8130685019002130187}
   m_PrefabAsset: {fileID: 0}

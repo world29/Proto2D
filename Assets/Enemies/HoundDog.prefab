@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83770505029336818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.178, y: -0.511, z: 0}
+  m_LocalPosition: {x: -0.178, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
@@ -149,7 +149,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8114190860774668913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.853, y: -0.015, z: 0}
+  m_LocalPosition: {x: 1.656, y: -0.456, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
@@ -259,18 +259,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.012745559}
+  m_Offset: {x: 0.08025849, y: -0.18388754}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.15625, y: 1.34375}
+    oldSize: {x: 3, y: 2}
     newSize: {x: 1.09375, y: 0.625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0717618, y: 1.2065293}
+  m_Size: {x: 2.7940876, y: 1.5997955}
   m_EdgeRadius: 0
 --- !u!114 &7599061006464237991
 MonoBehaviour:
@@ -522,12 +522,12 @@ PrefabInstance:
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.084
+      value: 0.148
       objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.145
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
@@ -587,7 +587,7 @@ PrefabInstance:
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.65
+      value: 2.0186718
       objectReference: {fileID: 0}
     - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
@@ -599,16 +599,16 @@ PrefabInstance:
       propertyPath: m_damageTypeFlag
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: receiver
-      value: 
-      objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 1822174567075259069, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7258437468021551376, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: receiver
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557b88b7f94fcdd47833e05bbbf8b965, type: 3}
 --- !u!4 &8356609445520509098 stripped
