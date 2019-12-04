@@ -293,7 +293,7 @@ namespace Proto2D
             ChangeState(new EnemyState_Damage());
         }
 
-        public void OnDeath()
+        protected virtual void OnDeath()
         {
             GameController.Instance.AddProgressValue(progressValue);
         }

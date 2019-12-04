@@ -35,6 +35,9 @@ namespace Proto2D
         [Tooltip("開始ステージのインデクス")]
         public int m_initialStageIndex = 0;
 
+        [Tooltip("ボス出現部屋")]
+        public RoomController m_bossRoom;
+
         [Tooltip("ステージの間の部屋")]
         public RoomController m_bridgeRoom;
 
@@ -276,7 +279,12 @@ namespace Proto2D
                     }
                     break;
                 case StagePhase.Phase3:
-                    //TODO:
+                    {
+                        // ボス部屋を生成する
+                        RoomController rc = Stage.SpawnNextRoom(m_bossRoom, m_roomSpawnTransform.position);
+                        updateSpawnPosition(rc);
+                        registerRoom(rc);
+                    }
                     break;
             }
         }

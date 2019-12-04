@@ -23,5 +23,13 @@ namespace Proto2D
                 ChangeState(new EnemyState_Teleportation());
             }
         }
+
+        protected override void OnDeath()
+        {
+            if (GameController.Instance)
+            {
+                GameController.Instance.Stage.Complete();
+            }
+        }
     }
 }

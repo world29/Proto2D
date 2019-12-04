@@ -92,6 +92,12 @@ namespace Proto2D
             }
         }
 
+        // 強制ステージコンプリート (ボス倒したときに呼ばれる想定)
+        public void Complete()
+        {
+            OnCompleted();
+        }
+
         public RoomController SpawnNextRoom(RoomController roomPrefab, Vector3 position)
         {
             // タイルマップ原点が部屋の中心軸上にあるかチェック
