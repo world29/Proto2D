@@ -183,7 +183,10 @@ namespace Proto2D
         {
             if (m_stageIndex >= 0 && m_stageIndex < m_stages.Count)
             {
-                Stage.AddProgressValue(progress);
+                if (Stage.Phase != StagePhase.Phase3)
+                {
+                    Stage.AddProgressValue(progress);
+                }
             }
         }
 
