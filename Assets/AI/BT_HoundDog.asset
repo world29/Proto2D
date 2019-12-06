@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 114635286459183492}
   - {fileID: 114653183356549972}
   - {fileID: 114405292529407664}
+  - {fileID: 114832676667255266}
 --- !u!114 &114186734394802590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_Name: Move Forward
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 56, y: 104}
+  position: {x: 56, y: 120}
   ports:
     keys:
     - parent
@@ -219,13 +220,13 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
-  m_speed: 15
+  m_speed: 8
   m_autoTurn: 0
   m_timeout:
     m_type: 1
     m_min: 0
     m_max: 0
-    m_value: 0.4
+    m_value: 0.15
 --- !u!114 &114519514175464180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +494,45 @@ MonoBehaviour:
   m_priority: 5
   child: {fileID: 0}
   condition: {fileID: 0}
+--- !u!114 &114832676667255266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa2bf52684fc824799e152eb6666068, type: 3}
+  m_Name: Move Forward
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 72, y: 296}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114832676667255266}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114906285408165198}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  m_speed: 17
+  m_autoTurn: 0
+  m_timeout:
+    m_type: 1
+    m_min: 0
+    m_max: 0
+    m_value: 0.2
 --- !u!114 &114888554003349128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,6 +595,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114415204384602768}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114832676667255266}
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114635286459183492}
