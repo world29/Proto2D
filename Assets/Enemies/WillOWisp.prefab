@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1358504037624809852
 Transform:
   m_ObjectHideFlags: 0
@@ -1169,7 +1169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   horizontalRayCount: 0
   verticalRayCount: 0
   horizontalRaySpacing: 0
@@ -1198,13 +1198,13 @@ MonoBehaviour:
   progressValue: 3
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
-  behaviourTree: {fileID: 11400000, guid: 403bd2aba7839174eb85cb1658e11049, type: 2}
+  behaviourTree: {fileID: 11400000, guid: 41590dfcddc5747e1b1c2df2780b851d, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
   shotTransform: {fileID: 0}
   sights:
   - fov: 180
-    viewDistance: 6
+    viewDistance: 8
     angleOffset: 0
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
