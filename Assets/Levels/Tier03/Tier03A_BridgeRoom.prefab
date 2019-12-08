@@ -15233,6 +15233,19 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &4697577300278155955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4194735162830155702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fa2d64fc2bb4cfe8669443cd703333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phaseProgressLock: 1
 --- !u!1 &5070147761312748625
 GameObject:
   m_ObjectHideFlags: 0
@@ -15245,6 +15258,7 @@ GameObject:
   - component: {fileID: 2840534136418595993}
   - component: {fileID: 3003097058227383739}
   - component: {fileID: 9109710932813234107}
+  - component: {fileID: 8265013863947894875}
   m_Layer: 0
   m_Name: TriggerBackgroundChange
   m_TagString: Untagged
@@ -15326,6 +15340,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_backgroundSprite: {fileID: 21300000, guid: 457dd7e58db2a4c428a2f33c728fa045, type: 3}
+--- !u!114 &8265013863947894875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070147761312748625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fa2d64fc2bb4cfe8669443cd703333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phaseProgressLock: 0
 --- !u!1 &5139968352006241740
 GameObject:
   m_ObjectHideFlags: 0
@@ -18867,6 +18894,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6cabe6c6ff874d389d3ce38f17c1906, type: 3}
+--- !u!1 &4194735162830155702 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4317866700862555125, guid: c6cabe6c6ff874d389d3ce38f17c1906,
+    type: 3}
+  m_PrefabInstance: {fileID: 133583536471043139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8500998403796824175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8368541907580263468, guid: c6cabe6c6ff874d389d3ce38f17c1906,

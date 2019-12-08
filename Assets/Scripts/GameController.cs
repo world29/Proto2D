@@ -58,6 +58,7 @@ namespace Proto2D
         private GameObject m_player;
         private bool m_isSceneLoading = false;
         private int m_stageIndex = -1;
+        private bool phaseLock = false;
 
         private Dictionary<Bounds, RoomController> m_spawnedRooms = new Dictionary<Bounds, RoomController>();
 
@@ -182,6 +183,10 @@ namespace Proto2D
 
         public void AddProgressValue(float progress)
         {
+            if (phaseLock)
+            {
+                return;
+            }
             if (m_stageIndex >= 0 && m_stageIndex < m_stages.Count)
             {
                 if (Stage.Phase != StagePhase.Phase3)
@@ -203,6 +208,11 @@ namespace Proto2D
             UnityEngine.Tilemaps.Tilemap tilemap = spawnedRoom.PrimaryTilemap;
             Vector3 roomSize = new Vector3(tilemap.size.x * tilemap.cellSize.x, tilemap.size.y * tilemap.cellSize.y);
             m_spawnedRooms.Add(new Bounds(spawnedRoom.transform.position, roomSize), spawnedRoom);
+        }
+
+        public void setPhaseLock(bool flag)
+        {
+            phaseLock = flag;
         }
 
         public void Pause()
