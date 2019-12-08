@@ -11,6 +11,8 @@ namespace Proto2D
     {
         // serialized field
         public List<RoomController> m_startRooms;
+        public List<RoomController> m_bridgeRooms;
+        public List<RoomController> m_bossRooms;
         public List<RoomController> m_normalRooms;
 
         public float m_progressPerPhase = 100;
@@ -67,6 +69,24 @@ namespace Proto2D
             return SpawnNextRoom(m_startRooms[roomIndex], position);
         }
 
+        public RoomController SpawnBossRoom(Vector3 position)
+        {
+            Debug.Assert(m_startRooms.Count > 0);
+
+            int roomIndex = Random.Range(0, m_bossRooms.Count);
+            return SpawnNextRoom(m_bossRooms[roomIndex], position);
+
+        }
+
+        public RoomController SpawnBridgeRoom(Vector3 position)
+        {
+            Debug.Assert(m_startRooms.Count > 0);
+
+            int roomIndex = Random.Range(0, m_bridgeRooms.Count);
+            return SpawnNextRoom(m_bridgeRooms[roomIndex], position);
+
+        }
+
         // 
         public void AddProgressValue(float value)
         {
@@ -97,6 +117,7 @@ namespace Proto2D
         {
             OnCompleted();
         }
+
 
         public RoomController SpawnNextRoom(RoomController roomPrefab, Vector3 position)
         {

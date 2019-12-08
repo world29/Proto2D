@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 6228375647003769256, guid: e62df92d38d5d4fddab61565445f50d6,
         type: 3}
       propertyPath: m_Name
-      value: Tier03_SC
+      value: Tier03_StageController
       objectReference: {fileID: 0}
     - target: {fileID: 6205017992219985929, guid: e62df92d38d5d4fddab61565445f50d6,
         type: 3}
@@ -79,6 +79,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2954326552167603158, guid: e62df92d38d5d4fddab61565445f50d6,
         type: 3}
+      propertyPath: m_bridgeRooms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954326552167603158, guid: e62df92d38d5d4fddab61565445f50d6,
+        type: 3}
+      propertyPath: m_bossRooms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954326552167603158, guid: e62df92d38d5d4fddab61565445f50d6,
+        type: 3}
       propertyPath: m_normalRooms.Array.data[2]
       value: 
       objectReference: {fileID: 8158235655175910608, guid: 9b34fb2c50ebe3c41b4b4101d1f3633c,
@@ -89,5 +99,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4465933680936766854, guid: 67cbddf842716094c98d31bacd862cc0,
         type: 3}
+    - target: {fileID: 2954326552167603158, guid: e62df92d38d5d4fddab61565445f50d6,
+        type: 3}
+      propertyPath: m_bridgeRooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 8158235655175910608, guid: 9b0cef66743e64d77b84e0eccd446cdc,
+        type: 3}
+    - target: {fileID: 2954326552167603158, guid: e62df92d38d5d4fddab61565445f50d6,
+        type: 3}
+      propertyPath: m_bossRooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 8158235655175910608, guid: 773978125dbe84eaeb4b84d24fe65e5a,
+        type: 3}
+    - target: {fileID: 2954326552167603158, guid: e62df92d38d5d4fddab61565445f50d6,
+        type: 3}
+      propertyPath: m_phaseLimit
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e62df92d38d5d4fddab61565445f50d6, type: 3}

@@ -9,6 +9,7 @@ namespace Proto2D
     {
         public GameObject m_bossPrefab;
         public Transform m_spawnTransform;
+        public AudioClip m_playBossBGM;
 
         IEnumerator BossSpawning(Vector3 position)
         {
@@ -32,6 +33,12 @@ namespace Proto2D
 
         IEnumerator SpawnBossSequence()
         {
+            // BGMを再生
+            if(m_playBossBGM)
+            {
+                SoundManager.Instance.Play(m_playBossBGM);
+            }
+            
             // 時を止める
             GameController.Instance.Pause();
 
