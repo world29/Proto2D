@@ -24,7 +24,9 @@ namespace Proto2D
         public Text replayText;
 
         [Tooltip("ワールドの境界")]
-        public Bounds m_worldBoundary;
+        public Bounds m_worldBoundaryParam;
+
+        private Bounds m_worldBoundary;
 
         [Tooltip("部屋生成位置")]
         public Transform m_roomSpawnTransform;
@@ -61,6 +63,7 @@ namespace Proto2D
 
         void Start()
         {
+            m_worldBoundary = m_worldBoundaryParam;
             isGameOver = false;
             isGameClear = false;
             if (replayText)
@@ -102,6 +105,7 @@ namespace Proto2D
             if (m_stageIndex >= 0 && m_stageIndex < m_stages.Count)
             {
                 m_worldBoundary.center = (Vector2)m_cameraRoot.gameObject.transform.position;
+                m_worldBoundary.center += m_worldBoundaryParam.center;
 
                 // 新しく部屋をスポーンする
                 Bounds bounds = new Bounds(m_roomSpawnTransform.position, Vector3.one);
@@ -331,7 +335,7 @@ namespace Proto2D
         private void OnDrawGizmos()
         {
             Gizmos.color = new Color(0, 1, 1, .2f);
-            Gizmos.DrawCube(m_worldBoundary.center, m_worldBoundary.size);
+            Gizmos.DrawCube(m_worldBoundaryParam.center, m_worldBoundaryParam.size);
 
             if (m_roomSpawnTransform)
             {

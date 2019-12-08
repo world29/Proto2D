@@ -669,13 +669,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   replayText: {fileID: 3654243045989336355}
-  m_worldBoundary:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 10, y: 30, z: 5}
+  m_worldBoundaryParam:
+    m_Center: {x: 0, y: -18, z: 0}
+    m_Extent: {x: 10, y: 30, z: 10}
   m_roomSpawnTransform: {fileID: 883206938731264134}
   m_stages: []
   m_initialStageIndex: 0
-  m_bridgeRoom: {fileID: 0}
   playerPrefab: {fileID: 6503610203471954336, guid: 4eb8db2a63a3af346b6f45d686bd5f63,
     type: 3}
   m_cameraRoot: {fileID: 3763611368824960922}
@@ -1425,6 +1424,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8969ae16e4aedd94c83c774bcea4cc09, type: 3}
+--- !u!114 &7109689613902421390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6237970994813150106, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+    type: 3}
+  m_PrefabInstance: {fileID: 3763611367542046228}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4178668971758762307 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 992645503052646231, guid: 8969ae16e4aedd94c83c774bcea4cc09,
@@ -1477,18 +1488,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7109689613902421390 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6237970994813150106, guid: 8969ae16e4aedd94c83c774bcea4cc09,
-    type: 3}
-  m_PrefabInstance: {fileID: 3763611367542046228}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &3654243045753732261 stripped
