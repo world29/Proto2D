@@ -38,7 +38,9 @@ namespace Proto2D
             {
                 SoundManager.Instance.Play(m_playBossBGM);
             }
-            
+
+            GameController.Instance.Stage.setStageBossPhaseParams();
+
             // 時を止める
             GameController.Instance.Pause();
 

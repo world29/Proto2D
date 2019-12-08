@@ -251,29 +251,23 @@ namespace Proto2D
             }
         }
 
+        public CameraController getCameraController()
+        {
+            return m_cameraRoot.GetComponent<CameraController>();
+        }
+
         void OnPhaseChanged(StagePhase phase)
         {
             Debug.Assert(m_cameraRoot);
-
+            Stage.setStagePhaseParams();
             switch (phase)
             {
                 case StagePhase.Phase1:
                     {
-                        // 自動スクロールを無効化する
-                        CameraController cc = m_cameraRoot.GetComponent<CameraController>();
-                        Debug.Assert(cc);
-                        cc.m_autoScrollEnabled = false;
-                        cc.m_followDownward = true;
                     }
                     break;
                 case StagePhase.Phase2:
                     {
-                        // 自動スクロールを有効化する
-                        //MEMO: 下方向の追従を OFF にしないと自動スクロールが正しく動かない
-                        CameraController cc = m_cameraRoot.GetComponent<CameraController>();
-                        Debug.Assert(cc);
-                        cc.m_autoScrollEnabled = true;
-                        cc.m_followDownward = false;
                     }
                     break;
                 case StagePhase.Phase3:

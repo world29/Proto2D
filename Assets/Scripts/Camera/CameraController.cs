@@ -4,21 +4,25 @@ using UnityEngine;
 
 namespace Proto2D
 {
+
     public class CameraController : MonoBehaviour
     {
-        [Header("プレイヤー追従")]
-        public bool m_followUpward = true;
-        public bool m_followDownward = true;
-        public bool m_followSideway = false;
+
         [Tooltip("追従のスムージング (0 ならスムージングなし)")]
         public float m_followSmoothTime = .1f;
         [Tooltip("この境界内にプレイヤーが収まるように動きます")]
         public Bounds m_focusBounds;
 
-        [Header("自動スクロール")]
+
+        [Tooltip("StageControllerが無い場合はこちらで設定した設定が")]
+        public bool m_followUpward = true;
+        public bool m_followDownward = true;
+        public bool m_followSideway = false;
         public bool m_autoScrollEnabled = false;
         public float m_autoScrollSpeed = 1;
 
+
+        [Tooltip("---")]
         Transform m_target;
         float m_smoothVelocityY;
 
@@ -40,6 +44,16 @@ namespace Proto2D
                 Scroll(m_autoScrollSpeed);
             }
         }
+
+        public void setCameraParams(PhaseCameraParameters pcp)
+        {
+            m_followUpward = pcp.m_followUpward;
+            m_followDownward = pcp.m_followDownward;
+            m_followSideway = pcp.m_followSideway;
+            m_autoScrollEnabled = pcp.m_autoScrollEnabled;
+            m_autoScrollSpeed = pcp.m_autoScrollSpeed;
+        }
+
 
         // カメラをターゲットの位置に移動するための移動量を計算する
         // 移動は immediate = true なら即時。そうでなければスムージングする
@@ -146,5 +160,17 @@ namespace Proto2D
             Gizmos.color = new Color(0, 0, 1, .2f);
             Gizmos.DrawCube(m_focusBounds.center, m_focusBounds.size);
         }
+    }
+    [System.Serializable]
+    public struct PhaseCameraParameters
+    {
+        [Header("プレイヤー追従")]
+        public bool m_followUpward;
+        public bool m_followDownward;
+        public bool m_followSideway;
+        [Header("自動スクロール")]
+        public bool m_autoScrollEnabled;
+        public float m_autoScrollSpeed;
+
     }
 }

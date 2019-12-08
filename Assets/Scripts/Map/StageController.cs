@@ -15,6 +15,12 @@ namespace Proto2D
         public List<RoomController> m_bossRooms;
         public List<RoomController> m_normalRooms;
 
+        [Header("フェイズ毎の設定")]
+        public List<StagePhaseParameters> stagePhaseParams = new List<StagePhaseParameters>();
+
+        [Header("ボスフェイズの設定")]
+        public StagePhaseParameters stageBossPhaseParams;
+
         public float m_progressPerPhase = 100;
         public StagePhase m_phaseLimit = StagePhase.Phase3;
 
@@ -52,6 +58,42 @@ namespace Proto2D
 
         private void Start()
         {
+        }
+
+        // 現在のフェイズからのパラメータを設定
+        public void setStagePhaseParams()
+        {
+            switch (Phase)
+            {
+                case StagePhase.Phase1:
+                    {
+                        setStagePhaseParams(0);
+                    }
+                    break;
+                case StagePhase.Phase2:
+                    {
+                        setStagePhaseParams(1);
+                    }
+                    break;
+                case StagePhase.Phase3:
+                    {
+                        setStagePhaseParams(2);
+                    }
+                    break;
+            }
+        }
+
+        public void setStageBossPhaseParams()
+        {
+            GameController.Instance.getCameraController().setCameraParams(stageBossPhaseParams.cameraParams);
+        }
+
+        public void setStagePhaseParams(int index)
+        {
+            if(index < stagePhaseParams.Count)
+            {
+                GameController.Instance.getCameraController().setCameraParams(stagePhaseParams[index].cameraParams);
+            }
         }
 
         // 
@@ -168,4 +210,14 @@ namespace Proto2D
         }
 
     }
+
+
+    [System.Serializable]
+    public struct StagePhaseParameters
+    {
+        [Header("フェイズ毎のカメラ設定")]
+        public PhaseCameraParameters cameraParams;
+
+    }
+
 }

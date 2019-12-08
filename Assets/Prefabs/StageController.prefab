@@ -45,8 +45,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_startRooms:
   - {fileID: 4465933680936766854, guid: 67cbddf842716094c98d31bacd862cc0, type: 3}
+  m_bridgeRooms: []
+  m_bossRooms: []
   m_normalRooms:
   - {fileID: 8158235655175910608, guid: 7fc57bf9e1159e3458a22923519b5cdb, type: 3}
   - {fileID: 8158235655175910608, guid: 9b34fb2c50ebe3c41b4b4101d1f3633c, type: 3}
+  stagePhaseParams:
+  - cameraParams:
+      m_followUpward: 1
+      m_followDownward: 1
+      m_followSideway: 0
+      m_autoScrollEnabled: 0
+      m_autoScrollSpeed: 0
+  - cameraParams:
+      m_followUpward: 1
+      m_followDownward: 0
+      m_followSideway: 0
+      m_autoScrollEnabled: 1
+      m_autoScrollSpeed: 1.5
+  - cameraParams:
+      m_followUpward: 1
+      m_followDownward: 0
+      m_followSideway: 0
+      m_autoScrollEnabled: 0
+      m_autoScrollSpeed: 0
+  stageBossPhaseParams:
+    cameraParams:
+      m_followUpward: 1
+      m_followDownward: 0
+      m_followSideway: 0
+      m_autoScrollEnabled: 1
+      m_autoScrollSpeed: 3
   m_progressPerPhase: 100
   m_phaseLimit: 1
