@@ -357,7 +357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8114190860774668913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.101, y: -0.549, z: 0}
+  m_LocalPosition: {x: 1.046, y: -0.289, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
@@ -516,7 +516,10 @@ MonoBehaviour:
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4656553412495861962}
   shotTransform: {fileID: 0}
-  sights: []
-  groundDetectionRayLength: 0.5
+  sights:
+  - fov: 90
+    viewDistance: 10
+    angleOffset: 19
+  groundDetectionRayLength: 1.5
   velocity: {x: 0, y: 0}
   effectSocket: {fileID: 0}
