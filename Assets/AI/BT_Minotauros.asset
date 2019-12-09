@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 114351627944322914}
   - {fileID: 114710629626387180}
   - {fileID: 114124986301734722}
+  - {fileID: 114861040943166840}
 --- !u!114 &114124986301734722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ MonoBehaviour:
   m_Name: Move Forward
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 392, y: -88}
+  position: {x: 408, y: 88}
   ports:
     keys:
     - parent
@@ -250,6 +251,9 @@ MonoBehaviour:
       - fieldName: parent
         node: {fileID: 114683087477707972}
         reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114861040943166840}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -316,3 +320,35 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 4
   child: {fileID: 0}
+--- !u!114 &114861040943166840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da739896c2618743abaefc791f0345d, type: 3}
+  m_Name: Look At Player
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 408, y: -24}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114861040943166840}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114812049693047758}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
