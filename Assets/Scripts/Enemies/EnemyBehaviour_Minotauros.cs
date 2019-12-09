@@ -18,7 +18,7 @@ namespace Proto2D
 
             // ビューポートより下にスクロールアウトした場合はテレポートする
             Vector3 viewportPoint = Camera.main.WorldToViewportPoint(transform.position);
-            if (viewportPoint.y < 0)
+            if (viewportPoint.y < -0.2)
             {
                 ChangeState(new EnemyState_Teleportation());
             }
