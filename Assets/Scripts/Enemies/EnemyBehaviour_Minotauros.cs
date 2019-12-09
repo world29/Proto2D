@@ -24,6 +24,25 @@ namespace Proto2D
             }
         }
 
+        public override void OnTakeDamage(float damageAmount)
+        {
+            if (health <= 0)
+            {
+                return;
+            }
+
+            health -= damageAmount;
+            if (health <= 0)
+            {
+                health = 0;
+
+                OnDeath();
+            }
+
+            ChangeState(new EnemyState_Damage_Minotauros());
+        }
+
+
         protected override void OnDeath()
         {
             if (GameController.Instance)
