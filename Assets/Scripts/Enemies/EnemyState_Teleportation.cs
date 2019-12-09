@@ -28,18 +28,22 @@ namespace Proto2D
 
             // テレポート先の座標を取得
             TilemapController tc = GameObject.FindObjectOfType<TilemapController>();
-            Vector3[] positions = tc.QueryPositionsForTeleportation();
-            Debug.Assert(positions.Count() > 0);
+            if (tc)
+            {
+                Vector3[] positions = tc.QueryPositionsForTeleportation();
+                Debug.Assert(positions.Count() > 0);
 
-            // ビューポート内でもっとも高い位置にある座標を選択する
-            m_targetPosition = positions.Aggregate((acc, cur) => {
-                bool isInViewport = Camera.main.WorldToViewportPoint(cur).y < 1;
-                if (isInViewport && acc.y < cur.y)
-                {
-                    return cur;
-                }
-                return acc;
-            });
+                // ビューポート内でもっとも高い位置にある座標を選択する
+                m_targetPosition = positions.Aggregate((acc, cur) => {
+                    bool isInViewport = Camera.main.WorldToViewportPoint(cur).y < 1;
+                    if (isInViewport && acc.y < cur.y)
+                    {
+                        return cur;
+                    }
+                    return acc;
+                });
+            }
+
             m_velocity = Vector3.zero;
         }
 
