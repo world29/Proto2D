@@ -104,9 +104,15 @@ namespace Proto2D
 
         void UpdateAnimationParameters()
         {
-            m_animator.SetFloat("move_x", Mathf.Abs(velocity.x));
-            m_animator.SetFloat("move_y", Mathf.Abs(velocity.y));
-            m_animator.SetBool("ground", controller.collisions.below);
+            if(m_animator &&  m_animator.isActiveAndEnabled)
+            {
+                m_animator.SetFloat("move_x", Mathf.Abs(velocity.x));
+                m_animator.SetFloat("move_y", Mathf.Abs(velocity.y));
+                m_animator.SetFloat("velocity_x", velocity.x);
+                m_animator.SetFloat("velocity_y", velocity.y);
+                m_animator.SetBool("ground", controller.collisions.below);
+            }
+
         }
 
         void UpdateStateMachine()
