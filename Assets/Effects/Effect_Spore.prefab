@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 2094274057772323644}
   - component: {fileID: 7765588797041700691}
   - component: {fileID: 3843744317073766230}
-  - component: {fileID: 8508513709736876807}
   - component: {fileID: 6077275991244422397}
   m_Layer: 0
   m_Name: Magatsudake_6
@@ -114,7 +113,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -746814829
-  m_SortingLayer: 1
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300012, guid: 36e75baa404d7a44f8373ca6d1aef4c4, type: 3}
   m_Color: {r: 0.9345012, g: 0, b: 1, a: 1}
@@ -153,21 +152,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.46875, y: 0.46875}
   m_EdgeRadius: 0
---- !u!114 &8508513709736876807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2226423752303503321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  damage: 1
-  knockbackForce: 5
 --- !u!114 &6077275991244422397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +168,14 @@ MonoBehaviour:
   damage: 1
   lifespan: 0
   initialVelocity: {x: 0, y: 0, z: 0}
+  layerMaskToCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  DisabledDuringJumpAttack: 0
+  ReflectedDuringJumpAttack: 0
+  RotateVelocity: 0
+  RotateObject: {fileID: 0}
+  OffsetRotate: 0
   startSE: {fileID: 0}
   startEffectPrefab: {fileID: 0}
   hitSE: {fileID: 0}
@@ -232,7 +224,7 @@ Animator:
   m_GameObject: {fileID: 5241340833221640842}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8e27f26932e89804f933f9d7e7de029c, type: 2}
+  m_Controller: {fileID: 22100000, guid: a0711e518dfd74fb9bfba6e150c0755d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -252,7 +244,6 @@ GameObject:
   - component: {fileID: 6106935030645913082}
   - component: {fileID: 2731063977946770163}
   - component: {fileID: 914407441644296062}
-  - component: {fileID: 5525268428707621037}
   - component: {fileID: 8954014688020561345}
   m_Layer: 0
   m_Name: Magatsudake_7
@@ -310,7 +301,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -746814829
-  m_SortingLayer: 1
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300014, guid: 36e75baa404d7a44f8373ca6d1aef4c4, type: 3}
   m_Color: {r: 1, g: 0, b: 0.9233203, a: 1}
@@ -349,21 +340,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.84375, y: 0.3125}
   m_EdgeRadius: 0
---- !u!114 &5525268428707621037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7887783911992378460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  damage: 1
-  knockbackForce: 5
 --- !u!114 &8954014688020561345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +356,14 @@ MonoBehaviour:
   damage: 1
   lifespan: 0
   initialVelocity: {x: 0, y: 0, z: 0}
+  layerMaskToCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  DisabledDuringJumpAttack: 0
+  ReflectedDuringJumpAttack: 0
+  RotateVelocity: 0
+  RotateObject: {fileID: 0}
+  OffsetRotate: 0
   startSE: {fileID: 0}
   startEffectPrefab: {fileID: 0}
   hitSE: {fileID: 0}
@@ -522,7 +506,6 @@ GameObject:
   - component: {fileID: 8213675257396206442}
   - component: {fileID: 3525422547918792158}
   - component: {fileID: 2527583952355929643}
-  - component: {fileID: 1178136774835993642}
   - component: {fileID: 6236126043630653863}
   m_Layer: 0
   m_Name: Magatsudake_8
@@ -580,7 +563,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -746814829
-  m_SortingLayer: 1
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300016, guid: 36e75baa404d7a44f8373ca6d1aef4c4, type: 3}
   m_Color: {r: 0.96328354, g: 0, b: 1, a: 1}
@@ -619,21 +602,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.96875, y: 0.6875}
   m_EdgeRadius: 0
---- !u!114 &1178136774835993642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8000017498726891388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0773db4cf43a46498b59362ff634260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  damage: 1
-  knockbackForce: 5
 --- !u!114 &6236126043630653863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,6 +618,14 @@ MonoBehaviour:
   damage: 1
   lifespan: 0
   initialVelocity: {x: 0, y: 0, z: 0}
+  layerMaskToCollide:
+    serializedVersion: 2
+    m_Bits: 0
+  DisabledDuringJumpAttack: 0
+  ReflectedDuringJumpAttack: 0
+  RotateVelocity: 0
+  RotateObject: {fileID: 0}
+  OffsetRotate: 0
   startSE: {fileID: 0}
   startEffectPrefab: {fileID: 0}
   hitSE: {fileID: 0}
