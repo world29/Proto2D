@@ -12,7 +12,7 @@ namespace Proto2D.AI
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
             Animator animator = enemyBehaviour.gameObject.GetComponent<Animator>();
-            if (animator == null)
+            if (animator == null || !animator.isActiveAndEnabled)
             {
                 Debug.LogWarning("Animator is not set");
                 return NodeStatus.FAILURE;

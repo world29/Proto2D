@@ -7,11 +7,11 @@ namespace Proto2D.AI
     [CreateNodeMenu("BehaviourTree/Action/MoveToPlayerLocation")]
     public class MoveToPlayerLocation : Action
     {
+        public string m_stateName;
         public float m_speed = 5;
 
         [Tooltip("実行中にターゲットの位置を更新します。\nfalse なら、実行開始時のターゲットの位置に向かって動きます。")]
         public bool m_updateTargetLocation = false;
-
         public RandomValue m_timeout;
 
         private float m_timeToWait;
@@ -48,6 +48,12 @@ namespace Proto2D.AI
         {
             if (m_nodeStatus == NodeStatus.READY)
             {
+                Animator animator = enemyBehaviour.gameObject.GetComponent<Animator>();
+                if (m_stateName != "" && animator && animator.isActiveAndEnabled)
+                {
+                    animator.Play(m_stateName);
+                }
+
                 // 目標位置を設定
                 m_targetPosition = m_playerTransform.position;
 

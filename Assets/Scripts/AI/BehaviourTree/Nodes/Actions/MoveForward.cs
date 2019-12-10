@@ -7,6 +7,7 @@ namespace Proto2D.AI
     [CreateNodeMenu("BehaviourTree/Action/MoveForward")]
     public class MoveForward : Action
     {
+        public string m_stateName;
         public float m_speed = 1;
         public bool m_autoTurn = true;
 
@@ -34,11 +35,17 @@ namespace Proto2D.AI
 
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
+
             enemyBehaviour.MoveForward(m_speed, m_autoTurn);
 
             if (m_nodeStatus == NodeStatus.READY)
             {
                 m_timeWaitStarted = Time.timeSinceLevelLoad;
+                Animator animator = enemyBehaviour.gameObject.GetComponent<Animator>();
+                if (m_stateName != "" && animator && animator.isActiveAndEnabled)
+                {
+                    animator.Play(m_stateName);
+                }
 
                 m_nodeStatus = NodeStatus.RUNNING;
             }

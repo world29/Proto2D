@@ -7,6 +7,7 @@ namespace Proto2D.AI
     [CreateNodeMenu("BehaviourTree/Action/Jump")]
     public class Jump : Action
     {
+        public string m_stateName;
         public Vector2 jumpVelocity = Vector2.one;
 
         [Tooltip("着地するまで実行を継続します。\nfalse の場合はジャンプしてすぐ実行を終了します。")]
@@ -16,6 +17,11 @@ namespace Proto2D.AI
         {
             if (m_nodeStatus == NodeStatus.READY)
             {
+                Animator animator = enemyBehaviour.gameObject.GetComponent<Animator>();
+                if (m_stateName != "" && animator && animator.isActiveAndEnabled)
+                {
+                    animator.Play(m_stateName);
+                }
                 enemyBehaviour.Jump(jumpVelocity);
 
                 m_nodeStatus = m_continueUntilGrounded ? NodeStatus.RUNNING : NodeStatus.SUCCESS;

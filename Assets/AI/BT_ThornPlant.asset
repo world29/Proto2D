@@ -22,7 +22,6 @@ MonoBehaviour:
   - {fileID: 114266728598912442}
   - {fileID: 114921703323054920}
   - {fileID: 114737794434097872}
-  - {fileID: 114582623176188642}
 --- !u!114 &114061163372742142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,7 +35,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 568, y: 264}
+  position: {x: 568, y: 216}
   ports:
     keys:
     - parent
@@ -55,6 +54,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_stateName: actionT1
   m_timeout:
     m_type: 0
     m_min: 1.3
@@ -92,6 +92,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_stateName: 
 --- !u!114 &114152842766793800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,39 +190,6 @@ MonoBehaviour:
   m_priority: 0
   m_abortType: 0
   children: {fileID: 0}
---- !u!114 &114582623176188642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c58a3a2c6f4102144b95a8cd3893c550, type: 3}
-  m_Name: Play Animator State
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 594.3062, y: 144.9845}
-  ports:
-    keys:
-    - parent
-    values:
-    - _fieldName: parent
-      _node: {fileID: 114582623176188642}
-      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: children
-        node: {fileID: 114863121842184824}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  parent: {fileID: 0}
-  m_priority: 0
-  m_stateName: actionT1
 --- !u!114 &114650305560412566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +250,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 568, y: -40}
+  position: {x: 568, y: 8}
   ports:
     keys:
     - parent
@@ -301,6 +269,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_stateName: 
   m_timeout:
     m_type: 0
     m_min: 0.3
@@ -332,9 +301,6 @@ MonoBehaviour:
       connections:
       - fieldName: parent
         node: {fileID: 114737794434097872}
-        reroutePoints: []
-      - fieldName: parent
-        node: {fileID: 114582623176188642}
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114061163372742142}
@@ -372,7 +338,7 @@ MonoBehaviour:
   m_Name: Randomly
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 280, y: -184}
+  position: {x: 264, y: -152}
   ports:
     keys:
     - child
@@ -405,7 +371,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 0
   child: {fileID: 0}
-  m_percentage: 5
+  m_percentage: 20
 --- !u!114 &114991651272656056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +404,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+  m_stateName: idle
   m_timeout:
     m_type: 0
     m_min: 0

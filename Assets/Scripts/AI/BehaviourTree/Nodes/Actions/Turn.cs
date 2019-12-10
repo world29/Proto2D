@@ -7,6 +7,7 @@ namespace Proto2D.AI
     [CreateNodeMenu("BehaviourTree/Action/Turn")]
     public class Turn : Action
     {
+        public string m_stateName;
         public enum TurnType { TurnAround, LookAtPlayer, LookAtPlayerOpposite }
 
         [Tooltip("TurnAround: 振り向く\nLookAtPlayer: プレイヤーのいる方を向く\nLookAtPlayerOpposite: プレイヤーのいる方と反対を向く")]
@@ -15,7 +16,11 @@ namespace Proto2D.AI
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
+            Animator animator = enemyBehaviour.gameObject.GetComponent<Animator>();
+            if (m_stateName != "" && animator && animator.isActiveAndEnabled)
+            {
+                animator.Play(m_stateName);
+            }
             switch (m_turnType)
             {
                 case TurnType.TurnAround:
