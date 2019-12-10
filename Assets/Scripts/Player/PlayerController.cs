@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float initialHealth = 5;
     [HideInInspector]
     public NotificationObject<float> health;
+    [HideInInspector]
+    public NotificationObject<int> coins;
 
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
@@ -134,6 +136,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private void Awake()
     {
         health = new NotificationObject<float>(initialHealth);
+        coins = new NotificationObject<int>(0);
 
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
@@ -363,6 +366,9 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         {
             case ItemType.Hopper:
                 ChangeState(new PlayerState_Hop());
+                break;
+            case ItemType.Coin:
+                coins.Value++;
                 break;
             default:
                 break;
