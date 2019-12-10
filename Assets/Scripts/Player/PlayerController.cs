@@ -225,6 +225,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         animator.SetFloat("move_x", Mathf.Abs(velocity.x));
         animator.SetFloat("move_y", Mathf.Abs(velocity.y));
+        animator.SetFloat("velocity_x", velocity.x);
+        animator.SetFloat("velocity_y", velocity.y);
         animator.SetBool("ground", controller.collisions.below);
     }
 

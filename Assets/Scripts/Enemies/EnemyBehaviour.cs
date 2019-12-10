@@ -47,6 +47,7 @@ namespace Proto2D
         private IEnemyState state;
         private GameObject player;
         private AudioSource audioSource;
+        private Animator m_animator;
         public GameObject effectSocket;
 
         private void Awake()
@@ -71,6 +72,7 @@ namespace Proto2D
 
         protected virtual void Start()
         {
+            m_animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
@@ -84,6 +86,7 @@ namespace Proto2D
             ResetMovement();
             UpdateStateMachine();
             UpdateMovement();
+            UpdateAnimationParameters();
         }
 
         public void ResetMovement(bool forceResetX = false, bool forceResetY = false)
@@ -97,6 +100,13 @@ namespace Proto2D
             {
                 velocity.y = 0;
             }
+        }
+
+        void UpdateAnimationParameters()
+        {
+            m_animator.SetFloat("move_x", Mathf.Abs(velocity.x));
+            m_animator.SetFloat("move_y", Mathf.Abs(velocity.y));
+            m_animator.SetBool("ground", controller.collisions.below);
         }
 
         void UpdateStateMachine()
