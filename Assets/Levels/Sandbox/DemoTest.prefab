@@ -30,6 +30,25 @@ Transform:
   m_Father: {fileID: 6609291727114985735}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &5712388426515075682
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649080557910584252}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 0}
+    value: {fileID: 4872854081320752784}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &931086991784063391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,25 +4173,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16, y: 8}
   m_EdgeRadius: 0
---- !u!320 &5712388426515075682
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 649080557910584252}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: f8226195b6dfa49d881eba8f5fcf0324, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 114809982733085284, guid: f8226195b6dfa49d881eba8f5fcf0324, type: 2}
-    value: {fileID: 4872854081320752784}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &8916984473485260605
 GameObject:
   m_ObjectHideFlags: 0
