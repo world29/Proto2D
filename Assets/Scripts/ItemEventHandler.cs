@@ -7,6 +7,7 @@ public enum ItemType
 {
     Hopper, // ホッパー
     Coin,
+    HealthPack,
 }
 
 public interface IItemReceiver : IEventSystemHandler

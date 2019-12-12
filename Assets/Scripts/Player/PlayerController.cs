@@ -370,6 +370,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             case ItemType.Coin:
                 coins.Value++;
                 break;
+            case ItemType.HealthPack:
+                if (health.Value < initialHealth)
+                {
+                    health.Value++;
+                }
+                break;
             default:
                 break;
         }
