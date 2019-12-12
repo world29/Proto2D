@@ -432,6 +432,7 @@ GameObject:
   - component: {fileID: 997119855823024304}
   - component: {fileID: 6102522049248353597}
   - component: {fileID: 1224988889047465035}
+  - component: {fileID: 6581128670246806790}
   m_Layer: 5
   m_Name: UI_Status
   m_TagString: Untagged
@@ -499,6 +500,30 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &6581128670246806790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5118736011812008716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8595554434d4dda44bf07e6cf0bbdb5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_progressSlider: {fileID: 2342291987165450908}
+  m_progressSliderBackground: {fileID: 2099062961266817116}
+  m_progressSliderFill: {fileID: 5077371965886192785}
+  m_progressSliderBackgroundSprites:
+  - {fileID: 21300018, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
+  - {fileID: 21300008, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
+  - {fileID: 21300028, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
+  m_progressSliderFillSprites:
+  - {fileID: 21300014, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
+  - {fileID: 21300016, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
+  - {fileID: 21300028, guid: ee1a6d938687e77429f627ca22c61ba7, type: 3}
+  m_healthSlider: {fileID: 2635291145284368693}
 --- !u!1 &5183200495832631631
 GameObject:
   m_ObjectHideFlags: 0
