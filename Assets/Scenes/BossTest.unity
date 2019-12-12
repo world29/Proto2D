@@ -305,13 +305,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_startRooms:
-  - {fileID: 4465933680936766854, guid: 4e8d9b2aa26e24442a93d67e5a7bd930, type: 3}
+  - {fileID: 4465933680936766854, guid: d8d8ca62bb8588342894874109625f0d, type: 3}
   m_bridgeRooms: []
   m_bossRooms:
-  - {fileID: 8158235655175910608, guid: 4d363493708eeea4b80968c46ae633fc, type: 3}
+  - {fileID: 8158235655175910608, guid: 0eebeb2af8b1e4446972a66d91e61c57, type: 3}
   m_normalRooms:
-  - {fileID: 4465933680936766854, guid: 4e8d9b2aa26e24442a93d67e5a7bd930, type: 3}
-  - {fileID: 8158235655175910608, guid: c69d94b6ed0c0c842ab353a1da1f92a2, type: 3}
+  - {fileID: 8158235655175910608, guid: 99bce344afdd6434a94d7842c4576036, type: 3}
+  - {fileID: 8158235655175910608, guid: 73451c7915954084cae78bb29bd11243, type: 3}
+  - {fileID: 8158235655175910608, guid: a5d8c1d8199295c4cb6b07f6b50273eb, type: 3}
   stagePhaseParams: []
   stageBossPhaseParams:
     cameraParams:
@@ -754,11 +755,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 76beabf49825f274bb6e72ce46d60f71,
+        type: 3}
     - target: {fileID: 3305032271497896281, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305032271497896281, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305032271497896281, guid: f3e2032529fd24c4e8914754081bbcac,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 21.875
       objectReference: {fileID: 0}
     - target: {fileID: 9137742982157774250, guid: f3e2032529fd24c4e8914754081bbcac,
         type: 3}
