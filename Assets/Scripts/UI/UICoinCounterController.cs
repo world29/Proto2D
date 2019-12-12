@@ -60,7 +60,7 @@ namespace Proto2D
                 float percentage = (Time.timeSinceLevelLoad - startTime) / duration;
                 float value = m_scaleCurve.Evaluate(percentage);
 
-                m_counterText.rectTransform.localScale = new Vector3(value, value);
+                m_counterText.rectTransform.localScale = new Vector3(value, value, 1);
 
                 yield return new WaitForEndOfFrame();
             }
