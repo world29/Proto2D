@@ -303,7 +303,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     private void ConsumeDamage(DamageInfo info)
     {
-        if (isInvincible || state is PlayerState_Death)
+        if (isInvincible || state is PlayerState_Death || state is PlayerState_Hop)
         {
             return;
         }
