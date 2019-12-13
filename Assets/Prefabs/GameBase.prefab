@@ -613,32 +613,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a25a4d1a5b5312b4181d038e60f88ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phaseCameraParams:
-  - m_followUpward: 1
-    m_followDownward: 1
-    m_followSideway: 0
-    m_autoScrollEnabled: 0
-    m_autoScrollSpeed: 0
-  - m_followUpward: 1
-    m_followDownward: 0
-    m_followSideway: 0
-    m_autoScrollEnabled: 1
-    m_autoScrollSpeed: 1
-  - m_followUpward: 1
-    m_followDownward: 1
-    m_followSideway: 0
-    m_autoScrollEnabled: 0
-    m_autoScrollSpeed: 0
-  bossCameraParams:
-    m_followUpward: 1
-    m_followDownward: 0
-    m_followSideway: 0
-    m_autoScrollEnabled: 1
-    m_autoScrollSpeed: 3
   m_followSmoothTime: 0.1
   m_focusBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 10, y: 1, z: 0}
+  m_followUpward: 1
+  m_followDownward: 1
+  m_followSideway: 0
+  m_autoScrollEnabled: 0
+  m_autoScrollSpeed: 1
 --- !u!1 &3763611368950876398
 GameObject:
   m_ObjectHideFlags: 0
