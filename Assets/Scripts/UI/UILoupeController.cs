@@ -7,7 +7,7 @@ namespace Proto2D
 {
     public class UILoupeController : MonoBehaviour
     {
-        public Image m_loupeImage;
+        public CanvasGroup m_target;
 
         private RectTransform m_rectTransform;
         private PlayerController m_player;
@@ -50,11 +50,11 @@ namespace Proto2D
 
             if (isPlayerOutOfViewport)
             {
-                m_loupeImage.color = Color.white;
+                m_target.alpha = 1;
             }
             else
             {
-                m_loupeImage.color = new Color(1, 1, 1, 0);
+                m_target.alpha = 0;
             }
         }
 
