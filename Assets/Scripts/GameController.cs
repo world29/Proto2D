@@ -239,6 +239,11 @@ namespace Proto2D
         {
             isGameOver = true;
             replayText.text = "You died.\nPress \'R\' to replay!";
+
+            Pause();
+
+            Debug.Assert(m_player);
+            m_player.SetActive(false);
         }
 
         public void GameClear()
