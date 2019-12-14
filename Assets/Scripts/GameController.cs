@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 namespace Proto2D
 {
@@ -67,10 +68,6 @@ namespace Proto2D
             m_worldBoundary = m_worldBoundaryParam;
             isGameOver = false;
             isGameClear = false;
-            if (replayText)
-            {
-                replayText.text = "";
-            }
 
             if (m_initialStageIndex < m_stages.Count)
             {
@@ -238,12 +235,14 @@ namespace Proto2D
         public void GameOver()
         {
             isGameOver = true;
-            replayText.text = "You died.\nPress \'R\' to replay!";
 
             Pause();
 
             Debug.Assert(m_player);
             m_player.SetActive(false);
+
+            BroadcastExecuteEvents.Execute<IGameOverReceiver>(null,
+                (target, eventTarget) => target.OnGameOver());
         }
 
         public void GameClear()
