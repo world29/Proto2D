@@ -20,7 +20,7 @@ namespace Proto2D
         public bool m_followSideway = false;
         public bool m_autoScrollEnabled = false;
         public float m_autoScrollSpeed = 1;
-
+        public float m_followLimitOffsetFromHighestPosition = -20;
 
         [Tooltip("---")]
         Transform m_target;
@@ -63,6 +63,14 @@ namespace Proto2D
 
             float cameraZ = transform.position.z;
             Vector3 targetPosition = new Vector3(m_focusBounds.center.x, m_focusBounds.center.y, cameraZ);
+
+            // 下方向へのカメラ追従に下限を設定
+            var gameController = GameController.Instance;
+            if (gameController)
+            {
+                float cameraPosLowerLimit = gameController.UpperLimit + m_followLimitOffsetFromHighestPosition;
+                targetPosition.y = Mathf.Max(targetPosition.y, cameraPosLowerLimit);
+            }
 
             float smoothTime = immediate ? 0 : m_followSmoothTime;
 

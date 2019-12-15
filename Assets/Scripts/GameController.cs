@@ -47,6 +47,10 @@ namespace Proto2D
         [HideInInspector]
         public Bounds WorldBoundary { get { return m_worldBoundary; } }
 
+        // プレイヤーの最高到達点の Y 座標
+        [HideInInspector]
+        public float UpperLimit { get { return m_upperLimit; } }
+
         [HideInInspector]
         public StageController Stage {
             get {
@@ -60,6 +64,7 @@ namespace Proto2D
         private bool m_isSceneLoading = false;
         private int m_stageIndex = -1;
         private bool phaseLock = false;
+        private float m_upperLimit;
 
         private Dictionary<Bounds, RoomController> m_spawnedRooms = new Dictionary<Bounds, RoomController>();
 
@@ -122,6 +127,12 @@ namespace Proto2D
                     GameObject.Destroy(item.Value.gameObject);
                     m_spawnedRooms.Remove(item.Key);
                 }
+            }
+
+            // プレイヤーの最高到達点を更新
+            if (m_player)
+            {
+                m_upperLimit = Mathf.Max(m_upperLimit, m_player.transform.position.y);
             }
         }
 
