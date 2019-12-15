@@ -354,7 +354,7 @@ namespace Proto2D
         private void OnDrawGizmos()
         {
             Gizmos.color = new Color(0, 1, 1, .2f);
-            Gizmos.DrawCube(m_worldBoundaryParam.center, m_worldBoundaryParam.size);
+            Gizmos.DrawCube(m_worldBoundary.center, m_worldBoundary.size);
 
             if (m_roomSpawnTransform)
             {
