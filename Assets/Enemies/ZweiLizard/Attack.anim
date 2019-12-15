@@ -28,16 +28,16 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.5
         value: {x: 1.15, y: -0.321, z: 0}
-        inSlope: {x: -0.54199994, y: 0, z: 0}
-        outSlope: {x: -0.54199994, y: 0, z: 0}
+        inSlope: {x: -0.36133328, y: 0, z: 0}
+        outSlope: {x: -0.36133328, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.5
+        time: 0.75
         value: {x: 0.978, y: -0.424, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -55,21 +55,21 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 7e9f3a0b4cd155349892c5ddf4473483, type: 3}
-    - time: 0.16666667
+    - time: 0.25
       value: {fileID: 21300000, guid: b99162289a5b5ff43b0f7fcacb1dfea6, type: 3}
-    - time: 0.33333334
-      value: {fileID: 21300000, guid: c9a07d56a29ff9a468ddfc30b2f05b4b, type: 3}
     - time: 0.5
+      value: {fileID: 21300000, guid: c9a07d56a29ff9a468ddfc30b2f05b4b, type: 3}
+    - time: 0.75
       value: {fileID: 21300000, guid: 2dd8b02854e50964ba202314ddcac512, type: 3}
-    - time: 0.6666667
+    - time: 1
       value: {fileID: 21300000, guid: e8331c057a0f0974daccb99e91269e1e, type: 3}
-    - time: 0.8333333
+    - time: 1.25
       value: {fileID: 21300000, guid: defe95cf91133b240be6a145960fe27f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 6
+  m_SampleRate: 4
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -102,7 +102,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -131,16 +131,16 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.5
         value: 1.15
-        inSlope: -0.54199994
-        outSlope: -0.54199994
+        inSlope: -0.36133328
+        outSlope: -0.36133328
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
+        time: 0.75
         value: 0.978
         inSlope: 0
         outSlope: 0
@@ -168,7 +168,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.5
         value: -0.321
         inSlope: 0
         outSlope: 0
@@ -177,7 +177,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
+        time: 0.75
         value: -0.424
         inSlope: 0
         outSlope: 0
@@ -205,7 +205,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -214,7 +214,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
+        time: 0.75
         value: 0
         inSlope: 0
         outSlope: 0
@@ -241,7 +241,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.16666667
+  - time: 0.25
     functionName: PlaySE
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: d221ebd16e21d0a4791a7d863e77f78e,
@@ -249,7 +249,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.5
     functionName: Shot
     data: 
     objectReferenceParameter: {fileID: 2710078861558965266, guid: aa6e0a59aa69ba540a8213774474de30,
@@ -257,7 +257,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5
+  - time: 0.75
     functionName: Shot
     data: 
     objectReferenceParameter: {fileID: 2710078861558965266, guid: c6a8dbbab83c88f4eaaea9dba1e83348,

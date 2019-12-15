@@ -48,6 +48,9 @@ MonoBehaviour:
   - {fileID: 114665752514088342}
   - {fileID: 114684195742578914}
   - {fileID: 114722277699192504}
+  - {fileID: 114071661369383090}
+  - {fileID: 114551761308214978}
+  - {fileID: 114952160665858356}
 --- !u!114 &114039017141560388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +83,44 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
+--- !u!114 &114071661369383090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 248, y: -1640}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114071661369383090}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114112954441187294}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  m_stateName: idle
+  m_timeout:
+    m_type: 0
+    m_min: 0.5
+    m_max: 1
+    m_value: 1
 --- !u!114 &114081444628648414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +236,9 @@ MonoBehaviour:
       - fieldName: parent
         node: {fileID: 114665752514088342}
         reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114071661369383090}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -228,7 +272,7 @@ MonoBehaviour:
   m_Name: Conditional Is Player In Sight
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: -1912}
+  position: {x: 168, y: -2040}
   ports:
     keys:
     - parent
@@ -261,7 +305,7 @@ MonoBehaviour:
   m_Name: Conditional Is Player In Sight
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 152, y: -152}
+  position: {x: -168, y: 376}
   ports:
     keys:
     - parent
@@ -294,7 +338,7 @@ MonoBehaviour:
   m_Name: Conditional Loop
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: 168}
+  position: {x: 168, y: 200}
   ports:
     keys:
     - condition
@@ -374,7 +418,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 0
   m_stateName: move
-  m_speed: 12
+  m_speed: 10
   m_autoTurn: 0
   m_timeout:
     m_type: 1
@@ -418,7 +462,7 @@ MonoBehaviour:
     m_type: 1
     m_min: 0
     m_max: 0
-    m_value: 0.2
+    m_value: 0.4
 --- !u!114 &114360019254335356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,7 +556,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 3
   m_stateName: air
-  jumpVelocity: {x: -12, y: 5}
+  jumpVelocity: {x: -9, y: 5}
   m_continueUntilGrounded: 1
 --- !u!114 &114451283990826726
 MonoBehaviour:
@@ -672,7 +716,7 @@ MonoBehaviour:
   m_Name: Sequence
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -120, y: -24}
+  position: {x: -440, y: 504}
   ports:
     keys:
     - children
@@ -691,6 +735,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114684195742578914}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114551761308214978}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -838,6 +885,44 @@ MonoBehaviour:
   m_stateName: 
   jumpVelocity: {x: 10, y: 5}
   m_continueUntilGrounded: 0
+--- !u!114 &114551761308214978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -152, y: 760}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114551761308214978}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114481894662460118}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 0
+  m_stateName: idle
+  m_timeout:
+    m_type: 0
+    m_min: 0.5
+    m_max: 1
+    m_value: 1
 --- !u!114 &114559474987737676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,7 +936,7 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 424, y: -984}
+  position: {x: 440, y: -1064}
   ports:
     keys:
     - parent
@@ -906,7 +991,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 0
   m_stateName: move
-  m_speed: 6
+  m_speed: 4
   m_autoTurn: 0
   m_timeout:
     m_type: 0
@@ -992,7 +1077,7 @@ MonoBehaviour:
   m_Name: Look At Player
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 216, y: -1784}
+  position: {x: 216, y: -1944}
   ports:
     keys:
     - parent
@@ -1025,7 +1110,7 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 216, y: -1656}
+  position: {x: 216, y: -1784}
   ports:
     keys:
     - parent
@@ -1045,7 +1130,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 3
   m_stateName: air
-  jumpVelocity: {x: -12, y: 5}
+  jumpVelocity: {x: -9, y: 5}
   m_continueUntilGrounded: 1
 --- !u!114 &114684195742578914
 MonoBehaviour:
@@ -1060,7 +1145,7 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 184, y: 24}
+  position: {x: -136, y: 584}
   ports:
     keys:
     - parent
@@ -1113,7 +1198,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  m_priority: 5
+  m_priority: 6
   m_stateName: idle
   m_timeout:
     m_type: 0
@@ -1206,7 +1291,7 @@ MonoBehaviour:
   m_Name: Turn
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: -72}
+  position: {x: -152, y: 456}
   ports:
     keys:
     - parent
@@ -1240,7 +1325,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 216, y: -1016}
+  position: {x: 216, y: -984}
   ports:
     keys:
     - parent
@@ -1337,6 +1422,9 @@ MonoBehaviour:
       - fieldName: parent
         node: {fileID: 114559474987737676}
         reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114952160665858356}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -1407,6 +1495,44 @@ MonoBehaviour:
   m_priority: 0
   m_abortType: 0
   children: {fileID: 0}
+--- !u!114 &114952160665858356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b00ce98cba08f648a7462c47f2f7a83, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 424, y: -840}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114952160665858356}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114912604527097612}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 1
+  m_stateName: 
+  m_timeout:
+    m_type: 0
+    m_min: 0.5
+    m_max: 1
+    m_value: 3
 --- !u!114 &114963029840914452
 MonoBehaviour:
   m_ObjectHideFlags: 0
