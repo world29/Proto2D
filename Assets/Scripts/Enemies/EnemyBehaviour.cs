@@ -193,9 +193,15 @@ namespace Proto2D
             velocity = moveVelocity;
         }
 
-        public void MoveForward(float moveSpeed, bool autoTurn = true)
+        public void MoveForward(float moveSpeed, bool autoTurn = true, bool autoGroundDetection = true)
         {
-            if (CanMoveForward())
+            bool canMoveForward = true;
+
+            if (autoGroundDetection) {
+                canMoveForward = CanMoveForward();
+            }
+
+            if (canMoveForward)
             {
                 velocity.x = moveSpeed * getFacingLocal();
             }
@@ -212,14 +218,33 @@ namespace Proto2D
 
         public virtual bool CanMoveForward()
         {
-            // 進行方向に地面があるか調べる
-            RaycastHit2D groundInfo = Physics2D.Raycast(groundDetectionTransform.position, Vector2.down, groundDetectionRayLength, controller.collisionMask);
-            Debug.DrawRay(groundDetectionTransform.position, Vector2.down, Color.red);
-
             // 進行方向に障害物があるか調べる
             bool obstacleInfo = GetFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
 
-            return groundInfo && !obstacleInfo;
+            return IsGroundDetected() && !obstacleInfo;
+        }
+
+        // 進行方向に地面があるか調べる
+        public virtual bool IsGroundDetected()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(groundDetectionTransform.position, Vector2.down, groundDetectionRayLength, controller.collisionMask);
+            Debug.DrawRay(groundDetectionTransform.position, Vector2.down, Color.red);
+
+            return (bool)hit;
+        }
+
+        // 前方の障害物までの距離
+        // 前方に障害物がない場合、無限 (Mathf.Infinity) を返す
+        public virtual float DistanceToObstacle()
+        {
+            Vector2 rayDirection = GetFacingWorld() > 0 ? Vector2.right : Vector2.left;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, Mathf.Infinity, controller.collisionMask);
+            Debug.DrawRay(transform.position, rayDirection, Color.red);
+            if (hit)
+            {
+                return hit.distance;
+            }
+            return Mathf.Infinity;
         }
 
         public void Turn()

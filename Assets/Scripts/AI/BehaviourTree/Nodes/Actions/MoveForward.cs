@@ -10,6 +10,7 @@ namespace Proto2D.AI
         public string m_stateName;
         public float m_speed = 1;
         public bool m_autoTurn = true;
+        public bool m_autoGroundDetection = true;
 
         public RandomValue m_timeout;
 
@@ -36,7 +37,7 @@ namespace Proto2D.AI
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
 
-            enemyBehaviour.MoveForward(m_speed, m_autoTurn);
+            enemyBehaviour.MoveForward(m_speed, m_autoTurn, m_autoGroundDetection);
 
             if (m_nodeStatus == NodeStatus.READY)
             {
