@@ -19,6 +19,10 @@ namespace Proto2D
 
         [Header("倒したときに得られる進捗ポイント")]
         public float progressValue = 3;
+        [Tooltip("倒したときにドロップするアイテム")]
+        public ItemController m_dropItemPrefab;
+        [Range(0, 100)]
+        public int m_dropItemPercentage = 100;
 
         [Header("ダメージをうけた時の追加エフェクト")]
         public GameObject damageEffectPrefab;
@@ -49,6 +53,9 @@ namespace Proto2D
         private AudioSource audioSource;
         private Animator m_animator;
         public GameObject effectSocket;
+        private const float kDropSpeed = 10;
+        private const float kDropAngleRange = 20;
+
 
         private void Awake()
         {
@@ -337,6 +344,8 @@ namespace Proto2D
         protected virtual void OnDeath()
         {
             GameController.Instance.AddProgressValue(progressValue);
+
+            DropItem();
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)
@@ -385,6 +394,23 @@ namespace Proto2D
                 effect.transform.eulerAngles = rot;
                 effect.transform.localScale = scale;
                 //Destroy(effect, 1);
+            }
+        }
+
+        private void DropItem()
+        {
+            if (m_dropItemPrefab && Random.Range(0, 100) < m_dropItemPercentage)
+            {
+                ItemController item = GameObject.Instantiate(m_dropItemPrefab, transform.position, Quaternion.identity);
+
+                DynamicObject dynobj = item.GetComponent<DynamicObject>();
+                if (dynobj)
+                {
+                    float deg = Random.value * kDropAngleRange - (kDropAngleRange / 2);
+
+                    Vector2 itemVelocity = Quaternion.Euler(0, 0, deg) * (Vector2.up * kDropSpeed);
+                    dynobj.Initialize(itemVelocity);
+                }
             }
         }
 
