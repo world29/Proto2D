@@ -31,6 +31,7 @@ MonoBehaviour:
   - {fileID: 114560023342473736}
   - {fileID: 114417906437003412}
   - {fileID: 114197114722690150}
+  - {fileID: 114115793360057928}
 --- !u!114 &114013615180590436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +115,39 @@ MonoBehaviour:
   m_priority: 0
   m_abortType: 1
   children: {fileID: 0}
+--- !u!114 &114115793360057928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58a3a2c6f4102144b95a8cd3893c550, type: 3}
+  m_Name: Play Animator State
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -392, y: -680}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114115793360057928}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children
+        node: {fileID: 114227030322683050}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 3
+  m_stateName: idle
 --- !u!114 &114197114722690150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,10 +211,13 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: parent
+        node: {fileID: 114573122885649272}
+        reroutePoints: []
+      - fieldName: parent
         node: {fileID: 114238679338956922}
         reroutePoints: []
       - fieldName: parent
-        node: {fileID: 114573122885649272}
+        node: {fileID: 114115793360057928}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -233,10 +270,11 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  m_priority: 0
-  m_stateName: move
+  m_priority: 2
+  m_stateName: idle
   m_speed: 1
   m_autoTurn: 1
+  m_autoGroundDetection: 1
   m_timeout:
     m_type: 0
     m_min: 2
@@ -337,6 +375,7 @@ MonoBehaviour:
   m_stateName: action1
   m_speed: 3
   m_autoTurn: 0
+  m_autoGroundDetection: 1
   m_timeout:
     m_type: 1
     m_min: 2
@@ -610,7 +649,7 @@ MonoBehaviour:
       _dynamic: 0
   parent: {fileID: 0}
   m_priority: 0
-  m_stateName: 
+  m_stateName: idle
   m_timeout:
     m_type: 0
     m_min: 1
