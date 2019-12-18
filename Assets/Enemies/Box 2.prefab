@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 6176242387673754215}
   - component: {fileID: 9202176072084308888}
   - component: {fileID: 550019408689717053}
+  - component: {fileID: 5472460531572227096}
   m_Layer: 10
   m_Name: Box 2
   m_TagString: Untagged
@@ -265,9 +266,7 @@ MonoBehaviour:
   blinkInterval: 0.1
   damageDuration: 0.2
   progressValue: 0
-  m_dropItemPrefab: {fileID: 6657147086526764878, guid: e7f1deb624b523a4199eee81c2ff74ee,
-    type: 3}
-  m_dropItemPercentage: 50
+  m_itemSpawner: {fileID: 5472460531572227096}
   damageEffectPrefab: {fileID: 1509154601807174269, guid: bb83308fbfc36421c8d36240cab8a387,
     type: 3}
   damageSE: {fileID: 0}
@@ -279,6 +278,24 @@ MonoBehaviour:
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
   effectSocket: {fileID: 0}
+--- !u!114 &5472460531572227096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204113652773712350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561fc6a9185bc97449ae0b98b44efa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_entries:
+  - weight: 5
+    prefab: {fileID: 6657147086526764877, guid: e7f1deb624b523a4199eee81c2ff74ee,
+      type: 3}
+  - weight: 5
+    prefab: {fileID: 0}
 --- !u!1 &3816399782570755407
 GameObject:
   m_ObjectHideFlags: 0
