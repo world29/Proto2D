@@ -29,7 +29,11 @@ namespace Proto2D
                 {
                     if (m_entries[i].prefab != null)
                     {
-                        SpawnPrefab(m_entries[i].prefab);
+                        int count = Random.Range(m_entries[i].countRange.x, m_entries[i].countRange.y + 1);
+                        for (int j = 0; j < count; j++)
+                        {
+                            SpawnPrefab(m_entries[i].prefab);
+                        }
                     }
                     break;
                 }
@@ -57,6 +61,8 @@ namespace Proto2D
             public int weight;
             [Tooltip("生成されるプレハブ。None の場合は何も生成しないエントリとして動作します。")]
             public GameObject prefab;
+            [Tooltip("生成される個数の範囲。[x, y]。")]
+            public Vector2Int countRange;
         }
     }
 }
