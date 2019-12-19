@@ -1789,7 +1789,7 @@ SpriteRenderer:
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.09375, y: 0.625}
+  m_Size: {x: 3.28125, y: 1.96875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1812,8 +1812,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.21875, y: 1.71875}
-    newSize: {x: 1.09375, y: 0.625}
+    oldSize: {x: 3.28125, y: 1.96875}
+    newSize: {x: 3.28125, y: 1.96875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1881,6 +1881,8 @@ MonoBehaviour:
   blinkInterval: 0.1
   damageDuration: 0.2
   progressValue: 3
+  m_dropItemPrefab: {fileID: 0}
+  m_dropItemPercentage: 100
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: 64ed4ebc2cc584ba1a0b6f58dee0da80, type: 2}
