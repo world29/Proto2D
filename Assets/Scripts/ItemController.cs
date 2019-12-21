@@ -65,7 +65,7 @@ namespace Proto2D
             DisableComponent<BoxCollider2D>();
         }
 
-        private void DisableComponent<T>()
+        private void DisableComponent<T>() where T : Component
         {
             T component = GetComponent<T>();
             if (component != null)
