@@ -110,8 +110,10 @@ GameObject:
   - component: {fileID: 6730292347644209704}
   - component: {fileID: 6730292347644209702}
   - component: {fileID: 6730292347644209701}
-  - component: {fileID: 6730292347644209700}
+  - component: {fileID: 8447431753011731634}
   - component: {fileID: 6730292347644209699}
+  - component: {fileID: 8796026633514062357}
+  - component: {fileID: 8593188519316310139}
   m_Layer: 0
   m_Name: ProgressOrb
   m_TagString: Untagged
@@ -181,7 +183,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &6730292347644209700
+--- !u!114 &8447431753011731634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,15 +192,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6730292347644209698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8edba9d31b8acf488aeba7bd0ba25b1, type: 3}
+  m_Script: {fileID: 11500000, guid: bf6d8cac0c4ab5e4fa41130bbadea589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemType: 3
   once: 1
-  pickupEffectPrefab: {fileID: 3942828076384422791, guid: f9688709533e3564a916aa5464e18357,
-    type: 3}
-  pickupSound: {fileID: 8300000, guid: 3254be561c9a43541be90e356cb9a2c3, type: 3}
+  pickupEffectPrefab: {fileID: 0}
+  pickupSound: {fileID: 0}
   pickupAnim: {fileID: 0}
+  m_progressValue: 1
+  m_uiOrbPrefab: {fileID: 5768343354344880373, guid: e35fc155010797c429c7debf8091d9fe,
+    type: 3}
 --- !u!82 &6730292347644209699
 AudioSource:
   m_ObjectHideFlags: 0
@@ -296,3 +300,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8796026633514062357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6730292347644209698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca98975ca6b7b224d9bb0658ca58a0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 512
+  horizontalRayCount: 0
+  verticalRayCount: 0
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
+  collider: {fileID: 0}
+  m_maxSlopeAngle: 60
+  m_input: {x: 0, y: 0}
+--- !u!114 &8593188519316310139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6730292347644209698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef643b556e9794ca2a4a5bd113294d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gravity: 20
+  m_dropSound: {fileID: 0}

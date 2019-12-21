@@ -37,7 +37,7 @@ namespace Proto2D
             }
         }
 
-        void OnPickedUp(GameObject receiver)
+        protected virtual void OnPickedUp(GameObject receiver)
         {
             if (pickupEffectPrefab)
             {
