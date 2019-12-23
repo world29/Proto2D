@@ -52,6 +52,9 @@ namespace Proto2D
         private Animator m_animator;
         public GameObject effectSocket;
 
+        private const float kSpawnSpeed = 10;
+        private const float kSpawnAngleRange = 20;
+
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
@@ -338,11 +341,36 @@ namespace Proto2D
 
         protected virtual void OnDeath()
         {
-            GameController.Instance.AddProgressValue(progressValue);
+            DropProgressOrbs();
 
             if (m_itemSpawner)
             {
                 m_itemSpawner.Spawn();
+            }
+        }
+
+        private void DropProgressOrbs()
+        {
+            // Assets/Resources 以下から読み込む。
+            GameObject prefab = (GameObject)Resources.Load("ProgressOrb");
+
+            for (int i = 0; i < Mathf.FloorToInt(progressValue); i++)
+            {
+                Drop(prefab);
+            }
+        }
+
+        private void Drop(GameObject prefab)
+        {
+            GameObject go = GameObject.Instantiate(prefab, transform.position, Quaternion.identity);
+
+            DynamicObject dynobj = go.GetComponent<DynamicObject>();
+            if (dynobj)
+            {
+                float deg = Random.value * kSpawnAngleRange - (kSpawnAngleRange / 2);
+
+                Vector2 itemVelocity = Quaternion.Euler(0, 0, deg) * (Vector2.up * kSpawnSpeed);
+                dynobj.Initialize(itemVelocity);
             }
         }
 
