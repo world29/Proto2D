@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Proto2D
 {
@@ -66,6 +67,11 @@ namespace Proto2D
         void OnProgressChanged(float value)
         {
             m_progressSlider.value = value % m_stage.m_progressPerPhase;
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(m_progressSliderFill.DOColor(Color.white, 0))
+                .Append(m_progressSliderFill.DOColor(Color.black, .5f))
+                .SetEase(Ease.OutCubic);
         }
 
         void OnPhaseChanged(StagePhase level)
