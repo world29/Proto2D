@@ -16,7 +16,7 @@ namespace Proto2D
         [Header("取得時のアニメ(AnimationをLegacyにする必要あり)")]
         public Animation pickupAnim;
 
-        AudioSource audioSource;
+        protected AudioSource audioSource;
 
         void Start () {
             //Componentを取得
@@ -65,7 +65,7 @@ namespace Proto2D
             DisableComponent<BoxCollider2D>();
         }
 
-        private void DisableComponent<T>() where T : Component
+        protected void DisableComponent<T>() where T : Component
         {
             T component = GetComponent<T>();
             if (component != null)
