@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Proto2D
 {
@@ -49,11 +50,11 @@ namespace Proto2D
 
             if (isPlayerOutOfViewport)
             {
-                m_target.alpha = 1;
+                m_target.DOFade(1, .5f);
             }
             else
             {
-                m_target.alpha = 0;
+                m_target.DOFade(0, .5f);
             }
         }
 
