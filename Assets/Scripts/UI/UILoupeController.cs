@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Proto2D
 {
@@ -41,20 +42,19 @@ namespace Proto2D
                 {
                     isPlayerOutOfViewport = true;
 
-                    // キャンバス座標 (= スクリーン座標)
                     Vector3 pos = m_rectTransform.position;
-                    pos.x = Screen.width * viewportPoint.x;
+                    pos.x = m_player.transform.position.x;
                     m_rectTransform.position = pos;
                 }
             }
 
             if (isPlayerOutOfViewport)
             {
-                m_target.alpha = 1;
+                m_target.DOFade(1, .5f);
             }
             else
             {
-                m_target.alpha = 0;
+                m_target.DOFade(0, .5f);
             }
         }
 
