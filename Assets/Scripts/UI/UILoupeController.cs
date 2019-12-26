@@ -41,9 +41,8 @@ namespace Proto2D
                 {
                     isPlayerOutOfViewport = true;
 
-                    // キャンバス座標 (= スクリーン座標)
                     Vector3 pos = m_rectTransform.position;
-                    pos.x = Screen.width * viewportPoint.x;
+                    pos.x = m_player.transform.position.x;
                     m_rectTransform.position = pos;
                 }
             }
