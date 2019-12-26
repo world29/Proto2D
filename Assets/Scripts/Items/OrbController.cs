@@ -5,12 +5,14 @@ using DG.Tweening;
 
 namespace Proto2D
 {
-    public class OrbController : ItemController
+    public class OrbController : MonoBehaviour
     {
         [Tooltip("進捗度の増える量")]
         public int m_progressValue = 1;
 
         [Header("移動パラメータ")]
+        [Tooltip("移動開始までのディレイ")]
+        public float m_delay = .5f;
         [Tooltip("移動アニメーションの時間")]
         public float m_duration = 1;
         [Tooltip("移動アニメーションのイージング")]
@@ -31,29 +33,11 @@ namespace Proto2D
             }
         }
 
-        protected override void OnPickedUp(GameObject receiver)
+        private void Start()
         {
-            //TODO: ItemController.OnPickedUp の実装をコピペしているので、要修正
-            if (pickupEffectPrefab)
-            {
-                GameObject effect = Instantiate(pickupEffectPrefab, receiver.transform.position, Quaternion.identity, null);
-            }
-
-            if (pickupSound)
-            {
-                audioSource.PlayOneShot(pickupSound);
-            }
-            if (pickupAnim)
-            {
-                pickupAnim.Play();
-            }
-
-            // コリジョンを無効化
-            DisableComponent<BoxCollider2D>();
-
-            // 移動制御を切り替えるために、DynamicObject コンポーネントを無効化
-            DisableComponent<DynamicObject>();
-            DisableComponent<Controller2D>();
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<DynamicObject>().enabled = false;
+            GetComponent<Controller2D>().enabled = false;
 
             // 進捗ゲージのワールド空間での座標を算出する
             Vector3 targetPosition = Vector3.zero;
@@ -61,11 +45,11 @@ namespace Proto2D
             RectTransformUtility.ScreenPointToWorldPointInRectangle(m_targetTransform, screenPoint, Camera.main, out targetPosition);
 
             Debug.DrawRay(targetPosition, Vector3.up, Color.red, 1);
-            Debug.DrawLine(Camera.main.ViewportToWorldPoint(Vector3.zero), Camera.main.ViewportToWorldPoint(Vector3.one), Color.red, 1);
 
-            // 目標へ向かって移動する
+            // スポーン時から一定時間後に、進捗ゲージに向かって飛んでいく
             transform.DOMove(targetPosition, m_duration)
                 .SetEase(m_easeType)
+                .SetDelay(m_delay)
                 .OnComplete(() => {
                     // 進捗度を増やす
                     if (GameController.Instance)
