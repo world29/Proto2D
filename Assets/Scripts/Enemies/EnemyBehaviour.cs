@@ -416,6 +416,7 @@ namespace Proto2D
                     rot = effectSocket.transform.eulerAngles;
                     scale = effectSocket.transform.localScale;
                 }
+                scale.x *= GetFacingWorld();
                 GameObject effect = Instantiate(EffectPrefab, pos, Quaternion.identity, null);
                 effect.transform.eulerAngles = rot;
                 effect.transform.localScale = scale;
