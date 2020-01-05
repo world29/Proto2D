@@ -32,7 +32,7 @@ public class PlatformController : RaycastController
         {
             m_globalWaypoints[i] = (transform.lossyScale.x > 0) 
                 ? transform.position + m_localWaypoints[i]
-                : transform.position - m_localWaypoints[i];
+                : transform.position + new Vector3(m_localWaypoints[i].x*-1,m_localWaypoints[i].y,0);
         }
     }
 
