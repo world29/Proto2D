@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 namespace Proto2D
 {
@@ -351,13 +352,15 @@ namespace Proto2D
 
         private void DropProgressOrbs()
         {
-            for (int i = 0; i < Mathf.FloorToInt(progressValue); i++)
+            if (OrbManager.Instance == null)
             {
-                if (OrbManager.Instance)
-                {
-                    OrbManager.Instance.DropOrb(transform.position);
-                }
+                return;
             }
+
+            DOVirtual.DelayedCall(.1f, () =>
+            {
+                OrbManager.Instance.DropOrb(transform.position);
+            }).SetLoops(Mathf.FloorToInt(progressValue));
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)
