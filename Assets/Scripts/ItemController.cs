@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 namespace Proto2D
 {
@@ -11,6 +12,7 @@ namespace Proto2D
         public ItemType itemType;
 
         public bool once = true;
+        public float delayToReactivation = 2;
         public GameObject pickupEffectPrefab;
         public AudioClip pickupSound;
         [Header("取得時のアニメ(AnimationをLegacyにする必要あり)")]
@@ -55,17 +57,25 @@ namespace Proto2D
                 pickupAnim.Play();
             }
 
-            if (!once){
-                return;
-            }
-            Destroy(gameObject, delayToDestroy);
-
             // 描画とコリジョンを無効化
-            DisableComponent<SpriteRenderer>();
-            DisableComponent<BoxCollider2D>();
+            SetEnabledComponent<SpriteRenderer>(false);
+            SetEnabledComponent<BoxCollider2D>(false);
+
+            if (once)
+            {
+                Destroy(gameObject, delayToDestroy);
+            }
+            else
+            {
+                DOVirtual.DelayedCall(delayToReactivation, () => {
+                    // 描画とコリジョンを有効化
+                    SetEnabledComponent<SpriteRenderer>(true);
+                    SetEnabledComponent<BoxCollider2D>(true);
+                });
+            }
         }
 
-        protected void DisableComponent<T>() where T : Component
+        protected void SetEnabledComponent<T>(bool enabled) where T : Component
         {
             T component = GetComponent<T>();
             if (component != null)
@@ -73,11 +83,11 @@ namespace Proto2D
                 // http://answers.unity.com/answers/417142/view.html
 
                 if (component is Behaviour)
-                    (component as Behaviour).enabled = false;
+                    (component as Behaviour).enabled = enabled;
                 else if (component is Collider)
-                    (component as Collider).enabled = false;
+                    (component as Collider).enabled = enabled;
                 else if (component is Renderer)
-                    (component as Renderer).enabled = false;
+                    (component as Renderer).enabled = enabled;
             }
         }
 
