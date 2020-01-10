@@ -443,8 +443,7 @@ MonoBehaviour:
   blinkInterval: 0.1
   damageDuration: 0.2
   progressValue: 3
-  m_dropItemPrefab: {fileID: 0}
-  m_dropItemPercentage: 100
+  m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: 41590dfcddc5747e1b1c2df2780b851d, type: 2}
@@ -453,7 +452,7 @@ MonoBehaviour:
   shotTransform: {fileID: 0}
   sights:
   - fov: 180
-    viewDistance: 8
+    viewDistance: 9
     angleOffset: 0
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}

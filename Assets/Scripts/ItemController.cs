@@ -14,6 +14,7 @@ namespace Proto2D
         public bool once = true;
         public float delayToReactivation = 2;
         public GameObject pickupEffectPrefab;
+        public GameObject reactivateEffectPrefab;
         public AudioClip pickupSound;
         [Header("取得時のアニメ(AnimationをLegacyにする必要あり)")]
         public Animation pickupAnim;
@@ -68,6 +69,11 @@ namespace Proto2D
             else
             {
                 DOVirtual.DelayedCall(delayToReactivation, () => {
+
+                    if (reactivateEffectPrefab)
+                    {
+                        GameObject effect = Instantiate(reactivateEffectPrefab, transform.position, Quaternion.identity, null);
+                    }
                     // 描画とコリジョンを有効化
                     SetEnabledComponent<SpriteRenderer>(true);
                     SetEnabledComponent<BoxCollider2D>(true);
