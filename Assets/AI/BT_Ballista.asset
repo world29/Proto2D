@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75954bc0db1426a43b85f6fe0f6f7c0f, type: 3}
-  m_Name: BT_PileTrap
+  m_Name: BT_Ballista
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 114991651272656056}
@@ -56,8 +56,8 @@ MonoBehaviour:
   m_stateName: 
   m_timeout:
     m_type: 0
-    m_min: 0.5
-    m_max: 1.5
+    m_min: 0.1
+    m_max: 0.5
     m_value: 1
 --- !u!114 &114147822068083978
 MonoBehaviour:
@@ -92,7 +92,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 1
   m_stateName: 
-  projectilePrefab: {fileID: 4156022876548339746, guid: 88e94a9761ee8fc4b8ddc23a0c1af47d,
+  projectilePrefab: {fileID: 2710078861558965266, guid: 6fc446ae8e2b94a7d965b23181bc1738,
     type: 3}
 --- !u!114 &114152842766793800
 MonoBehaviour:
@@ -178,7 +178,7 @@ MonoBehaviour:
     m_type: 1
     m_min: 0.5
     m_max: 3
-    m_value: 1
+    m_value: 1.5
 --- !u!114 &114650305560412566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
     m_type: 1
     m_min: 0.5
     m_max: 3
-    m_value: 1
+    m_value: 0.55
 --- !u!114 &114991651272656056
 MonoBehaviour:
   m_ObjectHideFlags: 0
