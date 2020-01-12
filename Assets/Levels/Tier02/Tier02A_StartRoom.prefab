@@ -3890,8 +3890,9 @@ GameObject:
   - component: {fileID: 4473467512835104266}
   - component: {fileID: 485416581955732332}
   - component: {fileID: 7563162931829299642}
+  - component: {fileID: 6423858991273241628}
   m_Layer: 0
-  m_Name: TriggerSoundPlay
+  m_Name: TriggerStageEntry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3971,6 +3972,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_audioClip: {fileID: 8300000, guid: ac85536a2f1d4884ab075f542205e943, type: 3}
+--- !u!114 &6423858991273241628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5538484586900417172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67805f9f0dc91034fb408c00f4388a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effectPrefab: {fileID: 1517139441771072911, guid: 8cf7a460ffd904a4c96e331832fdb498,
+    type: 3}
 --- !u!1 &8916984473485260605
 GameObject:
   m_ObjectHideFlags: 0
