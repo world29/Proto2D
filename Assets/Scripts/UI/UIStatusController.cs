@@ -12,6 +12,7 @@ namespace Proto2D
         public Slider m_progressSlider;
         public Image m_progressSliderBackground;
         public Image m_progressSliderFill;
+        public Image m_progressSliderFill_Add;
 
         public Sprite[] m_progressSliderBackgroundSprites;
         public Sprite[] m_progressSliderFillSprites;
@@ -69,8 +70,8 @@ namespace Proto2D
             m_progressSlider.value = value % m_stage.m_progressPerPhase;
 
             Sequence seq = DOTween.Sequence();
-            seq.Append(m_progressSliderFill.DOColor(Color.white, 0))
-                .Append(m_progressSliderFill.DOColor(Color.black, .5f))
+            seq.Append(m_progressSliderFill_Add.DOColor(Color.white, 0))
+                .Append(m_progressSliderFill_Add.DOColor(Color.black, .5f))
                 .SetEase(Ease.OutCubic);
         }
 
@@ -81,6 +82,7 @@ namespace Proto2D
 
             m_progressSliderBackground.sprite = m_progressSliderBackgroundSprites[(int)level];
             m_progressSliderFill.sprite = m_progressSliderFillSprites[(int)level];
+            m_progressSliderFill_Add.sprite = m_progressSliderFillSprites[(int)level];
         }
 
         void OnPlayerHealthChanged(float healthValue)
