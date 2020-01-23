@@ -81,7 +81,10 @@ namespace Proto2D
 
             // プレイヤーをスポーンする
             GameObject spawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
-            SpawnPlayer(spawner.transform.position);
+            if (spawner)
+            {
+                SpawnPlayer(spawner.transform.position);
+            }
         }
 
         void Update()
