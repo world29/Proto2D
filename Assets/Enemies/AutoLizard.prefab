@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 3603435985753771977}
   - component: {fileID: 8667336193306619030}
   m_Layer: 11
-  m_Name: RobotA_Worker
+  m_Name: AutoLizard
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,12 +170,12 @@ SpriteRenderer:
   m_SortingLayerID: -911777801
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 1dc40f0db23fb4004a078e4930c30d44, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f25471269e284bae95f2ef3fa0b8660, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.375, y: 2.625}
+  m_Size: {x: 0.96875, y: 1.1875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -191,7 +191,7 @@ Animator:
   m_GameObject: {fileID: 6245465354517601081}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 7e3002e4686b84b918d08c43bacc13b5, type: 2}
+  m_Controller: {fileID: 22100000, guid: c850c157f0a55420b8489a0dd9a202af, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -234,18 +234,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009190261, y: -0.044181824}
+  m_Offset: {x: 0, y: -0.16181755}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6875, y: 1.3125}
-    newSize: {x: 2.375, y: 2.625}
+    oldSize: {x: 1.75, y: 1.84375}
+    newSize: {x: 0.96875, y: 1.1875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3914989, y: 1.2758636}
+  m_Size: {x: 1.2, y: 1.5111351}
   m_EdgeRadius: 0
 --- !u!114 &1408866405167355065
 MonoBehaviour:
