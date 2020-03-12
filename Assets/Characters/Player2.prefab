@@ -517,7 +517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialHealth: 5
   gravity: 40
-  maxVelocity: {x: 7.5, y: 30}
+  maxVelocity: {x: 7.5, y: 40}
   jumpSpeed: 17
   hopSpeed: 20
   acceralationGround: 400
@@ -1010,7 +1010,7 @@ PrefabInstance:
     - target: {fileID: 5031575840539981620, guid: b966c3c0c21adb745ae3b39bc19eb2b7,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 9096227169130504186, guid: b966c3c0c21adb745ae3b39bc19eb2b7,
         type: 3}
@@ -1020,7 +1020,7 @@ PrefabInstance:
     - target: {fileID: 9096227169130504186, guid: b966c3c0c21adb745ae3b39bc19eb2b7,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3219944645392449281, guid: b966c3c0c21adb745ae3b39bc19eb2b7,
         type: 3}
@@ -1030,7 +1030,7 @@ PrefabInstance:
     - target: {fileID: 3219944645392449281, guid: b966c3c0c21adb745ae3b39bc19eb2b7,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8041174875608682533, guid: b966c3c0c21adb745ae3b39bc19eb2b7,
         type: 3}
@@ -1108,11 +1108,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6503610203471954341}
     m_Modifications:
-    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Name
-      value: JumpAttackTrail
-      objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1167,6 +1162,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Name
+      value: JumpAttackTrail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c79fb8ad98e7284e9b75477e500a7fa, type: 3}

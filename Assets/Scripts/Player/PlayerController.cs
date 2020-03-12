@@ -145,13 +145,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         hitQueue = new Queue<HitInfo>();
         damageQueue = new Queue<DamageInfo>();
+
+        // 初期ステート
+        state = new PlayerState_Free();
+        state.OnEnter(gameObject);
     }
 
     void Start()
     {
-        // 初期ステート
-        state = new PlayerState_Free();
-        state.OnEnter(gameObject);
     }
 
     void Update()
