@@ -17,6 +17,8 @@ namespace Proto2D
         [Header("ターゲット位置を更新する")]
         public bool m_updateTarget = false;
 
+        public GameObject m_hitEffectPrefab;
+
         private Vector3 m_targetPosition;
 
         void Start()
@@ -40,12 +42,21 @@ namespace Proto2D
             Debug.DrawRay(transform.position, diff);
             var q = Quaternion.FromToRotation(transform.right, diff);
             var rot = (q.eulerAngles.z < 180) ? q.eulerAngles.z : q.eulerAngles.z - 360;
-            Debug.Log(rot);
             var torque = rot * m_ratio;
             rb.AddTorque(torque);
 
             // 向いている方に進む
             rb.velocity = transform.right * m_speed;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                GameObject.Instantiate(m_hitEffectPrefab, transform.position, transform.rotation);
+
+                GameObject.Destroy(gameObject);
+            }
         }
 
         private void OnDrawGizmos()
