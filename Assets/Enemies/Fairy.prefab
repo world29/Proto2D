@@ -1770,6 +1770,7 @@ GameObject:
   - component: {fileID: 3505603300724250839}
   - component: {fileID: 4255205033312651060}
   - component: {fileID: 4503960071326144236}
+  - component: {fileID: 3820193477472386094}
   m_Layer: 11
   m_Name: Fairy
   m_TagString: Enemy
@@ -1948,7 +1949,7 @@ MonoBehaviour:
   blinkInterval: 0.1
   damageDuration: 0.5
   progressValue: 5
-  m_itemSpawner: {fileID: 0}
+  m_itemSpawner: {fileID: 3820193477472386094}
   damageEffectPrefab: {fileID: 7615431906169996719, guid: dbab2464a4b6c460daacbf6a16dbeae3,
     type: 3}
   damageSE: {fileID: 0}
@@ -1974,6 +1975,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_stagePhaseFlags: 7
   m_percentage: 30
+--- !u!114 &3820193477472386094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806861694332298747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561fc6a9185bc97449ae0b98b44efa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_entries:
+  - weight: 1
+    prefab: {fileID: 6730292347644209698, guid: b71ba89dad2dc28438441591c1468ab2,
+      type: 3}
+    countRange: {x: 1, y: 1}
 --- !u!1 &8807195396537334268
 GameObject:
   m_ObjectHideFlags: 0
