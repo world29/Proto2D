@@ -14,6 +14,9 @@ namespace Proto2D
         [Header("この係数が大きいほどターゲットに追従しやすく、Rigidbody2D.AngularDrag が大きいほど追従しにくくなる")]
         public float m_ratio;
 
+        [Header("寿命が終わるとターゲットに追従しなくなり、画面外にでると消える")]
+        public float m_lifetime = 5;
+
         [Header("ターゲット位置を更新する")]
         public bool m_updateTarget = false;
 
@@ -28,22 +31,41 @@ namespace Proto2D
 
         private void Update()
         {
+            // ターゲットの位置を更新する
             if (m_updateTarget)
             {
                 m_targetPosition = m_targetTransform.position;
             }
+
+            // ビューポートの外に出たら消える
+            {
+                var camera = Camera.main;
+                Vector3 vp = camera.WorldToViewportPoint(transform.position);
+
+                const float margin = .5f;
+                if (vp.x < -margin || vp.x > 1 + margin || vp.y < -margin || vp.y > 1 + margin)
+                {
+                    Destroy(gameObject);
+                }
+            }
+
+            // 寿命の計算
+            m_lifetime -= Time.deltaTime;
         }
 
         private void FixedUpdate()
         {
             var rb = GetComponent<Rigidbody2D>();
 
-            var diff = m_targetPosition - transform.position;
-            Debug.DrawRay(transform.position, diff);
-            var q = Quaternion.FromToRotation(transform.right, diff);
-            var rot = (q.eulerAngles.z < 180) ? q.eulerAngles.z : q.eulerAngles.z - 360;
-            var torque = rot * m_ratio;
-            rb.AddTorque(torque);
+            if (m_lifetime > 0)
+            {
+                var diff = m_targetPosition - transform.position;
+                Debug.DrawRay(transform.position, diff);
+                var q = Quaternion.FromToRotation(transform.right, diff);
+                var rot = (q.eulerAngles.z < 180) ? q.eulerAngles.z : q.eulerAngles.z - 360;
+                var torque = rot * m_ratio;
+                rb.AddTorque(torque);
+            }
 
             // 向いている方に進む
             rb.velocity = transform.right * m_speed;
