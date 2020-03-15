@@ -26,6 +26,14 @@ namespace Proto2D
 
         void Start()
         {
+            // ターゲットが設定されていなければプレイヤーを探してターゲットとする
+            if (m_targetTransform == null)
+            {
+                var go = GameObject.FindGameObjectWithTag("Player");
+                Debug.Assert(go);
+                m_targetTransform = go.transform;
+            }
+
             m_targetPosition = m_targetTransform.position;
         }
 
