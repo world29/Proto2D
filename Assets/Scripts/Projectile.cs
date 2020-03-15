@@ -128,7 +128,12 @@ public class Projectile : MonoBehaviour
             blockUpdate = true;
             HideAllSprites();
             // 自分を削除する
-            Destroy(gameObject, hitSE.length);
+            float delay = 0;
+            if (hitSE != null)
+            {
+                delay = hitSE.length;
+            }
+            Destroy(gameObject, delay);
         }
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         velocity.x *= -1;
