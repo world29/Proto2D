@@ -13,7 +13,7 @@ namespace Proto2D
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKey(KeyCode.L))
             {
                 var x = Random.Range(m_spawnArea.min.x, m_spawnArea.max.x);
                 var y = Random.Range(m_spawnArea.min.y, m_spawnArea.max.y);
