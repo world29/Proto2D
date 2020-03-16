@@ -56,6 +56,9 @@ namespace Proto2D
         private const float kSpawnSpeed = 10;
         private const float kSpawnAngleRange = 20;
 
+        private float m_lastTurnTime;
+        private const float m_kTurnInterval = 1;
+
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
@@ -85,6 +88,8 @@ namespace Proto2D
 
             state = new EnemyState_Idle();
             state.OnEnter(this);
+
+            m_lastTurnTime = Time.timeSinceLevelLoad;
         }
 
         protected virtual void Update()
@@ -255,8 +260,14 @@ namespace Proto2D
 
         public void Turn()
         {
-            Vector3 scl = transform.localScale;
-            transform.localScale = new Vector3(scl.x * -1, scl.y, scl.z);
+            // 高速でターンし続けるのを防ぐため、直前のターンから一定時間経過している場合に限り実行する
+            if ((Time.timeSinceLevelLoad - m_lastTurnTime) > m_kTurnInterval)
+            {
+                Vector3 scl = transform.localScale;
+                transform.localScale = new Vector3(scl.x * -1, scl.y, scl.z);
+
+                m_lastTurnTime = Time.timeSinceLevelLoad;
+            }
         }
 
         public virtual void Jump(Vector2 jumpVelocity)
