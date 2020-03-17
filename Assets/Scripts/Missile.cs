@@ -83,14 +83,10 @@ namespace Proto2D
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player") || (m_collisionMask == (m_collisionMask | (1 << collision.gameObject.layer))))
             {
                 GameObject.Instantiate(m_hitEffectPrefab, transform.position, transform.rotation);
 
-                GameObject.Destroy(gameObject);
-            }
-            else if (m_collisionMask == (m_collisionMask | (1 << collision.gameObject.layer)))
-            {
                 GameObject.Destroy(gameObject);
             }
         }
