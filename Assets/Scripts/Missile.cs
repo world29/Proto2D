@@ -6,6 +6,8 @@ namespace Proto2D
 {
     public class Missile : MonoBehaviour
     {
+        public LayerMask m_collisionMask;
+
         public Transform m_targetTransform;
 
         [Header("速度")]
@@ -85,6 +87,10 @@ namespace Proto2D
             {
                 GameObject.Instantiate(m_hitEffectPrefab, transform.position, transform.rotation);
 
+                GameObject.Destroy(gameObject);
+            }
+            else if (m_collisionMask == (m_collisionMask | (1 << collision.gameObject.layer)))
+            {
                 GameObject.Destroy(gameObject);
             }
         }
