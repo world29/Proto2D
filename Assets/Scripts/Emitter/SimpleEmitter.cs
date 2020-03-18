@@ -12,14 +12,11 @@ namespace Proto2D
         [Header("発射位置。null ならこのコンポーネントがアタッチされているオブジェクトの位置。")]
         public Transform m_emitLocation;
 
-        [Header("デフォルト速度")]
-        public float m_defaultSpeed;
-
-        [Header("デフォルト仰角"), Range(-180, 180)]
-        public int m_defaultElevation;
+        [Header("初速度")]
+        public float m_speed;
 
         // IProjectileEmitter
-        public void Emit(float speed, int elevation)
+        public void Emit()
         {
             Vector3 position = transform.position;
             
@@ -31,18 +28,7 @@ namespace Proto2D
             var projectile = GameObject.Instantiate(m_projectile, position, Quaternion.identity) as Projectile;
 
             Vector3 direction = (transform.lossyScale.x >= 0) ? Vector3.right : Vector3.left;
-            projectile.initialVelocity = Quaternion.Euler(0, 0, elevation) * direction * speed;
-        }
-
-        // call from AnimationEvent
-        public void EventEmitDefault()
-        {
-            Emit(m_defaultSpeed, m_defaultElevation);
-        }
-
-        public void EventEmit(AnimationEvent ae)
-        {
-            Emit(ae.floatParameter, ae.intParameter);
+            projectile.initialVelocity = transform.rotation * direction * m_speed;
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Proto2D
     public interface IProjectileEmitter
     {
         // 発射する
-        void Emit(float speed, int elevation);
+        void Emit();
     }
 }
