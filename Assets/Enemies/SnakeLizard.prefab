@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 3028474228098987851}
   - component: {fileID: 3603435985753771977}
   - component: {fileID: 8667336193306619030}
+  - component: {fileID: 8231316798688475302}
   m_Layer: 11
   m_Name: SnakeLizard
   m_TagString: Enemy
@@ -288,6 +289,7 @@ MonoBehaviour:
   blinkInterval: 0.1
   damageDuration: 0.5
   progressValue: 3
+  m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 8300000, guid: 42245de78853f974192c9f8e89c68732, type: 3}
   behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
@@ -427,6 +429,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8231316798688475302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354517601081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 2710078861558965266, guid: 25c301cec0ebf8444b846fcf2646036e,
+    type: 3}
+  m_emitLocation: {fileID: 6245465354011956537}
+  m_defaultSpeed: 0
+  m_defaultElevation: 0
 --- !u!1 &9028497248953889572
 GameObject:
   m_ObjectHideFlags: 0
