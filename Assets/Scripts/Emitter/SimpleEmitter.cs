@@ -19,16 +19,20 @@ namespace Proto2D
         public void Emit()
         {
             Vector3 position = transform.position;
-            
+            Quaternion rotation = transform.rotation;
+
             if (m_emitLocation)
             {
                 position = m_emitLocation.position;
+                rotation = m_emitLocation.rotation;
             }
 
             var projectile = GameObject.Instantiate(m_projectile, position, Quaternion.identity) as Projectile;
 
             Vector3 direction = (transform.lossyScale.x >= 0) ? Vector3.right : Vector3.left;
-            projectile.initialVelocity = transform.rotation * direction * m_speed;
+            projectile.initialVelocity = rotation * direction * m_speed;
+
+            Debug.DrawLine(position, position + projectile.initialVelocity);
         }
     }
 }
