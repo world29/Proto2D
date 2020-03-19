@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3751201934004884025}
   - component: {fileID: 6303308963203438242}
   - component: {fileID: 3384044613250764739}
+  - component: {fileID: 3223048881197053496}
   m_Layer: 10
   m_Name: Ballista
   m_TagString: Enemy
@@ -398,6 +399,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3223048881197053496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826051946666605233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 2710078861558965266, guid: 6fc446ae8e2b94a7d965b23181bc1738,
+    type: 3}
+  m_emitLocation: {fileID: 4269093937010934905}
+  m_speed: 44
 --- !u!1 &875219646959285993
 GameObject:
   m_ObjectHideFlags: 0
