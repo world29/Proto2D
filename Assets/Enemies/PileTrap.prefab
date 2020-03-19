@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4610346181113719562}
   - component: {fileID: 6606681533207635697}
   - component: {fileID: 3236762147389972734}
+  - component: {fileID: 6691149783720150518}
   m_Layer: 10
   m_Name: PileTrap
   m_TagString: Enemy
@@ -283,6 +284,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6691149783720150518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826051946666605233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 4156022876548339746, guid: 88e94a9761ee8fc4b8ddc23a0c1af47d,
+    type: 3}
+  m_emitLocation: {fileID: 4269093937010934905}
+  m_speed: 6
 --- !u!1 &2597100228471032582
 GameObject:
   m_ObjectHideFlags: 0

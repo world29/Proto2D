@@ -8,7 +8,6 @@ namespace Proto2D.AI
     public class Shot : Action
     {
         public string m_stateName;
-        public Projectile projectilePrefab;
 
         public override NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
         {
@@ -17,7 +16,10 @@ namespace Proto2D.AI
             {
                 animator.Play(m_stateName);
             }
-            enemyBehaviour.Shot(projectilePrefab);
+            var emitter = enemyBehaviour.gameObject.GetComponent<IProjectileEmitter>() as IProjectileEmitter;
+            if (emitter != null) {
+              emitter.Emit();
+            }
 
             return NodeStatus.SUCCESS;
         }
