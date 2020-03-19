@@ -606,6 +606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7808301341753748401}
+  - component: {fileID: 3812957098126668669}
   m_Layer: 10
   m_Name: ShotTransform
   m_TagString: Untagged
@@ -627,6 +628,22 @@ Transform:
   m_Father: {fileID: 8778643387317822643}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.624}
+--- !u!114 &3812957098126668669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449018985305260307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 2710078861558965266, guid: 3c694621d9e63bf41a130e9b6bd5525b,
+    type: 3}
+  m_emitLocation: {fileID: 0}
+  m_speed: 20
 --- !u!1 &4456251520415826029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,6 +1597,7 @@ GameObject:
   - component: {fileID: 1590208307270362419}
   - component: {fileID: 5496964147717276612}
   - component: {fileID: 3912455476042815390}
+  - component: {fileID: 4299715907531708675}
   m_Layer: 11
   m_Name: ThornLynx
   m_TagString: Enemy
@@ -1760,6 +1778,7 @@ MonoBehaviour:
   blinkInterval: 0.1
   damageDuration: 0.3
   progressValue: 3
+  m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 11400000, guid: 21905875b00189847af54d7562ff98a1, type: 2}
@@ -1902,6 +1921,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4299715907531708675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edb2f0dd347fce429648fe064778ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_emitters:
+  - {fileID: 4449018985305260307}
 --- !u!1 &8784012155091073224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,16 +2021,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8778643387317822643}
     m_Modifications:
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2067,6 +2090,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.1597
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
