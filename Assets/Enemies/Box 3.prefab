@@ -179,7 +179,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
-  shotTransform: {fileID: 0}
   sights: []
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
@@ -217,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5919542709258005915}
-  - component: {fileID: 8030296738879771681}
+  - component: {fileID: 1682771383083807806}
   m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
@@ -239,8 +238,8 @@ Transform:
   m_Father: {fileID: 6583429864534333430}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8030296738879771681
-BoxCollider2D:
+--- !u!68 &1682771383083807806
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -252,19 +251,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.082739234}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.96875, y: 1.40625}
-    newSize: {x: 1, y: 1.21875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.7776264, y: 1.226229}
+  m_Offset: {x: 0, y: 0.53}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5, y: 0}
+  - {x: 0.5, y: 0}
 --- !u!1 &7895209804602698210
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,5 +348,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0dcab4db94d8e408adc4afec51bddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_damageTypeFlag: 4
+  m_damageTypeFlag: 7
   m_receiver: {fileID: 1204113652773712350}
