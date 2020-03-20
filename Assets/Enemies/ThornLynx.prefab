@@ -1784,7 +1784,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 21905875b00189847af54d7562ff98a1, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 1054260359019353039}
-  shotTransform: {fileID: 7808301341753748401}
   sights:
   - fov: 160
     viewDistance: 7
@@ -2021,6 +2020,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8778643387317822643}
     m_Modifications:
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2090,16 +2099,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.1597
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
