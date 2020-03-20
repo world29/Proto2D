@@ -69,6 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6245465354011956537}
+  - component: {fileID: 4233251242421649782}
   m_Layer: 10
   m_Name: ShotTransform
   m_TagString: Untagged
@@ -90,6 +91,22 @@ Transform:
   m_Father: {fileID: 6245465354517601086}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4233251242421649782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354011956536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 2710078861558965266, guid: 25c301cec0ebf8444b846fcf2646036e,
+    type: 3}
+  m_locator: {fileID: 0}
+  m_speed: 3
 --- !u!1 &6245465354517601081
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +125,7 @@ GameObject:
   - component: {fileID: 3028474228098987851}
   - component: {fileID: 3603435985753771977}
   - component: {fileID: 8667336193306619030}
-  - component: {fileID: 8231316798688475302}
+  - component: {fileID: 9109029745472236730}
   m_Layer: 11
   m_Name: SnakeLizard
   m_TagString: Enemy
@@ -295,7 +312,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
-  shotTransform: {fileID: 6245465354011956537}
   sights:
   - fov: 90
     viewDistance: 7
@@ -429,7 +445,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8231316798688475302
+--- !u!114 &9109029745472236730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -438,13 +454,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6245465354517601081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Script: {fileID: 11500000, guid: 3edb2f0dd347fce429648fe064778ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectile: {fileID: 2710078861558965266, guid: 25c301cec0ebf8444b846fcf2646036e,
-    type: 3}
-  m_emitLocation: {fileID: 6245465354011956537}
-  m_speed: 3
+  m_emitters:
+  - {fileID: 6245465354011956536}
 --- !u!1 &9028497248953889572
 GameObject:
   m_ObjectHideFlags: 0
