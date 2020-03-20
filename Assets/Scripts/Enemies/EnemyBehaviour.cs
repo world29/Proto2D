@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
@@ -18,9 +19,13 @@ namespace Proto2D
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
 
+        [SerializeField, Header("死亡イベント")]
+        UnityEvent m_OnDeath;
+
         [Header("倒したときに得られる進捗ポイント")]
         public float progressValue = 3;
-        [Tooltip("倒したときにドロップするアイテムのスポーナー")]
+        [Header("[非推奨] 倒したときにドロップするアイテムのスポーナー。代わりに On Death イベントを使用してください")]
+        [System.Obsolete("現在使用されていません。代わりに On Death イベントを使用してください")]
         public RandomSpawner m_itemSpawner;
 
         [Header("ダメージをうけた時の追加エフェクト")]
@@ -342,10 +347,7 @@ namespace Proto2D
         {
             DropProgressOrbs();
 
-            if (m_itemSpawner)
-            {
-                m_itemSpawner.Spawn();
-            }
+            m_OnDeath.Invoke();
         }
 
         private void DropProgressOrbs()

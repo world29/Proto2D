@@ -13,13 +13,13 @@ namespace Proto2D
         [HideInInspector]
         public new Rigidbody2D rigidbody { get { return GetComponent<Rigidbody2D>(); } }
 
-        public UnityEvent OnPickup;
+        public UnityEvent m_OnPickup;
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                OnPickup.Invoke();
+                m_OnPickup.Invoke();
 
                 Destroy(gameObject);
             }

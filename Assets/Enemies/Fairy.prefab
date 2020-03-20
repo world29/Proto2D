@@ -1771,6 +1771,7 @@ GameObject:
   - component: {fileID: 4255205033312651060}
   - component: {fileID: 4503960071326144236}
   - component: {fileID: 3820193477472386094}
+  - component: {fileID: 4104335084970294842}
   m_Layer: 11
   m_Name: Fairy
   m_TagString: Enemy
@@ -1948,6 +1949,22 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.5
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4104335084970294842}
+        m_MethodName: Emit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   progressValue: 5
   m_itemSpawner: {fileID: 3820193477472386094}
   damageEffectPrefab: {fileID: 7615431906169996719, guid: dbab2464a4b6c460daacbf6a16dbeae3,
@@ -1956,7 +1973,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 5847e68888a4e034bb1698eeaa82b656, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
-  shotTransform: {fileID: 0}
   sights: []
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
@@ -1992,6 +2008,24 @@ MonoBehaviour:
     prefab: {fileID: 6730292347644209698, guid: b71ba89dad2dc28438441591c1468ab2,
       type: 3}
     countRange: {x: 1, y: 1}
+--- !u!114 &4104335084970294842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806861694332298747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4fd968528c23a469dca4778467a076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_itemTable:
+  - description: "\u56DE\u5FA9\u30A2\u30A4\u30C6\u30E0"
+    item: {fileID: 3979372016604126942, guid: b71ba89dad2dc28438441591c1468ab2, type: 3}
+    weight: 0
+  m_locator: {fileID: 0}
+  m_speed: 0
 --- !u!1 &8807195396537334268
 GameObject:
   m_ObjectHideFlags: 0
