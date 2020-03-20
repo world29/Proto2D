@@ -32,7 +32,7 @@ namespace Proto2D
         public AI.BehaviourTree behaviourTree;
         public bool behaviourTreeDebug = false;
         public Transform groundDetectionTransform;
-        public Transform shotTransform;
+
         /*
         [Range(0, 360)]
         public float viewAngle = 45; // fov
@@ -276,19 +276,6 @@ namespace Proto2D
             v.x *= getFacingLocal();
 
             velocity = v;
-        }
-
-        public virtual void Shot(Projectile prefab)
-        {
-
-            Projectile projectile = Instantiate(prefab, shotTransform.position, shotTransform.rotation) as Projectile;
-            float rotoffset = 0;
-
-            projectile.initialVelocity = Quaternion.Euler(0, 0, (shotTransform.rotation.eulerAngles.z + rotoffset) * GetFacingWorld()) * projectile.initialVelocity * shotTransform.transform.localScale.x ;
-
-            // 向きを合わせる
-            projectile.transform.localScale = gameObject.transform.lossyScale;
-            projectile.initialVelocity.x *= GetFacingWorld();
         }
 
         public virtual bool IsPlayerInSight(int sightIndex = 0)
