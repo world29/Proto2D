@@ -28,7 +28,7 @@ namespace Proto2D
                 rotation = m_locator.rotation;
             }
 
-            var projectile = GameObject.Instantiate(m_projectile, position, Quaternion.identity) as Projectile;
+            var projectile = GameObject.Instantiate(m_projectile, position, rotation) as Projectile;
 
             // 初速を計算
             Vector3 direction = (transform.lossyScale.x >= 0) ? Vector3.right : Vector3.left;
