@@ -23,10 +23,10 @@ namespace Proto2D
     // 子オブジェクトにアタッチされたエミッターを AnimationEvent から呼び出すためのプロキシコンポーネント
     public class EmitterProxy : MonoBehaviour, IEmitter
     {
-        [TypeConstraint(typeof(IEmitter))]
-        public GameObject[] m_emitters;
+        [SerializeField, TypeConstraint(typeof(IEmitter))]
+        GameObject[] m_emitters;
 
-        //
+        // IEmitter
         public void Emit()
         {
             EmitByIndex(0);

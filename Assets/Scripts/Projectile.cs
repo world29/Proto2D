@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Projectile : MonoBehaviour
+public class Projectile : Proto2D.Projectile
 {
     [Header("重力")]
     public float gravity = 20;
