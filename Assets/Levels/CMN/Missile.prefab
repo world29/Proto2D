@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5029415201633941957}
   - component: {fileID: 5029415201633941955}
-  - component: {fileID: 5029415201633941954}
   - component: {fileID: 5029415201633941952}
+  - component: {fileID: 5029415201633941954}
+  - component: {fileID: 3278950562494687594}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Untagged
@@ -56,28 +57,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5029415201633941954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5029415201633941956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca17f8b3fbc2d24cb25feb7aa6068f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_collisionMask:
-    serializedVersion: 2
-    m_Bits: 512
-  m_targetTransform: {fileID: 0}
-  m_speed: 4
-  m_ratio: 3.5
-  m_lifetime: 5
-  m_updateTarget: 1
-  m_hitEffectPrefab: {fileID: 7615431906169996719, guid: 3fd5afb12e2d87b4d91b6963444aad62,
-    type: 3}
 --- !u!61 &5029415201633941952
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -104,6 +83,73 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.53256464, y: 0.08409123}
   m_EdgeRadius: 0
+--- !u!114 &5029415201633941954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029415201633941956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca17f8b3fbc2d24cb25feb7aa6068f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3278950562494687594}
+        m_MethodName: Emit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_collisionMask:
+    serializedVersion: 2
+    m_Bits: 512
+  m_OnCollision:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3278950562494687594}
+        m_MethodName: Emit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_targetTransform: {fileID: 0}
+  m_speed: 4
+  m_ratio: 3.5
+  m_lifetime: 5
+  m_updateTarget: 1
+--- !u!114 &3278950562494687594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029415201633941956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3604280b7e0c02642aa073a2fa08c09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effect: {fileID: 7615431906169996719, guid: 3fd5afb12e2d87b4d91b6963444aad62,
+    type: 3}
+  m_locator: {fileID: 0}
 --- !u!1 &5029415202783123309
 GameObject:
   m_ObjectHideFlags: 0

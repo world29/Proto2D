@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Proto2D
 {
-    public class Missile : MonoBehaviour
+    public class Missile : Projectile
     {
-        public LayerMask m_collisionMask;
-
         public Transform m_targetTransform;
 
         [Header("速度")]
@@ -21,8 +19,6 @@ namespace Proto2D
 
         [Header("ターゲット位置を更新する")]
         public bool m_updateTarget = false;
-
-        public GameObject m_hitEffectPrefab;
 
         private Vector3 m_targetPosition;
 
@@ -79,16 +75,6 @@ namespace Proto2D
 
             // 向いている方に進む
             rb.velocity = transform.right * m_speed;
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("Player") || (m_collisionMask == (m_collisionMask | (1 << collision.gameObject.layer))))
-            {
-                GameObject.Instantiate(m_hitEffectPrefab, transform.position, transform.rotation);
-
-                GameObject.Destroy(gameObject);
-            }
         }
 
         private void OnDrawGizmos()

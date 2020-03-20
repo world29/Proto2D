@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1944157901282410877}
   - component: {fileID: 1944157901282410876}
+  - component: {fileID: 3338482462423637545}
+  - component: {fileID: 6604448208774870608}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -46,8 +48,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
   m_period: 1
-  m_hitEffectPrefab: {fileID: 7615431906169996719, guid: 4ded5c45bc986334e89b4d5283dad191,
+  m_OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6604448208774870608}
+        m_MethodName: Emit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3338482462423637545}
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 201dcc7a320693c42aaf44d992e7c9fa,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &3338482462423637545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944157901282410879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e53c1b2868c44f5459ebe3c288c3f001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6604448208774870608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944157901282410879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3604280b7e0c02642aa073a2fa08c09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effect: {fileID: 7615431906169996719, guid: f899ee65221a97a4cb77cfc30b24ea56,
     type: 3}
+  m_locator: {fileID: 0}
 --- !u!1 &1944157901569261008
 GameObject:
   m_ObjectHideFlags: 0

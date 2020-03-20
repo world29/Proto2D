@@ -16,7 +16,7 @@ namespace Proto2D.AI
             {
                 animator.Play(m_stateName);
             }
-            var emitter = enemyBehaviour.gameObject.GetComponent<IProjectileEmitter>() as IProjectileEmitter;
+            var emitter = enemyBehaviour.gameObject.GetComponent<IEmitter>() as IEmitter;
             if (emitter != null) {
               emitter.Emit();
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Proto2D
 {
-    public interface IProjectileEmitter
+    public interface IEmitter
     {
         // 発射する
         void Emit();

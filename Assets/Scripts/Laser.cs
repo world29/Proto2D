@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Proto2D
 {
@@ -11,7 +12,8 @@ namespace Proto2D
         [Header("命中までの時間")]
         public float m_period;
 
-        public GameObject m_hitEffectPrefab;
+        [Header("ヒットイベント")]
+        public UnityEvent m_OnHit;
 
         [HideInInspector]
         public Vector3 initialVelocity { set { m_velocity = value; } }
@@ -43,10 +45,8 @@ namespace Proto2D
             m_period -= Time.deltaTime;
             if (m_period < 0)
             {
-                if (m_hitEffectPrefab)
-                {
-                    GameObject.Instantiate(m_hitEffectPrefab, transform.position, Quaternion.identity);
-                }
+                m_OnHit.Invoke();
+
                 GameObject.Destroy(gameObject);
                 return;
             }

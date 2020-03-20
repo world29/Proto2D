@@ -20,18 +20,27 @@ namespace Proto2D
         }
     }
 
-    public class MultiEmitterProxy : MonoBehaviour
+    // 子オブジェクトにアタッチされたエミッターを AnimationEvent から呼び出すためのプロキシコンポーネント
+    public class EmitterProxy : MonoBehaviour, IEmitter
     {
-        [TypeConstraint(typeof(IProjectileEmitter))]
+        [TypeConstraint(typeof(IEmitter))]
         public GameObject[] m_emitters;
 
-        // call from AnimationEvent
+        //
+        public void Emit()
+        {
+            EmitByIndex(0);
+        }
+
         public void EmitByIndex(int emitterIndex)
         {
             Debug.Assert(emitterIndex < m_emitters.Length);
 
-            var emitter = m_emitters[emitterIndex].GetComponent<IProjectileEmitter>() as IProjectileEmitter;
-            emitter.Emit();
+            var emitter = m_emitters[emitterIndex].GetComponent<IEmitter>() as IEmitter;
+            if (emitter != null)
+            {
+                emitter.Emit();
+            }
         }
     }
 }
