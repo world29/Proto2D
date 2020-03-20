@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4610346181113719562}
   - component: {fileID: 6606681533207635697}
   - component: {fileID: 3236762147389972734}
-  - component: {fileID: 6691149783720150518}
+  - component: {fileID: 1776826615939606744}
   m_Layer: 10
   m_Name: PileTrap
   m_TagString: Enemy
@@ -173,6 +173,11 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.2
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   progressValue: 3
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
@@ -180,7 +185,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 31d823f86808b0745b64633143eec4ad, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4269093937010934905}
-  shotTransform: {fileID: 4269093937010934905}
   sights:
   - fov: 180
     viewDistance: 10
@@ -284,7 +288,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6691149783720150518
+--- !u!114 &1776826615939606744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,13 +297,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 826051946666605233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Script: {fileID: 11500000, guid: 3edb2f0dd347fce429648fe064778ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectile: {fileID: 4156022876548339746, guid: 88e94a9761ee8fc4b8ddc23a0c1af47d,
-    type: 3}
-  m_emitLocation: {fileID: 4269093937010934905}
-  m_speed: 6
+  m_emitters:
+  - {fileID: 3285357707813993850}
 --- !u!1 &2597100228471032582
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4269093937010934905}
+  - component: {fileID: 8170875620528845723}
   m_Layer: 10
   m_Name: ShotTransform
   m_TagString: Untagged
@@ -409,6 +412,22 @@ Transform:
   m_Father: {fileID: 8135050273782025795}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8170875620528845723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285357707813993850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 4156022876548339746, guid: 88e94a9761ee8fc4b8ddc23a0c1af47d,
+    type: 3}
+  m_locator: {fileID: 0}
+  m_speed: 5
 --- !u!1 &8451087480842941593
 GameObject:
   m_ObjectHideFlags: 0
