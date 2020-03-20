@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3751201934004884025}
   - component: {fileID: 6303308963203438242}
   - component: {fileID: 3384044613250764739}
-  - component: {fileID: 3223048881197053496}
+  - component: {fileID: 9111493958636639304}
   m_Layer: 10
   m_Name: Ballista
   m_TagString: Enemy
@@ -259,7 +259,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 3f49b867a26c8461f9d6c4a4a4477438, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4269093937010934905}
-  shotTransform: {fileID: 4269093937010934905}
   sights:
   - fov: 90
     viewDistance: 11
@@ -399,7 +398,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3223048881197053496
+--- !u!114 &9111493958636639304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -408,13 +407,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 826051946666605233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Script: {fileID: 11500000, guid: 3edb2f0dd347fce429648fe064778ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectile: {fileID: 2710078861558965266, guid: 6fc446ae8e2b94a7d965b23181bc1738,
-    type: 3}
-  m_emitLocation: {fileID: 4269093937010934905}
-  m_speed: 44
+  m_emitters:
+  - {fileID: 3285357707813993850}
 --- !u!1 &875219646959285993
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4269093937010934905}
+  - component: {fileID: 7486024026927444880}
   m_Layer: 10
   m_Name: ShotTransform
   m_TagString: Untagged
@@ -682,6 +680,22 @@ Transform:
   m_Father: {fileID: 2306534103593300404}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25}
+--- !u!114 &7486024026927444880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285357707813993850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 2710078861558965266, guid: 6fc446ae8e2b94a7d965b23181bc1738,
+    type: 3}
+  m_locator: {fileID: 0}
+  m_speed: 20
 --- !u!1 &3671041658673227198
 GameObject:
   m_ObjectHideFlags: 0

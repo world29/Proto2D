@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5361948975488168097}
-  - component: {fileID: 8778773180891840220}
+  - component: {fileID: 1384893102753624216}
   m_Layer: 10
   m_Name: EffectSocket
   m_TagString: Untagged
@@ -189,7 +189,7 @@ Transform:
   m_Father: {fileID: 8778643387317822643}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 37.023003}
---- !u!114 &8778773180891840220
+--- !u!114 &1384893102753624216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,12 +198,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2432236702630269230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_projectile: {fileID: 2710078861558965266, guid: ab56d0e6a0890e94da194a8947ad57d1,
     type: 3}
-  m_emitLocation: {fileID: 0}
+  m_locator: {fileID: 0}
   m_speed: 10
 --- !u!1 &2955873353452969287
 GameObject:
@@ -997,7 +997,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 891717cb91e869c4eb83c1b4340ef4dc, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
-  shotTransform: {fileID: 5361948975488168097}
   sights:
   - fov: 100
     viewDistance: 6
@@ -1160,21 +1159,6 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Name
-      value: Stompable
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1822174567075258946, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1239,6 +1223,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.99984384
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Name
+      value: Stompable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822174567075259071, guid: 557b88b7f94fcdd47833e05bbbf8b965,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8295238979916577050, guid: 557b88b7f94fcdd47833e05bbbf8b965,
         type: 3}

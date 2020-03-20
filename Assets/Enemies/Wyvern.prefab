@@ -2639,6 +2639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4861850203214842200}
+  - component: {fileID: 5242025672894158968}
   m_Layer: 0
   m_Name: Effect
   m_TagString: Untagged
@@ -2660,6 +2661,22 @@ Transform:
   m_Father: {fileID: 2229720972276607518}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5242025672894158968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386310566187099875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 2710078861558965266, guid: c6a8dbbab83c88f4eaaea9dba1e83348,
+    type: 3}
+  m_locator: {fileID: 0}
+  m_speed: 8
 --- !u!1 &8406494100538235767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,7 +2855,7 @@ GameObject:
   - component: {fileID: 1822995208518884972}
   - component: {fileID: 1742051692690925536}
   - component: {fileID: 6651459892978469475}
-  - component: {fileID: 7238831431189792818}
+  - component: {fileID: 1000296959382132241}
   m_Layer: 11
   m_Name: Wyvern
   m_TagString: Enemy
@@ -3022,7 +3039,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 1ac11f02337ed4f14b3d738bf8b4e6df, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
-  shotTransform: {fileID: 4861850203214842200}
   sights:
   - fov: 88
     viewDistance: 7
@@ -3162,7 +3178,7 @@ MonoBehaviour:
   m_damageType: 0
   damage: 1
   sender: {fileID: 8806861694332298747}
---- !u!114 &7238831431189792818
+--- !u!114 &1000296959382132241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3171,13 +3187,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8806861694332298747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da80356b3f2ae14aa41abd02359c529, type: 3}
+  m_Script: {fileID: 11500000, guid: 3edb2f0dd347fce429648fe064778ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectile: {fileID: 2710078861558965266, guid: 25c301cec0ebf8444b846fcf2646036e,
-    type: 3}
-  m_emitLocation: {fileID: 4861850203214842200}
-  m_speed: 8
+  m_emitters:
+  - {fileID: 8386310566187099875}
 --- !u!1 &9054749788592541999
 GameObject:
   m_ObjectHideFlags: 0
