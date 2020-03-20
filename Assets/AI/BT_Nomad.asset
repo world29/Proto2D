@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: Play Animator State
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: -680}
+  position: {x: -392, y: -504}
   ports:
     keys:
     - parent
@@ -211,13 +211,13 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: parent
-        node: {fileID: 114573122885649272}
-        reroutePoints: []
-      - fieldName: parent
         node: {fileID: 114238679338956922}
         reroutePoints: []
       - fieldName: parent
         node: {fileID: 114115793360057928}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 114573122885649272}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: Move Forward
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: -552}
+  position: {x: -392, y: -376}
   ports:
     keys:
     - parent
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: -360}
+  position: {x: -392, y: -648}
   ports:
     keys:
     - parent
@@ -648,7 +648,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  m_priority: 0
+  m_priority: 4
   m_stateName: idle
   m_timeout:
     m_type: 0
