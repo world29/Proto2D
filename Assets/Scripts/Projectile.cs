@@ -14,8 +14,6 @@ public class Projectile : Proto2D.Projectile
     [Header("生存期間 (0 なら無制限)")]
     public float lifespan = 0;
 
-    public Vector3 initialVelocity;
-
     [Tooltip("指定したレイヤーに対してのみ衝突します (プレイヤーはこの設定によらず衝突します)")]
     public LayerMask layerMaskToCollide;
 
@@ -29,7 +27,6 @@ public class Projectile : Proto2D.Projectile
     public GameObject RotateObject;
     public float OffsetRotate = 0f;
 
-    private Vector3 velocity;
     private float lifeTimer;
 
     [Header("発射時の効果音")]
@@ -47,10 +44,14 @@ public class Projectile : Proto2D.Projectile
 
     private bool blockUpdate = false;
 
+    private Vector3 velocity {
+        get { return GetComponent<Rigidbody2D>().velocity; }
+        set { GetComponent<Rigidbody2D>().velocity = value; }
+    }
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        velocity = initialVelocity;
         PlaySE(startSE);
         PlayEffect(startEffectPrefab);
     }
@@ -62,9 +63,6 @@ public class Projectile : Proto2D.Projectile
             return;
         }
         transform.rotation = Quaternion.identity;
-        velocity.y -= gravity * Time.deltaTime;
-
-        transform.Translate(velocity * Time.deltaTime);
 
         if(RotateVelocity && RotateObject)
         {
@@ -136,8 +134,10 @@ public class Projectile : Proto2D.Projectile
             Destroy(gameObject, delay);
         }
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-        velocity.x *= -1;
-        velocity.y *= .5f;
+        Vector3 reflectedVelocity = velocity;
+        reflectedVelocity.x *= -1;
+        reflectedVelocity.y *= .5f;
+        velocity = reflectedVelocity;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
