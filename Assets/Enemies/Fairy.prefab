@@ -158,6 +158,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &759303151555319362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2370621060277601843}
+  - component: {fileID: 6686959005158331344}
+  m_Layer: 0
+  m_Name: itemSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2370621060277601843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759303151555319362}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.05, y: 1.31, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 8806861694332298751}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &6686959005158331344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759303151555319362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4fd968528c23a469dca4778467a076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_itemTable:
+  - description: "\u56DE\u5FA9\u30A2\u30A4\u30C6\u30E0"
+    item: {fileID: 8400593839925035292, guid: 51cfc82371e054584863c161ac20223f, type: 3}
+    weight: 0
+  m_locator: {fileID: 2370621060277601843}
+  m_speed: 8
 --- !u!1 &813103158581880507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,8 +1819,6 @@ GameObject:
   - component: {fileID: 3505603300724250839}
   - component: {fileID: 4255205033312651060}
   - component: {fileID: 4503960071326144236}
-  - component: {fileID: 3820193477472386094}
-  - component: {fileID: 4104335084970294842}
   m_Layer: 11
   m_Name: Fairy
   m_TagString: Enemy
@@ -1792,6 +1839,7 @@ Transform:
   m_Children:
   - {fileID: 8336991967384074793}
   - {fileID: 1220445119488149034}
+  - {fileID: 2370621060277601843}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1952,7 +2000,7 @@ MonoBehaviour:
   m_OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4104335084970294842}
+      - m_Target: {fileID: 6686959005158331344}
         m_MethodName: Emit
         m_Mode: 1
         m_Arguments:
@@ -1966,7 +2014,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   progressValue: 5
-  m_itemSpawner: {fileID: 3820193477472386094}
+  m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 7615431906169996719, guid: dbab2464a4b6c460daacbf6a16dbeae3,
     type: 3}
   damageSE: {fileID: 0}
@@ -1991,41 +2039,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_stagePhaseFlags: 7
   m_percentage: 30
---- !u!114 &3820193477472386094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806861694332298747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561fc6a9185bc97449ae0b98b44efa2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_entries:
-  - weight: 1
-    prefab: {fileID: 6730292347644209698, guid: b71ba89dad2dc28438441591c1468ab2,
-      type: 3}
-    countRange: {x: 1, y: 1}
---- !u!114 &4104335084970294842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806861694332298747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4fd968528c23a469dca4778467a076, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_itemTable:
-  - description: "\u56DE\u5FA9\u30A2\u30A4\u30C6\u30E0"
-    item: {fileID: 3979372016604126942, guid: b71ba89dad2dc28438441591c1468ab2, type: 3}
-    weight: 0
-  m_locator: {fileID: 0}
-  m_speed: 0
 --- !u!1 &8807195396537334268
 GameObject:
   m_ObjectHideFlags: 0
