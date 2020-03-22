@@ -413,6 +413,11 @@ namespace Proto2D
             }
         }
 
+        public void Kill()
+        {
+            OnTakeDamage(Mathf.Infinity);
+        }
+
         private void OnDrawGizmos()
         {
             for (int i = 0; i < sights.Count; i++)
