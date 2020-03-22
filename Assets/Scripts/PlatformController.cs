@@ -39,7 +39,10 @@ public class PlatformController : RaycastController
             }
         }
 
-        m_previousParentPosition = transform.parent.position;
+        if (transform.parent != null)
+        {
+            m_previousParentPosition = transform.parent.position;
+        }
     }
 
     // Update is called once per frame
@@ -120,6 +123,11 @@ public class PlatformController : RaycastController
 
     Vector3 CalculateParentMovement()
     {
+        if (transform.parent == null)
+        {
+            return Vector3.zero;
+        }
+
         Vector3 parentPosition = transform.parent.position;
 
         Vector3 diff = parentPosition - m_previousParentPosition;
