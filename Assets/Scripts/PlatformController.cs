@@ -22,18 +22,24 @@ public class PlatformController : RaycastController
     List<PassengerMovement> m_passengerMovement;
     Dictionary<Transform, Controller2D> m_passengerDictionary = new Dictionary<Transform, Controller2D>();
 
+    Vector3 m_previousParentPosition;
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
-        m_globalWaypoints = new Vector3[m_localWaypoints.Length];
-        for (int i = 0; i < m_localWaypoints.Length; i++)
-        {
-            m_globalWaypoints[i] = (transform.lossyScale.x > 0) 
-                ? transform.position + m_localWaypoints[i]
-                : transform.position + new Vector3(m_localWaypoints[i].x*-1,m_localWaypoints[i].y,0);
+        if (m_localWaypoints != null) {
+            m_globalWaypoints = new Vector3[m_localWaypoints.Length];
+            for (int i = 0; i < m_localWaypoints.Length; i++)
+            {
+                m_globalWaypoints[i] = (transform.lossyScale.x > 0) 
+                    ? transform.position + m_localWaypoints[i]
+                    : transform.position + new Vector3(m_localWaypoints[i].x*-1,m_localWaypoints[i].y,0);
+            }
         }
+
+        m_previousParentPosition = transform.parent.position;
     }
 
     // Update is called once per frame
@@ -43,7 +49,24 @@ public class PlatformController : RaycastController
 
         Vector3 velocity = CalculatePlatformMovement();
 
-        CalculatePassengerMovement(velocity);
+        // グローバル空間の移動量を加算
+        Vector3 parentVelocity = CalculateParentMovement();
+
+        Vector3 totalVelocity = velocity + parentVelocity;
+
+        // 十分小さい値を無視する
+        {
+            const float epsilon = .000001f;
+
+            if (Mathf.Abs(totalVelocity.x) < epsilon) {
+                totalVelocity.x = 0;
+            }
+            if (Mathf.Abs(totalVelocity.y) < epsilon) {
+                totalVelocity.y = 0;
+            }
+        }
+
+        CalculatePassengerMovement(totalVelocity);
 
         MovePassengers(true);
         transform.Translate(velocity, Space.World);
@@ -58,6 +81,11 @@ public class PlatformController : RaycastController
 
     Vector3 CalculatePlatformMovement()
     {
+        if (m_globalWaypoints.Length == 0)
+        {
+            return Vector3.zero;
+        }
+
         if (Time.time < m_nextMoveTime)
         {
             return Vector3.zero;
@@ -88,6 +116,17 @@ public class PlatformController : RaycastController
             m_nextMoveTime = Time.time + m_waitTime;
         }
         return newPos - transform.position;
+    }
+
+    Vector3 CalculateParentMovement()
+    {
+        Vector3 parentPosition = transform.parent.position;
+
+        Vector3 diff = parentPosition - m_previousParentPosition;
+
+        m_previousParentPosition = parentPosition;
+
+        return diff;
     }
 
     void MovePassengers(bool beforeMovePlatform)
