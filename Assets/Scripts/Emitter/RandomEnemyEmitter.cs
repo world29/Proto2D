@@ -13,6 +13,9 @@ namespace Proto2D
         [SerializeField, Header("生成位置。null ならこのコンポーネントがアタッチされているオブジェクトの位置。")]
         Transform m_locator;
 
+        [Header("初速度")]
+        public float m_speed;
+
         [SerializeField, Header("true ならスタート時に自動的に抽選する (MonoBehaviour.Start)")]
         bool m_emitOnAwake = true;
 
@@ -44,7 +47,12 @@ namespace Proto2D
                 {
                     position = m_locator.position;
                 }
-                var go = GameObject.Instantiate(m_enemyTable[index].enemy, position, Quaternion.identity);
+
+                var enemy = GameObject.Instantiate(m_enemyTable[index].enemy, position, Quaternion.identity) as EnemyBehaviour;
+
+                // 初速を計算
+                Vector3 initialVelocity = Vector3.up * m_speed;
+                enemy.velocity = initialVelocity;
             }
         }
 
