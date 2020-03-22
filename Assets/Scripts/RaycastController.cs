@@ -37,6 +37,20 @@ public class RaycastController : MonoBehaviour
 
     public void UpdateRaycastOrigins()
     {
+        /*
+        To anybody confused about why he expands the bounds by `skinWidth * -2` :
+
+        The Bounds class represents an Axis Aligned Bounding Box (AABB), which only has a center point position, and the extents for each axis. 
+
+        So if you had a AABB at the center of the world, each side having a length of 1 unit, it would look like:
+        Position: (0.0, 0.0, 0.0)
+        Extents:  (0.5, 0.5, 0.5)
+
+        As you can see, the extents are half of the total box length on one axis.
+        When you call `Bounds.Expand(amount)` you are actually expanding each extent by `amount/2`,
+        so to actually expand by the amount you want on both (positive and negative) sides of the axis, you have to multiply by 2.
+        You can then negate the value to contract the bounding box instead of expanding it.
+        */
         Bounds bounds = collider.bounds;
         bounds.Expand(skinWidth * -2);
 

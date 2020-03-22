@@ -171,6 +171,10 @@ public class PlatformController : RaycastController
         // Passenger on top of a horizontally or downward moving platform
         if (directionY == -1 || velocity.y == 0 && velocity.x != 0)
         {
+            /*
+            one skinwidth to get to the surface of platform,
+            another just to have a small ray are detecting anything standing on top
+            */
             float rayLength = skinWidth * 2;
 
             for (int i = 0; i < verticalRayCount; i++)
