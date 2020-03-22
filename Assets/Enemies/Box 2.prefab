@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1786699707462486827}
   - component: {fileID: 72641651286138558}
   - component: {fileID: 2976851024266785261}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 9202176072084308888}
   - component: {fileID: 550019408689717053}
   - component: {fileID: 5472460531572227096}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Box 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,6 +265,11 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.2
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   progressValue: 0
   m_itemSpawner: {fileID: 5472460531572227096}
   damageEffectPrefab: {fileID: 1509154601807174269, guid: bb83308fbfc36421c8d36240cab8a387,
@@ -307,7 +312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8466259998179874615}
   - component: {fileID: 6254391819767201467}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

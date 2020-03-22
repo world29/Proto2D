@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5894971556088874444}
   - component: {fileID: 6286071854293018954}
   - component: {fileID: 4359935343724557824}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Box 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +171,11 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.2
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   progressValue: 0
   m_itemSpawner: {fileID: 4359935343724557824}
   damageEffectPrefab: {fileID: 1509154601807174269, guid: bb83308fbfc36421c8d36240cab8a387,
