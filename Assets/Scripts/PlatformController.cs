@@ -59,7 +59,7 @@ public class PlatformController : RaycastController
 
         // 十分小さい値を無視する
         {
-            const float epsilon = .000001f;
+            const float epsilon = .001f;
 
             if (Mathf.Abs(totalVelocity.x) < epsilon) {
                 totalVelocity.x = 0;
