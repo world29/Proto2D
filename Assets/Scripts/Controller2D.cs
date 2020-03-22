@@ -48,7 +48,7 @@ public class Controller2D : RaycastController
             VerticalCollisions(ref moveAmount);
         }
 
-        transform.Translate(moveAmount);
+        transform.Translate(moveAmount, standingOnPlatform? Space.World : Space.Self);
 
         if (standingOnPlatform)
         {
