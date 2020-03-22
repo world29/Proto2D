@@ -42,16 +42,19 @@ namespace Proto2D
             if (m_enemyTable[index].enemy)
             {
                 Vector3 position = transform.position;
+                Quaternion rotation = transform.rotation;
 
                 if (m_locator)
                 {
                     position = m_locator.position;
+                    rotation = m_locator.rotation;
                 }
 
                 var enemy = GameObject.Instantiate(m_enemyTable[index].enemy, position, Quaternion.identity) as EnemyBehaviour;
 
                 // 初速を計算
-                Vector3 initialVelocity = Vector3.up * m_speed;
+                Vector3 direction = (transform.lossyScale.x >= 0) ? Vector3.right : Vector3.left;
+                Vector3 initialVelocity = rotation * direction * m_speed;
                 enemy.velocity = initialVelocity;
             }
         }
