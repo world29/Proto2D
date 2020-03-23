@@ -48,29 +48,29 @@ namespace Proto2D
                     sequence.Join(t);
                 }
 
-
-                // カメラを上に移動する
+                // カメラ移動と同時にゲームシーンへ遷移する
                 {
-                    var targetPos = m_camera.transform.position;
-                    targetPos.y = m_cameraMoveTarget.position.y;
+                    sequence.AppendCallback(() => {
+                        GameManager.Instance.NextStage();
+                    });
 
-                    float duration = 1.5f;
-                    Ease easeType = Ease.InOutCubic;
+                    // カメラを上に移動する
+                    {
+                        var targetPos = m_camera.transform.position;
+                        targetPos.y = m_cameraMoveTarget.position.y;
 
-                    var t = m_camera.transform
-                        .DOMove(targetPos, duration)
-                        .SetEase(easeType)
-                        .SetDelay(.5f);
+                        float duration = 1;
+                        Ease easeType = Ease.InOutCubic;
 
-                    sequence.Append(t);
+                        var t = m_camera.transform
+                            .DOMove(targetPos, duration)
+                            .SetEase(easeType)
+                            .SetDelay(.5f);
+
+                        sequence.Join(t);
+                    }
                 }
-
                 //m_state = TransitionState.InProgress;
-
-                sequence.Play().OnComplete(() => {
-                    // 終わったらゲームシーンへ遷移する
-                    SceneController.Instance.LoadSceneAsync(SceneController.SceneType.Game);
-                });
             }
         }
 

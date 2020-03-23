@@ -11,7 +11,6 @@ namespace Proto2D
         public CanvasGroup m_target;
 
         private RectTransform m_rectTransform;
-        private PlayerController m_player;
 
         private void Awake()
         {
@@ -23,29 +22,25 @@ namespace Proto2D
 
         void LateUpdate()
         {
-            if (m_player == null)
+            GameObject go = GameObject.FindGameObjectWithTag("Player");
+            if (go == null)
             {
-                GameObject go = GameObject.FindGameObjectWithTag("Player");
-                if (go)
-                {
-                    m_player = go.GetComponent<PlayerController>();
-                }
+                return;
             }
+
+            PlayerController player = go.GetComponent<PlayerController>();
 
             // プレイヤーがビューポートの外にいる場合のみルーペを表示する
             bool isPlayerOutOfViewport = false;
 
-            if (m_player)
+            Vector3 viewportPoint = Camera.main.WorldToViewportPoint(player.transform.position);
+            if (viewportPoint.y < -0.05f)
             {
-                Vector3 viewportPoint = Camera.main.WorldToViewportPoint(m_player.transform.position);
-                if (viewportPoint.y < -0.05f)
-                {
-                    isPlayerOutOfViewport = true;
+                isPlayerOutOfViewport = true;
 
-                    Vector3 pos = m_rectTransform.position;
-                    pos.x = m_player.transform.position.x;
-                    m_rectTransform.position = pos;
-                }
+                Vector3 pos = m_rectTransform.position;
+                pos.x = player.transform.position.x;
+                m_rectTransform.position = pos;
             }
 
             if (isPlayerOutOfViewport)
