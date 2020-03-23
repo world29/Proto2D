@@ -250,13 +250,9 @@ namespace Proto2D
         {
             isGameOver = true;
 
-            Pause();
+            //Pause();
 
-            Debug.Assert(m_player);
-            m_player.SetActive(false);
-
-            BroadcastExecuteEvents.Execute<IGameOverReceiver>(null,
-                (target, eventTarget) => target.OnGameOver());
+            GameManager.Instance.GameOver();
         }
 
         public void GameClear()

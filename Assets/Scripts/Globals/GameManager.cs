@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Proto2D
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         [System.NonSerialized]
         public int m_currentStageNum = 0;
@@ -54,6 +54,7 @@ namespace Proto2D
 
         }
 
+        // 次のシーンに遷移する
         public void NextStage()
         {
             m_currentStageNum++;
@@ -62,6 +63,7 @@ namespace Proto2D
             StartCoroutine(WaitForLoadScene(m_currentStageNum));
         }
 
+        // 指定したシーンに遷移する
         public void MoveToStage(int stageNum)
         {
             StartCoroutine(WaitForLoadScene(stageNum));
