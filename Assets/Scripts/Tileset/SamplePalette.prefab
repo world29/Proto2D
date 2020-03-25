@@ -698,6 +698,15 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: 3, y: 5, z: 0}
+    second:
+      m_TileIndex: 71
+      m_TileSpriteIndex: 68
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 2
+      m_ColliderType: 1
   - first: {x: -11, y: 6, z: 0}
     second:
       m_TileIndex: 55
@@ -805,6 +814,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
+      m_ColliderType: 1
+  - first: {x: 3, y: 6, z: 0}
+    second:
+      m_TileIndex: 70
+      m_TileSpriteIndex: 67
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 2
       m_ColliderType: 1
   m_AnimatedTiles:
   - first: {x: -7, y: 0, z: 0}
@@ -960,6 +978,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 2976cbe044fa743ba80efff9a03d0174, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 89a19f44b46f0448aa1c743c7253f851, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 4fb714dfc0dbc478ebb7463c447955b5, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 9fca104d3d34d4e6d8c7d965985af12f, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300044, guid: ba1ce03b798c2af4681037e643578641, type: 3}
@@ -1095,8 +1117,12 @@ Tilemap:
     m_Data: {fileID: 21300020, guid: f0afe4bda86abb94688f96ac447cecb3, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300010, guid: f8e551f78baf644828afd4391ea5521c, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300012, guid: f46eaab7342c14059aabef5f16247274, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300014, guid: f46eaab7342c14059aabef5f16247274, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 68
+  - m_RefCount: 70
     m_Data:
       e00: 1
       e01: 0
@@ -1133,7 +1159,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 73
+  - m_RefCount: 75
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
     m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
