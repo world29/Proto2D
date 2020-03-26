@@ -7,10 +7,25 @@ namespace Proto2D
     [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public class Damageable : MonoBehaviour
     {
-        [EnumFlags]
+        [SerializeField, EnumFlags]
         public DamageTypeFlag m_damageTypeFlag;
 
-        public GameObject m_receiver;
+        [SerializeField, Header("ダメージを受けたことを伝えるオブジェクト。null の場合はルートオブジェクト")]
+        public GameObject m_owner;
+
+        private void Awake()
+        {
+            if (m_owner == null)
+            {
+                m_owner = transform.root.gameObject;
+            }
+
+            // recenver が IDamageSender を実装していない
+            if (m_owner.GetComponent<IDamageReceiver>() == null)
+            {
+                Debug.LogWarningFormat("{0} can not receive DamageReceiveEvent", m_owner.name);
+            }
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -21,6 +36,7 @@ namespace Proto2D
         {
             if (!enabled) return;
 
+            // ダメージ判定の矩形描画
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
             if (collider.enabled)
             {

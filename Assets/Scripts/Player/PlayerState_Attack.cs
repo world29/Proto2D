@@ -20,8 +20,11 @@ public class PlayerState_Attack : IPlayerState
         trail = player.jumpAttackTrail;
 
         // Trail 有効化
-        trail.emitting = true;
-           
+        if (trail)
+        {
+            trail.emitting = true;
+        }
+
 
         // 効果音再生
         if (!animator.GetBool("attack"))
@@ -53,7 +56,10 @@ public class PlayerState_Attack : IPlayerState
 
     public void OnExit(GameObject context)
     {
-        trail.emitting = false;
+        if (trail)
+        {
+            trail.emitting = false;
+        }
 
         // ジャンプアタックの攻撃判定を無効化
         var attackers = context.GetComponentsInChildren<Proto2D.Damager>()

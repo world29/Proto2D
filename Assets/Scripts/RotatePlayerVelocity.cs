@@ -10,6 +10,7 @@ public class RotatePlayerVelocity : MonoBehaviour
     void Start()
     {
         GameObject context = GameObject.FindGameObjectWithTag("Player");
+        if (context == null) { return; }
         PlayerController player = context.GetComponent<PlayerController>();
         if(player)
         {

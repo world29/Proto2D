@@ -227,11 +227,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void UpdateAnimationParameters()
     {
-        animator.SetFloat("move_x", Mathf.Abs(velocity.x));
-        animator.SetFloat("move_y", Mathf.Abs(velocity.y));
-        animator.SetFloat("velocity_x", velocity.x);
-        animator.SetFloat("velocity_y", velocity.y);
-        animator.SetBool("ground", controller.collisions.below);
+        if (animator)
+        {
+            animator.SetFloat("move_x", Mathf.Abs(velocity.x));
+            animator.SetFloat("move_y", Mathf.Abs(velocity.y));
+            animator.SetFloat("velocity_x", velocity.x);
+            animator.SetFloat("velocity_y", velocity.y);
+            animator.SetBool("ground", controller.collisions.below);
+        }
     }
 
     private void ProcessEventQueue()
@@ -435,7 +438,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     }
     public void PlaySE(AudioClip clip)
     {
-        if(clip)
+        if(clip && audioSource)
         {
             audioSource.PlayOneShot(clip);
         }
