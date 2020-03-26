@@ -1,18 +1,19 @@
 fileFormatVersion: 2
-guid: 4a4d3b4f577bb4f6cb89b905b10f4728
+guid: f46eaab7342c14059aabef5f16247274
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Tier04ATile04_0
-    21300002: Tier04ATile04_1
-    21300004: Tier04ATile04_2
-    21300006: Tier04ATile04_3
-    21300008: Tier04ATile04_4
-    21300010: Tier04ATile04_5
-    21300012: Tier04ATile04_6
-    21300014: Tier04ATile04_7
-    21300016: Tier04ATile04_8
-    21300018: Tier04ATile04_9
-    21300020: Tier04ATile04_10
+    21300000: Tier04ATile05_0
+    21300002: Tier04ATile05_1
+    21300004: Tier04ATile05_2
+    21300006: Tier04ATile05_3
+    21300008: Tier04ATile05_4
+    21300010: Tier04ATile05_5
+    21300012: Tier04ATile05_6
+    21300014: Tier04ATile05_7
+    21300016: Tier04ATile05_8
+    21300018: Tier04ATile05_9
+    21300020: Tier04ATile05_10
+    21300022: Tier04ATile05_11
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -106,7 +107,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tier04ATile04_0
+      name: Tier04ATile05_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,17 +121,39 @@ TextureImporter:
       physicsShape:
       - - {x: -16, y: -16}
         - {x: -16, y: 16}
-        - {x: 3, y: 16}
-        - {x: 3, y: -16}
+        - {x: 16, y: 16}
+        - {x: 16, y: -5}
+        - {x: 1, y: -5}
+        - {x: 1, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: f882aa2bbc2494b8e8d9112407838758
+      spriteID: 6099064ee88cb4500b4df48e10332651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_1
+      name: Tier04ATile05_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b27414f418e214bacabce99a6122189d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tier04ATile05_2
       rect:
         serializedVersion: 2
         x: 64
@@ -144,13 +167,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d5a1a8ce018e47bfbd4c518d39a97ce
+      spriteID: 58b72d49cb2f74211b20125930bdb9d7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_2
+      name: Tier04ATile05_3
       rect:
         serializedVersion: 2
         x: 0
@@ -163,44 +186,45 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: -16}
+        - {x: -16, y: 4}
         - {x: -16, y: 16}
-        - {x: 3, y: 16}
-        - {x: 3, y: 3}
-        - {x: 16, y: 3}
-        - {x: 16, y: -15}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7da44e5d9dd904592a7387a6130e4ba9
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tier04ATile04_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -16, y: -16}
-        - {x: -16, y: 3}
-        - {x: 16, y: 3}
+        - {x: 1, y: 16}
+        - {x: 1, y: 4}
+        - {x: 16, y: 4}
         - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 884e0e6e574ea4b0abe577d36e7a2af8
+      spriteID: 2aa46782ee6c942eaa2b9fc3dd355fce
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_4
+      name: Tier04ATile05_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: 4}
+        - {x: 16, y: 4}
+        - {x: 16, y: -16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6905c0609024a129f5b9afd38f8fb2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tier04ATile05_5
       rect:
         serializedVersion: 2
         x: 64
@@ -213,18 +237,18 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: -16}
-        - {x: -16, y: 3}
-        - {x: 4, y: 3}
-        - {x: 3, y: -16}
+        - {x: -16, y: 4}
+        - {x: 2, y: 4}
+        - {x: 2, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: e5c13eb3bc2b847d0a3691dbc5887c02
+      spriteID: 7011941be0bec4ca0892dd8325d6775f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_5
+      name: Tier04ATile05_6
       rect:
         serializedVersion: 2
         x: 0
@@ -238,13 +262,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7eb421de401c04091a60d60cfb674f0c
+      spriteID: c9414a8c2eee24ad9a60bd02bcb1ca53
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_6
+      name: Tier04ATile05_7
       rect:
         serializedVersion: 2
         x: 32
@@ -258,13 +282,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98e601a9264814b93b3bf303c748c124
+      spriteID: 866c6bc0becec4831ad9dda0e5c15f3d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_7
+      name: Tier04ATile05_8
       rect:
         serializedVersion: 2
         x: 64
@@ -278,17 +302,17 @@ TextureImporter:
       physicsShape:
       - - {x: -16, y: -16}
         - {x: -16, y: 16}
-        - {x: 3, y: 16}
-        - {x: 3, y: -16}
+        - {x: 2, y: 16}
+        - {x: 2, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 42a3e24753fae45e488d0879a57dba46
+      spriteID: 3122cba21b2e945f7820c7b81ef9295e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_8
+      name: Tier04ATile05_9
       rect:
         serializedVersion: 2
         x: 0
@@ -302,13 +326,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d39b6a891ed44a94b42bf6973f86d98
+      spriteID: b650b7e50105640da9bdc2472853d1f8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_9
+      name: Tier04ATile05_10
       rect:
         serializedVersion: 2
         x: 32
@@ -322,13 +346,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd15243d8924a48f78aee6bf844f6be1
+      spriteID: 39e29166b6e4740d985315015288010a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tier04ATile04_10
+      name: Tier04ATile05_11
       rect:
         serializedVersion: 2
         x: 64
@@ -340,14 +364,14 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -12, y: -16}
-        - {x: -16, y: -16}
+      - - {x: -16, y: -1}
         - {x: -16, y: 16}
-        - {x: 3, y: 16}
-        - {x: 3, y: 0}
+        - {x: 2, y: 16}
+        - {x: 2, y: 11}
+        - {x: -9, y: -1}
       tessellationDetail: 0
       bones: []
-      spriteID: 35cdd2abc35ce4b39ac3eb6f54205bc9
+      spriteID: d79241a03841d434496d3cd3c888c031
       vertices: []
       indices: 
       edges: []
@@ -355,7 +379,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: bf8533c68819449149e15a9eafc8227b
+    spriteID: af07360e85ce9476aa73fee52eabe712
     vertices: []
     indices: 
     edges: []
