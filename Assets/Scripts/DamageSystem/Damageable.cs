@@ -20,7 +20,7 @@ namespace Proto2D
                 m_owner = transform.root.gameObject;
             }
 
-            // recenver が IDamageSender を実装していない
+            // recenver が IDamageReceiver を実装していない
             if (m_owner.GetComponent<IDamageReceiver>() == null)
             {
                 Debug.LogWarningFormat("{0} can not receive DamageReceiveEvent", m_owner.name);

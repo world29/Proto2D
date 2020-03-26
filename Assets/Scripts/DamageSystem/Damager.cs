@@ -5,9 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Proto2D
 {
-    // Rigidbody2D は衝突検出するいずれかのオブジェクトに必要なので、
-    // Damageable オブジェクトに持たせる。
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class Damager : MonoBehaviour
     {
         [SerializeField, Header("ダメージを与えるレイヤー")]
@@ -42,29 +40,39 @@ namespace Proto2D
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            ProcessTrigger(collision);
+            OnHit(collider);
         }
 
-        private void OnTriggerStay2D(Collider2D collision)
+        private void OnTriggerStay2D(Collider2D collider)
         {
-            ProcessTrigger(collision);
+            OnHit(collider);
         }
 
-        void ProcessTrigger(Collider2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            OnHit(collision.collider);
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            OnHit(collision.collider);
+        }
+
+        void OnHit(Collider2D collider)
         {
             // このコンポーネントが無効
             if (!enabled) return;
 
             // ルートが同じ (自分自身)
-            if (collision.transform.root == transform.root) return;
+            if (collider.transform.root == transform.root) return;
 
             // レイヤー判定
-            if ((m_layerMask & (0x1 << collision.gameObject.layer)) == 0) return;
+            if ((m_layerMask & (0x1 << collider.gameObject.layer)) == 0) return;
 
             // ダメージを適用
-            Damageable damageable = collision.GetComponent<Damageable>();
+            Damageable damageable = collider.GetComponent<Damageable>();
             if (damageable && damageable.enabled)
             {
                 // ダメージタイプの不一致
@@ -90,7 +98,7 @@ namespace Proto2D
             if (!enabled) return;
 
             // ダメージ判定の矩形描画
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            Collider2D collider = GetComponent<Collider2D>();
             if (collider.enabled)
             {
                 Gizmos.color = new Color(1, 0, 0, .2f);
