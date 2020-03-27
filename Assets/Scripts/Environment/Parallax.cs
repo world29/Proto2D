@@ -10,7 +10,7 @@ namespace Proto2D
         float m_parallaxEffect;
 
         private Camera m_camera;
-        private Vector3 m_startPos;
+        private Vector3 m_basePos;
 
         private void Awake()
         {
@@ -22,14 +22,14 @@ namespace Proto2D
 
         private void Start()
         {
-            m_startPos = transform.position;
+            m_basePos = transform.position;
         }
 
         private void LateUpdate()
         {
-            float dist = m_camera.transform.position.y * m_parallaxEffect;
+            float dist = (m_camera.transform.position.y - m_basePos.y) * m_parallaxEffect;
 
-            transform.position = new Vector3(transform.position.x, m_startPos.y + dist, transform.position.z);
+            transform.position = new Vector3(transform.position.x, m_basePos.y + dist, transform.position.z);
         }
     }
 }
