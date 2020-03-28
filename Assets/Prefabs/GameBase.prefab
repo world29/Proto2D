@@ -674,7 +674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replayText: {fileID: 0}
   m_worldBoundaryParam:
-    m_Center: {x: 0, y: -18, z: 0}
+    m_Center: {x: 0, y: -15, z: 0}
     m_Extent: {x: 10, y: 30, z: 10}
   m_roomSpawnTransform: {fileID: 883206938731264134}
   m_stages: []
@@ -1335,11 +1335,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3763611367022188154}
     m_Modifications:
-    - target: {fileID: 472159057501782709, guid: 8969ae16e4aedd94c83c774bcea4cc09,
-        type: 3}
-      propertyPath: m_Name
-      value: GameUI
-      objectReference: {fileID: 0}
     - target: {fileID: 472159057501782705, guid: 8969ae16e4aedd94c83c774bcea4cc09,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1455,6 +1450,11 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -156567535
       objectReference: {fileID: 0}
+    - target: {fileID: 472159057501782709, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+        type: 3}
+      propertyPath: m_Name
+      value: GameUI
+      objectReference: {fileID: 0}
     - target: {fileID: 8733013607200895543, guid: 8969ae16e4aedd94c83c774bcea4cc09,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1480,6 +1480,16 @@ PrefabInstance:
       propertyPath: m_MaxValue
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2817637751923097944, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817637751923097944, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1705046843534766557, guid: 8969ae16e4aedd94c83c774bcea4cc09,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1498,16 +1508,6 @@ PrefabInstance:
     - target: {fileID: 9092960289082971334, guid: 8969ae16e4aedd94c83c774bcea4cc09,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2817637751923097944, guid: 8969ae16e4aedd94c83c774bcea4cc09,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2817637751923097944, guid: 8969ae16e4aedd94c83c774bcea4cc09,
-        type: 3}
-      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3471144840389554136, guid: 8969ae16e4aedd94c83c774bcea4cc09,
@@ -1527,15 +1527,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8969ae16e4aedd94c83c774bcea4cc09, type: 3}
---- !u!223 &3654243045753732262 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 472159057501782706, guid: 8969ae16e4aedd94c83c774bcea4cc09,
-    type: 3}
-  m_PrefabInstance: {fileID: 3763611367542046228}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5551510083955559459 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8733013607200895543, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+    type: 3}
+  m_PrefabInstance: {fileID: 3763611367542046228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &3654243045753732262 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 472159057501782706, guid: 8969ae16e4aedd94c83c774bcea4cc09,
     type: 3}
   m_PrefabInstance: {fileID: 3763611367542046228}
   m_PrefabAsset: {fileID: 0}
@@ -1552,11 +1552,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3763611367022188154}
     m_Modifications:
-    - target: {fileID: 1866422973084924843, guid: 9f02cce20f8dcf84990ed1a77d8012d7,
-        type: 3}
-      propertyPath: m_Name
-      value: BackgroundImage
-      objectReference: {fileID: 0}
     - target: {fileID: 1866422973084924841, guid: 9f02cce20f8dcf84990ed1a77d8012d7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1611,6 +1606,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866422973084924843, guid: 9f02cce20f8dcf84990ed1a77d8012d7,
+        type: 3}
+      propertyPath: m_Name
+      value: BackgroundImage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f02cce20f8dcf84990ed1a77d8012d7, type: 3}
