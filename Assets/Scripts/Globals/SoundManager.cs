@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Proto2D.Globals
 {
     [RequireComponent(typeof(AudioSource))]
-    public class SoundPlayer : SingletonMonoBehaviour<SoundPlayer>
+    public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
         private AudioSource audioSource;
 
@@ -18,7 +18,7 @@ namespace Proto2D.Globals
 
         public void Play(AudioClip clip)
         {
-            Debug.Assert(audioSource != null, "SoundPlayer.Start() より先に呼び出してはいけません");
+            Debug.Assert(audioSource != null, "SoundManager.Start() より先に呼び出してはいけません");
 
             audioSource.PlayOneShot(clip);
         }
