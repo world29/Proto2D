@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(AudioSource))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(AudioSource))]
     public class ItemController : MonoBehaviour
     {
         public ItemType itemType;
@@ -67,7 +67,7 @@ namespace Proto2D
 
             // 描画とコリジョンを無効化
             SetEnabledComponent<SpriteRenderer>(false);
-            SetEnabledComponent<BoxCollider2D>(false);
+            SetEnabledComponent<Collider2D>(false);
 
             if (once)
             {
@@ -83,7 +83,7 @@ namespace Proto2D
                     }
                     // 描画とコリジョンを有効化
                     SetEnabledComponent<SpriteRenderer>(true);
-                    SetEnabledComponent<BoxCollider2D>(true);
+                    SetEnabledComponent<Collider2D>(true);
                 });
             }
         }
@@ -106,8 +106,8 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
-            if (collider)
+            Collider2D collider = GetComponent<Collider2D>();
+            if (collider.enabled)
             {
                 Gizmos.color = new Color(1, 1, 0, .3f);
                 Gizmos.DrawCube(collider.bounds.center, collider.bounds.size);

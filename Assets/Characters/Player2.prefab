@@ -323,8 +323,8 @@ GameObject:
   - component: {fileID: 6503610203471954343}
   - component: {fileID: 6759853421765695750}
   - component: {fileID: 6503610203471954340}
-  - component: {fileID: 7187811184922299041}
   - component: {fileID: 4748702757739118001}
+  - component: {fileID: 4814176463424156889}
   m_Layer: 11
   m_Name: Player2
   m_TagString: Player
@@ -572,20 +572,6 @@ MonoBehaviour:
   hopSE: {fileID: 0}
   velocity: {x: 0, y: 0}
   direction: 1
---- !u!114 &7187811184922299041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6503610203471954336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca0bfe64a55269d418d540f3b076357c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_forceMode: 1
-  m_force: 40
 --- !u!82 &4748702757739118001
 AudioSource:
   m_ObjectHideFlags: 0
@@ -683,6 +669,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4814176463424156889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503610203471954336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca0bfe64a55269d418d540f3b076357c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_forceMode: 1
+  m_force: 40
 --- !u!1 &7466548893659416070
 GameObject:
   m_ObjectHideFlags: 0

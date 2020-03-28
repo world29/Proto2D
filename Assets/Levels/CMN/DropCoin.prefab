@@ -12,12 +12,11 @@ GameObject:
   - component: {fileID: 6657147086526764866}
   - component: {fileID: 6657147086526764865}
   - component: {fileID: 6657147086526764864}
-  - component: {fileID: 6657147086526764879}
-  - component: {fileID: 6657147086526764878}
-  - component: {fileID: 7701557293256563231}
-  - component: {fileID: 5507909912897603424}
-  - component: {fileID: 5782164831978827386}
-  m_Layer: 0
+  - component: {fileID: 3315132882356057420}
+  - component: {fileID: 7918218429948012154}
+  - component: {fileID: 239137743726163468}
+  - component: {fileID: 4608730931029660335}
+  m_Layer: 12
   m_Name: DropCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,21 +112,21 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6657147086526764877}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &6657147086526764879
-BoxCollider2D:
+  m_Constraints: 4
+--- !u!58 &3315132882356057420
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,23 +135,13 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.40625, y: 0.5625}
-    newSize: {x: 0.46875, y: 0.53125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.46875, y: 0.53125}
-  m_EdgeRadius: 0
---- !u!114 &6657147086526764878
+  m_Radius: 0.27857754
+--- !u!114 &7918218429948012154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,51 +150,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 6657147086526764877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8edba9d31b8acf488aeba7bd0ba25b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 71c629fe3c157384e8c6b8278206ecf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
-  once: 1
-  pickupEffectPrefab: {fileID: 0}
-  pickupSound: {fileID: 8300000, guid: 201dcc7a320693c42aaf44d992e7c9fa, type: 3}
-  pickupAnim: {fileID: 0}
---- !u!114 &7701557293256563231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6657147086526764877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca98975ca6b7b224d9bb0658ca58a0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 512
-  horizontalRayCount: 0
-  verticalRayCount: 0
-  horizontalRaySpacing: 0
-  verticalRaySpacing: 0
-  collider: {fileID: 0}
-  m_maxSlopeAngle: 60
-  m_input: {x: 0, y: 0}
---- !u!114 &5507909912897603424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6657147086526764877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91ef643b556e9794ca2a4a5bd113294d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gravity: 20
-  m_dropSound: {fileID: 8300000, guid: cbc531e982fccf347bb13e8ddfebf6d3, type: 3}
---- !u!82 &5782164831978827386
+  m_OnApplyDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnPickup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7918218429948012154}
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 201dcc7a320693c42aaf44d992e7c9fa,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!82 &239137743726163468
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,10 +189,9 @@ AudioSource:
   m_GameObject: {fileID: 6657147086526764877}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243619870385165850, guid: 546b2571e40e14d08b12e40866a799a5,
-    type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -302,3 +276,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4608730931029660335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657147086526764877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8edba9d31b8acf488aeba7bd0ba25b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 1
+  once: 1
+  delayToReactivation: 2
+  pickupEffectPrefab: {fileID: 0}
+  reactivateEffectPrefab: {fileID: 0}
+  pickupSound: {fileID: 0}
+  pickupAnim: {fileID: 0}
+  hopSpeed: 20
