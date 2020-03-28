@@ -203,6 +203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   m_damageType: 2
   damage: 1
   sender: {fileID: 6503610203471954336}
@@ -298,6 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   m_damageType: 1
   damage: 1
   sender: {fileID: 6503610203471954336}
@@ -317,6 +323,7 @@ GameObject:
   - component: {fileID: 6503610203471954343}
   - component: {fileID: 6759853421765695750}
   - component: {fileID: 6503610203471954340}
+  - component: {fileID: 7187811184922299041}
   - component: {fileID: 4748702757739118001}
   m_Layer: 11
   m_Name: Player2
@@ -444,7 +451,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.017920792, y: -0.1940651}
@@ -565,6 +572,20 @@ MonoBehaviour:
   hopSE: {fileID: 0}
   velocity: {x: 0, y: 0}
   direction: 1
+--- !u!114 &7187811184922299041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503610203471954336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca0bfe64a55269d418d540f3b076357c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_forceMode: 1
+  m_force: 40
 --- !u!82 &4748702757739118001
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1108,6 +1129,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6503610203471954341}
     m_Modifications:
+    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Name
+      value: JumpAttackTrail
+      objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1162,11 +1188,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Name
-      value: JumpAttackTrail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c79fb8ad98e7284e9b75477e500a7fa, type: 3}
