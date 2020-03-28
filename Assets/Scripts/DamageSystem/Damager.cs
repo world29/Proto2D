@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class Damager : MonoBehaviour
     {
         [SerializeField, Header("ダメージを与えるレイヤー")]
@@ -96,7 +96,7 @@ namespace Proto2D
             if (!enabled) return;
 
             // ダメージ判定の矩形描画
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            Collider2D collider = GetComponent<Collider2D>();
             if (collider.enabled)
             {
                 Gizmos.color = new Color(1, 0, 0, .2f);
