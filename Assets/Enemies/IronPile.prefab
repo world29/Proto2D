@@ -142,7 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_damageType: 0
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 3328
+  m_damageType: 2
   damage: 1
   sender: {fileID: 3116539405084895706}
 --- !u!1 &4275546094811795228
@@ -266,6 +269,11 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.2
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   progressValue: 3
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
@@ -273,7 +281,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: d01f2a66c6f8742a3986e4389e1c6076, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
-  shotTransform: {fileID: 0}
   sights:
   - fov: 121.3
     viewDistance: 12
