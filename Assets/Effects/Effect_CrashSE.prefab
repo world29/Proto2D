@@ -256,10 +256,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75642e8dcf48f984e9d0f14fa74d200a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_OnCollision:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   gravity: 0
   damage: 1
   lifespan: 0.1
-  initialVelocity: {x: 0, y: 0, z: 0}
   layerMaskToCollide:
     serializedVersion: 2
     m_Bits: 0
@@ -284,7 +296,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.1, y: -0.4}
