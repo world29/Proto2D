@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace Proto2D
 {
-    public class Missile : Projectile
+    // ミサイルの挙動
+    [RequireComponent(typeof(Projectile))]
+    public class Missile : MonoBehaviour, IDamageSender
     {
         public Transform m_targetTransform;
 
@@ -14,8 +16,8 @@ namespace Proto2D
         [Header("この係数が大きいほどターゲットに追従しやすく、Rigidbody2D.AngularDrag が大きいほど追従しにくくなる")]
         public float m_ratio;
 
-        [Header("寿命が終わるとターゲットに追従しなくなり、画面外にでると消える")]
-        public float m_lifetime = 5;
+        [Header("アクティブ時間を過ぎるとターゲットに追従しなくなる")]
+        public float m_activeTime = 5;
 
         [Header("ターゲット位置を更新する")]
         public bool m_updateTarget = false;
@@ -43,27 +45,15 @@ namespace Proto2D
                 m_targetPosition = m_targetTransform.position;
             }
 
-            // ビューポートの外に出たら消える
-            {
-                var camera = Camera.main;
-                Vector3 vp = camera.WorldToViewportPoint(transform.position);
-
-                const float margin = .5f;
-                if (vp.x < -margin || vp.x > 1 + margin || vp.y < -margin || vp.y > 1 + margin)
-                {
-                    Destroy(gameObject);
-                }
-            }
-
-            // 寿命の計算
-            m_lifetime -= Time.deltaTime;
+            // アクティブ時間の計算
+            m_activeTime -= Time.deltaTime;
         }
 
         private void FixedUpdate()
         {
             var rb = GetComponent<Rigidbody2D>();
 
-            if (m_lifetime > 0)
+            if (m_activeTime > 0)
             {
                 var diff = m_targetPosition - transform.position;
                 Debug.DrawRay(transform.position, diff);
@@ -77,6 +67,14 @@ namespace Proto2D
             rb.velocity = transform.right * m_speed;
         }
 
+        public void OnApplyDamage(DamageType type, float damage, GameObject receiver)
+        {
+            GetComponent<Projectile>().m_OnHit.Invoke();
+
+            Destroy(gameObject);
+        }
+
+        // デバッグ描画
         private void OnDrawGizmos()
         {
             if (Application.isPlaying)

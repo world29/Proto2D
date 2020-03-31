@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5029415201633941957}
   - component: {fileID: 5029415201633941955}
   - component: {fileID: 5029415201633941952}
+  - component: {fileID: 6072773570476707551}
   - component: {fileID: 5029415201633941954}
-  - component: {fileID: 3278950562494687594}
+  - component: {fileID: 5753098365893597137}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Untagged
@@ -83,6 +84,65 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.53256464, y: 0.08409123}
   m_EdgeRadius: 0
+--- !u!114 &6072773570476707551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029415201633941956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100116f4f542b3849b310ebde91d4553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6072773570476707551}
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 21162399befa94ccb9a9569294bce3ea,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6072773570476707551}
+        m_MethodName: PlayEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 7615431906169996719, guid: 3fd5afb12e2d87b4d91b6963444aad62,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnLaunch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6072773570476707551}
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 733016cad1ff62d4585211d3c979d686,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_lifespan: Infinity
 --- !u!114 &5029415201633941954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,47 +155,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca17f8b3fbc2d24cb25feb7aa6068f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3278950562494687594}
-        m_MethodName: Emit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_collisionMask:
-    serializedVersion: 2
-    m_Bits: 512
-  m_OnCollision:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3278950562494687594}
-        m_MethodName: Emit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_targetTransform: {fileID: 0}
   m_speed: 4
   m_ratio: 3.5
-  m_lifetime: 5
+  m_activeTime: 5
   m_updateTarget: 1
---- !u!114 &3278950562494687594
+--- !u!114 &5753098365893597137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,12 +169,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5029415201633941956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3604280b7e0c02642aa073a2fa08c09f, type: 3}
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_effect: {fileID: 7615431906169996719, guid: 3fd5afb12e2d87b4d91b6963444aad62,
-    type: 3}
-  m_locator: {fileID: 0}
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_damageType: 3
+  damage: 1
+  sender: {fileID: 5029415201633941956}
 --- !u!1 &5029415202783123309
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +264,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5029415201633941957}
     m_Modifications:
+    - target: {fileID: 9166418590241840204, guid: 159b99893ad33d645a5c0de93c5ba535,
+        type: 3}
+      propertyPath: m_Name
+      value: PileTrail
+      objectReference: {fileID: 0}
     - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -290,11 +323,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9166418590241840204, guid: 159b99893ad33d645a5c0de93c5ba535,
-        type: 3}
-      propertyPath: m_Name
-      value: PileTrail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 159b99893ad33d645a5c0de93c5ba535, type: 3}
