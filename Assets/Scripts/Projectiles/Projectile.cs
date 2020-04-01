@@ -15,6 +15,9 @@ namespace Proto2D
         [HideInInspector]
         public new Rigidbody2D rigidbody { get { return GetComponent<Rigidbody2D>(); } }
 
+        [SerializeField, Header("ヒットマスク")]
+        LayerMask m_hitMask;
+
         [SerializeField, Header("ヒットイベント")]
         public UnityEvent m_OnHit;
 
@@ -51,6 +54,30 @@ namespace Proto2D
                 // 寿命が尽きたので削除
                 Destroy(gameObject);
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            OnHit(collider);
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            OnHit(collision.collider);
+        }
+
+        void OnHit(Collider2D collider)
+        {
+            if ((m_hitMask & (0x1 << collider.gameObject.layer)) != 0)
+            {
+                m_OnHit.Invoke();
+            }
+        }
+
+        // オブジェクトの削除
+        public void Kill()
+        {
+            Destroy(gameObject);
         }
 
         // サウンドの再生

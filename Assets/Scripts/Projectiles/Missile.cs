@@ -5,8 +5,8 @@ using UnityEngine;
 namespace Proto2D
 {
     // ミサイルの挙動
-    [RequireComponent(typeof(Projectile))]
-    public class Missile : MonoBehaviour, IDamageSender
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class Missile : MonoBehaviour
     {
         public Transform m_targetTransform;
 
@@ -65,13 +65,6 @@ namespace Proto2D
 
             // 向いている方に進む
             rb.velocity = transform.right * m_speed;
-        }
-
-        public void OnApplyDamage(DamageType type, float damage, GameObject receiver)
-        {
-            GetComponent<Projectile>().m_OnHit.Invoke();
-
-            Destroy(gameObject);
         }
 
         // デバッグ描画
