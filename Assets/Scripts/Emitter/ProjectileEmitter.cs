@@ -30,6 +30,9 @@ namespace Proto2D
 
             var projectile = GameObject.Instantiate(m_projectile, position, rotation) as Projectile;
 
+            // 向きの反転を反映
+            projectile.transform.localScale = transform.lossyScale;
+
             // 初速を計算
             Vector3 direction = (transform.lossyScale.x >= 0) ? Vector3.right : Vector3.left;
             Vector3 initialVelocity = rotation * direction * m_speed;
