@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UniRx;
+using UniRx.Triggers;
 
 namespace Proto2D
 {
@@ -22,6 +24,19 @@ namespace Proto2D
         [SerializeField, Header("寿命(秒)")]
         float m_lifespan = Mathf.Infinity;
 
+        [SerializeField, Header("可視不可視の判断に使用する Renderer")]
+        Renderer m_targetRenderer;
+
+        private void Start()
+        {
+            if (m_targetRenderer)
+            {
+                // 不可視になったら削除
+                m_targetRenderer.OnBecameInvisibleAsObservable()
+                    .Subscribe(_ => Destroy(gameObject));
+            }
+        }
+
         private void OnEnable()
         {
             m_OnLaunch.Invoke();
@@ -36,12 +51,6 @@ namespace Proto2D
                 // 寿命が尽きたので削除
                 Destroy(gameObject);
             }
-        }
-
-        private void OnBecameInvisible()
-        {
-            // カメラ外に出たら削除
-            Destroy(gameObject);
         }
 
         // サウンドの再生
