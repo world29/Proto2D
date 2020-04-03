@@ -16,7 +16,7 @@ namespace Proto2D
         public new Rigidbody2D rigidbody { get { return GetComponent<Rigidbody2D>(); } }
 
         [SerializeField, Header("ヒットマスク")]
-        LayerMask m_hitMask;
+        protected LayerMask m_hitMask;
 
         [SerializeField, Header("ヒットイベント")]
         public UnityEvent m_OnHit;
@@ -25,10 +25,10 @@ namespace Proto2D
         public UnityEvent m_OnLaunch;
 
         [SerializeField, Header("寿命(秒)")]
-        float m_lifespan = Mathf.Infinity;
+        protected float m_lifespan = Mathf.Infinity;
 
-        [SerializeField, Header("可視不可視の判断に使用する Renderer")]
-        Renderer m_targetRenderer;
+        [SerializeField, Header("画面外判定に使用するレンダラ (レンダラがカメラ外に出たら自身を削除する)")]
+        protected Renderer m_targetRenderer;
 
         private void Start()
         {
@@ -66,7 +66,7 @@ namespace Proto2D
             OnHit(collision.collider);
         }
 
-        void OnHit(Collider2D collider)
+        virtual protected void OnHit(Collider2D collider)
         {
             if ((m_hitMask & (0x1 << collider.gameObject.layer)) != 0)
             {
