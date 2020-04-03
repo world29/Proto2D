@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 420631205038860082}
   - component: {fileID: 8910920029049011370}
   - component: {fileID: 6849773741594051721}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Damager (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1673,7 +1673,7 @@ GameObject:
   - component: {fileID: 3516200868372542989}
   - component: {fileID: 5803819209162832487}
   - component: {fileID: 5679588652781111168}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Damager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2476,26 +2476,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyDamageable
       objectReference: {fileID: 0}
-    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: -0.014441967
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.34178948
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1.799114
-      objectReference: {fileID: 0}
-    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.6630244
-      objectReference: {fileID: 0}
     - target: {fileID: 7046536723148281138, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_Offset.y
@@ -2541,16 +2521,41 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1.3046724
       objectReference: {fileID: 0}
-    - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+    - target: {fileID: 7208681048506878839, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_receiver
       value: 
       objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 7208681048506878839, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
+      propertyPath: m_damageTypeFlag
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
       propertyPath: m_receiver
       value: 
       objectReference: {fileID: 8778643387317822647}
+    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.014441967
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.34178948
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.799114
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081429105572595965, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.6630244
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af, type: 3}
 --- !u!4 &6531558184166090973 stripped
