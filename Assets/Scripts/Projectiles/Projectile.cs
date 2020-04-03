@@ -77,7 +77,9 @@ namespace Proto2D
         // オブジェクトの削除
         public void Kill()
         {
-            Destroy(gameObject);
+            // 即座に消すとコリジョンイベントの処理などが無効化されてしまうため、次のフレームで消す。
+            Observable.NextFrame()
+                .Subscribe(_ => Destroy(gameObject));
         }
 
         // サウンドの再生
