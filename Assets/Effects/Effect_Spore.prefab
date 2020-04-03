@@ -56,7 +56,8 @@ GameObject:
   - component: {fileID: 2094274057772323644}
   - component: {fileID: 7765588797041700691}
   - component: {fileID: 3843744317073766230}
-  - component: {fileID: 6077275991244422397}
+  - component: {fileID: 2492433754401665990}
+  - component: {fileID: 6438836059552605642}
   m_Layer: 0
   m_Name: Magatsudake_6
   m_TagString: Untagged
@@ -152,7 +153,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.46875, y: 0.46875}
   m_EdgeRadius: 0
---- !u!114 &6077275991244422397
+--- !u!114 &2492433754401665990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,37 +162,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 2226423752303503321}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75642e8dcf48f984e9d0f14fa74d200a, type: 3}
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_collisionMask:
+  m_layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  gravity: 0
+    m_Bits: 256
+  m_damageType: 0
   damage: 1
-  lifespan: 0
-  layerMaskToCollide:
-    serializedVersion: 2
-    m_Bits: 0
-  DisabledDuringJumpAttack: 0
-  ReflectedDuringJumpAttack: 0
-  RotateVelocity: 0
-  RotateObject: {fileID: 0}
-  OffsetRotate: 0
-  startSE: {fileID: 0}
-  startEffectPrefab: {fileID: 0}
-  hitSE: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
+  sender: {fileID: 1509154601807174269}
+--- !u!50 &6438836059552605642
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2226423752303503321}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5241340833221640842
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +256,8 @@ GameObject:
   - component: {fileID: 6106935030645913082}
   - component: {fileID: 2731063977946770163}
   - component: {fileID: 914407441644296062}
-  - component: {fileID: 8954014688020561345}
+  - component: {fileID: 5326252063700896957}
+  - component: {fileID: 6717590461410166795}
   m_Layer: 0
   m_Name: Magatsudake_7
   m_TagString: Untagged
@@ -352,7 +353,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.84375, y: 0.3125}
   m_EdgeRadius: 0
---- !u!114 &8954014688020561345
+--- !u!114 &5326252063700896957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,37 +362,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 7887783911992378460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75642e8dcf48f984e9d0f14fa74d200a, type: 3}
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_collisionMask:
+  m_layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  gravity: 0
+    m_Bits: 256
+  m_damageType: 0
   damage: 1
-  lifespan: 0
-  layerMaskToCollide:
-    serializedVersion: 2
-    m_Bits: 0
-  DisabledDuringJumpAttack: 0
-  ReflectedDuringJumpAttack: 0
-  RotateVelocity: 0
-  RotateObject: {fileID: 0}
-  OffsetRotate: 0
-  startSE: {fileID: 0}
-  startEffectPrefab: {fileID: 0}
-  hitSE: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
+  sender: {fileID: 0}
+--- !u!50 &6717590461410166795
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887783911992378460}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7954981600090674329
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +531,8 @@ GameObject:
   - component: {fileID: 8213675257396206442}
   - component: {fileID: 3525422547918792158}
   - component: {fileID: 2527583952355929643}
-  - component: {fileID: 6236126043630653863}
+  - component: {fileID: 3864917707863618716}
+  - component: {fileID: 1454961926847795920}
   m_Layer: 0
   m_Name: Magatsudake_8
   m_TagString: Untagged
@@ -627,7 +628,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.96875, y: 0.6875}
   m_EdgeRadius: 0
---- !u!114 &6236126043630653863
+--- !u!114 &3864917707863618716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -636,34 +637,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 8000017498726891388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75642e8dcf48f984e9d0f14fa74d200a, type: 3}
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_collisionMask:
+  m_layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  gravity: 0
+    m_Bits: 256
+  m_damageType: 0
   damage: 1
-  lifespan: 0
-  layerMaskToCollide:
-    serializedVersion: 2
-    m_Bits: 0
-  DisabledDuringJumpAttack: 0
-  ReflectedDuringJumpAttack: 0
-  RotateVelocity: 0
-  RotateObject: {fileID: 0}
-  OffsetRotate: 0
-  startSE: {fileID: 0}
-  startEffectPrefab: {fileID: 0}
-  hitSE: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
+  sender: {fileID: 1509154601807174269}
+--- !u!50 &1454961926847795920
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000017498726891388}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
