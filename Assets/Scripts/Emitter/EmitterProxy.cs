@@ -4,22 +4,6 @@ using UnityEngine;
 
 namespace Proto2D
 {
-    // http://answers.unity.com/answers/1479775/view.html
-    public class TypeConstraintAttribute : PropertyAttribute
-    {
-        private System.Type type;
-
-        public TypeConstraintAttribute(System.Type type)
-        {
-            this.type = type;
-        }
-
-        public System.Type Type
-        {
-            get { return type; }
-        }
-    }
-
     // 子オブジェクトにアタッチされたエミッターを AnimationEvent から呼び出すためのプロキシコンポーネント
     public class EmitterProxy : MonoBehaviour, IEmitter
     {
