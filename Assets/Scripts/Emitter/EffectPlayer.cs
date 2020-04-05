@@ -14,6 +14,9 @@ namespace Proto2D
         public Transform m_locator;
 
         // IEmitter
+        public float Speed { get; set; }
+
+        // IEmitter
         public void Emit()
         {
             Vector3 position = transform.position;

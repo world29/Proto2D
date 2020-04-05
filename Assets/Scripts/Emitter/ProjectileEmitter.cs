@@ -17,6 +17,10 @@ namespace Proto2D
         public float m_speed;
 
         // IEmitter
+        public float Speed { get { return m_speed; } set { m_speed = value; } }
+
+        // IEmitter
+        [ContextMenu("Emit")]
         public void Emit()
         {
             Vector3 position = transform.position;
@@ -28,14 +32,18 @@ namespace Proto2D
                 rotation = m_locator.rotation;
             }
 
-            var projectile = GameObject.Instantiate(m_projectile, position, rotation) as Projectile;
-
             // 向きの反転を反映
-            projectile.transform.localScale = transform.lossyScale;
+            var q = rotation;
+            if (transform.lossyScale.x < 0)
+            {
+                var e = rotation.eulerAngles;
+                q = Quaternion.Euler(e.x, e.y, 180 - e.z);
+            }
+
+            var projectile = GameObject.Instantiate(m_projectile, position, q) as Projectile;
 
             // 初速を計算
-            Vector3 direction = (transform.lossyScale.x >= 0) ? Vector3.right : Vector3.left;
-            Vector3 initialVelocity = rotation * direction * m_speed;
+            Vector3 initialVelocity = q * Vector3.right * m_speed;
 
             projectile.rigidbody.velocity = initialVelocity;
 

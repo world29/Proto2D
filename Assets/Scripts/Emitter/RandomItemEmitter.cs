@@ -17,6 +17,9 @@ namespace Proto2D
         public float m_speed;
 
         // IEmitter
+        public float Speed { get { return m_speed; } set { m_speed = value; } }
+
+        // IEmitter
         public void Emit()
         {
             if (m_itemTable.Length == 0) return;

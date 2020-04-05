@@ -19,6 +19,9 @@ namespace Proto2D
         [SerializeField, Header("true ならスタート時に自動的に抽選する (MonoBehaviour.Start)")]
         bool m_emitOnAwake = true;
 
+        // IEmitter
+        public float Speed { get { return m_speed; } set { m_speed = value; } }
+
         private void Start()
         {
             if (m_emitOnAwake)

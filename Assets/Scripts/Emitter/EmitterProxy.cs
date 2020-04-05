@@ -27,6 +27,9 @@ namespace Proto2D
         GameObject[] m_emitters;
 
         // IEmitter
+        public float Speed { get; set; }
+
+        // IEmitter
         public void Emit()
         {
             EmitByIndex(0);

@@ -8,5 +8,8 @@ namespace Proto2D
     {
         // 発射する
         void Emit();
+
+        // 速度プロパティ
+        float Speed { get; set; }
     }
 }
