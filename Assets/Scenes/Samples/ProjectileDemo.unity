@@ -2640,15 +2640,46 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2104804377}
-  - component: {fileID: 2104804379}
   - component: {fileID: 2104804378}
+  - component: {fileID: 2104804380}
+  - component: {fileID: 2104804376}
   m_Layer: 0
-  m_Name: ProjectileEmitter
+  m_Name: TriggerRandomEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2104804376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104804375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bae5cda60cea844aabd15e99b4a600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2104804378}
+        m_MethodName: Emit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_activationLimit: 1000000
+  m_interval: {x: 1, y: 1}
 --- !u!4 &2104804377
 Transform:
   m_ObjectHideFlags: 0
@@ -2656,13 +2687,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104804375}
-  m_LocalRotation: {x: -0, y: -0, z: 0.34049574, w: 0.94024605}
-  m_LocalPosition: {x: 0.01, y: -5.92, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70476806, w: 0.70943785}
+  m_LocalPosition: {x: 0.01, y: -5.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.814003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.622}
 --- !u!114 &2104804378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2672,25 +2703,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 2104804375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06dc00347bb9c304c80f7ffee3a40ed7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7861d7a663ba1aa4e9967c52c7c97f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_targetEmitter: {fileID: 2104804375}
-  m_angleRange: 23.83
-  m_speedRange: 3.77
---- !u!114 &2104804379
-MonoBehaviour:
+  m_table:
+  - description: "\u30B3\u30A4\u30F3"
+    entity: {fileID: 4147511300797853449, guid: a90e7e65c6ae59e4282f91241081bc5d,
+      type: 3}
+    weight: 5
+    countRange: {x: 5, y: 10}
+  - description: "\u304B\u3044\u3075\u304F"
+    entity: {fileID: 2219073324176930276, guid: 51cfc82371e054584863c161ac20223f,
+      type: 3}
+    weight: 3
+    countRange: {x: 1, y: 1}
+  - description: "\u306F\u305A\u308C"
+    entity: {fileID: 7065440297386274085, guid: 777bff2b516785b448c2b106c4fa9fee,
+      type: 3}
+    weight: 2
+    countRange: {x: 1, y: 2}
+  m_locator: {fileID: 0}
+  m_speed: 6.62
+  m_angleRange: 18.19
+  m_speedRange: 3.35
+--- !u!58 &2104804380
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104804375}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_projectile: {fileID: 5838924599409245475, guid: aa6e0a59aa69ba540a8213774474de30,
-    type: 3}
-  m_locator: {fileID: 0}
-  m_speed: 5
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.8701663
