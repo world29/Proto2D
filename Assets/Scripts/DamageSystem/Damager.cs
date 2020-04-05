@@ -58,9 +58,6 @@ namespace Proto2D
             // このコンポーネントが無効
             if (!enabled) return;
 
-            // ルートが同じ (自分自身)
-            if (collider.transform.root == transform.root) return;
-
             // レイヤー判定
             //NOTE: 既存の動作を変えないため、デフォルトなら従来と同じ動作にしておく
             if (m_layerMask.value != 0)
@@ -72,6 +69,9 @@ namespace Proto2D
             Damageable damageable = collider.GetComponent<Damageable>();
             if (damageable && damageable.enabled)
             {
+                // 自分自身を無視する
+                if (damageable.m_receiver == sender) return;
+
                 // ダメージタイプの不一致
                 DamageTypeFlag flag = (DamageTypeFlag)(0x1 << (int)m_damageType);
                 if ((flag & damageable.m_damageTypeFlag) == 0)
