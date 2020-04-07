@@ -24,7 +24,8 @@ namespace Proto2D
         public void Emit()
         {
             Vector3 position = transform.position;
-            Quaternion rotation = transform.rotation;
+            Quaternion rotation = transform.localRotation;
+            var speed = m_speed;
 
             if (m_locator)
             {
@@ -36,14 +37,21 @@ namespace Proto2D
             var q = rotation;
             if (transform.lossyScale.x < 0)
             {
-                var e = rotation.eulerAngles;
-                q = Quaternion.Euler(e.x, e.y, 180 - e.z);
+                speed *= -1;
+                //var e = rotation.eulerAngles;
+                //q = Quaternion.Euler(e.x, e.y, 180 - e.z);
             }
 
             var projectile = GameObject.Instantiate(m_projectile, position, q) as Projectile;
 
+            if (transform.lossyScale.x < 0)
+            {
+                Vector3 p_scale = projectile.transform.localScale;
+                projectile.transform.localScale = new Vector3(p_scale.x *= -1, p_scale.y, p_scale.z);
+            }
+
             // 初速を計算
-            Vector3 initialVelocity = q * Vector3.right * m_speed;
+            Vector3 initialVelocity = q * Vector3.right * speed;
 
             projectile.rigidbody.velocity = initialVelocity;
 
