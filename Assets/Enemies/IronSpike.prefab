@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3366336688413029283}
   - component: {fileID: 5931877064500492624}
   - component: {fileID: 1403342434087149925}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IronSpike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   m_damageType: 0
   damage: 1
   sender: {fileID: 4275546094811795228}

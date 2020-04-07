@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8306332076819965000}
   - component: {fileID: 7046536723148281138}
   - component: {fileID: 347620303824462117}
+  - component: {fileID: 6015360866164097262}
   m_Layer: 10
   m_Name: Damageable
   m_TagString: Untagged
@@ -94,6 +95,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_damageTypeFlag: 4
   m_receiver: {fileID: 0}
+--- !u!114 &6015360866164097262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7131918312752186089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_damageType: 0
+  damage: 1
+  sender: {fileID: 0}
 --- !u!1 &7807973821713625401
 GameObject:
   m_ObjectHideFlags: 0
