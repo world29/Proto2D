@@ -12,11 +12,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c779848d9dd029409ca676b49e10a18, type: 3}
   m_Name: New Rule Override Tile 2
   m_EditorClassIdentifier: 
-  m_Tile: {fileID: 0}
-  m_OverrideSelf: 1
-  m_Advanced: 0
+  m_Tile: {fileID: 11400000, guid: ae7cea506ff51402a80c987f224f8ddc, type: 2}
+  m_OverrideSelf: 0
+  m_Advanced: 1
   m_Sprites: []
-  m_OverrideTilingRules: []
+  m_OverrideTilingRules:
+  - m_Enabled: 1
+    m_TilingRule:
+      m_Neighbors: 
+      m_Sprites:
+      - {fileID: 21300002, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      m_GameObject: {fileID: 0}
+      m_AnimationSpeed: 1
+      m_PerlinScale: 0.5
+      m_RuleTransform: 2
+      m_Output: 0
+      m_ColliderType: 1
+      m_RandomTransform: 0
+  - m_Enabled: 1
+    m_TilingRule:
+      m_Neighbors: 
+      m_Sprites:
+      - {fileID: 21300016, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      m_GameObject: {fileID: 0}
+      m_AnimationSpeed: 1
+      m_PerlinScale: 0.5
+      m_RuleTransform: 2
+      m_Output: 0
+      m_ColliderType: 1
+      m_RandomTransform: 0
+  - m_Enabled: 1
+    m_TilingRule:
+      m_Neighbors: 
+      m_Sprites:
+      - {fileID: 21300008, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      - {fileID: 21300012, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      m_GameObject: {fileID: 0}
+      m_AnimationSpeed: 1
+      m_PerlinScale: 0.5
+      m_RuleTransform: 0
+      m_Output: 1
+      m_ColliderType: 1
+      m_RandomTransform: 0
+  - m_Enabled: 1
+    m_TilingRule:
+      m_Neighbors: 
+      m_Sprites:
+      - {fileID: 21300016, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      m_GameObject: {fileID: 0}
+      m_AnimationSpeed: 1
+      m_PerlinScale: 0.5
+      m_RuleTransform: 0
+      m_Output: 0
+      m_ColliderType: 1
+      m_RandomTransform: 0
+  - m_Enabled: 1
+    m_TilingRule:
+      m_Neighbors: 
+      m_Sprites:
+      - {fileID: 21300002, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      m_GameObject: {fileID: 0}
+      m_AnimationSpeed: 1
+      m_PerlinScale: 0.5
+      m_RuleTransform: 0
+      m_Output: 0
+      m_ColliderType: 1
+      m_RandomTransform: 0
+  - m_Enabled: 1
+    m_TilingRule:
+      m_Neighbors: 
+      m_Sprites:
+      - {fileID: 21300012, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      - {fileID: 21300008, guid: f9b100818afd448838a5d4c86c051d37, type: 3}
+      m_GameObject: {fileID: 0}
+      m_AnimationSpeed: 1
+      m_PerlinScale: 0.5
+      m_RuleTransform: 0
+      m_Output: 1
+      m_ColliderType: 1
+      m_RandomTransform: 0
   m_OverrideDefault:
     m_Enabled: 0
     m_TilingRule:

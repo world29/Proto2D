@@ -238,7 +238,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.375, y: 2.625}
+    oldSize: {x: 2.71875, y: 2.96875}
     newSize: {x: 2.375, y: 2.625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -281,12 +281,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6c1ee5863dda24e86f86bda0f61380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 20
+  gravity: 0
   health: 1
   superArmor: 0
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.5
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   progressValue: 3
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
@@ -294,7 +299,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
-  shotTransform: {fileID: 6245465354011956537}
   sights:
   - fov: 90
     viewDistance: 7
@@ -314,6 +318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   m_damageType: 0
   damage: 1
   sender: {fileID: 6245465354517601081}
