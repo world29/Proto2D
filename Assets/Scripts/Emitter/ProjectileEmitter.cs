@@ -24,7 +24,7 @@ namespace Proto2D
         public void Emit()
         {
             Vector3 position = transform.position;
-            Quaternion rotation = transform.localRotation;
+            Quaternion rotation = transform.rotation;
             var speed = m_speed;
 
             if (m_locator)
