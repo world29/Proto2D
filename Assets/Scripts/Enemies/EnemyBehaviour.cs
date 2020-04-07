@@ -223,7 +223,13 @@ namespace Proto2D
             }
             else if (autoTurn)
             {
-                Turn();
+                // 高速でターンし続けるのを防ぐため、直前のターンから一定時間経過している場合に限り実行する
+                if ((Time.timeSinceLevelLoad - m_lastTurnTime) > m_kTurnInterval)
+                {
+                    Turn();
+                    m_lastTurnTime = Time.timeSinceLevelLoad;
+                }
+                
             }
         }
 
@@ -263,16 +269,12 @@ namespace Proto2D
             return Mathf.Infinity;
         }
 
-        public void Turn()
+        public void Turn(bool force = false)
         {
-            // 高速でターンし続けるのを防ぐため、直前のターンから一定時間経過している場合に限り実行する
-            if ((Time.timeSinceLevelLoad - m_lastTurnTime) > m_kTurnInterval)
-            {
-                Vector3 scl = transform.localScale;
-                transform.localScale = new Vector3(scl.x * -1, scl.y, scl.z);
+            Vector3 scl = transform.localScale;
+            transform.localScale = new Vector3(scl.x * -1, scl.y, scl.z);
 
-                m_lastTurnTime = Time.timeSinceLevelLoad;
-            }
+
         }
 
         public virtual void Jump(Vector2 jumpVelocity)
