@@ -2185,6 +2185,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 64ed4ebc2cc584ba1a0b6f58dee0da80, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 4656553412495861962}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights:
   - fov: 132
     viewDistance: 5
@@ -2541,6 +2544,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 1.3046724
+      objectReference: {fileID: 0}
+    - target: {fileID: 9067247069929687316, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 9067247069929687316, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471537379113797716, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af, type: 3}
