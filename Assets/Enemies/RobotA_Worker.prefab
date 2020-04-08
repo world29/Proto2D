@@ -1278,6 +1278,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 354b87efdabcb437e9909c4eb49ae244, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights: []
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
@@ -2326,6 +2329,16 @@ PrefabInstance:
       propertyPath: m_receiver
       value: 
       objectReference: {fileID: 6245465354517601081}
+    - target: {fileID: 9067247069929687316, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.019
+      objectReference: {fileID: 0}
+    - target: {fileID: 9067247069929687316, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.207
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af, type: 3}
 --- !u!4 &4001617734784406396 stripped
