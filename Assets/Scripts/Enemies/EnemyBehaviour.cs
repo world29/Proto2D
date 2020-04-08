@@ -37,6 +37,7 @@ namespace Proto2D
         public AI.BehaviourTree behaviourTree;
         public bool behaviourTreeDebug = false;
         public Transform groundDetectionTransform;
+        public LayerMask collisionMask;
 
         /*
         [Range(0, 360)]
@@ -69,6 +70,10 @@ namespace Proto2D
             audioSource = GetComponent<AudioSource>();
             controller = GetComponent<Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
+
+            //TODO: 敵全体に変更を反映する手間を省くためハードコードしているが、
+            //      一部の敵に関して変更が必要になったらインスペクタからのみ設定するように修正する
+            collisionMask = LayerMask.GetMask("ObstacleEnemy");
 
             if (behaviourTree)
             {
@@ -235,9 +240,12 @@ namespace Proto2D
         public virtual bool CanMoveForward()
         {
             // 進行方向に障害物があるか調べる
-            bool obstacleInfo = GetFacingWorld() > 0 ? controller.collisions.right : controller.collisions.left;
+            Vector2 front = GetFacingWorld() > 0 ? Vector2.right : Vector2.left;
+            float rayLength = .1f;
+            RaycastHit2D hit = Physics2D.Raycast(groundDetectionTransform.position, front, rayLength, controller.collisionMask | collisionMask);
+            Debug.DrawRay(groundDetectionTransform.position, front * rayLength, hit? Color.red : Color.green);
 
-            return IsGroundDetected() && !obstacleInfo;
+            return IsGroundDetected() && !hit;
         }
 
         // 進行方向に地面があるか調べる
@@ -254,7 +262,7 @@ namespace Proto2D
         public virtual float DistanceToObstacle()
         {
             Vector2 rayDirection = GetFacingWorld() > 0 ? Vector2.right : Vector2.left;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, Mathf.Infinity, controller.collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, Mathf.Infinity, controller.collisionMask | collisionMask);
             Debug.DrawRay(transform.position, rayDirection, Color.red);
             if (hit)
             {
