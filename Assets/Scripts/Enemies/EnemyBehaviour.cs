@@ -203,12 +203,6 @@ namespace Proto2D
             }
         }
 
-        // deprecated
-        public void SetVelocity(Vector2 moveVelocity)
-        {
-            velocity = moveVelocity;
-        }
-
         public void MoveForward(float moveSpeed, bool autoTurn = true, bool autoGroundDetection = true)
         {
             bool canMoveForward = true;

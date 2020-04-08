@@ -82,8 +82,16 @@ namespace Proto2D
             var rb = GameObject.Instantiate(entity, position, Quaternion.identity) as Rigidbody2D;
 
             // 初速を計算
-            var initialVelocity = transform.rotation * Vector3.right * Speed;
-            rb.velocity = initialVelocity;
+            Vector3 initialVelocity = transform.rotation * Vector3.right * Speed;
+            if (rb.gameObject.GetComponent<EnemyBehaviour>() != null)
+            {
+                var enemy = rb.gameObject.GetComponent<EnemyBehaviour>();
+                enemy.velocity = initialVelocity;
+            }
+            else
+            {
+                rb.velocity = initialVelocity;
+            }
 
             // デバッグ描画
             Debug.DrawLine(position, position + initialVelocity);
