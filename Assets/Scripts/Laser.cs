@@ -47,7 +47,6 @@ namespace Proto2D
             {
                 m_OnHit.Invoke();
 
-                GameObject.Destroy(gameObject);
                 return;
             }
 
