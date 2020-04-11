@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6245465354517601074}
   - component: {fileID: 8667336193306619030}
   m_Layer: 11
-  m_Name: RobotC_Rider 1
+  m_Name: Robot_Foot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,6 +297,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights:
   - fov: 90
     viewDistance: 7
@@ -504,6 +507,11 @@ PrefabInstance:
       value: 2.4625
       objectReference: {fileID: 0}
     - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_receiver
+      value: 
+      objectReference: {fileID: 6245465354517601081}
+    - target: {fileID: 7208681048506878839, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_receiver
       value: 
