@@ -47,7 +47,11 @@ namespace Proto2D
             if (transform.lossyScale.x < 0)
             {
                 Vector3 p_scale = projectile.transform.localScale;
-                projectile.transform.localScale = new Vector3(p_scale.x *= -1, p_scale.y, p_scale.z);
+                projectile.transform.localScale = new Vector3(p_scale.x *= -1* transform.localScale.x, p_scale.y* transform.localScale.y, p_scale.z* transform.localScale.z);
+            }
+            else
+            {
+                projectile.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
 
             // 初速を計算
