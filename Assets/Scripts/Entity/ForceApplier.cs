@@ -22,7 +22,17 @@ namespace Proto2D
 
             foreach (var c in collision.contacts)
             {
-                rb.AddForceAtPosition(c.normal * m_force, c.point, m_forceMode);
+                var entity = collision.gameObject.GetComponent<PhysicsEntity>();
+
+                if (entity && entity.isContactObstacle)
+                {
+                    Vector2 dir = c.normal + Vector2.up;
+                    rb.AddForceAtPosition(dir.normalized * m_force, c.point, m_forceMode);
+                }
+                else
+                {
+                    rb.AddForceAtPosition(c.normal * m_force, c.point, m_forceMode);
+                }
             }
         }
     }
