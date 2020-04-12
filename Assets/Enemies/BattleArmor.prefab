@@ -1282,36 +1282,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &5901655702425256809
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8825147052538737645}
-  m_Layer: 10
-  m_Name: EffectSocket
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8825147052538737645
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5901655702425256809}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.203, y: -0.015, z: -0.017385695}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6245465354517601086}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6018494575539124190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1457,6 @@ Transform:
   m_Children:
   - {fileID: 6245465354011956537}
   - {fileID: 6245465352893042264}
-  - {fileID: 8825147052538737645}
   - {fileID: 2361333153340630383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1667,7 +1636,7 @@ MonoBehaviour:
     angleOffset: 0
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
-  effectSocket: {fileID: 5901655702425256809}
+  effectSocket: {fileID: 6245465354011956536}
 --- !u!82 &8667336193306619030
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1955,7 +1924,7 @@ Transform:
   - {fileID: 2890719163039252263}
   - {fileID: 694677248355282340}
   m_Father: {fileID: 6245465354517601086}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7611080582370549447
 GameObject:
