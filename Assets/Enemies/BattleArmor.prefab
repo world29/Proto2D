@@ -1400,6 +1400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6245465354011956537}
+  - component: {fileID: 136894548661655714}
   m_Layer: 10
   m_Name: ShotTransform
   m_TagString: Untagged
@@ -1416,11 +1417,27 @@ Transform:
   m_GameObject: {fileID: 6245465354011956536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.508, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 6245465354517601086}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &136894548661655714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354011956536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_projectile: {fileID: 4077929966673743753, guid: 25c301cec0ebf8444b846fcf2646036e,
+    type: 3}
+  m_locator: {fileID: 0}
+  m_speed: 5
 --- !u!1 &6245465354517601081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,6 +1454,7 @@ GameObject:
   - component: {fileID: 1408866405167355065}
   - component: {fileID: 6245465354517601074}
   - component: {fileID: 8667336193306619030}
+  - component: {fileID: 6049011968047338220}
   m_Layer: 11
   m_Name: BattleArmor
   m_TagString: Enemy
@@ -1624,14 +1642,23 @@ MonoBehaviour:
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
-  behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
+  behaviourTree: {fileID: 11400000, guid: 7ef5e4d71d7044929b5d46c16c321050, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
   collisionMask:
     serializedVersion: 2
     m_Bits: 0
   sights:
-  - fov: 90
+  - fov: 66
+    viewDistance: 11
+    angleOffset: 0
+  - fov: 35
+    viewDistance: 8
+    angleOffset: -44
+  - fov: 38
+    viewDistance: 8
+    angleOffset: 37
+  - fov: 360
     viewDistance: 7
     angleOffset: 0
   groundDetectionRayLength: 0.5
@@ -1734,6 +1761,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6049011968047338220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354517601081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edb2f0dd347fce429648fe064778ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_emitters:
+  - {fileID: 6245465354011956536}
 --- !u!1 &6502011123067014987
 GameObject:
   m_ObjectHideFlags: 0
