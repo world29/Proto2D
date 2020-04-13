@@ -37,9 +37,8 @@ namespace Proto2D
             var q = rotation;
             if (transform.lossyScale.x < 0)
             {
-                speed *= -1;
-                //var e = rotation.eulerAngles;
-                //q = Quaternion.Euler(e.x, e.y, 180 - e.z);
+                var e = rotation.eulerAngles;
+                q = Quaternion.Euler(e.x, e.y, e.z+180);
             }
 
             var projectile = GameObject.Instantiate(m_projectile, position, q) as Projectile;
@@ -47,7 +46,7 @@ namespace Proto2D
             if (transform.lossyScale.x < 0)
             {
                 Vector3 p_scale = projectile.transform.localScale;
-                projectile.transform.localScale = new Vector3(p_scale.x *= -1* transform.localScale.x, p_scale.y* transform.localScale.y, p_scale.z* transform.localScale.z);
+                projectile.transform.localScale = new Vector3(p_scale.x *=  transform.localScale.x, -1 * p_scale.y* transform.localScale.y, p_scale.z* transform.localScale.z);
             }
             else
             {
