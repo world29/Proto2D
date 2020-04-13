@@ -28,11 +28,9 @@ namespace Proto2D
 
                 float angleDeg = Mathf.Atan2(m_rigidbody.velocity.y, m_rigidbody.velocity.x) * Mathf.Rad2Deg;
                 float offset = m_offsetRotate;
-                if (transform.localScale.x < 0)
-                {
-                    offset -= 180;
-                }
-                m_targetObject.transform.Rotate(0, 0, transform.localScale.x * (angleDeg + offset - m_targetObject.transform.rotation.eulerAngles.z));
+                float val = m_targetObject.transform.rotation.eulerAngles.z;
+
+                m_targetObject.transform.Rotate(0, 0, transform.lossyScale.y * (angleDeg + offset - val));
             }
         }
     }
