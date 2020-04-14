@@ -11,6 +11,9 @@ namespace Proto2D
     public class PhysicsEntity : MonoBehaviour, IDamageSender, IDamageReceiver
     {
         [SerializeField]
+        float m_maxSpeed;
+
+        [SerializeField]
         Damager m_damager;
 
         [SerializeField]
@@ -57,6 +60,18 @@ namespace Proto2D
                     if (m_renderer)
                     {
                         m_renderer.enabled = overThreshold;
+                    }
+                });
+
+            // 速度が上限を超えないようにする
+            m_rigidbody
+                .ObserveEveryValueChanged(x => x.velocity.magnitude)
+                .Subscribe(x =>
+                {
+                    if (x > m_maxSpeed)
+                    {
+                        var v = m_rigidbody.velocity;
+                        m_rigidbody.velocity = v / x * m_maxSpeed;
                     }
                 });
         }
