@@ -27,11 +27,11 @@ namespace Proto2D
                 if (entity && entity.isContactObstacle)
                 {
                     Vector2 dir = c.normal + Vector2.up;
-                    rb.AddForceAtPosition(dir.normalized * m_force, c.point, m_forceMode);
+                    rb.AddForceAtPosition(dir.normalized * m_force, collision.gameObject.transform.position, m_forceMode);
                 }
                 else
                 {
-                    rb.AddForceAtPosition(c.normal * m_force, c.point, m_forceMode);
+                    rb.AddForceAtPosition(c.normal * m_force, collision.gameObject.transform.position, m_forceMode);
                 }
             }
         }
