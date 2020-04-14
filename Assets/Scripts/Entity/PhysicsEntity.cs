@@ -17,7 +17,7 @@ namespace Proto2D
         Damager m_damager;
 
         [SerializeField]
-        Renderer m_renderer;
+        TrailRenderer m_renderer;
 
         [SerializeField]
         float m_minSpeedForDamagerEnable;
@@ -59,7 +59,7 @@ namespace Proto2D
                     }
                     if (m_renderer)
                     {
-                        m_renderer.enabled = overThreshold;
+                        m_renderer.emitting = overThreshold;
                     }
                 });
 
