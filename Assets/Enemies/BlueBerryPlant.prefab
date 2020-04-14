@@ -1042,6 +1042,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 392c3b39d4f94514ab6d774a3761b55a, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights:
   - fov: 45
     viewDistance: 4
@@ -1214,6 +1217,11 @@ PrefabInstance:
     - target: {fileID: 7807973821713625400, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471537379113797716, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,

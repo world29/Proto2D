@@ -1010,7 +1010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &454661864327926196
 Transform:
   m_ObjectHideFlags: 0
@@ -1813,7 +1813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8750121458296811069}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.972, y: -1.502, z: 0}
+  m_LocalPosition: {x: 0.972, y: -1.231, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 8778643387317822643}
@@ -1962,7 +1962,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.7992699}
+  m_Offset: {x: 0, y: -1.2854276}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1973,7 +1973,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.4014602}
+  m_Size: {x: 1.5, y: 0.42914486}
   m_EdgeRadius: 0
 --- !u!114 &8555784964211331991
 MonoBehaviour:
@@ -2027,6 +2027,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: a97551c6cdaf8404684d941dac681961, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 1054260359019353039}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights:
   - fov: 92
     viewDistance: 2
@@ -2059,6 +2062,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8778643387317822643}
     m_Modifications:
+    - target: {fileID: 812730917143911980, guid: a8df3a0b29d25b148b60890c7d6bd5f8,
+        type: 3}
+      propertyPath: m_Name
+      value: PlatformBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 812730917143911980, guid: a8df3a0b29d25b148b60890c7d6bd5f8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4751797340976676318, guid: a8df3a0b29d25b148b60890c7d6bd5f8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2118,11 +2131,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812730917143911980, guid: a8df3a0b29d25b148b60890c7d6bd5f8,
-        type: 3}
-      propertyPath: m_Name
-      value: PlatformBase
       objectReference: {fileID: 0}
     - target: {fileID: 6434467733397246260, guid: a8df3a0b29d25b148b60890c7d6bd5f8,
         type: 3}
