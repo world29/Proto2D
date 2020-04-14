@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3249f4cad20a9bd4998cb2d4e6f45f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_delay: 1
+  m_delay: 2
 --- !u!114 &487782326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,12 +26,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
-  m_period: 1
+  m_period: 2
   m_OnHit:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2915029273018721484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069253668102663793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca98975ca6b7b224d9bb0658ca58a0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  horizontalRayCount: 0
+  verticalRayCount: 0
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
+  collider: {fileID: 0}
+  m_maxSlopeAngle: 60
+  m_input: {x: 0, y: 0}
+--- !u!114 &6371395815700626489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069253668102663793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef643b556e9794ca2a4a5bd113294d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gravity: 20
+  m_dropSound: {fileID: 0}
 --- !u!1001 &4923170673470439797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,6 +134,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147511300797853450, guid: a90e7e65c6ae59e4282f91241081bc5d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147511300797853450, guid: a90e7e65c6ae59e4282f91241081bc5d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a90e7e65c6ae59e4282f91241081bc5d, type: 3}

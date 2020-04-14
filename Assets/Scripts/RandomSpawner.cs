@@ -9,8 +9,8 @@ namespace Proto2D
     {
         public SpawnEntry[] m_entries;
 
-        private const float kSpawnSpeed = 10;
-        private const float kSpawnAngleRange = 20;
+        public float kSpawnSpeed = 10;
+        public float kSpawnAngleRange = 20;
 
         [ContextMenu("Spawn")]
         public void Spawn()

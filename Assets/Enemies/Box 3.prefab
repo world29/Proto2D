@@ -188,13 +188,16 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   progressValue: 0
-  m_itemSpawner: {fileID: 4359935343724557824}
+  m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 1509154601807174269, guid: bb83308fbfc36421c8d36240cab8a387,
     type: 3}
   damageSE: {fileID: 0}
   behaviourTree: {fileID: 0}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights: []
   groundDetectionRayLength: 0.5
   velocity: {x: 0, y: 0}
@@ -213,16 +216,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_entries:
   - weight: 5
-    prefab: {fileID: 4147511300797853444, guid: a90e7e65c6ae59e4282f91241081bc5d,
+    prefab: {fileID: 9069253668102663793, guid: af2276726a594254f925506430cb7015,
       type: 3}
-    countRange: {x: 1, y: 4}
+    countRange: {x: 2, y: 6}
   - weight: 1
     prefab: {fileID: 6730292347644209698, guid: b71ba89dad2dc28438441591c1468ab2,
       type: 3}
     countRange: {x: 1, y: 1}
-  - weight: 4
-    prefab: {fileID: 0}
-    countRange: {x: 0, y: 0}
+  kSpawnSpeed: 15
+  kSpawnAngleRange: 90
 --- !u!1 &1341978771918521482
 GameObject:
   m_ObjectHideFlags: 0
