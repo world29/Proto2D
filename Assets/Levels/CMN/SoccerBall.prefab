@@ -221,6 +221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5593244d531ae4448a1d0e7168074625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_damager: {fileID: 3181536596710760315}
+  m_renderer: {fileID: 3225732081030765744}
+  m_minSpeedForDamagerEnable: 7
   m_OnApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -373,6 +376,12 @@ PrefabInstance:
 --- !u!4 &5592813869084668323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 6799654202011966338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &3225732081030765744 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
     type: 3}
   m_PrefabInstance: {fileID: 6799654202011966338}
   m_PrefabAsset: {fileID: 0}

@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UniRx;
 using System.Linq;
 
 namespace Proto2D
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PhysicsEntity : MonoBehaviour, IDamageSender, IDamageReceiver
     {
+        [SerializeField]
+        Damager m_damager;
+
+        [SerializeField]
+        Renderer m_renderer;
+
+        [SerializeField]
+        float m_minSpeedForDamagerEnable;
+
         [SerializeField]
         UnityEvent m_OnApplyDamage;
 
@@ -26,6 +37,29 @@ namespace Proto2D
         }
 
         Collision2D m_collision;
+        Rigidbody2D m_rigidbody;
+
+        private void Start()
+        {
+            m_rigidbody = GetComponent<Rigidbody2D>();
+
+            // 速度が設定値以上のときだけ Damager を有効化
+            m_rigidbody
+                .ObserveEveryValueChanged(x => x.velocity.magnitude)
+                .Subscribe(x =>
+                {
+                    bool overThreshold = (x > m_minSpeedForDamagerEnable);
+
+                    if (m_damager)
+                    {
+                        m_damager.enabled = overThreshold;
+                    }
+                    if (m_renderer)
+                    {
+                        m_renderer.enabled = overThreshold;
+                    }
+                });
+        }
 
         public void OnApplyDamage(DamageType type, float damage, GameObject receiver)
         {
