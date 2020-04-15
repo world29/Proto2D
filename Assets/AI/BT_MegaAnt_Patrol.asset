@@ -42,10 +42,10 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: parent
-        node: {fileID: 114238679338956922}
+        node: {fileID: 114573122885649272}
         reroutePoints: []
       - fieldName: parent
-        node: {fileID: 114573122885649272}
+        node: {fileID: 114238679338956922}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: Move Forward
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 312, y: -184}
+  position: {x: 312, y: 8}
   ports:
     keys:
     - parent
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_stateName: 
   m_speed: 1
   m_autoTurn: 1
+  m_autoGroundDetection: 1
   m_timeout:
     m_type: 0
     m_min: 2
@@ -120,7 +121,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 312, y: -8}
+  position: {x: 312, y: -216}
   ports:
     keys:
     - parent
@@ -138,7 +139,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
-  m_priority: 0
+  m_priority: 2
   m_stateName: 
   m_timeout:
     m_type: 0
