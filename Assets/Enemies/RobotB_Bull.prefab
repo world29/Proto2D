@@ -1175,7 +1175,16 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 6b13bafe049b14cd6a1b45abc804bb78, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
-  sights: []
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  sights:
+  - fov: 57
+    viewDistance: 7
+    angleOffset: 0
+  - fov: 164
+    viewDistance: 8
+    angleOffset: 0
   groundDetectionRayLength: 2
   velocity: {x: 0, y: 0}
   effectSocket: {fileID: 5901655702425256809}
