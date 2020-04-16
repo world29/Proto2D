@@ -741,7 +741,7 @@ MonoBehaviour:
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 8300000, guid: 42245de78853f974192c9f8e89c68732, type: 3}
-  behaviourTree: {fileID: 11400000, guid: acdeac9293d18f74eb4a3dc9860da252, type: 2}
+  behaviourTree: {fileID: 11400000, guid: 401f7c3a6d28a44e0aaafb18ecf6fd73, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 6245465352893042264}
   collisionMask:
@@ -1449,11 +1449,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6245465354517601086}
     m_Modifications:
-    - target: {fileID: 7807973821713625401, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyDamageable
-      objectReference: {fileID: 0}
     - target: {fileID: 7807973821713625400, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1509,6 +1504,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7807973821713625401, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyDamageable
+      objectReference: {fileID: 0}
     - target: {fileID: 7807973822736983652, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -1544,6 +1544,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.053
       objectReference: {fileID: 0}
+    - target: {fileID: 7208681048506878839, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_receiver
+      value: 
+      objectReference: {fileID: 6245465354517601081}
     - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_receiver
@@ -1552,11 +1557,6 @@ PrefabInstance:
     - target: {fileID: 6015360866164097262, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: sender
-      value: 
-      objectReference: {fileID: 6245465354517601081}
-    - target: {fileID: 7208681048506878839, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_receiver
       value: 
       objectReference: {fileID: 6245465354517601081}
     m_RemovedComponents: []
