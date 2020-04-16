@@ -225,7 +225,42 @@ MonoBehaviour:
   m_maxSpeed: 20
   m_damager: {fileID: 3181536596710760315}
   m_renderer: {fileID: 3225732081030765744}
-  m_minSpeedForDamagerEnable: 5
+  m_minSpeedForDamagerEnable: {x: 5, y: 3}
+  m_OnDamagerEnabled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6770862135003315401}
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: e226f87c9145b431dae4a948bf775dc8,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnBounded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6770862135003315401}
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 6e3fd1d4f05ed4c4aab4b0fb5969d0e1,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_minImpulseOnBounded: 0.15
   m_OnApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -281,11 +316,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3181536598052217353}
     m_Modifications:
-    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Name
-      value: JumpAttackTrail
-      objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -340,6 +370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Name
+      value: JumpAttackTrail
       objectReference: {fileID: 0}
     - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}

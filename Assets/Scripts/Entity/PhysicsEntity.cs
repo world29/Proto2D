@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UniRx;
+using UniRx.Triggers;
 using System.Linq;
 
 namespace Proto2D
@@ -19,8 +20,17 @@ namespace Proto2D
         [SerializeField]
         TrailRenderer m_renderer;
 
+        [SerializeField, Tooltip("(x, y) = (OFF -> ON になる閾値, ON -> OFF になる閾値)")]
+        Vector2 m_minSpeedForDamagerEnable;
+
         [SerializeField]
-        float m_minSpeedForDamagerEnable;
+        UnityEvent m_OnDamagerEnabled;
+
+        [SerializeField]
+        UnityEvent m_OnBounded;
+
+        [SerializeField]
+        float m_minImpulseOnBounded = 3;
 
         [SerializeField]
         UnityEvent m_OnApplyDamage;
@@ -42,36 +52,72 @@ namespace Proto2D
         Collision2D m_collision;
         Rigidbody2D m_rigidbody;
 
+        ReactiveProperty<bool> m_activated;
+
         private void Start()
         {
+            m_activated = new ReactiveProperty<bool>(false);
+
             m_rigidbody = GetComponent<Rigidbody2D>();
 
-            // 速度が設定値以上のときだけ Damager を有効化
+            // 速度が閾値を越えるか下回ったらアクティブ状態を切り替え
             m_rigidbody
                 .ObserveEveryValueChanged(x => x.velocity.magnitude)
-                .Subscribe(x =>
+                .Subscribe(currentSpeed =>
                 {
-                    bool overThreshold = (x > m_minSpeedForDamagerEnable);
-
-                    if (m_damager)
+                    if (m_activated.Value)
                     {
-                        m_damager.enabled = overThreshold;
+                        if (currentSpeed < m_minSpeedForDamagerEnable.y)
+                        {
+                            m_activated.SetValueAndForceNotify(false);
+                        }
                     }
-                    if (m_renderer)
+                    else
                     {
-                        m_renderer.emitting = overThreshold;
+                        if (currentSpeed > m_minSpeedForDamagerEnable.x)
+                        {
+                            m_activated.SetValueAndForceNotify(true);
+                        }
                     }
                 });
+
+            // アクティブのとき Damager と トレイルを有効化
+            m_activated
+                .Subscribe(x =>
+                {
+                    if (m_damager) m_damager.enabled = x;
+                    if (m_renderer) m_renderer.emitting = x;
+                });
+
+            // ダメージが有効になったらイベントを呼び出す
+            m_damager
+                .ObserveEveryValueChanged(x => x.enabled)
+                .Subscribe(damagerEnabled =>
+                {
+                    if (damagerEnabled) {
+                        m_OnDamagerEnabled.Invoke();
+                    }
+                });
+
+            // ダメージが有効で、バウンドしたときにイベントを呼び出す
+            this.OnCollisionEnter2DAsObservable().Subscribe(collision => {
+                Debug.Assert(collision.contactCount > 0);
+
+                if (collision.contacts[0].normalImpulse > m_minImpulseOnBounded && m_damager.enabled)
+                {
+                    m_OnBounded.Invoke();
+                }
+            });
 
             // 速度が上限を超えないようにする
             m_rigidbody
                 .ObserveEveryValueChanged(x => x.velocity.magnitude)
-                .Subscribe(x =>
+                .Subscribe(currentSpeed =>
                 {
-                    if (x > m_maxSpeed)
+                    if (currentSpeed > m_maxSpeed)
                     {
                         var v = m_rigidbody.velocity;
-                        m_rigidbody.velocity = v / x * m_maxSpeed;
+                        m_rigidbody.velocity = v / currentSpeed * m_maxSpeed;
                     }
                 });
         }
@@ -138,7 +184,8 @@ namespace Proto2D
                 for (var i = 0; i < m_collision.contactCount; i++)
                 {
                     var contact = m_collision.contacts[i];
-                    Debug.DrawLine(contact.point, contact.point + contact.normal * contact.normalImpulse, Color.red);
+                    Color clr = contact.normalImpulse > m_minImpulseOnBounded ? Color.red : Color.green;
+                    Debug.DrawLine(contact.point, contact.point + contact.normal * contact.normalImpulse, clr);
                 }
             }
         }
