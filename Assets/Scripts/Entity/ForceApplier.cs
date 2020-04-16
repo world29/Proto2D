@@ -29,7 +29,7 @@ namespace Proto2D
                     entity.EnableMoving();
                 }
 
-                if (entity && entity.isContactObstacle)
+                if (entity)// && entity.isContactObstacle)
                 {
                     Vector2 dir = c.normal + Vector2.up;
                     rb.AddForceAtPosition(dir.normalized * m_force, collision.gameObject.transform.position, m_forceMode);
