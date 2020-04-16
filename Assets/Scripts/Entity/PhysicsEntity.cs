@@ -44,8 +44,7 @@ namespace Proto2D
         {
             get
             {
-                return m_colliders
-                    .Any(collider => LayerMask.NameToLayer("Obstacle") == collider.gameObject.layer);
+                return m_colliders.Count > 0;
             }
         }
 
@@ -140,7 +139,10 @@ namespace Proto2D
         {
             m_collision = collision;
 
-            m_colliders.Add(collision.collider);
+            if (LayerMask.NameToLayer("Obstacle") == collision.gameObject.layer)
+            {
+                m_colliders.Add(collision.collider);
+            }
         }
 
         private void OnCollisionExit2D(Collision2D collision)

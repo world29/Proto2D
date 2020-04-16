@@ -24,6 +24,11 @@ namespace Proto2D
             {
                 var entity = collision.gameObject.GetComponent<PhysicsEntity>();
 
+                if (rb.constraints.HasFlag(RigidbodyConstraints2D.FreezePosition))
+                {
+                    rb.constraints = RigidbodyConstraints2D.None;
+                }
+
                 if (entity && entity.isContactObstacle)
                 {
                     Vector2 dir = c.normal + Vector2.up;
