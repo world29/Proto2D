@@ -12,6 +12,9 @@ namespace Proto2D
     public class PhysicsEntity : MonoBehaviour, IDamageSender, IDamageReceiver
     {
         [SerializeField]
+        float m_lifespan;
+
+        [SerializeField]
         float m_maxSpeed;
 
         [SerializeField]
@@ -52,6 +55,7 @@ namespace Proto2D
         Rigidbody2D m_rigidbody;
 
         ReactiveProperty<bool> m_activated;
+        bool m_moveEnabled = false;
 
         private void Start()
         {
@@ -119,6 +123,47 @@ namespace Proto2D
                         m_rigidbody.velocity = v / currentSpeed * m_maxSpeed;
                     }
                 });
+        }
+
+        public void EnableMoving()
+        {
+            // 初回のみ
+            if (m_moveEnabled) return;
+
+            // コンストレイントの解除
+            if (m_rigidbody.constraints.HasFlag(RigidbodyConstraints2D.FreezePosition))
+            {
+                m_rigidbody.constraints = RigidbodyConstraints2D.None;
+            }
+
+            // スリープ解除してから一定時間後に消滅する
+            float m_blinkTime = 1;
+            Observable.Timer(System.TimeSpan.FromSeconds(m_lifespan - m_blinkTime))
+                .Subscribe(_ =>
+                {
+                    Blink();
+                    Destroy(gameObject, m_blinkTime);
+                });
+
+            m_moveEnabled = true;
+        }
+
+        private void Blink()
+        {
+            var renderer = GetComponent<SpriteRenderer>();
+            Debug.Assert(renderer);
+
+            float angularFrequency = 30f;
+            float deltaTime = 0.0166f;
+
+            float time = 0f;
+            Observable.Interval(System.TimeSpan.FromSeconds(deltaTime)).Subscribe(_ =>
+            {
+                time += angularFrequency * deltaTime;
+                var color = renderer.color;
+                color.a = Mathf.Abs(Mathf.Sin(time));
+                renderer.color = color;
+            }).AddTo(this);
         }
 
         public void OnApplyDamage(DamageType type, float damage, GameObject receiver)

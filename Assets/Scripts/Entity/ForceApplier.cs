@@ -24,9 +24,9 @@ namespace Proto2D
             {
                 var entity = collision.gameObject.GetComponent<PhysicsEntity>();
 
-                if (rb.constraints.HasFlag(RigidbodyConstraints2D.FreezePosition))
+                if (entity)
                 {
-                    rb.constraints = RigidbodyConstraints2D.None;
+                    entity.EnableMoving();
                 }
 
                 if (entity && entity.isContactObstacle)
