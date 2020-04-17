@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public Vector2 velocity;
     [HideInInspector]
     public float direction = 1; // 1: right, -1: left
+    [HideInInspector]
+    public bool hangable = true;
 
     Controller2D controller;
     Animator animator;
@@ -448,6 +450,22 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             GameObject effect = Instantiate(EffectPrefab, transform.position, Quaternion.identity, null);
             effect.transform.localScale.Scale(transform.localScale);
             Destroy(effect, 1);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.GetComponent<DistanceJoint2D>())
+        {
+            Debug.Log("collide to DistanceJoint2D!");
+
+            if (hangable)
+            {
+                var targetBody = collider.gameObject.GetComponent<Rigidbody2D>();
+                Debug.Assert(targetBody);
+
+                ChangeState(new PlayerState_Hang(targetBody));
+            }
         }
     }
 }
