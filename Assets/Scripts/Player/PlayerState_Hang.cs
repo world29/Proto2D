@@ -52,6 +52,13 @@ public class PlayerState_Hang : IPlayerState
         player.velocity = rigidbody.velocity;
         rigidbody.velocity = Vector2.zero;
 
+        // ジャンプで離脱したときはジャンプ分を加算
+        if (input.isTouched)
+        {
+            var dir = player.velocity.normalized;
+            player.velocity += (dir * player.jumpSpeed);
+        }
+
         // キネマティックに戻す
         rigidbody.isKinematic = true;
 
