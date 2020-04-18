@@ -41,6 +41,9 @@ public class PlayerState_Hang : IPlayerState
 
         // 移動量をリセットする
         player.velocity = Vector2.zero;
+
+        // パラメータを設定
+        animator.SetBool("hang", true);
     }
 
     public void OnExit(GameObject context)
@@ -62,10 +65,16 @@ public class PlayerState_Hang : IPlayerState
         // ジョイントを無効化
         joint.connectedBody = null;
         joint.enabled = false;
+
+        // パラメータを設定
+        animator.SetBool("hang", false);
     }
 
     public IPlayerState Update(GameObject context)
     {
+        // パラメータを更新
+        animator.SetFloat("hang_speed", rigidbody.velocity.magnitude);
+
         // ハンドルに力を与える
         if (input.directionalInput.x != 0)
         {
