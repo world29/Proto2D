@@ -103,6 +103,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public AudioClip hopSE;
     AudioSource audioSource;
 
+    [Header("ハング状態")]
+
+    [SerializeField, Tooltip("ロープに伝える力の強さ")]
+    public float m_hangForceAmount = 30f;
+    [HideInInspector, Tooltip("次にハングできるようになるまでのインターバル")]
+    public float m_hangableInterval = .5f;
+
+
     [HideInInspector]
     public Vector2 velocity;
     [HideInInspector]

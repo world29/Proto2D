@@ -15,9 +15,6 @@ public class PlayerState_Hang : IPlayerState
     private HingeJoint2D joint;
     private Rigidbody2D targetBody;
 
-    float m_hangableInterval = .5f;
-    float m_forceAmount = 30f;
-
     public PlayerState_Hang(Rigidbody2D _targetBody)
     {
         targetBody = _targetBody;
@@ -73,7 +70,7 @@ public class PlayerState_Hang : IPlayerState
         if (input.directionalInput.x != 0)
         {
             Vector2 direction = input.directionalInput.x > 0 ? Vector2.right : Vector2.left;
-            var force = direction * m_forceAmount;
+            var force = direction * player.m_hangForceAmount;
             targetBody.AddForce(force);
         }
 
@@ -101,7 +98,7 @@ public class PlayerState_Hang : IPlayerState
     void setHangableInterval()
     {
         // すぐにハング状態にならないようにインターバルを設定する
-        Observable.Timer(System.TimeSpan.FromSeconds(m_hangableInterval))
+        Observable.Timer(System.TimeSpan.FromSeconds(player.m_hangableInterval))
             .Subscribe(_ =>
             {
                 player.hangable = true;
