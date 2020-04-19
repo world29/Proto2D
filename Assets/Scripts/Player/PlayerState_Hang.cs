@@ -53,7 +53,7 @@ public class PlayerState_Hang : IPlayerState
         rigidbody.velocity = Vector2.zero;
 
         // ジャンプで離脱したときはジャンプ分を加算
-        if (input.isTouched)
+        if (input.isTouched || input.isFlicked)
         {
             var dir = player.velocity.normalized;
             player.velocity += (dir * player.jumpSpeed);
@@ -84,21 +84,13 @@ public class PlayerState_Hang : IPlayerState
         }
 
         // 遷移
-        if (input.directionalInput.y < 0 || input.isTouched)
+        if (input.directionalInput.y < 0 || input.isTouched || input.isFlicked)
         {
             // ジャンプか下方向の入力でキャンセル
 
             setHangableInterval();
 
             return new PlayerState_Free();
-        }
-        else if (input.isFlicked)
-        {
-            // フリックでジャンプアタックに移行
-
-            setHangableInterval();
-
-            return new PlayerState_Attack();
         }
 
         return this;
