@@ -13,6 +13,7 @@ public class PlayerState_Hang : IPlayerState
     private TrailRenderer trail;
     private Rigidbody2D rigidbody;
     private HingeJoint2D joint;
+    private DistanceJoint2D distanceJoint;
 
     private Proto2D.RopeHandle ropeHandle;
     private Rigidbody2D ropeHandleBody;
@@ -31,6 +32,7 @@ public class PlayerState_Hang : IPlayerState
         input = context.GetComponent<PlayerInput>();
         rigidbody = context.GetComponent<Rigidbody2D>();
         joint = context.GetComponent<HingeJoint2D>();
+        distanceJoint = context.GetComponent<DistanceJoint2D>();
 
         // ロープハンドルコンポーネントを掴んだ
         ropeHandle.Grab();
@@ -42,8 +44,11 @@ public class PlayerState_Hang : IPlayerState
         Vector3 desiredPos = ropeHandleBody.transform.position - (Vector3)joint.anchor;
         player.transform.position = desiredPos;
 
+        // ジョイントコンポーネントを有効化する
         joint.enabled = true;
         joint.connectedBody = ropeHandleBody;
+        distanceJoint.enabled = true;
+        distanceJoint.connectedBody = ropeHandleBody;
 
         // 移動量をリセットする
         player.velocity = Vector2.zero;
@@ -74,6 +79,8 @@ public class PlayerState_Hang : IPlayerState
         // ジョイントを無効化
         joint.connectedBody = null;
         joint.enabled = false;
+        distanceJoint.connectedBody = null;
+        distanceJoint.enabled = false;
 
         // パラメータを設定
         animator.SetBool("hang", false);
