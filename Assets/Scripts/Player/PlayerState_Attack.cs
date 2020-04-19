@@ -19,10 +19,6 @@ public class PlayerState_Attack : IPlayerState
         input = context.GetComponent<PlayerInput>();
         trail = player.jumpAttackTrail;
 
-        // Trail 有効化
-        trail.emitting = true;
-           
-
         // 効果音再生
         if (!animator.GetBool("attack"))
         {
@@ -32,45 +28,11 @@ public class PlayerState_Attack : IPlayerState
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 
-        // ジャンプアタックの攻撃判定を有効化
-        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
-            .Where(item => item.m_damageType == DamageType.Attack);
-        if (attackers.Count() > 0)
-        {
-            attackers.First().enabled = true;
-        }
-
-        // 踏みつけ判定を無効化
-        var stompers = context.GetComponentsInChildren<Proto2D.Damager>()
-            .Where(item => item.m_damageType == DamageType.Stomp);
-        if (stompers.Count() > 0)
-        {
-            stompers.First().enabled = false;
-        }
-
         animator.SetBool("attack", true);
     }
 
     public void OnExit(GameObject context)
     {
-        trail.emitting = false;
-
-        // ジャンプアタックの攻撃判定を無効化
-        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
-            .Where(item => item.m_damageType == DamageType.Attack);
-        if (attackers.Count() > 0)
-        {
-            attackers.First().enabled = false;
-        }
-
-        // 踏みつけ判定を有効化
-        var stompers = context.GetComponentsInChildren<Proto2D.Damager>()
-            .Where(item => item.m_damageType == DamageType.Stomp);
-        if (stompers.Count() > 0)
-        {
-            stompers.First().enabled = true;
-        }
-
         animator.SetBool("attack", false);
     }
 

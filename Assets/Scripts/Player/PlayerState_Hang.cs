@@ -13,11 +13,14 @@ public class PlayerState_Hang : IPlayerState
     private TrailRenderer trail;
     private Rigidbody2D rigidbody;
     private HingeJoint2D joint;
-    private Rigidbody2D targetBody;
 
-    public PlayerState_Hang(Rigidbody2D _targetBody)
+    private Proto2D.RopeHandle ropeHandle;
+    private Rigidbody2D ropeHandleBody;
+
+    public PlayerState_Hang(Proto2D.RopeHandle handle)
     {
-        targetBody = _targetBody;
+        ropeHandle = handle;
+        ropeHandleBody = handle.GetComponent<Rigidbody2D>();
     }
 
     public void OnEnter(GameObject context)
@@ -29,15 +32,18 @@ public class PlayerState_Hang : IPlayerState
         rigidbody = context.GetComponent<Rigidbody2D>();
         joint = context.GetComponent<HingeJoint2D>();
 
+        // ロープハンドルコンポーネントを掴んだ
+        ropeHandle.Grab();
+
         // 物理制御にし、入力はハンドルに力を与える
         rigidbody.isKinematic = false;
 
         // プレイヤーの位置を補正する
-        Vector3 desiredPos = targetBody.transform.position - (Vector3)joint.anchor;
+        Vector3 desiredPos = ropeHandleBody.transform.position - (Vector3)joint.anchor;
         player.transform.position = desiredPos;
 
         joint.enabled = true;
-        joint.connectedBody = targetBody;
+        joint.connectedBody = ropeHandleBody;
 
         // 移動量をリセットする
         player.velocity = Vector2.zero;
@@ -48,6 +54,9 @@ public class PlayerState_Hang : IPlayerState
 
     public void OnExit(GameObject context)
     {
+        // ロープハンドルコンポーネントを放した
+        ropeHandle.Release();
+
         // 物理の速度をキネマティックの速度に変換する
         player.velocity = rigidbody.velocity;
         rigidbody.velocity = Vector2.zero;
@@ -80,7 +89,7 @@ public class PlayerState_Hang : IPlayerState
         {
             Vector2 direction = input.directionalInput.x > 0 ? Vector2.right : Vector2.left;
             var force = direction * player.m_hangForceAmount;
-            targetBody.AddForce(force);
+            ropeHandleBody.AddForce(force);
         }
 
         // 遷移

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UniRx;
+using UniRx.Triggers;
+using System.Linq;
 
 [RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
@@ -163,6 +166,32 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Start()
     {
+        // 初期状態として、ジャンプアタックの攻撃判定を無効化
+        SetAttackEnabled(false);
+
+        // Attack ステートのときだけダメージを有効化する
+        var stateMachine = animator.GetBehaviour<ObservableStateMachineTrigger>();
+        stateMachine.OnStateEnterAsObservable()
+            .Where(b => b.StateInfo.IsName("player_attack"))
+            .Subscribe(_ =>
+            {
+                SetAttackEnabled(true);
+                SetStompEnabled(false);
+
+                // Trail 有効化
+                jumpAttackTrail.emitting = true;
+            });
+
+        stateMachine.OnStateExitAsObservable()
+            .Where(b => b.StateInfo.IsName("player_attack"))
+            .Subscribe(_ =>
+            {
+                // Trail 無効化
+                jumpAttackTrail.emitting = false;
+
+                SetAttackEnabled(false);
+                SetStompEnabled(true);
+            });
     }
 
     void Update()
@@ -404,6 +433,20 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
     }
 
+    private void SetAttackEnabled(bool enabled)
+    {
+        GetComponentsInChildren<Proto2D.Damager>()
+            .First(x => x.m_damageType == DamageType.Attack)
+            .enabled = enabled;
+    }
+
+    private void SetStompEnabled(bool enabled)
+    {
+        GetComponentsInChildren<Proto2D.Damager>()
+            .First(x => x.m_damageType == DamageType.Stomp)
+            .enabled = enabled;
+    }
+
     IEnumerator StartInvincible(float duration, bool blinking = true)
     {
         isInvincible = true;
@@ -463,17 +506,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.GetComponent<DistanceJoint2D>())
+        var ropeHandle = collider.gameObject.GetComponent<Proto2D.RopeHandle>();
+        if (ropeHandle && hangable)
         {
-            Debug.Log("collide to DistanceJoint2D!");
-
-            if (hangable)
-            {
-                var targetBody = collider.gameObject.GetComponent<Rigidbody2D>();
-                Debug.Assert(targetBody);
-
-                ChangeState(new PlayerState_Hang(targetBody));
-            }
+            ChangeState(new PlayerState_Hang(ropeHandle));
         }
     }
 }
