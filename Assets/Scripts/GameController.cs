@@ -248,11 +248,11 @@ namespace Proto2D
 
         public void GameOver()
         {
-            isGameOver = true;
-
-            //Pause();
-
-            GameManager.Instance.GameOver();
+            if (!isGameOver)
+            {
+                GameManager.Instance.GameOver();
+                isGameOver = true;
+            }
         }
 
         public void GameClear()
