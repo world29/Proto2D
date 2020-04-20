@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Bits: 1024
   m_damageType: 2
   damage: 1
-  sender: {fileID: 0}
+  sender: {fileID: 3181536598052217366}
 --- !u!1 &3181536598052217366
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,40 +353,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3181536598052217353}
     m_Modifications:
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
-      propertyPath: m_Emitting
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
-      value: 0.8949585
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inSlope
-      value: -1.0035576
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outSlope
-      value: -1.0035576
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inWeight
-      value: 0.6738889
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0.6736357
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 0.1
+      propertyPath: m_Name
+      value: JumpAttackTrail
       objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
@@ -443,10 +413,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
-      propertyPath: m_Name
-      value: JumpAttackTrail
+      propertyPath: m_Emitting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
+      value: 0.8949585
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inSlope
+      value: -1.0035576
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outSlope
+      value: -1.0035576
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inWeight
+      value: 0.6738889
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.6736357
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_MinVertexDistance
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c79fb8ad98e7284e9b75477e500a7fa, type: 3}
