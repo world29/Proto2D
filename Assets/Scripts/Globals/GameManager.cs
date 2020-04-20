@@ -57,10 +57,9 @@ namespace Proto2D
         // 次のシーンに遷移する
         public void NextStage()
         {
-            m_currentStageNum++;
-            m_currentStageNum %= m_stageName.Length;
+            var nextStageNum = (m_currentStageNum + 1) % m_stageName.Length;
 
-            StartCoroutine(WaitForLoadScene(m_currentStageNum));
+            StartCoroutine(WaitForLoadScene(nextStageNum));
         }
 
         // 指定したシーンに遷移する
@@ -71,6 +70,8 @@ namespace Proto2D
 
         IEnumerator WaitForLoadScene(int stageNum)
         {
+            Debug.Assert(stageNum < m_stageName.Length);
+
             // フェードオブジェクトを生成
             m_fadeCanvasClone = Instantiate(m_fadeCanvasPrefab);
 
@@ -83,7 +84,8 @@ namespace Proto2D
             yield return new WaitForSeconds(m_fadeWaitTime);
 
             // シーンを非同期で読み込み
-            yield return SceneManager.LoadSceneAsync(m_stageName[stageNum]);
+            m_currentStageNum = stageNum;
+            yield return SceneManager.LoadSceneAsync(m_stageName[m_currentStageNum]);
 
             m_fadeCanvas.fadeOut = true;
         }
