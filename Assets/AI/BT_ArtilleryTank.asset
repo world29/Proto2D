@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 114920267676545166}
   - {fileID: 114698688414865808}
   - {fileID: 114583662175584352}
+  - {fileID: 114928110922138844}
 --- !u!114 &114182336539545708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +283,7 @@ MonoBehaviour:
   m_Name: Move Forward
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -8, y: 248}
+  position: {x: -8, y: 264}
   ports:
     keys:
     - parent
@@ -309,7 +310,7 @@ MonoBehaviour:
     m_type: 1
     m_min: 0
     m_max: 5
-    m_value: 0.6
+    m_value: 0.2
 --- !u!114 &114681649308610486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +383,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: parent
-        node: {fileID: 114898023153260784}
+        node: {fileID: 114928110922138844}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -527,10 +528,7 @@ MonoBehaviour:
       _node: {fileID: 114898023153260784}
       _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: child
-        node: {fileID: 114698688414865808}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 1
       _typeConstraint: 0
@@ -574,3 +572,44 @@ MonoBehaviour:
   m_stateName: 
   jumpVelocity: {x: -7, y: 5}
   m_continueUntilGrounded: 1
+--- !u!114 &114928110922138844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa2bf52684fc824799e152eb6666068, type: 3}
+  m_Name: Move Forward
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -24, y: 40}
+  ports:
+    keys:
+    - parent
+    values:
+    - _fieldName: parent
+      _node: {fileID: 114928110922138844}
+      _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: child
+        node: {fileID: 114698688414865808}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  m_priority: 6
+  m_stateName: actionT1
+  m_speed: 3
+  m_autoTurn: 1
+  m_autoGroundDetection: 1
+  m_timeout:
+    m_type: 1
+    m_min: 0
+    m_max: 5
+    m_value: 2
