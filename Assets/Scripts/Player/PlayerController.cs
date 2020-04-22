@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UniRx;
 using UniRx.Triggers;
+using System;
 using System.Linq;
 
 [RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
@@ -353,20 +354,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         health.Value = Mathf.Max(0, health.Value - info.damage);
         if (health.Value == 0)
         {
-            // コリジョンを無効化
-            controller.collisionMask = 0;
-
-            // カメラ追従を解除
-            Camera.main.GetComponentInParent<Proto2D.CameraController>().enabled = false;
-
-            // ルーペ無効化
-            GameObject.FindObjectOfType<Proto2D.UILoupeController>().enabled = false;
-
-            // ドロップアウト無効化
-            GameObject.FindObjectOfType<Proto2D.UIDropoutController>().enabled = false;
-
-            // ノックバックした後、Death ステートに遷移する
-            Proto2D.GameController.Instance.GameOver();
+            StartCoroutine(StartDeathSequence());
         }
 
         // ノックバック
@@ -377,6 +365,33 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         ChangeState(new PlayerState_Knockback());
         StartCoroutine(StartInvincible(invincibleDuration));
+    }
+
+    IEnumerator StartDeathSequence()
+    {
+        // コリジョンを無効化
+        controller.collisionMask = 0;
+
+        // カメラ追従を解除
+        Camera.main.GetComponentInParent<Proto2D.CameraController>().enabled = false;
+
+        // ルーペ無効化
+        GameObject.FindObjectOfType<Proto2D.UILoupeController>().enabled = false;
+
+        // ドロップアウト無効化
+        GameObject.FindObjectOfType<Proto2D.UIDropoutController>().enabled = false;
+
+        // 時間停止
+        {
+            Time.timeScale = .3f;
+
+            yield return new WaitForSecondsRealtime(1f);
+
+            Time.timeScale = 1f;
+        }
+
+        // ノックバックした後、Death ステートに遷移する
+        Proto2D.GameController.Instance.GameOver();
     }
 
     public void UpdateFacing(float _direction = 0f)
