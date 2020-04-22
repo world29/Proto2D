@@ -118,7 +118,15 @@ public class PlayerState_Hang : IPlayerState
 
             setHangableInterval();
 
-            return new PlayerState_Free();
+            var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("player_attack"))
+            {
+                return new PlayerState_Attack();
+            }
+            else
+            {
+                return new PlayerState_Free();
+            }
         }
 
         return this;
