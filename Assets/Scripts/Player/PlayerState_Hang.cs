@@ -103,6 +103,9 @@ public class PlayerState_Hang : IPlayerState
         // パラメータを更新
         animator.SetFloat("hang_speed", rigidbody.velocity.magnitude);
 
+        // 向きの更新
+        player.UpdateFacing(Mathf.Sign(rigidbody.velocity.x));
+
         // ハンドルに力を与える
         if (input.directionalInput.x != 0)
         {
