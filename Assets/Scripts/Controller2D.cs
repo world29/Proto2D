@@ -76,7 +76,11 @@ public class Controller2D : RaycastController
 
             if (hit)
             {
-                if (hit.distance == 0)
+                if (hit.collider.CompareTag("Through"))
+                {
+                    continue;
+                }
+                    if (hit.distance == 0)
                 {
                     continue;
                 }
