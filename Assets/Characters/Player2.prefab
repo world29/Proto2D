@@ -573,6 +573,7 @@ MonoBehaviour:
   jumpAttackSE: {fileID: 8300000, guid: 3dde23ce7eaa1cc468c833dbce36336d, type: 3}
   hopSE: {fileID: 0}
   m_hangForceAmount: 30
+  m_disableCollisionWhileHanging: 1
   m_hangableInterval: 0.5
   velocity: {x: 0, y: 0}
   direction: 1
@@ -1177,11 +1178,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6503610203471954341}
     m_Modifications:
-    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_Name
-      value: JumpAttackTrail
-      objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1236,6 +1232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 917414108972351302, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Name
+      value: JumpAttackTrail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c79fb8ad98e7284e9b75477e500a7fa, type: 3}

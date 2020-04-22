@@ -53,6 +53,12 @@ public class PlayerState_Hang : IPlayerState
         // 移動量をリセットする
         player.velocity = Vector2.zero;
 
+        // コリジョンを無効化する
+        if (player.m_disableCollisionWhileHanging)
+        {
+            player.gameObject.GetComponent<Collider2D>().isTrigger = true;
+        }
+
         // パラメータを設定
         animator.SetBool("hang", true);
     }
@@ -81,6 +87,12 @@ public class PlayerState_Hang : IPlayerState
         joint.enabled = false;
         distanceJoint.connectedBody = null;
         distanceJoint.enabled = false;
+
+        // コリジョンの無効化を元にもどす
+        if (player.m_disableCollisionWhileHanging)
+        {
+            player.gameObject.GetComponent<Collider2D>().isTrigger = false;
+        }
 
         // パラメータを設定
         animator.SetBool("hang", false);

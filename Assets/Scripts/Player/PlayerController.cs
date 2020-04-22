@@ -110,9 +110,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     [SerializeField, Tooltip("ロープに伝える力の強さ")]
     public float m_hangForceAmount = 30f;
+    [SerializeField, Tooltip("ハング時にコリジョンを無効化する")]
+    public bool m_disableCollisionWhileHanging = false;
     [HideInInspector, Tooltip("次にハングできるようになるまでのインターバル")]
     public float m_hangableInterval = .5f;
-
 
     [HideInInspector]
     public Vector2 velocity;
