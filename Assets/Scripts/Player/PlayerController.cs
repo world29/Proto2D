@@ -379,6 +379,36 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         StartCoroutine(StartInvincible(invincibleDuration));
     }
 
+    public void UpdateFacing(float _direction = 0f)
+    {
+        if (_direction == 0f)
+        {
+            float inputX = input.directionalInput.x;
+            if (inputX != 0)
+            {
+                // キー入力の向き
+                direction = Mathf.Sign(inputX);
+            }
+            else if (velocity.x == 0)
+            {
+                // マウスカーソルの向き
+                Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 diff = targetPosition - gameObject.transform.position;
+
+                direction = Mathf.Sign(diff.x);
+            }
+        }
+        else
+        {
+            // 指定された向き
+            direction = _direction;
+        }
+
+        Vector3 scale = transform.localScale;
+        scale.x = direction;
+        transform.localScale = scale;
+    }
+
     public void OnApplyDamage(DamageType type, float damage, GameObject receiver)
     {
         HitInfo info;
