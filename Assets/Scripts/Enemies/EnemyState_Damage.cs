@@ -18,7 +18,7 @@ namespace Proto2D
             m_animator = enemyBehaviour.gameObject.GetComponent<Animator>();
 
             // スーパーアーマーでない場合は、被ダメージ時に、AI 停止、与ダメージを無効化
-            if (!enemyBehaviour.superArmor)
+            if (!enemyBehaviour.superArmor || enemyBehaviour.health == 0)
             {
                 if (enemyBehaviour.behaviourTree)
                 {
@@ -34,8 +34,14 @@ namespace Proto2D
                         damager.enabled = false;
                     }
                 }
-
                 m_animator.SetBool("damage", true);
+
+
+            }
+            if (enemyBehaviour.health == 0)
+            {
+                m_animator.SetBool("damage", false);
+                m_animator.SetBool("death", true);
             }
 
             enemyBehaviour.PlaySE(enemyBehaviour.damageSE);

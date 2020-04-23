@@ -19,6 +19,9 @@ namespace Proto2D
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
 
+        [SerializeField, Header("ダメージイベント")]
+        UnityEvent m_OnDamage;
+
         [SerializeField, Header("死亡イベント")]
         UnityEvent m_OnDeath;
 
@@ -343,7 +346,7 @@ namespace Proto2D
 
                 OnDeath();
             }
-
+            m_OnDamage.Invoke();
             ChangeState(new EnemyState_Damage());
         }
 
