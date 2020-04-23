@@ -2604,9 +2604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c112f74f3dc1ac4f97cfc6f0608fe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectile: {fileID: 2710078861558965266, guid: c6a8dbbab83c88f4eaaea9dba1e83348,
+  m_projectile: {fileID: 616676621378057021, guid: c6a8dbbab83c88f4eaaea9dba1e83348,
     type: 3}
-  m_locator: {fileID: 0}
+  m_locator: {fileID: 4861850203214842200}
   m_speed: 8
 --- !u!1 &8406494100538235767
 GameObject:
@@ -2973,6 +2973,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 11400000, guid: 1ac11f02337ed4f14b3d738bf8b4e6df, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
   sights:
   - fov: 88
     viewDistance: 7
