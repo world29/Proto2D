@@ -113,6 +113,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float m_hangForceAmount = 30f;
     [SerializeField, Tooltip("ハング時にコリジョンを無効化する")]
     public bool m_disableCollisionWhileHanging = false;
+    [SerializeField, Tooltip("上向きの速度にかかるバイアス"), Range(0, 2)]
+    public float m_hangJumpVelocityBias = 1f;
     [HideInInspector, Tooltip("次にハングできるようになるまでのインターバル")]
     public float m_hangableInterval = .5f;
 

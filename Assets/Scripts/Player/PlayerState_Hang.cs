@@ -69,8 +69,19 @@ public class PlayerState_Hang : IPlayerState
         ropeHandle.Release();
 
         // 物理の速度をキネマティックの速度に変換する
-        player.velocity = rigidbody.velocity;
-        rigidbody.velocity = Vector2.zero;
+        {
+            var v = rigidbody.velocity;
+            if (v.y > 0)
+            {
+                player.velocity = v.normalized * v.magnitude * player.m_hangJumpVelocityBias;
+            }
+            else
+            {
+                player.velocity = v.normalized * v.magnitude;
+            }
+
+            rigidbody.velocity = Vector2.zero;
+        }
 
         // キネマティックに戻す
         rigidbody.isKinematic = true;
