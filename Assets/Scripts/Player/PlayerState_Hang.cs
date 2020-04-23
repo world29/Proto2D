@@ -72,13 +72,6 @@ public class PlayerState_Hang : IPlayerState
         player.velocity = rigidbody.velocity;
         rigidbody.velocity = Vector2.zero;
 
-        // ジャンプで離脱したときはジャンプ分を加算
-        if (input.isTouched || input.isFlicked)
-        {
-            var dir = player.velocity.normalized;
-            player.velocity += (dir * player.jumpSpeed);
-        }
-
         // キネマティックに戻す
         rigidbody.isKinematic = true;
 
@@ -114,22 +107,12 @@ public class PlayerState_Hang : IPlayerState
             ropeHandleBody.AddForce(force);
         }
 
-        // 遷移
+        // ジャンプか下方向の入力でハング状態を終了
         if (input.directionalInput.y < 0 || input.isTouched || input.isFlicked)
         {
-            // ジャンプか下方向の入力でキャンセル
-
             setHangableInterval();
 
-            var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("player_attack"))
-            {
-                return new PlayerState_Attack();
-            }
-            else
-            {
-                return new PlayerState_Free();
-            }
+            return new PlayerState_Physics();
         }
 
         return this;
