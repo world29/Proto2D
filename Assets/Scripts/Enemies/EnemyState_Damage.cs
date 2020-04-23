@@ -61,7 +61,7 @@ namespace Proto2D
                 damageable.enabled = false;
             }
 
-            timeToTransition = Time.timeSinceLevelLoad + enemyBehaviour.damageDuration;
+            timeToTransition = Time.timeSinceLevelLoad + blink;
         }
 
         public void OnExit(EnemyBehaviour enemyBehaviour)

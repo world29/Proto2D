@@ -134,6 +134,11 @@ namespace Proto2D
 
         void UpdateAnimationParameters()
         {
+            if(health==0)
+            {
+                m_animator.SetBool("damage", false);
+                m_animator.SetBool("death", true);
+            }
             if(m_animator &&  m_animator.isActiveAndEnabled)
             {
                 m_animator.SetFloat("move_x", Mathf.Abs(velocity.x));
@@ -381,6 +386,8 @@ namespace Proto2D
             SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
 
             float endTime = Time.timeSinceLevelLoad + duration;
+
+            if (blinkInterval == 0) yield return new WaitForSeconds(duration);
 
             while (Time.timeSinceLevelLoad < endTime)
             {
