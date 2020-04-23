@@ -1,5 +1,201 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2382721917045102831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3956465836977634532}
+  - component: {fileID: 4063089282137858741}
+  - component: {fileID: 4900331313168311813}
+  - component: {fileID: 8573430633064019205}
+  m_Layer: 0
+  m_Name: Damager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3956465836977634532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382721917045102831}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 0.49, z: 0}
+  m_LocalScale: {x: 0.96503234, y: 0.7741468, z: 0.84838}
+  m_Children: []
+  m_Father: {fileID: 5547779684136353100}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &4063089282137858741
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382721917045102831}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1, y: -0.4}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1.4933437}
+  m_EdgeRadius: 0
+--- !u!50 &4900331313168311813
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382721917045102831}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &8573430633064019205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382721917045102831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_damageType: 3
+  damage: 1
+  sender: {fileID: 7615431906169996719}
+--- !u!1 &2753436022856327892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8968012030813972249}
+  - component: {fileID: 8782622082274046634}
+  - component: {fileID: 4064461445997041244}
+  - component: {fileID: 8918359013864827637}
+  m_Layer: 0
+  m_Name: 'Damager '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8968012030813972249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753436022856327892}
+  m_LocalRotation: {x: -0, y: -0, z: 0.99999857, w: 0.0016963889}
+  m_LocalPosition: {x: 0.17, y: -0.34, z: 0}
+  m_LocalScale: {x: 1.1350497, y: 0.7741486, z: 0.84838}
+  m_Children: []
+  m_Father: {fileID: 3812718898232569175}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8782622082274046634
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753436022856327892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1, y: -0.4}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1.4933437}
+  m_EdgeRadius: 0
+--- !u!50 &4064461445997041244
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753436022856327892}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &8918359013864827637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753436022856327892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_damageType: 3
+  damage: 1
+  sender: {fileID: 7615431906169996719}
 --- !u!1 &2872414426266374997
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,7 +224,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.99999857, w: 0.0016963889}
   m_LocalPosition: {x: 0.133, y: -0.767, z: 0}
   m_LocalScale: {x: 0.85021, y: 1.0126582, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8968012030813972249}
   m_Father: {fileID: 7615431906169996716}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -179.80602}
@@ -110,8 +307,6 @@ GameObject:
   - component: {fileID: 7615431906169996716}
   - component: {fileID: 3201879595134373141}
   - component: {fileID: 2678342945141858481}
-  - component: {fileID: 7003081118614750332}
-  - component: {fileID: 4475142719274480292}
   - component: {fileID: 3972308904677209531}
   m_Layer: 0
   m_Name: Effect_CrashSE
@@ -183,99 +378,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.4933437}
   m_EdgeRadius: 0
---- !u!114 &7003081118614750332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7615431906169996719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 100116f4f542b3849b310ebde91d4553, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_hitMask:
-    serializedVersion: 2
-    m_Bits: 256
-  m_OnHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7003081118614750332}
-        m_MethodName: PlaySound
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: c56b96284fbd1b44bae82374d6e83d74,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7003081118614750332}
-        m_MethodName: PlayEffect
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7615431906169996719, guid: c13ba49be51b0f141adc28ad1751503c,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_OnLaunch:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7003081118614750332}
-        m_MethodName: PlaySound
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 5406464d0a3fe964c9f48b6b34eb34d5,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7003081118614750332}
-        m_MethodName: PlayEffect
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7615431906169996719, guid: c13ba49be51b0f141adc28ad1751503c,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_lifespan: Infinity
-  m_targetRenderer: {fileID: 0}
---- !u!114 &4475142719274480292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7615431906169996719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58e4b6d67ffe0448ab1ecaad105b066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_layerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  m_damageType: 3
-  damage: 1
-  sender: {fileID: 7615431906169996719}
 --- !u!114 &3972308904677209531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +418,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.056, y: -0.113, z: 0}
   m_LocalScale: {x: 1, y: 1.0126582, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3956465836977634532}
   m_Father: {fileID: 7615431906169996716}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
