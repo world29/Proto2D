@@ -9,17 +9,22 @@ namespace Proto2D
     {
         private List<Damager> m_damagersCache = new List<Damager>();
 
+        private Animator m_animator;
         private Vector3 m_targetPosition;
         private Vector3 m_velocity;
         private float m_smoothTime = .3f;
 
         public void OnEnter(EnemyBehaviour context)
         {
+            m_animator = context.gameObject.GetComponent<Animator>();
+
             // AI キャンセル
             if (context.behaviourTree)
             {
                 context.behaviourTree.Abort();
             }
+
+            m_animator.SetBool("teleportation", true);
 
             disableCollisions(context);
 
@@ -50,7 +55,7 @@ namespace Proto2D
         public void OnExit(EnemyBehaviour context)
         {
             context.suspended = false;
-
+            m_animator.SetBool("teleportation", false);
             enableCollisions(context);
         }
 

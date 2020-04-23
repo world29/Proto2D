@@ -16,8 +16,14 @@ namespace Proto2D
         public bool superArmor = false;
         [Tooltip("一時停止。位置の更新を停止する")]
         public bool suspended = false;
+
+        [Tooltip("ダメージを受けたときのブリンク時間")]
         public float blinkInterval = .1f;
         public float damageDuration = .2f;
+
+        [Tooltip("死亡時のブリンク時間")]
+        public float deathBlinkInterval = .1f;
+        public float deathDuration = .5f;
 
         [SerializeField, Header("ダメージイベント")]
         UnityEvent m_OnDamage;

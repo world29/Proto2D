@@ -38,16 +38,20 @@ namespace Proto2D
 
 
             }
+            float blink = enemyBehaviour.damageDuration;
+            float interval = enemyBehaviour.blinkInterval;
             if (enemyBehaviour.health == 0)
             {
                 m_animator.SetBool("damage", false);
                 m_animator.SetBool("death", true);
+                blink = enemyBehaviour.deathDuration;
+                interval = enemyBehaviour.deathBlinkInterval;
             }
 
             enemyBehaviour.PlaySE(enemyBehaviour.damageSE);
             enemyBehaviour.PlayEffect(enemyBehaviour.damageEffectPrefab);
 
-            enemyBehaviour.Blink(enemyBehaviour.damageDuration, enemyBehaviour.blinkInterval);
+            enemyBehaviour.Blink(blink, interval);
 
             // スーパーアーマーに関わらずダメージ中は被ダメージを停止
             // 連続でダメージが入らないようにするため

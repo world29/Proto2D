@@ -35,13 +35,13 @@ namespace Proto2D
                     }
                 }
 
-                if (enemyBehaviour.health == 0)
-                {
-                    m_animator.SetBool("damage", false);
-                    m_animator.SetBool("death", true);
-                }
+                m_animator.SetBool("damage", true);
             }
-
+            if (enemyBehaviour.health == 0)
+            {
+                m_animator.SetBool("damage", false);
+                m_animator.SetBool("death", true);
+            }
             enemyBehaviour.PlaySE(enemyBehaviour.damageSE);
             enemyBehaviour.PlayEffect(enemyBehaviour.damageEffectPrefab);
 
