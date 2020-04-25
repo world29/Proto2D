@@ -59,10 +59,7 @@ namespace Proto2D
             // カウント 0 でゲームオーバー
             if (Mathf.CeilToInt(m_timer) == 0)
             {
-                if (GameController.Instance)
-                {
-                    GameController.Instance.GameOver();
-                }
+                m_player.ApplyDamage(Mathf.Infinity);
             }
             UpdateUI(Mathf.CeilToInt(m_timer));
 

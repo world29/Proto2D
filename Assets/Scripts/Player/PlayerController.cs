@@ -552,6 +552,17 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
     }
 
+    // 外部から直接ダメージを適用するための公開関数
+    public void ApplyDamage(float damageAmount)
+    {
+        DamageInfo dinfo;
+        dinfo.type = DamageType.Contact;
+        dinfo.damage = damageAmount;
+        dinfo.senderPos = Vector3.zero;
+
+        ConsumeDamage(dinfo);
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         var ropeHandle = collider.gameObject.GetComponent<Proto2D.RopeHandle>();
