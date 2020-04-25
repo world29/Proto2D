@@ -422,6 +422,7 @@ GameObject:
   - component: {fileID: 3763611367723190461}
   - component: {fileID: 3763611367723190458}
   - component: {fileID: 3763611367723190463}
+  - component: {fileID: 54503915448395612}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -461,9 +462,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.21889055
     y: 0
-    width: 1
+    width: 0.5622189
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -505,6 +506,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7fe5ac20fd2414c8dbb4414f4ec153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &54503915448395612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763611367723190459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 981631c2587a37049b711c14614440cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWidth: 750
+  targetHeight: 1334
+  type: 0
 --- !u!1 &3763611368254109350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,6 +1571,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2103656353887850427, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -82.79999
+      objectReference: {fileID: 0}
     - target: {fileID: 472159057501782706, guid: 8969ae16e4aedd94c83c774bcea4cc09,
         type: 3}
       propertyPath: m_Camera
@@ -1637,9 +1658,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8969ae16e4aedd94c83c774bcea4cc09, type: 3}
---- !u!224 &3654243045753732261 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 472159057501782705, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+--- !u!223 &3654243045753732262 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 472159057501782706, guid: 8969ae16e4aedd94c83c774bcea4cc09,
     type: 3}
   m_PrefabInstance: {fileID: 3763611367542046228}
   m_PrefabAsset: {fileID: 0}
@@ -1649,9 +1670,9 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3763611367542046228}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &3654243045753732262 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 472159057501782706, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+--- !u!224 &3654243045753732261 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 472159057501782705, guid: 8969ae16e4aedd94c83c774bcea4cc09,
     type: 3}
   m_PrefabInstance: {fileID: 3763611367542046228}
   m_PrefabAsset: {fileID: 0}
