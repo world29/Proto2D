@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UniRx;
+using UniRx.Triggers;
+using System;
 
 namespace Proto2D
 {
@@ -10,8 +14,8 @@ namespace Proto2D
         public Text m_counterText;
         public int m_timeLimit = 3;
 
-        private PlayerController m_player;
-        private float m_timer;
+        private PlayerController m_playerCache;
+        private IDisposable m_countDownHandle;
 
         private void Awake()
         {
@@ -20,55 +24,77 @@ namespace Proto2D
 
         private void Start()
         {
-            m_timer = m_timeLimit;
-        }
+            var countDownObservable = CreateCountDownObservable(m_timeLimit);
 
-        private void LateUpdate()
-        {
-            if (m_player == null)
-            {
-                GameObject go = GameObject.FindGameObjectWithTag("Player");
-                if (go)
+            // プレイヤーが画面外に出た/画面内に入った際に bool 値を発行する
+            var playerFrameOutObservable = this.UpdateAsObservable()
+                .Select(_ => IsPlayerFrameOut())
+                .DistinctUntilChanged();
+
+            playerFrameOutObservable
+                .Subscribe(isFrameOut =>
                 {
-                    m_player = go.GetComponent<PlayerController>();
-                }
-            }
+                    // カウントダウンのテキスト表示切替
+                    m_counterText.enabled = isFrameOut;
 
-            // プレイヤー画面外の判定
-            bool isPlayerOutOfViewport = false;
-
-            if (m_player)
-            {
-                Vector3 viewportPoint = Camera.main.WorldToViewportPoint(m_player.transform.position);
-                if (viewportPoint.y < -0.05f)
-                {
-                    isPlayerOutOfViewport = true;
-                }
-            }
-
-            // カウントダウン
-            if (isPlayerOutOfViewport)
-            {
-                m_timer -= Time.deltaTime;
-            }
-            else
-            {
-                m_timer = m_timeLimit;
-            }
-
-            // カウント 0 でゲームオーバー
-            if (Mathf.CeilToInt(m_timer) == 0)
-            {
-                m_player.ApplyDamage(Mathf.Infinity);
-            }
-            UpdateUI(Mathf.CeilToInt(m_timer));
-
-            m_counterText.enabled = isPlayerOutOfViewport;
+                    if (isFrameOut)
+                    {
+                        // カウントダウン開始
+                        m_countDownHandle = countDownObservable
+                            .Subscribe(time =>
+                            {
+                                UpdateUI(time);
+                                if (time == 0)
+                                {
+                                    // カウントゼロで強制ゲームオーバー
+                                    m_playerCache.ApplyDamage(Mathf.Infinity);
+                                }
+                            });
+                    }
+                    else
+                    {
+                        // カウントダウンをキャンセル
+                        m_countDownHandle.Dispose();
+                    }
+                });
         }
 
         private void UpdateUI(int counter)
         {
             m_counterText.text = string.Format("{0}", counter);
+            m_counterText.rectTransform.localScale = Vector3.one * 1.5f;
+
+            m_counterText.rectTransform
+                .DOScale(Vector3.one, .5f);
+        }
+
+        private bool IsPlayerFrameOut()
+        {
+            if (m_playerCache == null)
+            {
+                GameObject go = GameObject.FindGameObjectWithTag("Player");
+                if (go)
+                {
+                    m_playerCache = go.GetComponent<PlayerController>();
+                }
+            }
+            Debug.Assert(m_playerCache != null);
+
+            // プレイヤー画面外の判定
+            Vector3 viewportPoint = Camera.main.WorldToViewportPoint(m_playerCache.transform.position);
+            if (viewportPoint.y < -0.05f)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private IObservable<int> CreateCountDownObservable(int countTime)
+        {
+            return Observable
+                .Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1))
+                .Select(x => (int)(countTime - x))
+                .TakeWhile(x => x >= 0);
         }
     }
 }
