@@ -375,10 +375,14 @@ namespace Proto2D
                 return;
             }
 
-            DOVirtual.DelayedCall(.1f, () =>
+            int count = Mathf.FloorToInt(progressValue);
+            if (count > 0)
             {
-                OrbManager.Instance.DropOrb(transform.position);
-            }).SetLoops(Mathf.FloorToInt(progressValue));
+                DOVirtual.DelayedCall(.1f, () =>
+                {
+                    OrbManager.Instance.DropOrb(transform.position);
+                }).SetLoops(Mathf.FloorToInt(progressValue));
+            }
         }
 
         IEnumerator StartBlinking(float duration, float blinkInterval)
