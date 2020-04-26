@@ -19,37 +19,16 @@ public class PlayerState_Hop : IPlayerState
         input = context.GetComponent<PlayerInput>();
         trail = player.hopTrail;
 
-        // Trail 有効化
-        trail.emitting = true;
-
         player.PlaySE(player.hopSE);
 
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
-
-        // ジャンプアタックの攻撃判定を有効化
-        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
-            .Where(item => item.m_damageType == DamageType.Attack);
-        if (attackers.Count() > 0)
-        {
-            attackers.First().enabled = true;
-        }
 
         animator.SetBool("hop", true);
     }
 
     public void OnExit(GameObject context)
     {
-        trail.emitting = false;
-
-        // 攻撃判定を無効化
-        var attackers = context.GetComponentsInChildren<Proto2D.Damager>()
-            .Where(item => item.m_damageType == DamageType.Attack);
-        if (attackers.Count() > 0)
-        {
-            attackers.First().enabled = false;
-        }
-
         animator.SetBool("hop", false);
     }
 

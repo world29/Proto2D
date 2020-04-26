@@ -173,25 +173,31 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         // 初期状態として、ジャンプアタックの攻撃判定を無効化
         SetAttackEnabled(false);
 
-        // Attack ステートのときだけダメージを有効化する
+        // Attack/Hop ステートのときだけダメージを有効化する
         var stateMachine = animator.GetBehaviour<ObservableStateMachineTrigger>();
         stateMachine.OnStateEnterAsObservable()
-            .Where(b => b.StateInfo.IsName("player_attack"))
-            .Subscribe(_ =>
+            .Where(b => b.StateInfo.IsName("player_attack") || b.StateInfo.IsName("player_hop"))
+            .Subscribe(b =>
             {
                 SetAttackEnabled(true);
                 SetStompEnabled(false);
 
                 // Trail 有効化
-                jumpAttackTrail.emitting = true;
+                if (b.StateInfo.IsName("player_attack"))
+                {
+                    jumpAttackTrail.emitting = true;
+                }
             });
 
         stateMachine.OnStateExitAsObservable()
-            .Where(b => b.StateInfo.IsName("player_attack"))
-            .Subscribe(_ =>
+            .Where(b => b.StateInfo.IsName("player_attack") || b.StateInfo.IsName("player_hop"))
+            .Subscribe(b =>
             {
                 // Trail 無効化
-                jumpAttackTrail.emitting = false;
+                if (b.StateInfo.IsName("player_attack"))
+                {
+                    jumpAttackTrail.emitting = false;
+                }
 
                 SetAttackEnabled(false);
                 SetStompEnabled(true);
