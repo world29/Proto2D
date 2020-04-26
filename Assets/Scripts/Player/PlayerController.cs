@@ -181,24 +181,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             {
                 SetAttackEnabled(true);
                 SetStompEnabled(false);
-
-                // Trail 有効化
-                if (b.StateInfo.IsName("player_attack"))
-                {
-                    jumpAttackTrail.emitting = true;
-                }
             });
 
         stateMachine.OnStateExitAsObservable()
             .Where(b => b.StateInfo.IsName("player_attack") || b.StateInfo.IsName("player_hop"))
             .Subscribe(b =>
             {
-                // Trail 無効化
-                if (b.StateInfo.IsName("player_attack"))
-                {
-                    jumpAttackTrail.emitting = false;
-                }
-
                 SetAttackEnabled(false);
                 SetStompEnabled(true);
             });
