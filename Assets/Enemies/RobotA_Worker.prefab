@@ -1086,6 +1086,7 @@ GameObject:
   - component: {fileID: 1408866405167355065}
   - component: {fileID: 6245465354517601074}
   - component: {fileID: 8667336193306619030}
+  - component: {fileID: 7431723487297657311}
   m_Layer: 11
   m_Name: RobotA_Worker
   m_TagString: Enemy
@@ -1266,9 +1267,27 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.5
-  m_OnDeath:
+  deathBlinkInterval: 0.1
+  deathDuration: 0.5
+  m_OnDamage:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7431723487297657311}
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   progressValue: 1
@@ -1382,6 +1401,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7431723487297657311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245465354517601081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561fc6a9185bc97449ae0b98b44efa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_entries:
+  - weight: 8
+    prefab: {fileID: 9069253668102663793, guid: af2276726a594254f925506430cb7015,
+      type: 3}
+    countRange: {x: 1, y: 4}
+  kSpawnSpeed: 15
+  kSpawnAngleRange: 90
 --- !u!1 &7030463966533582111
 GameObject:
   m_ObjectHideFlags: 0
@@ -2239,11 +2277,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6245465354517601086}
     m_Modifications:
-    - target: {fileID: 7807973821713625401, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyDamageable
-      objectReference: {fileID: 0}
     - target: {fileID: 7807973821713625400, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2299,11 +2332,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 650250791677806978, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.17
-      objectReference: {fileID: 0}
     - target: {fileID: 7807973822736983652, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2313,6 +2341,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.6375
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807973821713625401, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyDamageable
       objectReference: {fileID: 0}
     - target: {fileID: 9067247069929687316, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
@@ -2324,9 +2357,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.207
       objectReference: {fileID: 0}
-    - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+    - target: {fileID: 650250791677806978, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
-      propertyPath: m_receiver
+      propertyPath: m_LocalPosition.y
+      value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015360866164097262, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: sender
       value: 
       objectReference: {fileID: 6245465354517601081}
     - target: {fileID: 7208681048506878839, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
@@ -2334,9 +2372,9 @@ PrefabInstance:
       propertyPath: m_receiver
       value: 
       objectReference: {fileID: 6245465354517601081}
-    - target: {fileID: 6015360866164097262, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+    - target: {fileID: 347620303824462117, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
-      propertyPath: sender
+      propertyPath: m_receiver
       value: 
       objectReference: {fileID: 6245465354517601081}
     m_RemovedComponents: []

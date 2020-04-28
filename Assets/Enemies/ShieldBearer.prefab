@@ -1342,6 +1342,7 @@ GameObject:
   - component: {fileID: 1846819741723289012}
   - component: {fileID: 7453558116312180146}
   - component: {fileID: 4691014186338469620}
+  - component: {fileID: 4455002730645898725}
   m_Layer: 11
   m_Name: ShieldBearer
   m_TagString: Enemy
@@ -1519,9 +1520,27 @@ MonoBehaviour:
   suspended: 0
   blinkInterval: 0.1
   damageDuration: 0.2
-  m_OnDeath:
+  deathBlinkInterval: 0.1
+  deathDuration: 0.5
+  m_OnDamage:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4455002730645898725}
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   progressValue: 3
@@ -1652,6 +1671,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_emitters:
   - {fileID: 0}
+--- !u!114 &4455002730645898725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561fc6a9185bc97449ae0b98b44efa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_entries:
+  - weight: 8
+    prefab: {fileID: 9069253668102663793, guid: af2276726a594254f925506430cb7015,
+      type: 3}
+    countRange: {x: 2, y: 3}
+  kSpawnSpeed: 15
+  kSpawnAngleRange: 90
 --- !u!1 &9127820621521314137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,6 +1889,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7807973822736983652, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.224
+      objectReference: {fileID: 0}
     - target: {fileID: 7807973821713625401, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_Name
@@ -1860,11 +1903,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7807973822736983652, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.224
       objectReference: {fileID: 0}
     - target: {fileID: 9067247069929687316, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
@@ -1881,6 +1919,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.6375
       objectReference: {fileID: 0}
+    - target: {fileID: 6015360866164097262, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
+        type: 3}
+      propertyPath: sender
+      value: 
+      objectReference: {fileID: 8778643387317822647}
     - target: {fileID: 7046536723148281138, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
         type: 3}
       propertyPath: m_Offset.y
@@ -1951,11 +1994,6 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 1.2120992
       objectReference: {fileID: 0}
-    - target: {fileID: 6015360866164097262, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af,
-        type: 3}
-      propertyPath: sender
-      value: 
-      objectReference: {fileID: 8778643387317822647}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8dfe5bf1ddb782419a63dfa5ea1e5af, type: 3}
 --- !u!4 &5937366625719275401 stripped
