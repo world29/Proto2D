@@ -52,7 +52,7 @@ namespace Proto2D
                 prevStage.m_phase.OnChanged -= OnPhaseChanged;
             }
 
-            m_progressSlider.maxValue = nextStage.m_progressPerPhase;
+            m_progressSlider.maxValue = nextStage.ProgressPerPhase;
 
             nextStage.m_progress.OnChanged += OnProgressChanged;
             nextStage.m_phase.OnChanged += OnPhaseChanged;
@@ -66,7 +66,7 @@ namespace Proto2D
 
         void OnProgressChanged(float value)
         {
-            m_progressSlider.value = value % m_stage.m_progressPerPhase;
+            m_progressSlider.value = value % m_stage.ProgressPerPhase;
 
             Sequence seq = DOTween.Sequence();
             seq.Append(m_progressSliderFill.DOColor(Color.white, .1f))
