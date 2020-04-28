@@ -25,6 +25,7 @@ namespace Proto2D
 
         public float m_progressPerPhase = 100;
         public float m_progressPerPhaseCompleted = 50;
+        public StagePhase m_startPhase = StagePhase.Phase1;
         public StagePhase m_phaseLimit = StagePhase.Phase3;
 
         // ステージ名
@@ -77,6 +78,8 @@ namespace Proto2D
         {
             // 進捗状況をロード
             m_isCompleted = GameState.Instance.GetStageCompleted(m_name);
+
+            m_phase.Value = m_startPhase;
         }
 
         // 現在のフェイズからのパラメータを設定
