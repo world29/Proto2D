@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace Proto2D
 {
@@ -18,10 +19,13 @@ namespace Proto2D
         [SerializeField]
         GameObject m_gameOverCanvasPrefab;
         [SerializeField]
+        GameObject m_debugMenuCanvasPrefab;
+        [SerializeField]
         float m_fadeWaitTime = 1;
 
         GameObject m_fadeCanvasClone;
         GameObject m_gameOverCanvasClone;
+        GameObject m_debugMenuCanvasClone;
         UIFadeCanvas m_fadeCanvas;
         Button[] m_buttons;
 
@@ -89,7 +93,6 @@ namespace Proto2D
 
             m_fadeCanvas.fadeOut = true;
         }
-
         public void GameOver()
         {
             m_gameOverCanvasClone = Instantiate(m_gameOverCanvasPrefab);
@@ -98,6 +101,16 @@ namespace Proto2D
 
             m_buttons[0].onClick.AddListener(Retry);
             m_buttons[1].onClick.AddListener(Return);
+        }
+
+        public void OpenDebugMenu()
+        {
+            m_debugMenuCanvasClone = Instantiate(m_debugMenuCanvasPrefab);
+
+            var backButton = m_debugMenuCanvasClone.GetComponentsInChildren<Button>()
+                .First(btn => btn.gameObject.name == "BackButton");
+
+            backButton.onClick.AddListener(() => Destroy(m_debugMenuCanvasClone));
         }
 
         // 現在のシーンをリトライ

@@ -1305,6 +1305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4979245887869708050}
   - component: {fileID: 6479413859640139923}
+  - component: {fileID: 6905206343056975970}
   - component: {fileID: 1736739090892402652}
   - component: {fileID: 2177947178036081781}
   m_Layer: 0
@@ -1345,7 +1346,21 @@ MonoBehaviour:
     type: 3}
   m_gameOverCanvasPrefab: {fileID: 7462359891995478566, guid: 64b466976c6eac948a86b7ab99b7ecce,
     type: 3}
+  m_debugMenuCanvasPrefab: {fileID: 2592123976351717550, guid: 51cc170d3a7674c46b3302abd8cd2f65,
+    type: 3}
   m_fadeWaitTime: 1
+--- !u!114 &6905206343056975970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8970924596860645068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41de0b2910164384c94ebbafa89282a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &1736739090892402652
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1658,15 +1673,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8969ae16e4aedd94c83c774bcea4cc09, type: 3}
---- !u!224 &5551510083955559459 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8733013607200895543, guid: 8969ae16e4aedd94c83c774bcea4cc09,
-    type: 3}
-  m_PrefabInstance: {fileID: 3763611367542046228}
-  m_PrefabAsset: {fileID: 0}
 --- !u!223 &3654243045753732262 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 472159057501782706, guid: 8969ae16e4aedd94c83c774bcea4cc09,
+    type: 3}
+  m_PrefabInstance: {fileID: 3763611367542046228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &5551510083955559459 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8733013607200895543, guid: 8969ae16e4aedd94c83c774bcea4cc09,
     type: 3}
   m_PrefabInstance: {fileID: 3763611367542046228}
   m_PrefabAsset: {fileID: 0}

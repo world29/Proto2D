@@ -152,8 +152,11 @@ namespace Proto2D
                 prevStage.m_phase.OnChanged -= OnPhaseChanged;
             }
 
+            // ステージ初期化
             if (Stage)
             {
+                Stage.Initialize();
+
                 Stage.OnCompleted += OnStageCompleted;
                 Stage.m_phase.OnChanged += OnPhaseChanged;
             }

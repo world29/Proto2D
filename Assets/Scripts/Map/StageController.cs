@@ -9,7 +9,9 @@ namespace Proto2D
 {
     public class StageController : MonoBehaviour
     {
-        // serialized field
+        [SerializeField, Tooltip("ステージ名")]
+        string m_name;
+
         public List<RoomController> m_startRooms;
         public List<RoomController> m_bridgeRooms;
         public List<RoomController> m_bossRooms;
@@ -22,9 +24,20 @@ namespace Proto2D
         public StagePhaseParameters stageBossPhaseParams;
 
         public float m_progressPerPhase = 100;
+        public float m_progressPerPhaseCompleted = 50;
         public StagePhase m_phaseLimit = StagePhase.Phase3;
 
-        // public field
+        // ステージ名
+        public string Name { get { return m_name; } }
+        // クリア済みか
+        private bool m_isCompleted = false;
+        public bool IsCompleted { get { return m_isCompleted; } }
+        // フェーズごとの目標進捗度 (クリア済みか否かで変わる)
+        public float ProgressPerPhase { get { return IsCompleted ? m_progressPerPhaseCompleted : m_progressPerPhase; } }
+        // 最終フェーズ (クリア済みか否かで変わる)
+        public StagePhase PhaseLimit { get { return IsCompleted ? StagePhase.Phase2 : m_phaseLimit; } }
+
+
         [HideInInspector]
         public float Progress { get { return m_progress.Value; } set { m_progress.Value = value; } }
         [HideInInspector]
@@ -58,6 +71,12 @@ namespace Proto2D
 
         private void Start()
         {
+        }
+
+        public void Initialize()
+        {
+            // 進捗状況をロード
+            m_isCompleted = GameState.Instance.GetStageCompleted(m_name);
         }
 
         // 現在のフェイズからのパラメータを設定
@@ -137,15 +156,14 @@ namespace Proto2D
             Progress += value;
 
             // 進捗度に応じてフェーズを変更
-            int prevPhase = Mathf.FloorToInt(prevProgress / m_progressPerPhase);
-            int nextPhase = Mathf.FloorToInt(Progress / m_progressPerPhase);
+            int prevPhase = Mathf.FloorToInt(prevProgress / ProgressPerPhase);
+            int nextPhase = Mathf.FloorToInt(Progress / ProgressPerPhase);
 
             if (prevPhase < nextPhase)
             {
-                if (nextPhase > (int)m_phaseLimit)
+                if (nextPhase > (int)PhaseLimit)
                 {
-                    // ステージコンプリート
-                    OnCompleted();
+                    CompleteThisStage();
                 }
                 else
                 {
@@ -154,10 +172,19 @@ namespace Proto2D
             }
         }
 
+        private void CompleteThisStage()
+        {
+            m_isCompleted = true;
+
+            OnCompleted();
+
+            GameState.Instance.SetStageCompleted(Name, true);
+        }
+
         // 強制ステージコンプリート (ボス倒したときに呼ばれる想定)
         public void Complete()
         {
-            OnCompleted();
+            CompleteThisStage();
         }
 
 
