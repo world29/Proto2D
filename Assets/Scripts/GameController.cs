@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using UniRx;
 
 namespace Proto2D
 {
@@ -58,6 +59,9 @@ namespace Proto2D
             }
         }
 
+        private ReactiveProperty<int> RxStageIndex = new ReactiveProperty<int>(-1);
+        public ReactiveProperty<StageController> RxStage = new ReactiveProperty<StageController>(null);
+
         private bool isGameOver;
         private bool isGameClear;
         private GameObject m_player;
@@ -70,6 +74,10 @@ namespace Proto2D
 
         void Start()
         {
+            RxStageIndex
+                .SkipLatestValueOnSubscribe()
+                .Subscribe(idx => RxStage.Value = m_stages[idx]);
+
             m_worldBoundary = m_worldBoundaryParam;
             isGameOver = false;
             isGameClear = false;
@@ -145,6 +153,7 @@ namespace Proto2D
 
             StageController prevStage = Stage;
             m_stageIndex = stageIndex;
+            RxStageIndex.Value = stageIndex;
 
             if (prevStage)
             {
