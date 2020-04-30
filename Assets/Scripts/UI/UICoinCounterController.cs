@@ -34,6 +34,7 @@ namespace Proto2D
                 {
                     var pc = go.GetComponent<PlayerController>();
                     pc.coinCount
+                        .DistinctUntilChanged()
                         .Subscribe(count => UpdateUI(count));
 
                     registered = true;
@@ -49,12 +50,12 @@ namespace Proto2D
 
         IEnumerator IncrementedEffect(float duration)
         {
-            float startTime = Time.timeSinceLevelLoad;
+            float startTime = Time.time;
             float endTime = startTime + duration;
 
-            while (Time.timeSinceLevelLoad < endTime)
+            while (Time.time < endTime)
             {
-                float percentage = (Time.timeSinceLevelLoad - startTime) / duration;
+                float percentage = (Time.time - startTime) / duration;
                 float value = m_scaleCurve.Evaluate(percentage);
 
                 m_counterText.rectTransform.localScale = new Vector3(value, value, 1);
