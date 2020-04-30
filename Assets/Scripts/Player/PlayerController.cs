@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
     public float jumpSpeed = 15;
-    public float hopSpeed = 20;
 
     [Header("地上の加速度")]
     public float acceralationGround = 1;
@@ -452,7 +451,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     }
 
-    public void OnPickupItem(ItemType type, GameObject sender)
+    public void OnPickupItem(ItemType type, GameObject sender, ItemData itemData)
     {
         Debug.Log(state);
         // 死んだら拾えなくなる(死んでもKnockbackステートが終わるまではDeathステートにならないので、HPで判定)
@@ -463,7 +462,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         switch (type)
         {
             case ItemType.Hopper:
-                ChangeState(new PlayerState_Hop());
+                ChangeState(new PlayerState_Hop(itemData.hopSpeed));
                 break;
             case ItemType.Coin:
                 coinCount.Value++;

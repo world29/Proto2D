@@ -18,6 +18,9 @@ namespace Proto2D
         [SerializeField, Header("アイテムタイプ")]
         ItemType m_itemType;
 
+        [SerializeField]
+        float m_hopSpeed = 20;
+
         [SerializeField, Header("ピックアップイベント")]
         UnityEvent m_OnPickup;
 
@@ -53,9 +56,11 @@ namespace Proto2D
                 // ピックアップイベントの呼び出し
                 m_OnPickup.Invoke();
 
+                var itemData = new ItemData(m_hopSpeed);
+
                 // 取得先オブジェクトにイベントを送信
                 ExecuteEvents.Execute<IItemReceiver>(collider.gameObject, null,
-                    (target, eventTarget) => target.OnPickupItem(m_itemType, gameObject));
+                    (target, eventTarget) => target.OnPickupItem(m_itemType, gameObject, itemData));
 
                 // 一定時間後にリスポーンする
                 if (m_reactivateInterval > 0)

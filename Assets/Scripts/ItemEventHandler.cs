@@ -11,7 +11,17 @@ public enum ItemType
     ProgressOrb,
 }
 
+public struct ItemData
+{
+    public float hopSpeed;
+
+    public ItemData(float _hopSpeed)
+    {
+        hopSpeed = _hopSpeed;
+    }
+}
+
 public interface IItemReceiver : IEventSystemHandler
 {
-    void OnPickupItem(ItemType type, GameObject sender);
+    void OnPickupItem(ItemType type, GameObject sender, ItemData itemData);
 }

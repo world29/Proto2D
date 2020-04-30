@@ -19,7 +19,6 @@ namespace Proto2D
         [Header("取得時のアニメ(AnimationをLegacyにする必要あり)")]
         public Animation pickupAnim;
 
-        //HACK:
         public float hopSpeed = 20;
 
         protected AudioSource audioSource;
@@ -36,12 +35,10 @@ namespace Proto2D
             {
                 GameObject receiver = collision.gameObject;
 
-                //HACK: ホッパーの場合に無理やり hopSpeed を設定する
-                var pc = collision.gameObject.GetComponent<PlayerController>();
-                pc.hopSpeed = hopSpeed;
+                var itemData = new ItemData(hopSpeed);
 
                 ExecuteEvents.Execute<IItemReceiver>(receiver, null,
-                    (target, eventTarget) => target.OnPickupItem(itemType, gameObject));
+                    (target, eventTarget) => target.OnPickupItem(itemType, gameObject, itemData));
 
                 OnPickedUp(receiver);
             }

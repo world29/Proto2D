@@ -10,6 +10,12 @@ public class PlayerState_Hop : IPlayerState
     private Animator animator;
     private PlayerInput input;
     private TrailRenderer trail;
+    private float hopSpeed;
+
+    public PlayerState_Hop(float _hopSpeed)
+    {
+        hopSpeed = _hopSpeed;
+    }
 
     public void OnEnter(GameObject context)
     {
@@ -76,7 +82,7 @@ public class PlayerState_Hop : IPlayerState
 
     private void CalculateInitialVelocity(ref Vector2 velocity)
     {
-        velocity.y = player.hopSpeed;
+        velocity.y = hopSpeed;
     }
 
     private void CalculateVelocity(ref Vector2 velocity)
