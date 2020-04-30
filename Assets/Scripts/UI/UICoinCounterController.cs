@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
 namespace Proto2D
 {
@@ -31,23 +32,19 @@ namespace Proto2D
                 GameObject go = GameObject.FindGameObjectWithTag("Player");
                 if (go)
                 {
-                    PlayerController pc = go.GetComponent<PlayerController>();
-                    pc.coins.OnChanged += OnChangeCoinCount;
+                    var pc = go.GetComponent<PlayerController>();
+                    pc.coinCount
+                        .Subscribe(count => UpdateUI(count));
 
                     registered = true;
                 }
             }
         }
 
-        public void OnChangeCoinCount(int count)
-        {
-            UpdateUI(count);
-            StartCoroutine(IncrementedEffect(m_scaleDuration));
-        }
-
         private void UpdateUI(int coinCount)
         {
             m_counterText.text = string.Format("x {0}", coinCount);
+            StartCoroutine(IncrementedEffect(m_scaleDuration));
         }
 
         IEnumerator IncrementedEffect(float duration)

@@ -13,8 +13,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public float initialHealth = 5;
     [HideInInspector]
     public NotificationObject<float> health;
-    [HideInInspector]
-    public NotificationObject<int> coins;
+    public ReactiveProperty<int> coinCount;
 
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
@@ -153,7 +152,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private void Awake()
     {
         health = new NotificationObject<float>(initialHealth);
-        coins = new NotificationObject<int>(0);
+        coinCount = new ReactiveProperty<int>(Proto2D.GameState.Instance.GetCoinCount());
 
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
@@ -386,6 +385,11 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             Time.timeScale = 1f;
         }
 
+        //MEMO: 現状、GameOver はここでしか呼ばれないため、ゲームオーバー時の処理を個々に記述している
+        // コイン数を半減する
+        coinCount.Value /= 2;
+        Proto2D.GameState.Instance.SetCoinCount(coinCount.Value);
+
         // ノックバックした後、Death ステートに遷移する
         Proto2D.GameController.Instance.GameOver();
     }
@@ -462,7 +466,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                 ChangeState(new PlayerState_Hop());
                 break;
             case ItemType.Coin:
-                coins.Value++;
+                coinCount.Value++;
                 break;
             case ItemType.HealthPack:
                 if (health.Value < initialHealth)
@@ -555,6 +559,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         dinfo.senderPos = Vector3.zero;
 
         ConsumeDamage(dinfo);
+    }
+
+    // ステージクリア時の処理
+    public void OnStageCompleted()
+    {
+        Proto2D.GameState.Instance.SetCoinCount(coinCount.Value);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
