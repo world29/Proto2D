@@ -25,18 +25,25 @@ namespace Proto2D
         [SerializeField]
         Button m_coinCountResetButton;
 
+        [SerializeField]
+        Button m_resetAllButton;
+
         private void Start()
         {
             // ステージクリアフラグ
             foreach(var ui in m_stageUi)
             {
-                // トグルへの入力を GameState に反映
+                string stageName = ui.nameText.text;
+
+                // トグル入力によって GameState を更新
                 ui.completedToggle
                     .onValueChanged.AsObservable() // 初期値をストリームに流したい場合は OnValueChangedAsObservable を使う
-                    .Subscribe(isOn => GameState.Instance.SetStageCompleted(ui.nameText.text, isOn));
+                    .Subscribe(isOn => GameState.Instance.SetStageCompleted(stageName, isOn));
 
-                // GameState から初期値を読み込み
-                ui.completedToggle.isOn = GameState.Instance.GetStageCompleted(ui.nameText.text);
+                // GameState を反映
+                GameState.Instance
+                    .ObserveEveryValueChanged(x => x.GetStageCompleted(stageName))
+                    .Subscribe(b => ui.completedToggle.isOn = b);
             }
 
             // コイン数
@@ -47,6 +54,11 @@ namespace Proto2D
             m_coinCountResetButton
                 .OnClickAsObservable()
                 .Subscribe(_ => GameState.Instance.SetCoinCount(0));
+
+            // リセット機能
+            m_resetAllButton
+                .OnClickAsObservable()
+                .Subscribe(_ => GameState.Instance.ResetAll());
         }
     }
 }

@@ -37,6 +37,14 @@ namespace Proto2D
             return GetInt(KEY_COIN_COUNT);
         }
 
+        public void ResetAll()
+        {
+            m_intDict.Clear();
+            m_boolDict.Clear();
+
+            PlayerPrefs.DeleteAll();
+        }
+
         void SetInt(string key, int value)
         {
             m_intDict[key] = value;
