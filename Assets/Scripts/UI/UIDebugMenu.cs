@@ -19,9 +19,15 @@ namespace Proto2D
         [SerializeField]
         StageUI[] m_stageUi;
 
+        [SerializeField]
+        Text m_coinCountText;
+
+        [SerializeField]
+        Button m_coinCountResetButton;
+
         private void Start()
         {
-            // 初期化
+            // ステージクリアフラグ
             foreach(var ui in m_stageUi)
             {
                 // トグルへの入力を GameState に反映
@@ -32,6 +38,15 @@ namespace Proto2D
                 // GameState から初期値を読み込み
                 ui.completedToggle.isOn = GameState.Instance.GetStageCompleted(ui.nameText.text);
             }
+
+            // コイン数
+            GameState.Instance
+                .ObserveEveryValueChanged(x => x.GetCoinCount())
+                .SubscribeToText(m_coinCountText);
+
+            m_coinCountResetButton
+                .OnClickAsObservable()
+                .Subscribe(_ => GameState.Instance.SetCoinCount(0));
         }
     }
 }

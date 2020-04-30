@@ -280,6 +280,9 @@ namespace Proto2D
             if (m_stageIndex < m_stages.Count - 1)
             {
                 LoadStage(m_stageIndex + 1);
+
+                // コイン数を保存
+                m_player.GetComponent<PlayerController>().OnStageCompleted();
             }
             else
             {
