@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -26,6 +27,13 @@ public class PlayerInput : MonoBehaviour
 
     private void Awake()
     {
+        if (moveJoystick == null || actionJoystick == null)
+        {
+            var joystickObjects = FindObjectsOfType<CustomFloatingJoystick>();
+            moveJoystick = joystickObjects.First(comp => comp.gameObject.name == "MoveJoystick");
+            actionJoystick = joystickObjects.First(comp => comp.gameObject.name == "ActionJoystick");
+        }
+
         // マウスとタッチを区別するための設定
         Input.simulateMouseWithTouches = false;
 

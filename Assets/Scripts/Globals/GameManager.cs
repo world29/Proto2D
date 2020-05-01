@@ -10,7 +10,7 @@ namespace Proto2D
     public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         [System.NonSerialized]
-        public int m_currentStageNum = 0;
+        int m_currentStageNum = 0;
 
         [SerializeField]
         string[] m_stageName;
@@ -31,8 +31,6 @@ namespace Proto2D
 
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
-
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 

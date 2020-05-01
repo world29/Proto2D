@@ -97,21 +97,6 @@ namespace Proto2D
 
         void Update()
         {
-            // デバッグビルド時、R キーを押すとシーンをリロードする
-            if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.R))
-            {
-                LoadScene(SceneManager.GetActiveScene().name);
-            }
-
-            if (!isGameOver && !isGameClear)
-            {
-                return;
-            }
-
-            if (Input.touchCount > 0)
-            {
-                LoadScene(SceneManager.GetActiveScene().name);
-            }
         }
 
         private void LateUpdate()
@@ -318,51 +303,6 @@ namespace Proto2D
                     }
                     break;
             }
-        }
-
-        void LoadScene(string sceneName)
-        {
-            if (!m_isSceneLoading)
-            {
-                m_isSceneLoading = true;
-
-                StartCoroutine(LoadSceneAsync(sceneName));
-            }
-        }
-
-        IEnumerator LoadSceneAsync(string sceneName)
-        {
-            Pause();
-
-            yield return FadeController.Instance.FadeOut();
-
-            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-            Debug.Assert(operation != null);
-
-            operation.allowSceneActivation = false;
-            while (true)
-            {
-                Debug.Log(operation.progress + "%");
-
-                // allowSceneActivation = false の場合、progress は 0.9f までしか更新されない
-                //https://docs.unity3d.com/jp/540/ScriptReference/AsyncOperation-allowSceneActivation.html
-                if (operation.progress >= .9f)
-                {
-                    break;
-                }
-
-                yield return new WaitForEndOfFrame();
-            }
-
-            operation.completed += (asyncOperation) =>
-            {
-                Resume();
-            };
-            operation.allowSceneActivation = true;
-
-            yield return FadeController.Instance.FadeIn();
-
-            m_isSceneLoading = false;
         }
 
         private void OnDrawGizmos()
