@@ -17,6 +17,8 @@ namespace Proto2D
             var prefab = (GameObject)Resources.Load("SeparatedMoveActionJoystick");
             var clone = GameObject.Instantiate(prefab);
 
+            GameObject.DontDestroyOnLoad(clone);
+
             var joysticks = clone.GetComponentsInChildren<CustomFloatingJoystick>();
             m_moveJoystick = joysticks.First(j => j.gameObject.name == "MoveJoystick");
             m_actionJoystick = joysticks.First(j => j.gameObject.name == "ActionJoystick");

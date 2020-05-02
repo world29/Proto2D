@@ -12,7 +12,13 @@ namespace Proto2D
         {
             Debug.Log("RuntimeInitializeOnLoadMethod");
 
-            GameObject.Instantiate(Resources.Load<GameObject>("ManagerObjects"));
+            var prefabs = Resources.LoadAll<GameObject>("RuntimeInitializeObjects");
+
+            foreach (var prefab in prefabs)
+            {
+                var obj = GameObject.Instantiate((GameObject)prefab);
+                DontDestroyOnLoad(obj);
+            }
         }
     }
 }

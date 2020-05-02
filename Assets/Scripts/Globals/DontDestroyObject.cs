@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Proto2D
 {
-    public class DontDestroyOnLoad : MonoBehaviour
+    public class DontDestroyObject : MonoBehaviour
     {
         private void Awake()
         {

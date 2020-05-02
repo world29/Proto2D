@@ -16,7 +16,8 @@ namespace Proto2D
 
         public void Register<T>(T instance)
         {
-            m_container.Add(typeof(T), instance);
+            //m_container.Add(typeof(T), instance);
+            m_container[typeof(T)] = instance;
         }
     }
 }
