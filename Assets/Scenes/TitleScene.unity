@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 350278292}
   - component: {fileID: 350278291}
   - component: {fileID: 350278290}
+  - component: {fileID: 350278293}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -337,7 +338,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 350278293}
         m_MethodName: OpenDebugMenu
         m_Mode: 1
         m_Arguments:
@@ -383,6 +384,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350278288}
   m_CullTransparentMesh: 0
+--- !u!114 &350278293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350278288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc3adb990c0b3c844b9b322e594557db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &425183889
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,7 +586,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1117248691
 RectTransform:

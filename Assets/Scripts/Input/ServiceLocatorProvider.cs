@@ -12,9 +12,9 @@ namespace Proto2D
 
         public enum InputMode
         {
-            Auto, // 自動検出
-            KeyboardAndMouse,
             Touch,
+            KeyboardAndMouse,
+            Auto, // 自動検出
         }
 
         public enum InputTouchMode
@@ -89,16 +89,9 @@ namespace Proto2D
             {
                 Debug.Log("UnityRemote detected.");
 
-                if (m_inputTouchMode == InputTouchMode.Separated)
-                {
-                    Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
-                }
-                else
-                {
-                    Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
-                }
+                m_inputMode = InputMode.Touch;
 
-                m_isDeviceDetected = true;
+                UpdateInputMode();
             }
         }
 

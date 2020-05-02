@@ -16,8 +16,11 @@ namespace Proto2D
 
         public void Register<T>(T instance)
         {
-            //m_container.Add(typeof(T), instance);
-            m_container[typeof(T)] = instance;
+            if (m_container.ContainsKey(typeof(T)))
+            {
+                m_container.Remove(typeof(T), c => (c as IDisposable)?.Dispose());
+            }
+            m_container.Add(typeof(T), instance);
         }
     }
 }

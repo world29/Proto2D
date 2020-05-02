@@ -28,6 +28,12 @@ namespace Proto2D
         [SerializeField]
         Button m_resetAllButton;
 
+        [SerializeField]
+        Dropdown m_inputDropdown;
+
+        [SerializeField]
+        Dropdown m_inputTouchDropdown;
+
         private void Start()
         {
             // ステージクリアフラグ
@@ -59,6 +65,25 @@ namespace Proto2D
             m_resetAllButton
                 .OnClickAsObservable()
                 .Subscribe(_ => GameState.Instance.ResetAll());
+
+            // 入力モード
+            m_inputDropdown
+                .onValueChanged.AsObservable()
+                .Subscribe(selectedIndex => ServiceLocatorProvider.Instance.inputMode = (ServiceLocatorProvider.InputMode)selectedIndex);
+
+            ServiceLocatorProvider.Instance
+                .ObserveEveryValueChanged(x => x.inputMode)
+                .Where(inputMode => inputMode != ServiceLocatorProvider.InputMode.Auto)
+                .Subscribe(inputMode => m_inputDropdown.value = (int)inputMode);
+
+            // タッチモード
+            m_inputTouchDropdown
+                .onValueChanged.AsObservable()
+                .Subscribe(selectedIndex => ServiceLocatorProvider.Instance.inputTouchMode = (ServiceLocatorProvider.InputTouchMode)selectedIndex);
+
+            ServiceLocatorProvider.Instance
+                .ObserveEveryValueChanged(x => x.inputTouchMode)
+                .Subscribe(inputTouchMode => m_inputTouchDropdown.value = (int)inputTouchMode);
         }
     }
 }

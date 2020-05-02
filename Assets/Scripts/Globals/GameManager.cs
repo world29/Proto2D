@@ -103,12 +103,19 @@ namespace Proto2D
 
         public void OpenDebugMenu()
         {
+            // 既にデバッグメニューが開いている場合はなにもしない
+            if (m_debugMenuCanvasClone != null) return;
+
             m_debugMenuCanvasClone = Instantiate(m_debugMenuCanvasPrefab);
 
             var backButton = m_debugMenuCanvasClone.GetComponentsInChildren<Button>()
                 .First(btn => btn.gameObject.name == "BackButton");
 
-            backButton.onClick.AddListener(() => Destroy(m_debugMenuCanvasClone));
+            backButton.onClick.AddListener(() =>
+            {
+                Destroy(m_debugMenuCanvasClone);
+                m_debugMenuCanvasClone = null;
+            });
         }
 
         // 現在のシーンをリトライ

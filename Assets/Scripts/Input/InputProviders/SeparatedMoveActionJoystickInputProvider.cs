@@ -1,27 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using System.Linq;
 
 namespace Proto2D
 {
-    public class SeparatedMoveActionJoystickInputProvider : IInputProvider
+    public class SeparatedMoveActionJoystickInputProvider : Disposable, IInputProvider
     {
         CustomFloatingJoystick m_moveJoystick;
         CustomFloatingJoystick m_actionJoystick;
+
+        private GameObject m_rootObject = null;
 
         // ctor
         public SeparatedMoveActionJoystickInputProvider()
         {
             // 仮想ジョイスティックを生成
             var prefab = (GameObject)Resources.Load("SeparatedMoveActionJoystick");
-            var clone = GameObject.Instantiate(prefab);
+            m_rootObject = GameObject.Instantiate(prefab);
 
-            GameObject.DontDestroyOnLoad(clone);
+            GameObject.DontDestroyOnLoad(m_rootObject);
 
-            var joysticks = clone.GetComponentsInChildren<CustomFloatingJoystick>();
+            var joysticks = m_rootObject.GetComponentsInChildren<CustomFloatingJoystick>();
             m_moveJoystick = joysticks.First(j => j.gameObject.name == "MoveJoystick");
             m_actionJoystick = joysticks.First(j => j.gameObject.name == "ActionJoystick");
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (m_rootObject)
+                {
+                    GameObject.Destroy(m_rootObject);
+                    m_rootObject = null;
+                }
+            }
+
+            base.Dispose(isDisposing);
         }
 
         public Vector2 GetMoveDirection()

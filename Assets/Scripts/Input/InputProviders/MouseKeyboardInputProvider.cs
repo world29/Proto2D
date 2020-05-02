@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Proto2D
 {
-    public class MouseKeyboardInputProvider : IInputProvider
+    public class MouseKeyboardInputProvider : Disposable, IInputProvider
     {
         float m_minDistanceToPlayer = 1f;
 

@@ -16,7 +16,7 @@ namespace Proto2D
 
             foreach (var prefab in prefabs)
             {
-                var obj = GameObject.Instantiate((GameObject)prefab);
+                var obj = GameObject.Instantiate(prefab);
                 DontDestroyOnLoad(obj);
             }
         }
