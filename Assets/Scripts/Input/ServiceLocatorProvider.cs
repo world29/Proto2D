@@ -8,6 +8,15 @@ namespace Proto2D
     {
         public ServiceLocator Current { get; private set; }
 
+        public enum JoystickMode
+        {
+            Separated,
+            Single,
+        }
+
+        [SerializeField]
+        JoystickMode m_joystickMode = JoystickMode.Separated;
+
         private bool isMobile = false;
 
         private new void Awake()
@@ -22,7 +31,15 @@ namespace Proto2D
             // 入力モードをプラットフォームによって切り替える
             if (Application.isMobilePlatform)
             {
-                Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
+                if (m_joystickMode == JoystickMode.Separated)
+                {
+                    Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
+                }
+                else
+                {
+                    Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
+                }
+
                 isMobile = true;
             }
             else
@@ -37,7 +54,15 @@ namespace Proto2D
             {
                 Debug.Log("UnityRemote detected.");
 
-                Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
+                if (m_joystickMode == JoystickMode.Separated)
+                {
+                    Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
+                }
+                else
+                {
+                    Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
+                }
+
                 isMobile = true;
             }
         }
