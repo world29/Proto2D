@@ -8,16 +8,35 @@ namespace Proto2D
     {
         public ServiceLocator Current { get; private set; }
 
-        public enum JoystickMode
+        public enum InputMode
+        {
+            Auto, // 自動検出
+            KeyboardAndMouse,
+            Touch,
+        }
+
+        public enum InputTouchMode
         {
             Separated,
             Single,
         }
 
         [SerializeField]
-        JoystickMode m_joystickMode = JoystickMode.Separated;
+        InputMode m_inputMode = InputMode.Auto;
 
-        private bool isMobile = false;
+        [SerializeField]
+        InputTouchMode m_inputTouchMode = InputTouchMode.Separated;
+
+        [SerializeField]
+        bool m_simulateMouseWithTouches = false;
+
+        // 現在の入力モード
+        public InputMode inputMode { get { return m_inputMode; } set { m_inputMode = value; } }
+
+        // 現在のタッチ操作モード
+        public InputTouchMode inputTouchMode { get { return m_inputTouchMode; } set { m_inputTouchMode = value; } }
+
+        private bool isDeviceDetected = false;
 
         private new void Awake()
         {
@@ -26,12 +45,31 @@ namespace Proto2D
             Current = new ServiceLocator();
 
             // マウスとタッチを区別するための設定
-            Input.simulateMouseWithTouches = false;
+            Input.simulateMouseWithTouches = m_simulateMouseWithTouches;
 
             // 入力モードをプラットフォームによって切り替える
-            if (Application.isMobilePlatform)
+            if (m_inputMode == InputMode.Auto)
             {
-                if (m_joystickMode == JoystickMode.Separated)
+                if (Application.isMobilePlatform)
+                {
+                    m_inputMode = InputMode.Touch;
+
+                    isDeviceDetected = true;
+                }
+                else
+                {
+                    m_inputMode = InputMode.KeyboardAndMouse;
+                }
+            }
+            else
+            {
+                // 明示的に入力モードが指定された場合は、UnityRemote の状態をチェックしないためフラグをセット。
+                isDeviceDetected = true;
+            }
+
+            if (m_inputMode == InputMode.Touch)
+            {
+                if (m_inputTouchMode == InputTouchMode.Separated)
                 {
                     Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
                 }
@@ -40,7 +78,7 @@ namespace Proto2D
                     Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
                 }
 
-                isMobile = true;
+                isDeviceDetected = true;
             }
             else
             {
@@ -50,11 +88,11 @@ namespace Proto2D
 
         private void Update()
         {
-            if (!isMobile && IsRemoteConnected())
+            if (!isDeviceDetected && IsRemoteConnected())
             {
                 Debug.Log("UnityRemote detected.");
 
-                if (m_joystickMode == JoystickMode.Separated)
+                if (m_inputTouchMode == InputTouchMode.Separated)
                 {
                     Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
                 }
@@ -63,7 +101,7 @@ namespace Proto2D
                     Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
                 }
 
-                isMobile = true;
+                isDeviceDetected = true;
             }
         }
 
