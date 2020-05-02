@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 namespace Proto2D
 {
@@ -36,7 +38,7 @@ namespace Proto2D
         // 現在のタッチ操作モード
         public InputTouchMode inputTouchMode { get { return m_inputTouchMode; } set { m_inputTouchMode = value; } }
 
-        private bool isDeviceDetected = false;
+        private bool m_isDeviceDetected = false;
 
         private new void Awake()
         {
@@ -54,7 +56,7 @@ namespace Proto2D
                 {
                     m_inputMode = InputMode.Touch;
 
-                    isDeviceDetected = true;
+                    m_isDeviceDetected = true;
                 }
                 else
                 {
@@ -64,31 +66,26 @@ namespace Proto2D
             else
             {
                 // 明示的に入力モードが指定された場合は、UnityRemote の状態をチェックしないためフラグをセット。
-                isDeviceDetected = true;
+                m_isDeviceDetected = true;
             }
 
-            if (m_inputMode == InputMode.Touch)
-            {
-                if (m_inputTouchMode == InputTouchMode.Separated)
-                {
-                    Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
-                }
-                else
-                {
-                    Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
-                }
+            this.ObserveEveryValueChanged(x => x.inputMode)
+                .Subscribe(inputMode => UpdateInputMode());
 
-                isDeviceDetected = true;
-            }
-            else
-            {
-                Current.Register<IInputProvider>(new MouseKeyboardInputProvider());
-            }
+            this.ObserveEveryValueChanged(x => x.inputTouchMode)
+                .Skip(1) // 初期値の通知を無視する
+                .Subscribe(inputTouchMode => 
+                {
+                    if (m_inputMode == InputMode.Touch)
+                    {
+                        UpdateInputTouchMode();
+                    }
+                });
         }
 
         private void Update()
         {
-            if (!isDeviceDetected && IsRemoteConnected())
+            if (!m_isDeviceDetected && IsRemoteConnected())
             {
                 Debug.Log("UnityRemote detected.");
 
@@ -101,7 +98,33 @@ namespace Proto2D
                     Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
                 }
 
-                isDeviceDetected = true;
+                m_isDeviceDetected = true;
+            }
+        }
+
+        private void UpdateInputMode()
+        {
+            if (m_inputMode == InputMode.Touch)
+            {
+                UpdateInputTouchMode();
+
+                m_isDeviceDetected = true;
+            }
+            else
+            {
+                Current.Register<IInputProvider>(new MouseKeyboardInputProvider());
+            }
+        }
+
+        private void UpdateInputTouchMode()
+        {
+            if (m_inputTouchMode == InputTouchMode.Separated)
+            {
+                Current.Register<IInputProvider>(new SeparatedMoveActionJoystickInputProvider());
+            }
+            else
+            {
+                Current.Register<IInputProvider>(new SingleMoveActionJoystickInputProvider());
             }
         }
 
