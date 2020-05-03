@@ -118,8 +118,8 @@ public class PlayerState_Hang : IPlayerState
             ropeHandleBody.AddForce(force);
         }
 
-        // ジャンプか下方向の入力でハング状態を終了
-        if (input.directionalInput.y < 0 || input.isTouched || input.isFlicked)
+        // ジャンプ入力でハング状態を終了
+        if (input.isTouched || input.isFlicked)
         {
             setHangableInterval();
 
