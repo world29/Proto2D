@@ -13,6 +13,8 @@ namespace Proto2D
 
         private GameObject m_rootObject = null;
 
+        private Vector2 m_prevAttackDirection = Vector2.zero;
+
         // ctor
         public SeparatedMoveActionJoystickInputProvider()
         {
@@ -54,15 +56,19 @@ namespace Proto2D
         public bool GetAttack(out Vector2 attackDirection)
         {
             attackDirection = Vector2.zero;
+            bool isAttacked = false;
 
-            if (m_actionJoystick.Flicked)
+            if (m_prevAttackDirection == Vector2.zero)
             {
-                attackDirection = m_actionJoystick.FlickDirection;
-
-                return true;
+                if (m_actionJoystick.Direction.magnitude > 0)
+                {
+                    isAttacked = true;
+                    attackDirection = m_actionJoystick.Direction;
+                }
             }
+            m_prevAttackDirection = m_actionJoystick.Direction;
 
-            return false;
+            return isAttacked;
         }
     }
 }
