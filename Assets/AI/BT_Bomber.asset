@@ -37,7 +37,10 @@ MonoBehaviour:
       _node: {fileID: 114189897875290572}
       _typeQualifiedName: Proto2D.AI.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: children
+        node: {fileID: 114788958813167442}
+        reroutePoints: []
       _direction: 0
       _connectionType: 1
       _typeConstraint: 0
@@ -45,7 +48,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   m_priority: 0
   m_stateName: 
-  m_speed: 1
+  m_speed: 2
   m_autoTurn: 1
   m_autoGroundDetection: 1
   m_timeout:
