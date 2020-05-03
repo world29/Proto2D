@@ -22,6 +22,11 @@ public class CustomFloatingJoystick : FloatingJoystick
     public bool Flicked { get { return flicked; } }
     public Vector2 FlickDirection { get { return positionTouchEnded - positionTouchBegan; } }
 
+    [SerializeField]
+    bool deadZoneYEnabled = false;
+    [SerializeField]
+    float deadZoneY = 0;
+
     [SerializeField] private bool touched = false;
     [SerializeField] private bool flicked = false;
     private bool touching = false;
@@ -68,6 +73,33 @@ public class CustomFloatingJoystick : FloatingJoystick
 
         //
         base.OnPointerUp(eventData);
+    }
+
+    protected override void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
+    {
+        if (deadZoneYEnabled)
+        {
+            var vec = normalised * magnitude;
+
+            float x = vec.x;
+            float y = vec.y;
+
+            if (Mathf.Abs(x) < DeadZone)
+            {
+                x = 0;
+            }
+
+            if (Mathf.Abs(y) < deadZoneY)
+            {
+                y = 0;
+            }
+
+            input = new Vector2(x, y).normalized;
+        }
+        else
+        {
+            base.HandleInput(magnitude, normalised, radius, cam);
+        }
     }
 
     private void OnDrawGizmos()
