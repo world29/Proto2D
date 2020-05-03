@@ -405,11 +405,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             }
             else if (velocity.x == 0)
             {
-                // マウスカーソルの向き
-                Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 diff = targetPosition - gameObject.transform.position;
+                // マウス入力モードのときは、プレイヤーがポインターの方を向く
+                if (Proto2D.ServiceLocatorProvider.Instance.inputMode == Proto2D.ServiceLocatorProvider.InputMode.KeyboardAndMouse)
+                {
+                    Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 diff = targetPosition - gameObject.transform.position;
 
-                direction = Mathf.Sign(diff.x);
+                    direction = Mathf.Sign(diff.x);
+                }
             }
         }
         else

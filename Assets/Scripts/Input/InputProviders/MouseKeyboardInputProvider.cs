@@ -9,9 +9,30 @@ namespace Proto2D
     {
         float m_minDistanceToPlayer = 1f;
 
+        private GameObject m_rootObject;
+
         // ctor
         public MouseKeyboardInputProvider()
         {
+            // ジャンプアタックカーソルを生成
+            var prefab = (GameObject)Resources.Load("UI/JumpAttackCursor");
+            m_rootObject = GameObject.Instantiate(prefab);
+
+            GameObject.DontDestroyOnLoad(m_rootObject);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (m_rootObject)
+                {
+                    GameObject.Destroy(m_rootObject);
+                    m_rootObject = null;
+                }
+            }
+
+            base.Dispose(isDisposing);
         }
 
         public Vector2 GetMoveDirection()
