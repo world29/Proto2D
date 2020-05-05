@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using TMPro;
 
 namespace Proto2D
 {
     public class UICoinCounterController : MonoBehaviour
     {
-        public Text m_counterText;
+        [SerializeField]
+        TextMeshProUGUI m_counterText;
 
         [Header("カウントアップ時のスケールアニメーション")]
         [Tooltip("アニメーション時間")]
@@ -20,8 +22,6 @@ namespace Proto2D
 
         private void Awake()
         {
-            Debug.Assert(m_counterText);
-
             UpdateUI(0);
         }
 
@@ -44,7 +44,7 @@ namespace Proto2D
 
         private void UpdateUI(int coinCount)
         {
-            m_counterText.text = string.Format("x {0}", coinCount);
+            m_counterText.text = string.Format("x{0}", coinCount);
             StartCoroutine(IncrementedEffect(m_scaleDuration));
         }
 
