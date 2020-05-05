@@ -16,8 +16,9 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector]
     public float flickAngleRounded; // 45度で丸められた角度 (rad)
 
-    private void Awake()
+    private void OnDisable()
     {
+        ResetInputState();
     }
 
     public void Update()
@@ -60,6 +61,15 @@ public class PlayerInput : MonoBehaviour
         {
             flickAngleRounded = Mathf.Floor(flickAngle / (Mathf.PI / 4) + .5f) * (Mathf.PI / 4);
         }
+    }
+
+    void ResetInputState()
+    {
+        directionalInput = Vector2.zero;
+        isFlicked = false;
+        isTouched = false;
+        flickAngle = 0f;
+        flickAngleRounded = 0f;
     }
 }
 

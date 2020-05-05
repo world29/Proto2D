@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UniRx;
+using UniRx.Triggers;
 using System;
 
 namespace Proto2D
@@ -15,29 +16,32 @@ namespace Proto2D
 
         private Canvas m_dialogClone;
 
-        const string TARGET_TAG = "Player";
+        const string PLAYER_TAG = "Player";
 
         private void Start()
         {
-        }
-
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            if (collider.gameObject.CompareTag(TARGET_TAG))
-            {
-                m_dialogClone = GameObject.Instantiate(m_dialogPrefab);
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            if (collider.gameObject.CompareTag(TARGET_TAG))
-            {
-                if (m_dialogClone != null)
+            this.OnTriggerEnter2DAsObservable()
+                .Where(collider => collider.gameObject.CompareTag(PLAYER_TAG))
+                .Select(collider => collider.gameObject.GetComponent<PlayerInput>())
+                .Subscribe(playerInput =>
                 {
-                    Destroy(m_dialogClone.gameObject);
-                }
-            }
+                    // 既にダイアログ生成済み
+                    if (m_dialogClone != null) return;
+
+                    // ダイアログを生成
+                    m_dialogClone = GameObject.Instantiate(m_dialogPrefab);
+
+                    // PlayerInput を無効化
+                    playerInput.enabled = false;
+
+                    // PlayerInput を有効化
+                    m_dialogClone.OnDestroyAsObservable()
+                        .Subscribe(_ =>
+                        {
+                            playerInput.enabled = true;
+                            m_dialogClone = null;
+                        });
+                });
         }
     }
 }
