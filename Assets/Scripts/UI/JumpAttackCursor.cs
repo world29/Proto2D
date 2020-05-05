@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Proto2D
 {
@@ -11,11 +12,17 @@ namespace Proto2D
 
         private void Start()
         {
-            m_camera = Camera.main;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
         void LateUpdate()
         {
+            if (m_camera == null)
+            {
+                m_camera = Camera.main;
+            }
+
             if (m_player == null)
             {
                 m_player = GameObject.FindGameObjectWithTag("Player");
@@ -33,6 +40,16 @@ namespace Proto2D
 
                 transform.localRotation = Quaternion.Euler(0, 0, angleDeg);
             }
+        }
+
+        private void OnSceneLoaded(Scene scn, LoadSceneMode mode)
+        {
+        }
+
+        private void OnSceneUnloaded(Scene scn)
+        {
+            m_player = null;
+            m_camera = null;
         }
     }
 }
