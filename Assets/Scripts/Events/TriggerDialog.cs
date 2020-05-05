@@ -12,9 +12,9 @@ namespace Proto2D
     public class TriggerDialog : MonoBehaviour
     {
         [SerializeField]
-        Canvas m_dialogPrefab;
+        Dialog m_dialogPrefab;
 
-        private Canvas m_dialogClone;
+        private Dialog m_dialogClone;
 
         const string PLAYER_TAG = "Player";
 
@@ -22,8 +22,7 @@ namespace Proto2D
         {
             this.OnTriggerEnter2DAsObservable()
                 .Where(collider => collider.gameObject.CompareTag(PLAYER_TAG))
-                .Select(collider => collider.gameObject.GetComponent<PlayerInput>())
-                .Subscribe(playerInput =>
+                .Subscribe(collider =>
                 {
                     // 既にダイアログ生成済み
                     if (m_dialogClone != null) return;
@@ -31,14 +30,10 @@ namespace Proto2D
                     // ダイアログを生成
                     m_dialogClone = GameObject.Instantiate(m_dialogPrefab);
 
-                    // PlayerInput を無効化
-                    playerInput.enabled = false;
-
-                    // PlayerInput を有効化
+                    // ダイアログの終了をハンドリング
                     m_dialogClone.OnDestroyAsObservable()
                         .Subscribe(_ =>
                         {
-                            playerInput.enabled = true;
                             m_dialogClone = null;
                         });
                 });
