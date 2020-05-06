@@ -223,7 +223,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lifespan: 3
-  m_maxSpeed: 20
+  m_maxSpeed: 40
+  m_shootAngle: 0
+  m_shootSpeed: 3
   m_damager: {fileID: 3181536596710760315}
   m_renderer: {fileID: 3225732081030765744}
   m_minSpeedForDamagerEnable: {x: 5, y: 3}
@@ -254,8 +256,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_OnBounded:
     m_PersistentCalls:
       m_Calls:
@@ -283,8 +283,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_minImpulseOnBounded: 0.15
   m_OnApplyDamage:
     m_PersistentCalls:
@@ -325,13 +323,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_OnReceiveDamage:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &2881189735990725550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_stagePhaseFlags: 7
-  m_percentage: 56
+  m_percentage: 54
 --- !u!1001 &6799654202011966338
 PrefabInstance:
   m_ObjectHideFlags: 0
