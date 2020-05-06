@@ -311,8 +311,6 @@ MonoBehaviour:
           m_StringArgument: actionT1
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_activationLimit: 9999
   m_interval: {x: 1, y: 1}
 --- !u!1 &6245465354517601081
@@ -510,12 +508,15 @@ MonoBehaviour:
   superArmor: 0
   suspended: 0
   blinkInterval: 0.1
-  damageDuration: 0.5
+  damageDuration: 0
+  deathBlinkInterval: 0.1
+  deathDuration: 0
+  m_OnDamage:
+    m_PersistentCalls:
+      m_Calls: []
   m_OnDeath:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   progressValue: 0
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
