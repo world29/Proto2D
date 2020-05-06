@@ -14,7 +14,10 @@ namespace Proto2D
 
         public void SetText(string message)
         {
-            m_text.text = message;
+            if (m_text != null)
+            {
+                m_text.text = message;
+            }
         }
 
         private void Start()

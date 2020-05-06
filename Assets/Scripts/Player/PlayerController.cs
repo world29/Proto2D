@@ -132,6 +132,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private bool isHitStop;
     private float wallClimbEntryTimer;
 
+    [SerializeField]
+    Proto2D.ShopItemDatabase m_shopItemDatabase;
+
+    // 購入済みアイテムの個数を管理する辞書
+    Dictionary<string, int> m_purchasedItems = new Dictionary<string, int>();
+
     public struct HitInfo
     {
         public DamageType type;
@@ -359,6 +365,30 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         ChangeState(new PlayerState_Knockback());
         StartCoroutine(StartInvincible(invincibleDuration));
+    }
+
+    // アイテムを購入
+    public void PurchaseItem(string itemId)
+    {
+        if (!m_purchasedItems.ContainsKey(itemId))
+        {
+            m_purchasedItems.Add(itemId, 0);
+        }
+        var count = ++m_purchasedItems[itemId];
+
+        // デバッグ表示
+        var item = m_shopItemDatabase.GetItemList().First(x => x.itemId == itemId);
+        Debug.LogFormat("Item purchased. {0}:{1}", item.displayName, count);
+    }
+
+    // 購入したアイテム数を取得
+    public int GetItemPurchasedCount(string itemId)
+    {
+        if (m_purchasedItems.ContainsKey(itemId))
+        {
+            return m_purchasedItems[itemId];
+        }
+        return 0;
     }
 
     IEnumerator StartDeathSequence()
