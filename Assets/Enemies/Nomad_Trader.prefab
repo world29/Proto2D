@@ -1820,13 +1820,16 @@ MonoBehaviour:
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 0}
   damageSE: {fileID: 0}
-  behaviourTree: {fileID: 0}
+  behaviourTree: {fileID: 11400000, guid: 21905875b00189847af54d7562ff98a1, type: 2}
   behaviourTreeDebug: 0
   groundDetectionTransform: {fileID: 1054260359019353039}
   collisionMask:
     serializedVersion: 2
     m_Bits: 0
-  sights: []
+  sights:
+  - fov: 360
+    viewDistance: 3
+    angleOffset: 0
   groundDetectionRayLength: 3
   velocity: {x: 0, y: 0}
   effectSocket: {fileID: 0}
