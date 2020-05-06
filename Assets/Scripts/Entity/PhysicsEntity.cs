@@ -20,6 +20,9 @@ namespace Proto2D
         [SerializeField, Range(0, 360)]
         float m_shootAngle;
 
+        // 部屋の反転を考慮した値を返すプロパティ
+        private float shootAngle { get { return transform.lossyScale.x > 0 ? m_shootAngle : 180 - m_shootAngle; } }
+
         [SerializeField]
         float m_shootSpeed;
 
@@ -136,7 +139,7 @@ namespace Proto2D
             EnableMoving();
 
             var o = transform.position;
-            var p = o + Quaternion.Euler(0, 0, m_shootAngle) * Vector3.right * m_shootSpeed;
+            var p = o + Quaternion.Euler(0, 0, shootAngle) * Vector3.right * m_shootSpeed;
             var op = p - o;
 
             m_rigidbody.AddForce(op, ForceMode2D.Impulse);
@@ -245,7 +248,7 @@ namespace Proto2D
         {
             {
                 var o = transform.position;
-                var p = o + Quaternion.Euler(0, 0, m_shootAngle) * Vector3.right * m_shootSpeed;
+                var p = o + Quaternion.Euler(0, 0, shootAngle) * Vector3.right * m_shootSpeed;
                 var op = p - o;
                 var po = o - p;
 
@@ -254,9 +257,15 @@ namespace Proto2D
                 var arrow1 = v1.normalized * op.magnitude / 4;
                 var arrow2 = v2.normalized * op.magnitude / 4;
 
-                Debug.DrawLine(p, p + arrow1, Color.red);
-                Debug.DrawLine(p, p + arrow2, Color.red);
-                Debug.DrawLine(o, p, Color.red);
+                // 矢印を描画する
+                var gizmoColor = Gizmos.color;
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(p, p + arrow1);
+                    Gizmos.DrawLine(p, p + arrow2);
+                    Gizmos.DrawLine(o, p);
+                }
+                Gizmos.color = gizmoColor;
             }
 
             if (m_collision != null)
