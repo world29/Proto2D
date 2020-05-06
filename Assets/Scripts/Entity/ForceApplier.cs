@@ -12,6 +12,11 @@ namespace Proto2D
         [SerializeField]
         float m_force;
 
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            collider.gameObject.GetComponent<PhysicsEntity>()?.Shoot();
+        }
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             var rb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -20,25 +25,7 @@ namespace Proto2D
             // 物理制御オブジェクトのみを対象とする
             if (rb.isKinematic) return;
 
-            foreach (var c in collision.contacts)
-            {
-                var entity = collision.gameObject.GetComponent<PhysicsEntity>();
-
-                if (entity)
-                {
-                    entity.EnableMoving();
-                }
-
-                if (entity)// && entity.isContactObstacle)
-                {
-                    Vector2 dir = c.normal + Vector2.up;
-                    rb.AddForceAtPosition(dir.normalized * m_force, collision.gameObject.transform.position, m_forceMode);
-                }
-                else
-                {
-                    rb.AddForceAtPosition(c.normal * m_force, collision.gameObject.transform.position, m_forceMode);
-                }
-            }
+            collision.gameObject.GetComponent<PhysicsEntity>()?.Shoot();
         }
     }
 }

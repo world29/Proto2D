@@ -17,6 +17,12 @@ namespace Proto2D
         [SerializeField]
         float m_maxSpeed;
 
+        [SerializeField, Range(0, 360)]
+        float m_shootAngle;
+
+        [SerializeField]
+        float m_shootSpeed;
+
         [SerializeField]
         Damager m_damager;
 
@@ -125,6 +131,17 @@ namespace Proto2D
                 });
         }
 
+        public void Shoot()
+        {
+            EnableMoving();
+
+            var o = transform.position;
+            var p = o + Quaternion.Euler(0, 0, m_shootAngle) * Vector3.right * m_shootSpeed;
+            var op = p - o;
+
+            m_rigidbody.AddForce(op, ForceMode2D.Impulse);
+        }
+
         public void EnableMoving()
         {
             // 初回のみ
@@ -226,6 +243,22 @@ namespace Proto2D
 
         private void OnDrawGizmos()
         {
+            {
+                var o = transform.position;
+                var p = o + Quaternion.Euler(0, 0, m_shootAngle) * Vector3.right * m_shootSpeed;
+                var op = p - o;
+                var po = o - p;
+
+                var v1 = Quaternion.Euler(0, 0, 15) * po;
+                var v2 = Quaternion.Euler(0, 0, -15) * po;
+                var arrow1 = v1.normalized * op.magnitude / 4;
+                var arrow2 = v2.normalized * op.magnitude / 4;
+
+                Debug.DrawLine(p, p + arrow1, Color.red);
+                Debug.DrawLine(p, p + arrow2, Color.red);
+                Debug.DrawLine(o, p, Color.red);
+            }
+
             if (m_collision != null)
             {
                 for (var i = 0; i < m_collision.contactCount; i++)
