@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using TMPro;
 
 namespace Proto2D
 {
     public class Dialog : MonoBehaviour
     {
+        [SerializeField]
+        TextMeshProUGUI m_text;
+
+        public void SetText(string message)
+        {
+            m_text.text = message;
+        }
+
         private void Start()
         {
             var player = GameObject.FindGameObjectWithTag("Player");

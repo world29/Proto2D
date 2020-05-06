@@ -14,6 +14,12 @@ namespace Proto2D
         [SerializeField]
         Dialog m_dialogPrefab;
 
+        [SerializeField]
+        string m_message;
+
+        [SerializeField]
+        UnityEvent m_onClose;
+
         private Dialog m_dialogClone;
 
         const string PLAYER_TAG = "Player";
@@ -29,11 +35,14 @@ namespace Proto2D
 
                     // ダイアログを生成
                     m_dialogClone = GameObject.Instantiate(m_dialogPrefab);
+                    m_dialogClone.SetText(m_message);
 
                     // ダイアログの終了をハンドリング
                     m_dialogClone.OnDestroyAsObservable()
                         .Subscribe(_ =>
                         {
+                            m_onClose.Invoke();
+
                             m_dialogClone = null;
                         });
                 });
