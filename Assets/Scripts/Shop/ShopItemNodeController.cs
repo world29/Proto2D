@@ -20,6 +20,9 @@ namespace Proto2D
         Button m_purchaseButton;
 
         [SerializeField]
+        Image m_purchaseButtonIcon;
+
+        [SerializeField]
         Image m_itemImage;
 
         [SerializeField]
@@ -62,11 +65,12 @@ namespace Proto2D
                     {
                         m_priceText.text = "Sold out";
                         m_purchaseButton.interactable = false;
+                        m_purchaseButtonIcon.enabled = false;
                     }
                     else
                     {
                         var sb = new System.Text.StringBuilder();
-                        sb.AppendFormat("$ {0}", m_itemDict[itemId].GetPrice(count));
+                        sb.AppendFormat("x {0}", m_itemDict[itemId].GetPrice(count));
                         m_priceText.text = sb.ToString();
                     }
                 });
