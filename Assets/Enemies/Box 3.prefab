@@ -176,8 +176,6 @@ MonoBehaviour:
   m_OnDamage:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -192,8 +190,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   progressValue: 0
   m_itemSpawner: {fileID: 0}
   damageEffectPrefab: {fileID: 1509154601807174269, guid: bb83308fbfc36421c8d36240cab8a387,
@@ -241,10 +237,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5919542709258005915}
-  - component: {fileID: 1682771383083807806}
+  - component: {fileID: 7174703188243934981}
   m_Layer: 9
   m_Name: GameObject
-  m_TagString: Untagged
+  m_TagString: Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -263,8 +259,8 @@ Transform:
   m_Father: {fileID: 6583429864534333430}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!68 &1682771383083807806
-EdgeCollider2D:
+--- !u!61 &7174703188243934981
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -276,11 +272,19 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.53}
+  m_Offset: {x: 0, y: -0.117549896}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 1.0940399}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.5, y: 0}
-  - {x: 0.5, y: 0}
 --- !u!1 &7895209804602698210
 GameObject:
   m_ObjectHideFlags: 0
