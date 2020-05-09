@@ -12,6 +12,9 @@ namespace Proto2D
         [SerializeField]
         SlidableMask m_mask;
 
+        [SerializeField]
+        Animator m_animator;
+
 #if UNITY_EDITOR
         [SerializeField]
         private float m_maxProgress = 1;
@@ -77,6 +80,8 @@ namespace Proto2D
         {
             m_currentProgress = progress - (m_maxProgress * (int)m_currentPhase);
             m_mask.sliderValue = m_currentProgress / m_maxProgress;
+
+            m_animator.SetTrigger("point_up");
         }
     }
 }
