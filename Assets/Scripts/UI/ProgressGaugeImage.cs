@@ -7,30 +7,17 @@ using UniRx.Triggers;
 
 namespace Proto2D
 {
-    public class ProgressGaugeController : MonoBehaviour
+    public class ProgressGaugeImage : MonoBehaviour
     {
         [SerializeField]
-        SlidableMask m_mask;
+        Image m_image;
 
-#if UNITY_EDITOR
         [SerializeField]
-        private float m_maxProgress = 1;
-        [SerializeField]
-        private float m_currentProgress;
-        [SerializeField]
-        private StagePhase m_currentPhase;
-#else
-        private float m_maxProgress = 1;
-        private float m_currentProgress;
-#endif
+        Sprite[] m_spritePerPhase;
+
         private bool m_initialized = false;
 
-        private System.IDisposable m_progressHandle;
         private System.IDisposable m_phaseHandle;
-
-        private void Start()
-        {
-        }
 
         private void LateUpdate()
         {
@@ -49,8 +36,6 @@ namespace Proto2D
 
         private void HandleStageChanged(StageController stage)
         {
-            m_maxProgress = stage.ProgressPerPhase;
-
             if (m_phaseHandle != null)
             {
                 m_phaseHandle.Dispose();
@@ -58,25 +43,14 @@ namespace Proto2D
 
             m_phaseHandle = stage.ObserveEveryValueChanged(x => x.Phase)
                 .Subscribe(phase => HandlePhaseChanged(phase));
-
-            if (m_progressHandle != null)
-            {
-                m_progressHandle.Dispose();
-            }
-
-            m_progressHandle = stage.ObserveEveryValueChanged(x => x.Progress)
-                .Subscribe(progress => HandleProgressChanged(progress));
         }
 
         private void HandlePhaseChanged(StagePhase phase)
         {
-            m_currentPhase = phase;
-        }
-
-        private void HandleProgressChanged(float progress)
-        {
-            m_currentProgress = progress - (m_maxProgress * (int)m_currentPhase);
-            m_mask.sliderValue = m_currentProgress / m_maxProgress;
+            if (m_spritePerPhase.Length > (int)phase)
+            {
+                m_image.sprite = m_spritePerPhase[(int)phase];
+            }
         }
     }
 }
