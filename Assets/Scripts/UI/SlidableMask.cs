@@ -5,10 +5,16 @@ using UnityEngine.UI;
 
 namespace Proto2D
 {
+    [ExecuteInEditMode()]
     public class SlidableMask : MonoBehaviour
     {
         [SerializeField, Range(0f, 1f)]
         float m_value;
+
+        public float sliderValue { get { return m_value; } set { m_value = value; } }
+
+        [SerializeField]
+        RectTransform m_lockTarget;
 
         RectTransform m_rectTransform;
         Vector3 m_farBottom;
@@ -18,8 +24,8 @@ namespace Proto2D
         {
             m_rectTransform = GetComponent<RectTransform>();
 
-            m_farBottom = m_rectTransform.position - new Vector3(0f, m_rectTransform.rect.height);
-            m_farTop = m_rectTransform.position;
+            m_farBottom = m_lockTarget.localPosition - new Vector3(0f, m_rectTransform.rect.height);
+            m_farTop = m_lockTarget.localPosition;
         }
 
         private void Start()
@@ -34,7 +40,7 @@ namespace Proto2D
 
         private void HandleSliderChanged(float value)
         {
-            m_rectTransform.position = Vector2.Lerp(m_farBottom, m_farTop, value);
+            m_rectTransform.localPosition = Vector2.Lerp(m_farBottom, m_farTop, value);
         }
     }
 }

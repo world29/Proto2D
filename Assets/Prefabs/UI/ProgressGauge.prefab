@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_value: 0
+  m_lockTarget: {fileID: 8450081409684529000}
 --- !u!1 &8450081411217307068
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,9 +479,10 @@ GameObject:
   - component: {fileID: 8450081411514717522}
   - component: {fileID: 358526201926953805}
   - component: {fileID: 3512680263171328544}
+  - component: {fileID: 4705136247221434006}
   m_Layer: 5
   m_Name: ProgressGauge
-  m_TagString: Untagged
+  m_TagString: ProgressGauge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -540,3 +542,20 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &4705136247221434006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450081411514717523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8904f6d332c66242b9f7c9098181893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_backgroundImage: {fileID: 8450081409684529007}
+  m_fillImage: {fileID: 8450081411305897619}
+  m_mask: {fileID: 8450081410968364758}
+  m_maxProgress: 1
+  m_currentProgress: 0
