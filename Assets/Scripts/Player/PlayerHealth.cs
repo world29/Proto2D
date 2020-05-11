@@ -29,7 +29,7 @@ namespace Proto2D
 
         public void SetMaxHealth(float value)
         {
-            m_maxHealth.Value = value;
+            m_maxHealth.Value = Mathf.Min(m_maxHealthLimit.Value, value);
         }
 
         public void SetCurrentHealth(float value)

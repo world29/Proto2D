@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 6503610203471954343}
   - component: {fileID: 6759853421765695750}
   - component: {fileID: 2178218726003434771}
+  - component: {fileID: 114458047131102770}
   - component: {fileID: 6503610203471954340}
   - component: {fileID: 4748702757739118001}
   - component: {fileID: 4814176463424156889}
@@ -415,6 +416,21 @@ MonoBehaviour:
     value: 10
   m_currentHealth:
     value: 3
+--- !u!114 &114458047131102770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503610203471954336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7727c9fbea4bcbd46b17d3023cd2834a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_shieldLimit: 3
+  m_currentShield:
+    value: 2
 --- !u!114 &6503610203471954340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,15 +887,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f477fc3d22c77574dbbc9d34bbedec21, type: 3}
---- !u!4 &3029376290651371811 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2598320194992374888, guid: f477fc3d22c77574dbbc9d34bbedec21,
-    type: 3}
-  m_PrefabInstance: {fileID: 1010380666665008459}
-  m_PrefabAsset: {fileID: 0}
 --- !u!96 &908600466982359788 stripped
 TrailRenderer:
   m_CorrespondingSourceObject: {fileID: 188703216999968679, guid: f477fc3d22c77574dbbc9d34bbedec21,
+    type: 3}
+  m_PrefabInstance: {fileID: 1010380666665008459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3029376290651371811 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2598320194992374888, guid: f477fc3d22c77574dbbc9d34bbedec21,
     type: 3}
   m_PrefabInstance: {fileID: 1010380666665008459}
   m_PrefabAsset: {fileID: 0}

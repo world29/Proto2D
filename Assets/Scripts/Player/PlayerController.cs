@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     Animator animator;
     PlayerInput input;
     Proto2D.PlayerHealth health;
+    Proto2D.PlayerShield shield;
 
     private IPlayerState state;
     private bool isInvincible;
@@ -156,6 +157,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private void Awake()
     {
         health = GetComponent<Proto2D.PlayerHealth>();
+        shield = GetComponent<Proto2D.PlayerShield>();
 
         coinCount = new ReactiveProperty<int>(Proto2D.GameState.Instance.GetCoinCount());
 
@@ -366,24 +368,33 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             return;
         }
 
-        // ダメージ計算
-        health.ApplyDamage(info.damage);
-
-        // ノックバック
-        Vector3 collvec = info.senderPos - transform.position;
-
-        velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
-        velocity.y = knockbackVelocity.y;
-
-        if (health.IsDead())
+        // ダメージ計算 (あればシールドで受ける)
+        if (shield.ConsumeShield())
         {
-            ChangeState(new PlayerState_Knockback(new PlayerState_Death()));
+            // シールドを消費した
+            Debug.Log("Consume shield.");
         }
         else
         {
-            ChangeState(new PlayerState_Knockback(new PlayerState_Free()));
+            health.ApplyDamage(info.damage);
+
+            // ノックバック
+            Vector3 collvec = info.senderPos - transform.position;
+
+            velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
+            velocity.y = knockbackVelocity.y;
+
+            if (health.IsDead())
+            {
+                ChangeState(new PlayerState_Knockback(new PlayerState_Death()));
+            }
+            else
+            {
+                ChangeState(new PlayerState_Knockback(new PlayerState_Free()));
+            }
         }
 
+        // 無敵時間開始
         StartCoroutine(StartInvincible(invincibleDuration));
     }
 
