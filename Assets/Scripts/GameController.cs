@@ -155,13 +155,6 @@ namespace Proto2D
                 Stage.m_phase.OnChanged += OnPhaseChanged;
             }
 
-            // UI 設定
-            UIStatusController ui = GameObject.FindObjectOfType<UIStatusController>();
-            if (ui)
-            {
-                ui.ResetStage(prevStage, Stage);
-            }
-
             // 明示的に呼び出してリセットする
             OnPhaseChanged(Stage.Phase);
 

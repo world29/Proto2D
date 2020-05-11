@@ -11,6 +11,13 @@ public class PlayerState_Knockback : IPlayerState
 
     private float timer;
 
+    private IPlayerState m_nextState;
+
+    public PlayerState_Knockback(IPlayerState nextState)
+    {
+        m_nextState = nextState;
+    }
+
     public void HandleInput()
     {
     }
@@ -64,14 +71,7 @@ public class PlayerState_Knockback : IPlayerState
         timer += Time.deltaTime;
         if (timer > player.knockbackDuration)
         {
-            if (player.health.Value == 0)
-            {
-                return new PlayerState_Death();
-            }
-            else
-            {
-                return new PlayerState_Free();
-            }
+            return m_nextState;
         }
 
         return this;

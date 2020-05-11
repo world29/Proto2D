@@ -10,9 +10,6 @@ using System.Linq;
 [RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
-    public float initialHealth = 5;
-    [HideInInspector]
-    public NotificationObject<float> health;
     public ReactiveProperty<int> coinCount;
 
     public float gravity = 30;
@@ -126,11 +123,13 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     Controller2D controller;
     Animator animator;
     PlayerInput input;
+    Proto2D.PlayerHealth health;
 
     private IPlayerState state;
     private bool isInvincible;
     private bool isHitStop;
     private float wallClimbEntryTimer;
+    private bool canPickup;
 
     [SerializeField]
     Proto2D.ShopItemDatabase m_shopItemDatabase;
@@ -156,7 +155,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     private void Awake()
     {
-        health = new NotificationObject<float>(initialHealth);
+        health = GetComponent<Proto2D.PlayerHealth>();
+
         coinCount = new ReactiveProperty<int>(Proto2D.GameState.Instance.GetCoinCount());
 
         audioSource = GetComponent<AudioSource>();
@@ -174,6 +174,22 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Start()
     {
+        health.SetCurrentHealth(health.maxHealth.Value);
+
+        health.currentHealth.Subscribe(hp => 
+        {
+            if (hp <= 0f)
+            {
+                // 死んだら拾えなくなる
+                canPickup = false;
+
+                // 死亡時のシーケンスを再生する
+                Observable.FromCoroutine(StartDeathSequence).Subscribe();
+            }
+        });
+
+        canPickup = true;
+
         // 初期状態として、ジャンプアタックの攻撃判定を無効化
         SetAttackEnabled(false);
 
@@ -351,11 +367,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
 
         // ダメージ計算
-        health.Value = Mathf.Max(0, health.Value - info.damage);
-        if (health.Value == 0)
-        {
-            StartCoroutine(StartDeathSequence());
-        }
+        health.ApplyDamage(info.damage);
 
         // ノックバック
         Vector3 collvec = info.senderPos - transform.position;
@@ -363,7 +375,15 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
         velocity.y = knockbackVelocity.y;
 
-        ChangeState(new PlayerState_Knockback());
+        if (health.IsDead())
+        {
+            ChangeState(new PlayerState_Knockback(new PlayerState_Death()));
+        }
+        else
+        {
+            ChangeState(new PlayerState_Knockback(new PlayerState_Free()));
+        }
+
         StartCoroutine(StartInvincible(invincibleDuration));
     }
 
@@ -487,11 +507,9 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     public void OnPickupItem(ItemType type, GameObject sender, ItemData itemData)
     {
         Debug.Log(state);
-        // 死んだら拾えなくなる(死んでもKnockbackステートが終わるまではDeathステートにならないので、HPで判定)
-        if (health.Value == 0)
-        {
-            return;
-        }
+
+        if (!canPickup) return;
+
         switch (type)
         {
             case ItemType.Hopper:
@@ -501,10 +519,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                 coinCount.Value++;
                 break;
             case ItemType.HealthPack:
-                if (health.Value < initialHealth)
-                {
-                    health.Value++;
-                }
+                health.ApplyHeal(1f);
                 break;
             default:
                 break;

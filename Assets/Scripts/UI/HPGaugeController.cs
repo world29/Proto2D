@@ -24,7 +24,7 @@ namespace Proto2D
 
         private List<HPGaugeNodeController> m_healthNodes = new List<HPGaugeNodeController>();
 
-        private PlayerController m_player;
+        private PlayerHealth m_playerHealth;
 
         private void Awake()
         {
@@ -81,21 +81,19 @@ namespace Proto2D
 
         private void LateUpdate()
         {
-            if (m_player == null)
+            if (m_playerHealth == null)
             {
-                var go = GameObject.FindGameObjectWithTag("Player");
-                m_player = go.GetComponent<PlayerController>();
+                var playerObject = GameObject.FindGameObjectWithTag("Player");
+                m_playerHealth = playerObject.GetComponent<PlayerHealth>();
 
-                m_maxHealth = (int)m_player.initialHealth;
-                m_player.health.OnChanged += OnPlayerHealthChanged;
-                OnPlayerHealthChanged(m_player.health.Value);
+                m_playerHealth.maxHealth
+                    .Subscribe(maxHp => m_maxHealth = (int)maxHp)
+                    .AddTo(playerObject);
+
+                m_playerHealth.currentHealth
+                    .Subscribe(hp => m_currentHealth = (int)hp)
+                    .AddTo(playerObject);
             }
-        }
-
-        private void OnPlayerHealthChanged(float health)
-        {
-            Debug.LogFormat("player health: {0}", (int)health);
-            m_currentHealth = (int)health;
         }
 
         private void OnSceneLoaded(Scene scn, LoadSceneMode mode)
@@ -104,7 +102,7 @@ namespace Proto2D
 
         private void OnSceneUnloaded(Scene scn)
         {
-            m_player = null;
+            m_playerHealth = null;
         }
 
         private void AddHealthNode()
