@@ -17,14 +17,22 @@ namespace Proto2D
         int m_currentHealth;
 
         [SerializeField]
+        int m_currentShield;
+
+        [SerializeField]
         HPGaugeNodeController m_nodePrefab;
+
+        [SerializeField]
+        HPGaugeNodeController m_shieldNodePrefab;
 
         [SerializeField]
         RectTransform m_content;
 
         private List<HPGaugeNodeController> m_healthNodes = new List<HPGaugeNodeController>();
+        private List<HPGaugeNodeController> m_shieldNodes = new List<HPGaugeNodeController>();
 
         private PlayerHealth m_playerHealth;
+        private PlayerShield m_playerShield;
 
         private void Awake()
         {
@@ -71,6 +79,25 @@ namespace Proto2D
                     }
                 });
 
+            // シールド更新
+            this.ObserveEveryValueChanged(x => x.m_currentShield)
+                .DistinctUntilChanged()
+                .Subscribe(shield =>
+                {
+                    // 増えたとき
+                    while (shield > m_shieldNodes.Count)
+                    {
+                        AddShieldNode();
+                    }
+                    // 減ったとき
+                    while (shield < m_shieldNodes.Count)
+                    {
+                        var item = m_shieldNodes[m_shieldNodes.Count - 1];
+                        item.Damage();
+                        m_shieldNodes.Remove(item);
+                    }
+                });
+
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
@@ -85,6 +112,7 @@ namespace Proto2D
             {
                 var playerObject = GameObject.FindGameObjectWithTag("Player");
                 m_playerHealth = playerObject.GetComponent<PlayerHealth>();
+                m_playerShield = playerObject.GetComponent<PlayerShield>();
 
                 m_playerHealth.maxHealth
                     .Subscribe(maxHp => m_maxHealth = (int)maxHp)
@@ -92,6 +120,10 @@ namespace Proto2D
 
                 m_playerHealth.currentHealth
                     .Subscribe(hp => m_currentHealth = (int)hp)
+                    .AddTo(playerObject);
+
+                m_playerShield.currentShield
+                    .Subscribe(shield => m_currentShield = shield)
                     .AddTo(playerObject);
             }
         }
@@ -110,6 +142,13 @@ namespace Proto2D
             var clone = GameObject.Instantiate(m_nodePrefab);
             clone.GetComponent<RectTransform>().SetParent(m_content, false);
             m_healthNodes.Add(clone);
+        }
+
+        private void AddShieldNode()
+        {
+            var clone = GameObject.Instantiate(m_shieldNodePrefab);
+            clone.GetComponent<RectTransform>().SetParent(m_content, false);
+            m_shieldNodes.Add(clone);
         }
     }
 }
