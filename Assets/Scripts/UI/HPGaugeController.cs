@@ -93,8 +93,11 @@ namespace Proto2D
                     while (shield < m_shieldNodes.Count)
                     {
                         var item = m_shieldNodes[m_shieldNodes.Count - 1];
-                        item.Damage();
                         m_shieldNodes.Remove(item);
+
+                        // ダメージアニメーション終了後にノードを削除する
+                        Observable.FromCoroutine(item.DamageAnimationFlow)
+                            .Subscribe(_ => item.transform.parent = null);
                     }
                 });
 
