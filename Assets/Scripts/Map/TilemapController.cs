@@ -65,7 +65,7 @@ namespace Proto2D
                     m_tilemapBackgroundAdd.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
                     break;
                 default:
-                    Debug.Assert(false, "tilemap has unexpected sorting layer");
+                    Debug.LogWarningFormat("tilemap has unexpected sorting layer: {0}", tr.sortingLayerName);
                     break;
             }
         }

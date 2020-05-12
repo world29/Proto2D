@@ -62,7 +62,7 @@ namespace Proto2D
                 .Subscribe(coins =>
                 {
                     InitializeButton(m_itemDict[itemId], m_player.GetItemPurchasedCount(itemId), coins);
-                });
+                }).AddTo(gameObject);
 
             // 購入処理
             m_purchaseButton.OnClickAsObservable()

@@ -20,7 +20,8 @@ namespace Proto2D
         private void Start()
         {
             Observable.Timer(TimeSpan.FromSeconds(m_delay))
-                .Subscribe(_ => BeginAbsorb());
+                .Subscribe(_ => BeginAbsorb())
+                .AddTo(gameObject);
         }
 
         private void BeginAbsorb()

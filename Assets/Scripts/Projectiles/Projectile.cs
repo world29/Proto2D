@@ -79,7 +79,8 @@ namespace Proto2D
         {
             // 即座に消すとコリジョンイベントの処理などが無効化されてしまうため、次のフレームで消す。
             Observable.NextFrame()
-                .Subscribe(_ => Destroy(gameObject));
+                .Subscribe(_ => Destroy(gameObject))
+                .AddTo(gameObject);
         }
 
         // サウンドの再生
