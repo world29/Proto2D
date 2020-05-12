@@ -26,7 +26,10 @@ namespace Proto2D
         HPGaugeNodeController m_shieldNodePrefab;
 
         [SerializeField]
-        RectTransform m_content;
+        RectTransform m_hpContainer;
+
+        [SerializeField]
+        RectTransform m_shieldContainer;
 
         private List<HPGaugeNodeController> m_healthNodes = new List<HPGaugeNodeController>();
         private List<HPGaugeNodeController> m_shieldNodes = new List<HPGaugeNodeController>();
@@ -142,15 +145,18 @@ namespace Proto2D
 
         private void AddHealthNode()
         {
-            var clone = GameObject.Instantiate(m_nodePrefab);
-            clone.GetComponent<RectTransform>().SetParent(m_content, false);
-            m_healthNodes.Add(clone);
+            var hpNode = GameObject.Instantiate(m_nodePrefab);
+            hpNode.GetComponent<RectTransform>().SetParent(m_hpContainer, false);
+            m_healthNodes.Add(hpNode);
+
+            //TODO: HP ゲージの初期状態をダメージ状態にする
+            hpNode.Damage();
         }
 
         private void AddShieldNode()
         {
             var clone = GameObject.Instantiate(m_shieldNodePrefab);
-            clone.GetComponent<RectTransform>().SetParent(m_content, false);
+            clone.GetComponent<RectTransform>().SetParent(m_shieldContainer, false);
             m_shieldNodes.Add(clone);
         }
     }
