@@ -58,29 +58,10 @@ namespace Proto2D
             m_itemImage.sprite = m_itemDict[itemId].itemSprite;
 
             // 購入するたびに価格を更新する
-            m_player
-                .ObserveEveryValueChanged(x => x.GetItemPurchasedCount(itemId))
-                .Subscribe(count =>
+            m_player.coinCount
+                .Subscribe(coins =>
                 {
-                    // 購入上限に達しているなら売り切れにする
-                    if (!m_itemDict[itemId].isInfinity && m_itemDict[itemId].maxCount <= count)
-                    {
-                        m_priceText.text = "Sold out";
-                        m_purchaseButton.interactable = false;
-                        m_purchaseButtonIcon.enabled = false;
-                    }
-                    else
-                    {
-                        // 購入済みアイテム数に応じた値段を取得
-                        m_price = m_itemDict[itemId].GetPrice(count);
-
-                        var sb = new System.Text.StringBuilder();
-                        sb.AppendFormat("x {0}", m_price);
-                        m_priceText.text = sb.ToString();
-
-                        // 所持コインを超える値段のアイテムは購入不可とする
-                        m_purchaseButton.interactable = m_player.coinCount.Value >= m_price;
-                    }
+                    InitializeButton(m_itemDict[itemId], m_player.GetItemPurchasedCount(itemId), coins);
                 });
 
             // 購入処理
@@ -89,6 +70,29 @@ namespace Proto2D
                 {
                     m_player.PurchaseItem(itemId, m_price);
                 });
+        }
+
+        private void InitializeButton(ShopItem shopItem, int purchasedCount, int coinCount)
+        {
+            // 購入上限に達しているなら売り切れにする
+            if (!shopItem.isInfinity && shopItem.maxCount <= purchasedCount)
+            {
+                m_priceText.text = "Sold out";
+                m_purchaseButton.interactable = false;
+                m_purchaseButtonIcon.enabled = false;
+            }
+            else
+            {
+                // 購入済みアイテム数に応じた値段を取得
+                m_price = shopItem.GetPrice(purchasedCount);
+
+                var sb = new System.Text.StringBuilder();
+                sb.AppendFormat("x {0}", m_price);
+                m_priceText.text = sb.ToString();
+
+                // 所持コインを超える値段のアイテムは購入不可とする
+                m_purchaseButton.interactable = coinCount >= m_price;
+            }
         }
     }
 }
