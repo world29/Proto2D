@@ -33,6 +33,8 @@ namespace Proto2D
 
         private PlayerController m_player;
 
+        private int m_price;
+
         private void Awake()
         {
             // アイテム辞書を構築
@@ -69,9 +71,15 @@ namespace Proto2D
                     }
                     else
                     {
+                        // 購入済みアイテム数に応じた値段を取得
+                        m_price = m_itemDict[itemId].GetPrice(count);
+
                         var sb = new System.Text.StringBuilder();
-                        sb.AppendFormat("x {0}", m_itemDict[itemId].GetPrice(count));
+                        sb.AppendFormat("x {0}", m_price);
                         m_priceText.text = sb.ToString();
+
+                        // 所持コインを超える値段のアイテムは購入不可とする
+                        m_purchaseButton.interactable = m_player.coinCount.Value >= m_price;
                     }
                 });
 
@@ -79,7 +87,7 @@ namespace Proto2D
             m_purchaseButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    m_player.PurchaseItem(itemId);
+                    m_player.PurchaseItem(itemId, m_price);
                 });
         }
     }
