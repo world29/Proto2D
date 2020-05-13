@@ -49,7 +49,7 @@ namespace Proto2D
                                     // カウントゼロで強制ゲームオーバー
                                     m_playerCache.ApplyDamage(Mathf.Infinity);
                                 }
-                            });
+                            }).AddTo(gameObject);
                     }
                     else
                     {
