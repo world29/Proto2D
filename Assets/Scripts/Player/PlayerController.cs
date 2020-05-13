@@ -135,11 +135,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [SerializeField]
     Proto2D.ShopItemDatabase m_shopItemDatabase;
 
-    [System.NonSerialized]
-    Proto2D.ShopItemHandler m_shopItemHandler;
-
-    // 購入済みアイテムの個数を管理する辞書
-    Dictionary<string, int> m_purchasedItems = new Dictionary<string, int>();
+    private Proto2D.ShopItemManager m_shopItemManager;
 
     public struct HitInfo
     {
@@ -161,11 +157,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         health = GetComponent<Proto2D.PlayerHealth>();
         shield = GetComponent<Proto2D.PlayerShield>();
-
-        m_shopItemHandler = new Proto2D.ShopItemHandler();
-        m_shopItemHandler.RegisterHandler("healpotion", new Proto2D.ShopItemHandler_HealPotion());
-        m_shopItemHandler.RegisterHandler("lifegain", new Proto2D.ShopItemHandler_LifeGain());
-        m_shopItemHandler.RegisterHandler("shield", new Proto2D.ShopItemHandler_Shield());
 
         coinCount = new ReactiveProperty<int>(Proto2D.GameState.Instance.GetCoinCount());
 
@@ -197,6 +188,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                 Observable.FromCoroutine(StartDeathSequence).Subscribe();
             }
         });
+
+        m_shopItemManager = FindObjectOfType<Proto2D.ShopItemManager>();
 
         canPickup = true;
 
@@ -409,33 +402,17 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     // アイテムを購入
     public void PurchaseItem(string itemId, int price)
     {
-        // コインを消費する
-        Debug.Assert(coinCount.Value >= price);
-        coinCount.Value -= price;
-
-        // 購入したアイテムの効果を適用する
-        m_shopItemHandler.ConsumeItem(itemId, gameObject);
-
-        // アイテム購入数を更新する
-        if (!m_purchasedItems.ContainsKey(itemId))
+        // コインを消費してアイテムを購入する
+        var coins = coinCount.Value;
+        Proto2D.IShopItemHandler shopItemHandler;
+        if (m_shopItemManager.TryPurchaseItem(itemId, ref coins, out shopItemHandler))
         {
-            m_purchasedItems.Add(itemId, 0);
-        }
-        var count = ++m_purchasedItems[itemId];
+            // コイン数を更新
+            coinCount.Value = coins;
 
-        // デバッグ表示
-        var item = m_shopItemDatabase.GetItemList().First(x => x.itemId == itemId);
-        Debug.LogFormat("Item purchased. {0}:{1}", item.displayName, count);
-    }
-
-    // 購入したアイテム数を取得
-    public int GetItemPurchasedCount(string itemId)
-    {
-        if (m_purchasedItems.ContainsKey(itemId))
-        {
-            return m_purchasedItems[itemId];
+            // 購入したアイテムを消費する
+            shopItemHandler.Consume(gameObject);
         }
-        return 0;
     }
 
     IEnumerator StartDeathSequence()

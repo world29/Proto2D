@@ -28,21 +28,17 @@ namespace Proto2D
         [SerializeField]
         ShopItemDatabase m_itemDatabase;
 
-        // アイテム情報検索用辞書
-        private Dictionary<string, ShopItem> m_itemDict = new Dictionary<string, ShopItem>();
+        IReadOnlyDictionary<string, ShopItem> m_shopItemDict;
 
+        private ShopItemManager m_shopItemManager;
         private PlayerController m_player;
 
         private int m_price;
 
         private void Awake()
         {
-            // アイテム辞書を構築
-            var itemList = m_itemDatabase.GetItemList();
-            foreach (var item in itemList)
-            {
-                m_itemDict[item.itemId] = item;
-            }
+            m_shopItemDict = m_itemDatabase.GetItemDictionary();
+            m_shopItemManager = FindObjectOfType<ShopItemManager>();
 
             // プレイヤーを検索
             var go = GameObject.FindGameObjectWithTag("Player");
@@ -52,16 +48,16 @@ namespace Proto2D
         // 初期化
         public void InitializeFromItemId(string itemId)
         {
-            if (!m_itemDict.ContainsKey(itemId)) return;
+            Debug.Assert(m_shopItemDict.ContainsKey(itemId));
 
-            m_itemNameText.text = m_itemDict[itemId].displayName;
-            m_itemImage.sprite = m_itemDict[itemId].itemSprite;
+            m_itemNameText.text = m_shopItemDict[itemId].displayName;
+            m_itemImage.sprite = m_shopItemDict[itemId].itemSprite;
 
             // 購入するたびに価格を更新する
             m_player.coinCount
                 .Subscribe(coins =>
                 {
-                    InitializeButton(m_itemDict[itemId], m_player.GetItemPurchasedCount(itemId), coins);
+                    InitializeButton(m_shopItemDict[itemId], m_shopItemManager.GetPurchasedCount(itemId), coins);
                 }).AddTo(gameObject);
 
             // 購入処理

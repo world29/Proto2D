@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Proto2D
 {
@@ -14,6 +15,11 @@ namespace Proto2D
         public IReadOnlyList<ShopItem> GetItemList()
         {
             return itemList.AsReadOnly();
+        }
+
+        public IReadOnlyDictionary<string, ShopItem> GetItemDictionary()
+        {
+            return itemList.ToDictionary(shopItem => shopItem.itemId);
         }
     }
 }
