@@ -10,8 +10,6 @@ using System.Linq;
 [RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
 {
-    public ReactiveProperty<int> coinCount;
-
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
     public float jumpSpeed = 15;
@@ -125,6 +123,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     PlayerInput input;
     Proto2D.PlayerHealth health;
     Proto2D.PlayerShield shield;
+    Proto2D.PlayerWallet m_wallet;
 
     private IPlayerState state;
     private bool isInvincible;
@@ -157,9 +156,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         health = GetComponent<Proto2D.PlayerHealth>();
         shield = GetComponent<Proto2D.PlayerShield>();
-
-        coinCount = new ReactiveProperty<int>(Proto2D.GameState.Instance.GetCoinCount());
-
+        m_wallet = GameObject.FindObjectOfType<Proto2D.PlayerWallet>();
+        
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
         animator = GetComponent<Animator>();
@@ -399,22 +397,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         StartCoroutine(StartInvincible(invincibleDuration));
     }
 
-    // アイテムを購入
-    public void PurchaseItem(string itemId, int price)
-    {
-        // コインを消費してアイテムを購入する
-        var coins = coinCount.Value;
-        Proto2D.IShopItemHandler shopItemHandler;
-        if (m_shopItemManager.TryPurchaseItem(itemId, ref coins, out shopItemHandler))
-        {
-            // コイン数を更新
-            coinCount.Value = coins;
-
-            // 購入したアイテムを消費する
-            shopItemHandler.Consume(gameObject);
-        }
-    }
-
     IEnumerator StartDeathSequence()
     {
         // コリジョンを無効化
@@ -437,11 +419,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
             Time.timeScale = 1f;
         }
-
-        //MEMO: 現状、GameOver はここでしか呼ばれないため、ゲームオーバー時の処理を個々に記述している
-        // コイン数を半減する
-        coinCount.Value /= 2;
-        Proto2D.GameState.Instance.SetCoinCount(coinCount.Value);
 
         // ノックバックした後、Death ステートに遷移する
         Proto2D.GameController.Instance.GameOver();
@@ -520,7 +497,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
                 ChangeState(new PlayerState_Hop(itemData.hopSpeed));
                 break;
             case ItemType.Coin:
-                coinCount.Value++;
+                m_wallet.AddCoin(1);
                 break;
             case ItemType.HealthPack:
                 health.ApplyHeal(1f);
@@ -610,12 +587,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         dinfo.senderPos = Vector3.zero;
 
         ConsumeDamage(dinfo);
-    }
-
-    // ステージクリア時の処理
-    public void OnStageCompleted()
-    {
-        Proto2D.GameState.Instance.SetCoinCount(coinCount.Value);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

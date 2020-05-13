@@ -33,6 +33,7 @@ namespace Proto2D
         public Sprite itemSprite { get { return m_itemSprite; } }
         public bool isInfinity { get { return m_isInfinity; } }
         public int maxCount { get { return m_maxCount; } }
+        public AnimationCurve priceCurve { get { return m_priceCurve; } }
 
         // 購入済みアイテム数に応じた価格を取得する
         public int GetPrice(int purchasedCount)

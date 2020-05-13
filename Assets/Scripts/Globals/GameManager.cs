@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
+using UniRx;
 
 namespace Proto2D
 {
@@ -22,6 +23,8 @@ namespace Proto2D
         GameObject m_debugMenuCanvasPrefab;
         [SerializeField]
         float m_fadeWaitTime = 1;
+
+        public Subject<Unit> OnGameOver = new Subject<Unit>();
 
         GameObject m_fadeCanvasClone;
         GameObject m_gameOverCanvasClone;
@@ -95,10 +98,14 @@ namespace Proto2D
         {
             m_gameOverCanvasClone = Instantiate(m_gameOverCanvasPrefab);
 
+            // ゲームオーバー画面の UI セットアップ
             m_buttons = m_gameOverCanvasClone.GetComponentsInChildren<Button>();
 
             m_buttons[0].onClick.AddListener(Retry);
             m_buttons[1].onClick.AddListener(Return);
+
+            // ゲームオーバーイベント発行
+            OnGameOver.OnNext(Unit.Default);
         }
 
         public void OpenDebugMenu()

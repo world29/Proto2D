@@ -61,6 +61,7 @@ namespace Proto2D
 
         private ReactiveProperty<int> RxStageIndex = new ReactiveProperty<int>(-1);
         public ReactiveProperty<StageController> RxStage = new ReactiveProperty<StageController>(null);
+        public Subject<StageController> OnStageCompleted = new Subject<StageController>();
 
         private bool isGameOver;
         private bool isGameClear;
@@ -142,7 +143,7 @@ namespace Proto2D
 
             if (prevStage)
             {
-                prevStage.OnCompleted -= OnStageCompleted;
+                prevStage.OnCompleted -= OnCurrentStageCompleted;
                 prevStage.m_phase.OnChanged -= OnPhaseChanged;
             }
 
@@ -151,7 +152,7 @@ namespace Proto2D
             {
                 Stage.Initialize();
 
-                Stage.OnCompleted += OnStageCompleted;
+                Stage.OnCompleted += OnCurrentStageCompleted;
                 Stage.m_phase.OnChanged += OnPhaseChanged;
             }
 
@@ -253,14 +254,14 @@ namespace Proto2D
             Pause();
         }
 
-        public void OnStageCompleted()
+        private void OnCurrentStageCompleted()
         {
             if (m_stageIndex < m_stages.Count - 1)
             {
-                LoadStage(m_stageIndex + 1);
+                // ステージクリアイベントを発行
+                OnStageCompleted.OnNext(Stage);
 
-                // コイン数を保存
-                m_player.GetComponent<PlayerController>().OnStageCompleted();
+                LoadStage(m_stageIndex + 1);
             }
             else
             {

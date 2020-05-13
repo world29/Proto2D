@@ -19,6 +19,8 @@ namespace Proto2D
             get { return m_currentShield; }
         }
 
+        public int shieldLimit { get { return m_shieldLimit; } }
+
         public void SetCurrentShield(int value)
         {
             m_currentShield.Value = value;

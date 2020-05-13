@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 namespace Proto2D
 {
@@ -16,13 +17,29 @@ namespace Proto2D
 
         IReadOnlyDictionary<string, ShopItem> m_shopItemDict;
 
+        public Subject<ShopItem> OnPurchased = new Subject<ShopItem>();
+
+        readonly string ItemId_HealPotion = "healpotion";
+        readonly string ItemId_LifeGain = "lifegain";
+        readonly string ItemId_Shield = "shield";
+
         private void Awake()
         {
             m_shopItemDict = m_shopItemDatabase.GetItemDictionary();
 
-            RegisterHandler("healpotion", new ShopItemHandler_HealPotion());
-            RegisterHandler("lifegain", new ShopItemHandler_LifeGain());
-            RegisterHandler("shield", new ShopItemHandler_Shield());
+            RegisterHandler(ItemId_HealPotion, new ShopItemHandler_HealPotion(m_shopItemDict[ItemId_HealPotion]));
+            RegisterHandler(ItemId_LifeGain, new ShopItemHandler_LifeGain(m_shopItemDict[ItemId_LifeGain]));
+            RegisterHandler(ItemId_Shield, new ShopItemHandler_Shield(m_shopItemDict[ItemId_Shield]));
+        }
+
+        private void Start()
+        {
+            // ゲームオーバー時にアイテム購入数をリセットする
+            GameManager.Instance.OnGameOver
+                .Subscribe(_ => 
+                {
+                    m_purchasedCounts.Clear();
+                });
         }
 
         private void RegisterHandler(string itemId, IShopItemHandler handler)
@@ -33,6 +50,11 @@ namespace Proto2D
         private void UnregisterHandler(string itemId)
         {
             m_handlers.Remove(itemId);
+        }
+
+        public IShopItemHandler GetShopItemHandler(string itemId)
+        {
+            return m_handlers[itemId];
         }
 
         public int GetPurchasedCount(string itemId)
@@ -53,29 +75,26 @@ namespace Proto2D
             m_purchasedCounts[itemId]++;
         }
 
-        public bool TryPurchaseItem(string itemId, ref int coinBudget, out IShopItemHandler shopItemHandler)
+        public void PurchaseAndConsumeItem(string itemId)
         {
-            Debug.Assert(m_shopItemDict.ContainsKey(itemId));
-            Debug.Assert(m_handlers.ContainsKey(itemId));
+            var shopItem = m_shopItemDict[itemId];
+            var handler = m_handlers[itemId];
 
-            var itemData = m_shopItemDict[itemId];
+            // コインを消費してアイテムを購入
+            var playerWallet = FindObjectOfType<PlayerWallet>();
+            int count = GetPurchasedCount(itemId);
+            playerWallet.SubtractCoin(handler.GetPrice(count));
 
-            // 十分な数のコインを持っていれば購入
-            var price = itemData.GetPrice(GetPurchasedCount(itemId));
-            if (coinBudget >= price)
-            {
-                coinBudget -= price;
-                shopItemHandler = m_handlers[itemId];
+            // アイテム購入数を記録
+            IncrementPurchasedCount(itemId);
 
-                // アイテム購入数を記録
-                IncrementPurchasedCount(itemId);
+            // アイテムを消費する
+            handler.Consume(GameObject.FindGameObjectWithTag("Player"));
 
-                return true;
-            }
+            Debug.LogFormat("shopItem purchased: {0}", shopItem.displayName);
 
-            // アイテム購入失敗
-            shopItemHandler = null;
-            return false;
+            // 購入イベントを発行
+            OnPurchased.OnNext(shopItem);
         }
     }
 }

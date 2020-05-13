@@ -12,10 +12,12 @@ namespace Proto2D
         FloatReactiveProperty m_maxHealth;
 
         [SerializeField, Tooltip("最大HPの上限")]
-        FloatReactiveProperty m_maxHealthLimit;
+        float m_maxHealthLimit;
 
         [SerializeField]
         FloatReactiveProperty m_currentHealth;
+
+        public float maxHealthLimit { get { return m_maxHealthLimit; } }
 
         public IReadOnlyReactiveProperty<float> maxHealth
         {
@@ -29,7 +31,7 @@ namespace Proto2D
 
         public void SetMaxHealth(float value)
         {
-            m_maxHealth.Value = Mathf.Min(m_maxHealthLimit.Value, value);
+            m_maxHealth.Value = Mathf.Min(m_maxHealthLimit, value);
         }
 
         public void SetCurrentHealth(float value)

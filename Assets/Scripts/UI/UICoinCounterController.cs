@@ -18,33 +18,17 @@ namespace Proto2D
         [SerializeField, Tooltip("スケール値のカーブ")]
         public AnimationCurve m_scaleCurve;
 
-        private bool registered = false;
-
-        private void Awake()
+        private void Start()
         {
-            UpdateUI(0);
+            var playerWallet = FindObjectOfType<PlayerWallet>();
+            playerWallet.coins
+                .Subscribe(coins => UpdateUI(coins))
+                .AddTo(gameObject);
         }
 
-        private void LateUpdate()
+        private void UpdateUI(int coins)
         {
-            if (!registered)
-            {
-                GameObject go = GameObject.FindGameObjectWithTag("Player");
-                if (go)
-                {
-                    var pc = go.GetComponent<PlayerController>();
-                    pc.coinCount
-                        .DistinctUntilChanged()
-                        .Subscribe(count => UpdateUI(count));
-
-                    registered = true;
-                }
-            }
-        }
-
-        private void UpdateUI(int coinCount)
-        {
-            m_counterText.text = string.Format("x{0}", coinCount);
+            m_counterText.text = string.Format("x{0}", coins);
             StartCoroutine(IncrementedEffect(m_scaleDuration));
         }
 
