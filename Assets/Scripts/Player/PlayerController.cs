@@ -368,8 +368,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
 
         // ダメージ計算 (あればシールドで受ける)
-        if (shield.ConsumeShield())
+        if (shield.currentShield.Value > 0 && info.type != DamageType.Directly)
         {
+            shield.ConsumeShield();
+
             // シールドを消費した
             Debug.Log("Consume shield.");
         }
@@ -579,10 +581,10 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     }
 
     // 外部から直接ダメージを適用するための公開関数
-    public void ApplyDamage(float damageAmount)
+    public void ApplyDirectDamage(float damageAmount)
     {
         DamageInfo dinfo;
-        dinfo.type = DamageType.Contact;
+        dinfo.type = DamageType.Directly;
         dinfo.damage = damageAmount;
         dinfo.senderPos = Vector3.zero;
 

@@ -10,6 +10,7 @@ public enum DamageType
     Attack,     // ジャンプアタック
     Projectile, // 弾
     FrailtyProjectile, // ジャンプアタック中は無効になる弾
+    Directly, // シールドを貫通する
 }
 
 [System.Flags]
