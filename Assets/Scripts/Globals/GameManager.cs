@@ -24,6 +24,9 @@ namespace Proto2D
         [SerializeField]
         float m_fadeWaitTime = 1;
 
+        BoolReactiveProperty m_isGameOver = new BoolReactiveProperty();
+
+        public IReadOnlyReactiveProperty<bool> isGameOver;
         public Subject<Unit> OnGameOver = new Subject<Unit>();
 
         GameObject m_fadeCanvasClone;
@@ -34,6 +37,8 @@ namespace Proto2D
 
         private void Start()
         {
+            isGameOver = m_isGameOver;
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -56,7 +61,7 @@ namespace Proto2D
         // シーンのロード時に実行される
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-
+            m_isGameOver.Value = false;
         }
 
         // 次のシーンに遷移する
@@ -103,6 +108,8 @@ namespace Proto2D
 
             m_buttons[0].onClick.AddListener(Retry);
             m_buttons[1].onClick.AddListener(Return);
+
+            m_isGameOver.Value = true;
 
             // ゲームオーバーイベント発行
             OnGameOver.OnNext(Unit.Default);

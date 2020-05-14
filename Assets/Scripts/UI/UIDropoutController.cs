@@ -28,6 +28,7 @@ namespace Proto2D
 
             // プレイヤーが画面外に出た/画面内に入った際に bool 値を発行する
             var playerFrameOutObservable = this.UpdateAsObservable()
+                .Where(_ => !GameManager.Instance.isGameOver.Value)
                 .Select(_ => IsPlayerFrameOut())
                 .DistinctUntilChanged();
 
