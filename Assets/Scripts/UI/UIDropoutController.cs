@@ -48,7 +48,7 @@ namespace Proto2D
                                 if (time == 0)
                                 {
                                     // カウントゼロで強制ゲームオーバー
-                                    m_playerCache.ApplyDirectDamage(Mathf.Infinity);
+                                    Dropout();
                                 }
                             }).AddTo(gameObject);
                     }
@@ -61,6 +61,12 @@ namespace Proto2D
                         }
                     }
                 });
+        }
+
+        [ContextMenu("Dropout")]
+        private void Dropout()
+        {
+            m_playerCache.ApplyDirectDamage(Mathf.Infinity);
         }
 
         private void UpdateUI(int counter)

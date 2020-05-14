@@ -28,6 +28,7 @@ namespace Proto2D
         {
             this.OnTriggerEnter2DAsObservable()
                 .Where(collider => collider.gameObject.CompareTag(PLAYER_TAG))
+                .Where(collider => !collider.gameObject.GetComponent<PlayerHealth>().IsDead())
                 .Subscribe(collider =>
                 {
                     // 既にダイアログ生成済み
