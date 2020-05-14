@@ -54,7 +54,10 @@ namespace Proto2D
                     else
                     {
                         // カウントダウンをキャンセル
-                        m_countDownHandle.Dispose();
+                        if (m_countDownHandle != null)
+                        {
+                            m_countDownHandle.Dispose();
+                        }
                     }
                 });
         }
