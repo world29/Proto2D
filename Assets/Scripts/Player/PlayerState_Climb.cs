@@ -31,6 +31,8 @@ public class PlayerState_Climb : IPlayerState
         // 座標更新
         controller.Move(player.velocity * Time.deltaTime, false);
 
+        player.UpdateFacing(controller.collisions.right ? 1f : -1f);
+
         if (controller.collisions.below || (!controller.collisions.right && !controller.collisions.left))
         {
             return new PlayerState_Free();
