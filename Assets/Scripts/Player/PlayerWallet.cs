@@ -27,10 +27,15 @@ namespace Proto2D
             m_coins.Value = GameState.Instance.GetCoinCount();
 
             // ステージクリア時にセーブする
-            GameController.Instance.OnStageCompleted.Subscribe(stage =>
-            {
-                Save();
-            });
+            GameManager.Instance.gameController
+                .Where(x => x != null)
+                .Subscribe(gc =>
+                {
+                    gc.OnStageCompleted.Subscribe(stage =>
+                    {
+                        Save();
+                    });
+                });
 
             // ゲームオーバー時に半額にする
             GameManager.Instance.OnGameOver.Subscribe(_ => 

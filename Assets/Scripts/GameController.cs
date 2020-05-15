@@ -73,6 +73,13 @@ namespace Proto2D
 
         private Dictionary<Bounds, RoomController> m_spawnedRooms = new Dictionary<Bounds, RoomController>();
 
+        private new void Awake()
+        {
+            base.Awake();
+
+            GameManager.Instance.RegisterGameController(this);
+        }
+
         void Start()
         {
             RxStageIndex

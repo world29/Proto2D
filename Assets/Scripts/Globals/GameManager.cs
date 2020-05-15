@@ -29,6 +29,10 @@ namespace Proto2D
         public IReadOnlyReactiveProperty<bool> isGameOver;
         public Subject<Unit> OnGameOver = new Subject<Unit>();
 
+        ReactiveProperty<GameController> m_gameController = new ReactiveProperty<GameController>();
+
+        public IReadOnlyReactiveProperty<GameController> gameController;
+
         GameObject m_fadeCanvasClone;
         GameObject m_gameOverCanvasClone;
         GameObject m_debugMenuCanvasClone;
@@ -37,6 +41,8 @@ namespace Proto2D
 
         private void Start()
         {
+            gameController = m_gameController;
+
             isGameOver = m_isGameOver;
 
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -56,6 +62,11 @@ namespace Proto2D
 
                 GameOver();
             }
+        }
+
+        public void RegisterGameController(GameController gc)
+        {
+            m_gameController.Value = gc;
         }
 
         // シーンのロード時に実行される

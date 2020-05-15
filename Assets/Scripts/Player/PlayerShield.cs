@@ -40,5 +40,10 @@ namespace Proto2D
             }
             return false;
         }
+
+        public void ResetShields()
+        {
+            m_currentShield.Value = 0;
+        }
     }
 }
