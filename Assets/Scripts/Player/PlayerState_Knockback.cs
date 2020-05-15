@@ -11,10 +11,12 @@ public class PlayerState_Knockback : IPlayerState
 
     private float timer;
 
+    private Vector2 m_hitNormal;
     private IPlayerState m_nextState;
 
-    public PlayerState_Knockback(IPlayerState nextState)
+    public PlayerState_Knockback(Vector2 hitNormal, IPlayerState nextState)
     {
+        m_hitNormal = hitNormal;
         m_nextState = nextState;
     }
 
@@ -27,6 +29,11 @@ public class PlayerState_Knockback : IPlayerState
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
+
+        // ダメージを受けた方向と逆方向にノックバック
+        Vector3 velocity = player.knockbackVelocity;
+        velocity.x *= -Mathf.Sign(m_hitNormal.x);
+        player.velocity = velocity;
 
         // 踏みつけ判定を無効化
         var stompers = context.GetComponentsInChildren<Proto2D.Damager>()

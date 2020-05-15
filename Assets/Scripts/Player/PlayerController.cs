@@ -181,10 +181,12 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             {
                 // 死んだら拾えなくなる
                 canPickup = false;
+                hangable = false;
 
                 shield.ResetShields();
 
-                ChangeState(new PlayerState_Knockback(new PlayerState_Death()));
+                Vector2 hitNormal = transform.position.x > 0 ? Vector2.right : Vector2.left;
+                ChangeState(new PlayerState_Knockback(hitNormal, new PlayerState_Death()));
 
                 // 死亡時のシーケンスを再生する
                 Observable.FromCoroutine(StartDeathSequence).Subscribe();
@@ -384,12 +386,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             health.ApplyDamage(info.damage);
 
             // ノックバック
-            Vector3 collvec = info.senderPos - transform.position;
-
-            velocity.x = knockbackVelocity.x * -Mathf.Sign(collvec.x);
-            velocity.y = knockbackVelocity.y;
-
-            ChangeState(new PlayerState_Knockback(new PlayerState_Free()));
+            Vector2 hitNormal = (info.senderPos - transform.position).normalized;
+            ChangeState(new PlayerState_Knockback(hitNormal, new PlayerState_Free()));
         }
 
         // 無敵時間開始
