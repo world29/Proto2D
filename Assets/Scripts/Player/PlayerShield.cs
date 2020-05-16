@@ -14,6 +14,14 @@ namespace Proto2D
         [SerializeField]
         IntReactiveProperty m_currentShield;
 
+        public AudioClip m_consumeSE;
+
+        AudioSource audioSource;
+
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
         public IReadOnlyReactiveProperty<int> currentShield
         {
             get { return m_currentShield; }
@@ -35,6 +43,11 @@ namespace Proto2D
         {
             if (m_currentShield.Value > 0)
             {
+                if (m_consumeSE)
+                {
+                    audioSource.PlayOneShot(m_consumeSE);
+                }
+
                 m_currentShield.Value--;
                 return true;
             }
