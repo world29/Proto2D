@@ -173,6 +173,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Start()
     {
+        health.SetMaxHealth(health.maxHealth.Value);
         health.SetCurrentHealth(health.maxHealth.Value);
 
         health.currentHealth.Subscribe(hp => 

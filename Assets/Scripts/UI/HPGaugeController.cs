@@ -41,7 +41,6 @@ namespace Proto2D
         {
             // HP の最大値アップ
             this.ObserveEveryValueChanged(x => x.m_maxHealth)
-                .DistinctUntilChanged()
                 .Subscribe(maxHealth => 
                 {
                     while (maxHealth > m_healthNodes.Count) {
@@ -51,7 +50,6 @@ namespace Proto2D
 
             // HP 更新
             this.ObserveEveryValueChanged(x => x.m_currentHealth)
-                .DistinctUntilChanged()
                 .Pairwise()
                 .Subscribe(health =>
                 {
@@ -141,6 +139,8 @@ namespace Proto2D
         private void OnSceneUnloaded(Scene scn)
         {
             m_playerHealth = null;
+
+            m_maxHealth = 0;
         }
 
         private void AddHealthNode()
