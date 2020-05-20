@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using UniRx;
+using UniRx.Triggers;
 
 namespace Proto2D
 {
@@ -33,9 +35,10 @@ namespace Proto2D
         // 取得先のタグはデフォルトでプレイヤーとする
         string m_targetTag = "Player";
 
-        private void OnEnable()
+        private void Awake()
         {
-            m_OnActivate.Invoke();
+            gameObject.OnEnableAsObservable()
+                .Subscribe(_ => m_OnActivate.Invoke());
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
