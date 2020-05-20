@@ -10,5 +10,10 @@ namespace Proto2D
         {
             GameManager.Instance.OpenDebugMenu();
         }
+
+        public void MoveToScene(string sceneName)
+        {
+            GameManager.Instance.MoveToScene(sceneName);
+        }
     }
 }

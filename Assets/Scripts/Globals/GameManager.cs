@@ -75,6 +75,13 @@ namespace Proto2D
             m_isGameOver.Value = false;
         }
 
+        // 指定したシーンに遷移する
+        public void MoveToScene(string sceneName)
+        {
+            int sceneIndex = m_stageName.ToList().IndexOf(sceneName);
+            MoveToStage(sceneIndex);
+        }
+
         // 次のシーンに遷移する
         public void NextStage()
         {
