@@ -110,8 +110,10 @@ namespace Proto2D
 
             m_fadeCanvas.fadeOut = true;
         }
+
         public void GameOver()
         {
+#if false
             m_gameOverCanvasClone = Instantiate(m_gameOverCanvasPrefab);
 
             // ゲームオーバー画面の UI セットアップ
@@ -119,6 +121,13 @@ namespace Proto2D
 
             m_buttons[0].onClick.AddListener(Retry);
             m_buttons[1].onClick.AddListener(Return);
+#else
+            if (m_stageName.Length > 0)
+            {
+                // 末尾のステージをゲームオーバーとみなす
+                MoveToStage(m_stageName.Length - 1);
+            }
+#endif
 
             m_isGameOver.Value = true;
 
