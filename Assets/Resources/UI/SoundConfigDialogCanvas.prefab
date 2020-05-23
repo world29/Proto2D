@@ -1869,7 +1869,7 @@ GameObject:
   - component: {fileID: 8913327020197847035}
   - component: {fileID: 8913327020197847034}
   - component: {fileID: 8913327020197847033}
-  - component: {fileID: 4179545574366940014}
+  - component: {fileID: 1894779608659939851}
   m_Layer: 5
   m_Name: SoundConfigDialogCanvas
   m_TagString: Untagged
@@ -1957,7 +1957,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4179545574366940014
+--- !u!114 &1894779608659939851
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1966,10 +1966,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8913327020197847032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3bc3535f7e4584b9977734d604e3e0, type: 3}
+  m_Script: {fileID: 11500000, guid: cf77dcb9c71061c4aaa95f2dabea1f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: {fileID: 0}
+  m_mixLevels: {fileID: 0}
+  m_masterVolumeSlider: {fileID: 3635382271184602574}
+  m_musicVolumeSlider: {fileID: 3635382270810824914}
+  m_sfxVolumeSlider: {fileID: 3635382272622498869}
 --- !u!1 &8913327020490120405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2251,7 @@ GameObject:
   - component: {fileID: 8913327021205531727}
   - component: {fileID: 8913327021205531726}
   m_Layer: 5
-  m_Name: ButtonNo
+  m_Name: ButtonBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2348,7 +2352,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4179545574366940014}
+      - m_Target: {fileID: 1894779608659939851}
         m_MethodName: Close
         m_Mode: 1
         m_Arguments:

@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c0c7742b7e82d4e9fd40564116687d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_soundMenuDialog: {fileID: 3861758745752101240}
+  m_soundMenuDialog: {fileID: 1575309427536902173}
+  m_mixLevels: {fileID: 1691890078704160733}
 --- !u!114 &1691890078704160733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +165,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3396204147831946933}
     m_Modifications:
+    - target: {fileID: 1894779608659939851, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_mixLevels
+      value: 
+      objectReference: {fileID: 1691890078704160733}
     - target: {fileID: 3635382270810824914, guid: bc1ded15177470448b421c11911edbff,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
@@ -544,6 +550,36 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8913327021205531726, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913327021205531726, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913327021205531726, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913327021205531726, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4282834021353841047}
+    - target: {fileID: 8913327021205531726, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveSoundConfig
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913327021205531726, guid: bc1ded15177470448b421c11911edbff,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc1ded15177470448b421c11911edbff, type: 3}
 --- !u!224 &8369231972835653098 stripped
@@ -552,15 +588,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1123370549775264278}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3861758745752101240 stripped
+--- !u!114 &1575309427536902173 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4179545574366940014, guid: bc1ded15177470448b421c11911edbff,
+  m_CorrespondingSourceObject: {fileID: 1894779608659939851, guid: bc1ded15177470448b421c11911edbff,
     type: 3}
   m_PrefabInstance: {fileID: 1123370549775264278}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3bc3535f7e4584b9977734d604e3e0, type: 3}
+  m_Script: {fileID: 11500000, guid: cf77dcb9c71061c4aaa95f2dabea1f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
