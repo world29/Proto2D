@@ -95,11 +95,12 @@ namespace Proto2D
                 LoadStage(m_initialStageIndex);
             }
 
-            // プレイヤーをスポーンする
-            GameObject spawner = GameObject.FindGameObjectWithTag("PlayerSpawner");
-            if (spawner)
+            // プレイヤーをシーン直下に移動する
+            var playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject)
             {
-                SpawnPlayer(spawner.transform.position);
+                playerObject.transform.SetParent(null, true);
+                m_player = playerObject;
             }
         }
 
