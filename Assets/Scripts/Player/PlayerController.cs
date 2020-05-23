@@ -200,24 +200,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         // 初期状態として、ジャンプアタックの攻撃判定を無効化
         SetAttackEnabled(false);
-
-        // Attack/Hop ステートのときだけダメージを有効化する
-        var stateMachine = animator.GetBehaviour<ObservableStateMachineTrigger>();
-        stateMachine.OnStateEnterAsObservable()
-            .Where(b => b.StateInfo.IsName("player_attack") || b.StateInfo.IsName("player_hop"))
-            .Subscribe(b =>
-            {
-                SetAttackEnabled(true);
-                SetStompEnabled(false);
-            });
-
-        stateMachine.OnStateExitAsObservable()
-            .Where(b => b.StateInfo.IsName("player_attack") || b.StateInfo.IsName("player_hop"))
-            .Subscribe(b =>
-            {
-                SetAttackEnabled(false);
-                SetStompEnabled(true);
-            });
     }
 
     void Update()
@@ -505,14 +487,14 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
     }
 
-    private void SetAttackEnabled(bool enabled)
+    public void SetAttackEnabled(bool enabled)
     {
         GetComponentsInChildren<Proto2D.Damager>()
             .First(x => x.m_damageType == DamageType.Attack)
             .enabled = enabled;
     }
 
-    private void SetStompEnabled(bool enabled)
+    public void SetStompEnabled(bool enabled)
     {
         GetComponentsInChildren<Proto2D.Damager>()
             .First(x => x.m_damageType == DamageType.Stomp)

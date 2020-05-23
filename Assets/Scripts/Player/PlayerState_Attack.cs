@@ -28,11 +28,18 @@ public class PlayerState_Attack : IPlayerState
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 
+        // 各種ダメージャの切り替え
+        player.SetAttackEnabled(true);
+        player.SetStompEnabled(false);
+
         animator.SetBool("attack", true);
     }
 
     public void OnExit(GameObject context)
     {
+        player.SetAttackEnabled(false);
+        player.SetStompEnabled(true);
+
         animator.SetBool("attack", false);
     }
 

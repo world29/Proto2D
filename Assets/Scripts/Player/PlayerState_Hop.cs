@@ -30,11 +30,18 @@ public class PlayerState_Hop : IPlayerState
         // 初速の計算
         CalculateInitialVelocity(ref player.velocity);
 
+        // 各種ダメージャの切り替え
+        player.SetAttackEnabled(true);
+        player.SetStompEnabled(false);
+
         animator.SetBool("hop", true);
     }
 
     public void OnExit(GameObject context)
     {
+        player.SetAttackEnabled(false);
+        player.SetStompEnabled(true);
+
         animator.SetBool("hop", false);
     }
 
