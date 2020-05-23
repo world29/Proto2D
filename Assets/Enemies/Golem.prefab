@@ -2333,6 +2333,7 @@ GameObject:
   - component: {fileID: 5137105001093596734}
   - component: {fileID: 4974927026796974366}
   - component: {fileID: 3660474024773480311}
+  - component: {fileID: 7060715895701694644}
   m_Layer: 11
   m_Name: Golem
   m_TagString: Enemy
@@ -2613,6 +2614,20 @@ MonoBehaviour:
     countRange: {x: 5, y: 7}
   kSpawnSpeed: 15
   kSpawnAngleRange: 90
+--- !u!114 &7060715895701694644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778643387317822647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e447295abeddc4e844b04848474b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stagePhaseFlags: 3
+  m_percentage: 100
 --- !u!1001 &1620464734144737571
 PrefabInstance:
   m_ObjectHideFlags: 0
