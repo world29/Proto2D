@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using System;
 
 namespace Proto2D.Globals
 {
@@ -14,6 +16,9 @@ namespace Proto2D.Globals
         MixLevels m_mixLevels;
 
         private AudioSource audioSource;
+
+        private IDisposable m_fadeInOutHandle;
+        private float m_masterVolumeSave;
 
         private void Start()
         {
@@ -29,6 +34,48 @@ namespace Proto2D.Globals
             Debug.Assert(audioSource != null, "SoundManager.Start() より先に呼び出してはいけません");
 
             audioSource.PlayOneShot(clip);
+        }
+
+        public void FadeOut(float duration)
+        {
+            if (m_fadeInOutHandle != null)
+            {
+                m_fadeInOutHandle.Dispose();
+            }
+
+            const float intervalMs = 50f;
+            float count = duration * 1000 / intervalMs;
+
+            m_masterVolumeSave = m_mixLevels.masterVolume;
+
+            m_fadeInOutHandle = Observable
+                .Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(intervalMs))
+                .TakeWhile(l => l <= count)
+                .Subscribe(l =>
+                {
+                    var level = Mathf.Lerp(m_masterVolumeSave, 0, l / count);
+                    m_mixLevels.SetMasterVolume(level);
+                });
+        }
+
+        public void FadeIn(float duration)
+        {
+            if (m_fadeInOutHandle != null)
+            {
+                m_fadeInOutHandle.Dispose();
+            }
+
+            const float intervalMs = 50f;
+            float count = duration * 1000 / intervalMs;
+
+            m_fadeInOutHandle = Observable
+                .Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(intervalMs))
+                .TakeWhile(l => l <= count)
+                .Subscribe(l =>
+                {
+                    var level = Mathf.Lerp(0, m_masterVolumeSave, l / count);
+                    m_mixLevels.SetMasterVolume(level);
+                });
         }
 
         public void OpenSoundMenu()

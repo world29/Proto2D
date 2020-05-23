@@ -113,6 +113,8 @@ namespace Proto2D
             // フェードイン
             m_fadeCanvas.fadeIn = true;
 
+            Globals.SoundManager.Instance.FadeOut(m_fadeWaitTime);
+
             yield return new WaitForSeconds(m_fadeWaitTime);
 
             // シーンを非同期で読み込み
@@ -120,6 +122,8 @@ namespace Proto2D
             yield return SceneManager.LoadSceneAsync(m_stageName[m_currentStageNum]);
 
             m_fadeCanvas.fadeOut = true;
+
+            Globals.SoundManager.Instance.FadeIn(m_fadeWaitTime);
         }
 
         public void GameOver()
