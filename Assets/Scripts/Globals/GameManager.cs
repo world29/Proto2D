@@ -62,6 +62,10 @@ namespace Proto2D
 
                 GameOver();
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                Globals.SoundManager.Instance.OpenSoundMenu();
+            }
         }
 
         public void RegisterGameController(GameController gc)

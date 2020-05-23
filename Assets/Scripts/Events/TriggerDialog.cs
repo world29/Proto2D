@@ -17,35 +17,24 @@ namespace Proto2D
         [SerializeField]
         string m_message;
 
-        [SerializeField]
-        UnityEvent m_onClose;
-
         private Dialog m_dialogClone;
-
-        const string PLAYER_TAG = "Player";
 
         private void Start()
         {
             this.OnTriggerEnter2DAsObservable()
-                .Where(collider => collider.gameObject.CompareTag(PLAYER_TAG))
-                .Where(collider => !collider.gameObject.GetComponent<PlayerHealth>().IsDead())
-                .Subscribe(collider =>
+                .Select(collider => collider.gameObject)
+                .Where(go => go.CompareTag("Player"))
+                .Where(go => !go.GetComponent<PlayerHealth>().IsDead())
+                .Subscribe(go =>
                 {
-                    // 既にダイアログ生成済み
+                    // 既にダイアログを開いている
                     if (m_dialogClone != null) return;
 
-                    // ダイアログを生成
+                    // ダイアログを開く
                     m_dialogClone = GameObject.Instantiate(m_dialogPrefab);
-                    m_dialogClone.SetText(m_message);
+                    m_dialogClone.Open();
 
-                    // ダイアログの終了をハンドリング
-                    m_dialogClone.OnDestroyAsObservable()
-                        .Subscribe(_ =>
-                        {
-                            m_onClose.Invoke();
-
-                            m_dialogClone = null;
-                        });
+                    m_dialogClone.onClose.AddListener(() => m_dialogClone = null);
                 });
         }
     }

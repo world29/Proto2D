@@ -7,6 +7,9 @@ namespace Proto2D.Globals
     [RequireComponent(typeof(AudioSource))]
     public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
+        [SerializeField]
+        Dialog m_soundMenuDialog;
+
         private AudioSource audioSource;
 
         private void Start()
@@ -21,6 +24,11 @@ namespace Proto2D.Globals
             Debug.Assert(audioSource != null, "SoundManager.Start() より先に呼び出してはいけません");
 
             audioSource.PlayOneShot(clip);
+        }
+
+        public void OpenSoundMenu()
+        {
+            m_soundMenuDialog.Open();
         }
     }
 }
