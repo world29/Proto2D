@@ -113,7 +113,7 @@ namespace Proto2D
             // フェードイン
             m_fadeCanvas.fadeIn = true;
 
-            Globals.SoundManager.Instance.FadeOut(m_fadeWaitTime);
+            Globals.SoundManager.Instance.FadeOut();
 
             yield return new WaitForSeconds(m_fadeWaitTime);
 
@@ -123,7 +123,7 @@ namespace Proto2D
 
             m_fadeCanvas.fadeOut = true;
 
-            Globals.SoundManager.Instance.FadeIn(m_fadeWaitTime);
+            Globals.SoundManager.Instance.FadeIn();
         }
 
         public void GameOver()

@@ -15,6 +15,12 @@ namespace Proto2D.Globals
         [SerializeField]
         MixLevels m_mixLevels;
 
+        [SerializeField]
+        float m_fadeOutDuration;
+
+        [SerializeField]
+        float m_fadeInDuration;
+
         private AudioSource audioSource;
 
         private IDisposable m_fadeInOutHandle;
@@ -36,7 +42,12 @@ namespace Proto2D.Globals
             audioSource.PlayOneShot(clip);
         }
 
-        public void FadeOut(float duration)
+        public void FadeOut()
+        {
+            FadeOutImpl(m_fadeOutDuration);
+        }
+
+        private void FadeOutImpl(float duration)
         {
             if (m_fadeInOutHandle != null)
             {
@@ -58,7 +69,12 @@ namespace Proto2D.Globals
                 });
         }
 
-        public void FadeIn(float duration)
+        public void FadeIn()
+        {
+            FadeInImpl(m_fadeInDuration);
+        }
+
+        private void FadeInImpl(float duration)
         {
             if (m_fadeInOutHandle != null)
             {
