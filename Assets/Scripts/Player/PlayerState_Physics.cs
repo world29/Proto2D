@@ -31,6 +31,10 @@ public class PlayerState_Physics : IPlayerState
 
     public void OnExit(GameObject context)
     {
+        // PlayerState_Hang で有効にしたジャンプアタック判定を無効化する
+        player.SetAttackEnabled(false);
+        player.SetStompEnabled(true);
+
         // 物理の速度をキネマティックの速度に変換する
         player.velocity = rigidbody.velocity;
         rigidbody.velocity = Vector2.zero;

@@ -59,6 +59,10 @@ public class PlayerState_Hang : IPlayerState
             player.gameObject.GetComponent<Collider2D>().isTrigger = true;
         }
 
+        // 各種ダメージャの切り替え
+        player.SetAttackEnabled(true);
+        player.SetStompEnabled(false);
+
         // パラメータを設定
         animator.SetBool("hang", true);
     }
