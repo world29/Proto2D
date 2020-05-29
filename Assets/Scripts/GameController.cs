@@ -95,13 +95,14 @@ namespace Proto2D
                 LoadStage(m_initialStageIndex);
             }
 
-            // プレイヤーをシーン直下に移動する
-            var playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject)
+            // プレイヤーを生成する
+            var playerStart = GameObject.FindGameObjectWithTag("PlayerSpawner");
+            var playerStarter = GameObject.Instantiate(playerPrefab);
             {
-                playerObject.transform.SetParent(null, true);
-                m_player = playerObject;
+                playerStarter.transform.position = playerStart.transform.position;
             }
+            var pd = playerStarter.GetComponent<UnityEngine.Playables.PlayableDirector>();
+            pd.Play();
         }
 
         void Update()

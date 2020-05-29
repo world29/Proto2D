@@ -7,7 +7,8 @@ using UnityEngine.Playables;
 public class PlayerUncontrollableBehaviour : PlayableBehaviour
 {
     public GameObject playerObject;
-    public RuntimeAnimatorController animatorController;
+
+    private bool m_played = false; // Play のあとに Pause が呼び出されたときだけ処理を行うための番兵
 
     // Called when the owning graph starts playing
     public override void OnGraphStart(Playable playable)
@@ -29,20 +30,20 @@ public class PlayerUncontrollableBehaviour : PlayableBehaviour
         var controller = playerObject.GetComponent<PlayerController>();
         controller.enabled = false;
 
-        var animator = playerObject.GetComponent<Animator>();
-        animator.runtimeAnimatorController = null;
+        m_played = true;
     }
 
     // Called when the state of the playable is set to Paused
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
+        if (!m_played) { return; }
         if (playerObject == null) { return; }
-
-        var animator = playerObject.GetComponent<Animator>();
-        animator.runtimeAnimatorController = animatorController;
 
         var controller = playerObject.GetComponent<PlayerController>();
         controller.enabled = true;
+
+        // プレイヤーの親子付けを変更し、シーン直下のオブジェクトにする
+        playerObject.transform.SetParent(null);
     }
 
     // Called each frame while the state is set to Play
