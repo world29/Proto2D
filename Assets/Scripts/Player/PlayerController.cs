@@ -152,6 +152,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private Queue<HitInfo> hitQueue;
     private Queue<DamageInfo> damageQueue;
 
+    public Vector2 directionalInput { get; private set; }
+
     private void Awake()
     {
         health = GetComponent<Proto2D.PlayerHealth>();
@@ -211,6 +213,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         ProcessEventQueue();
 
+        UpdateInput();
         IPlayerState next = state.Update(gameObject);
         if (next != state)
         {
@@ -221,6 +224,27 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
 
         UpdateAnimationParameters();
+    }
+
+    private void UpdateInput()
+    {
+        // PlayerInput が無効なら、外部から設定された値を使用するため、ここでは更新しない
+        if (!input.enabled) { return; }
+
+        directionalInput = input.directionalInput;
+    }
+
+    public void Jump()
+    {
+        velocity.y = jumpSpeed;
+
+        PlaySE(jumpSE);
+        PlayEffect(jumpEffectPrefab);
+    }
+
+    public void SetDirectionalInput(Vector2 value)
+    {
+        directionalInput = value;
     }
 
     public bool CheckEntryWallClimbing()

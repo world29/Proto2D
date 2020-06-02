@@ -22,13 +22,11 @@ public class PlayerState_Free : IPlayerState
 
     public IPlayerState Update(GameObject context)
     {
-        bool normalJumped = false;
-
         // 速度計算
-        CalculateVelocity(ref player.velocity, ref normalJumped);
+        CalculateVelocity(ref player.velocity);
 
         // 座標更新
-        controller.Move(player.velocity * Time.deltaTime, input.directionalInput, false);
+        controller.Move(player.velocity * Time.deltaTime, player.directionalInput, false);
 
         player.UpdateFacing();
 
@@ -60,12 +58,12 @@ public class PlayerState_Free : IPlayerState
         return this;
     }
 
-    private void CalculateVelocity(ref Vector2 velocity, ref bool jumped)
+    private void CalculateVelocity(ref Vector2 velocity)
     {
         bool grounded = controller.collisions.below;
 
         // 水平方向の速度を算出
-        if (input.directionalInput.x == 0)
+        if (player.directionalInput.x == 0)
         {
             // 方向キーの入力がない場合、速度は 0 に近づく
             if (Mathf.Abs(velocity.x) > 0)
@@ -84,7 +82,7 @@ public class PlayerState_Free : IPlayerState
             float acc = grounded
                 ? player.acceralationGround * player.frictionGround // 地上なら摩擦の影響を受ける
                 : player.acceralationAirborne;
-            acc *= Mathf.Sign(input.directionalInput.x);
+            acc *= Mathf.Sign(player.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;
         }
@@ -93,10 +91,7 @@ public class PlayerState_Free : IPlayerState
         // 垂直方向の速度を算出
         if (grounded && input.isTouched)
         {
-            player.PlaySE(player.jumpSE);
-            player.PlayEffect(player.jumpEffectPrefab);
-            velocity.y = player.jumpSpeed;
-            jumped = true;
+            player.Jump();
         }
         else
         {
