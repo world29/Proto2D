@@ -65,9 +65,10 @@ namespace Proto2D
             Vector3 targetPosition = new Vector3(m_focusBounds.center.x, m_focusBounds.center.y, cameraZ);
 
             // 下方向へのカメラ追従に下限を設定
-            var gameController = GameController.Instance;
-            if (gameController)
+            var gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
+            if (gameControllerObject)
             {
+                var gameController = gameControllerObject.GetComponent<GameController>();
                 float cameraPosLowerLimit = gameController.UpperLimit + m_followLimitOffsetFromHighestPosition;
                 targetPosition.y = Mathf.Max(targetPosition.y, cameraPosLowerLimit);
             }

@@ -13,9 +13,9 @@ namespace Proto2D
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                if (SoundManager.Instance)
+                if (Globals.SoundManager.Instance)
                 {
-                    SoundManager.Instance.Play(m_audioClip);
+                    Globals.SoundManager.Instance.PlayMusic(m_audioClip);
                 }
 
                 // BGM の変更は一度だけ行う

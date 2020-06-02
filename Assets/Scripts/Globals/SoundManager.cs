@@ -6,9 +6,14 @@ using System;
 
 namespace Proto2D.Globals
 {
-    [RequireComponent(typeof(AudioSource))]
     public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
+        [SerializeField]
+        AudioSource m_musicSource;
+
+        [SerializeField]
+        AudioSource m_sfxSource;
+
         [SerializeField]
         Dialog m_soundMenuDialog;
 
@@ -21,25 +26,55 @@ namespace Proto2D.Globals
         [SerializeField]
         float m_fadeInDuration;
 
-        private AudioSource audioSource;
-
         private IDisposable m_fadeInOutHandle;
         private float m_masterVolumeSave;
 
         private void Start()
         {
-            audioSource = GetComponent<AudioSource>();
-            audioSource.spatialBlend = 0; // 2D サウンド
-            audioSource.playOnAwake = false;
-
             LoadSoundConfig();
         }
 
+        // SE の再生
         public void Play(AudioClip clip)
         {
-            Debug.Assert(audioSource != null, "SoundManager.Start() より先に呼び出してはいけません");
+            m_sfxSource.PlayOneShot(clip);
+        }
 
-            audioSource.PlayOneShot(clip);
+        // BGM の再生
+        public void PlayMusic(AudioClip clip)
+        {
+            m_musicSource.clip = clip;
+            m_musicSource.Play();
+            m_musicSource.volume = 1;
+        }
+
+        // BGM の停止
+        public void StopMusic()
+        {
+            StopMusic(5f);
+        }
+
+        public void StopMusic(float fadeDuration)
+        {
+            StartCoroutine(FadeOutMusic(fadeDuration));
+        }
+
+        private IEnumerator FadeOutMusic(float duration)
+        {
+            float maxVolume = m_musicSource.volume;
+            float endTime = Time.timeSinceLevelLoad + duration;
+
+            while (Time.timeSinceLevelLoad < endTime)
+            {
+                float percentage = (endTime - Time.timeSinceLevelLoad) / duration;
+
+                m_musicSource.volume = percentage * maxVolume;
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            m_musicSource.volume = 0;
+            m_musicSource.Stop();
         }
 
         public void FadeOut()

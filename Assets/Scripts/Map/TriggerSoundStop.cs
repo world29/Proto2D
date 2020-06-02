@@ -13,9 +13,9 @@ namespace Proto2D
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                if (SoundManager.Instance)
+                if (Globals.SoundManager.Instance)
                 {
-                    SoundManager.Instance.Stop(m_fadeOutDuration);
+                    Globals.SoundManager.Instance.StopMusic(m_fadeOutDuration);
                 }
 
                 // BGM の変更は一度だけ行う
