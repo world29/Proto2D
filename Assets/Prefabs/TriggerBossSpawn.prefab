@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4176597932908171779}
   - component: {fileID: 7853515087466960053}
   - component: {fileID: 2475294685209560269}
-  - component: {fileID: 6214255041091861323}
+  - component: {fileID: 8529607478094299684}
+  - component: {fileID: 6008870853540926383}
   m_Layer: 0
   m_Name: TriggerBossSpawn
   m_TagString: Untagged
@@ -80,7 +81,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16.597088, y: 4.2944546}
   m_EdgeRadius: 0
---- !u!114 &6214255041091861323
+--- !u!320 &8529607478094299684
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405755217247930584}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: f359fa871a16be445aca5d7dd53caeec, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114039347497162666, guid: f359fa871a16be445aca5d7dd53caeec, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114546407975193908, guid: f359fa871a16be445aca5d7dd53caeec, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &6008870853540926383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,10 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 405755217247930584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fbc42c9e37676241bab71000ce19ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cfc348f56f404f439cd98dd3fb1724e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bossPrefab: {fileID: 8778643387317822647, guid: 3c2e1c64588709e4baac110d5be2894b,
-    type: 3}
-  m_spawnTransform: {fileID: 0}
-  m_playBossBGM: {fileID: 8300000, guid: eca901c03410ee24aab1388c5d1be6b7, type: 3}
+  m_playableDirector: {fileID: 8529607478094299684}
