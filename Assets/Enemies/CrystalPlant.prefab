@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 381746681744455695}
   - component: {fileID: 7343818853844586513}
   - component: {fileID: 960678228597369664}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Damager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,8 +205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_damageType: 0
+    m_Bits: 256
+  m_damageType: 2
   damage: 1
   sender: {fileID: 8778643387317822647}
 --- !u!1 &2169319094245025995
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_projectile: {fileID: 6168143691085963177, guid: 51ff5a8241b674d0a9d51b7dc3c4b7f0,
     type: 3}
   m_locator: {fileID: 0}
-  m_speed: 22
+  m_speed: 18
 --- !u!1 &3162290240977509026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,7 +1291,7 @@ MonoBehaviour:
   m_projectile: {fileID: 6168143691085963177, guid: 51ff5a8241b674d0a9d51b7dc3c4b7f0,
     type: 3}
   m_locator: {fileID: 0}
-  m_speed: 22
+  m_speed: 18
 --- !u!1 &8696029028232262122
 GameObject:
   m_ObjectHideFlags: 0
