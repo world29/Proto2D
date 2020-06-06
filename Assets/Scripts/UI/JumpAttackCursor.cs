@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx;
+using UniRx.Triggers;
 
 namespace Proto2D
 {
@@ -26,6 +28,18 @@ namespace Proto2D
             if (m_player == null)
             {
                 m_player = GameObject.FindGameObjectWithTag("Player");
+
+                if (m_player)
+                {
+                    // プレイヤーを操作可能なときだけカーソルを表示する
+                    m_player.ObserveEveryValueChanged(obj => obj.GetComponent<PlayerInput>().enabled && obj.GetComponent<PlayerController>().enabled)
+                        .DistinctUntilChanged()
+                        .Subscribe(inputEnabled =>
+                        {
+                            gameObject.SetActive(inputEnabled);
+                        })
+                        .AddTo(m_player);
+                }
             }
             else
             {
