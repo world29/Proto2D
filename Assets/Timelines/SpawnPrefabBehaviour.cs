@@ -34,6 +34,10 @@ namespace Proto2D
             {
                 enemyBehaviour.behaviourTreeUpdatable = false;
             }
+
+            //TODO: SpawnPrefabBehaviour クラスにボス専用の処理を書いてしまっている。
+            //      SpawnPrefab を汎用的に使用する場合は、この処理を別のクリップに移動する。
+            GameController.Instance.Stage.setStageBossPhaseParams();
         }
 
         // Called when the state of the playable is set to Paused
