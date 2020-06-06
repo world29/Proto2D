@@ -10,6 +10,8 @@ namespace Proto2D
         public GameObject prefab;
         public Transform spawnPosition;
 
+        private GameObject m_spawnedObject;
+
         // Called when the owning graph starts playing
         public override void OnGraphStart(Playable playable)
         {
@@ -23,13 +25,28 @@ namespace Proto2D
         // Called when the state of the playable is set to Play
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
-            var go = GameObject.Instantiate(prefab);
-            go.transform.position = spawnPosition.position;
+            m_spawnedObject = GameObject.Instantiate(prefab);
+            m_spawnedObject.transform.position = spawnPosition.position;
+
+            // スポーンしたオブジェクトがエネミーの場合、トラック終了までビヘイビアツリーの更新を停止する
+            var enemyBehaviour = m_spawnedObject.GetComponent<EnemyBehaviour>();
+            if (enemyBehaviour)
+            {
+                enemyBehaviour.behaviourTreeUpdatable = false;
+            }
         }
 
         // Called when the state of the playable is set to Paused
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
+            if(m_spawnedObject)
+            {
+                var enemyBehaviour = m_spawnedObject.GetComponent<EnemyBehaviour>();
+                if (enemyBehaviour)
+                {
+                    enemyBehaviour.behaviourTreeUpdatable = true;
+                }
+            }
         }
 
         // Called each frame while the state is set to Play

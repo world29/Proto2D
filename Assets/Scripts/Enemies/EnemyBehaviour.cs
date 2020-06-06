@@ -48,6 +48,8 @@ namespace Proto2D
         public Transform groundDetectionTransform;
         public LayerMask collisionMask;
 
+        public bool behaviourTreeUpdatable { get; set; }
+
         /*
         [Range(0, 360)]
         public float viewAngle = 45; // fov
@@ -95,6 +97,8 @@ namespace Proto2D
                     behaviourTree = behaviourTree.Copy() as AI.BehaviourTree;
                 }
                 behaviourTree.Setup();
+
+                behaviourTreeUpdatable = true;
             }
         }
 
@@ -158,7 +162,7 @@ namespace Proto2D
 
         public void UpdateBehaviourTree()
         {
-            if (behaviourTree)
+            if (behaviourTree && behaviourTreeUpdatable)
             {
                 behaviourTree.Evaluate(this);
             }
