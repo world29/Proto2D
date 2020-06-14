@@ -20,18 +20,23 @@ namespace Proto2D
         [Tooltip("出現確率"), Range(0, 100)]
         public int m_percentage = 100;
 
+        [SerializeField, Tooltip("プレイヤーのコイン所持数の最小値")]
+        int m_playerCoinsMin;
+
         void Start()
         {
             bool activated = false;
 
             StagePhaseFlag flags = (StagePhaseFlag)(0x1 << (int)GameController.Instance.Stage.Phase);
-            if ((flags & m_stagePhaseFlags) > 0)
+
+            var wallet = GameObject.FindObjectOfType<PlayerWallet>();
+
+            if (((flags & m_stagePhaseFlags) > 0) &&
+                (Random.Range(0, 100) < m_percentage) &&
+                (m_playerCoinsMin <= wallet.coins.Value))
             {
-                if (Random.Range(0, 100) < m_percentage)
-                {
-                    // 進捗度と出現確率の条件を満たした場合のみ
-                    activated = true;
-                }
+                // 全ての条件を満たした場合のみ
+                activated = true;
             }
 
             gameObject.SetActive(activated);
