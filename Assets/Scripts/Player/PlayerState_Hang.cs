@@ -125,23 +125,12 @@ public class PlayerState_Hang : IPlayerState
         // ジャンプ入力でハング状態を終了
         if (input.isTouched || input.isFlicked)
         {
-            setHangableInterval();
+            // ステート切り替え直後にハング状態に遷移しないようにする
+            player.SetHangableInterval();
 
             return new PlayerState_Physics();
         }
 
         return this;
-    }
-
-    void setHangableInterval()
-    {
-        // すぐにハング状態にならないようにインターバルを設定する
-        Observable.Timer(System.TimeSpan.FromSeconds(player.m_hangableInterval))
-            .Subscribe(_ =>
-            {
-                player.hangable = true;
-            });
-
-        player.hangable = false;
     }
 }

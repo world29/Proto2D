@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     [HideInInspector]
     public float direction = 1; // 1: right, -1: left
     [HideInInspector]
-    public bool hangable = true;
+    private bool hangable = true;
 
     Controller2D controller;
     Animator animator;
@@ -293,6 +293,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
             state.OnExit(gameObject);
             state = next;
             state.OnEnter(gameObject);
+
+            Debug.Log(state);
         }
     }
 
@@ -491,8 +493,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     public void OnPickupItem(ItemType type, GameObject sender, ItemData itemData)
     {
-        Debug.Log(state);
-
         if (!canPickup) return;
 
         switch (type)
@@ -593,11 +593,34 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         ConsumeDamage(dinfo);
     }
 
+    public void SetHangableInterval()
+    {
+        // すぐにハング状態にならないようにインターバルを設定する
+        Observable.Timer(System.TimeSpan.FromSeconds(m_hangableInterval))
+            .Subscribe(_ =>
+            {
+                hangable = true;
+            });
+
+        hangable = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         var ropeHandle = collider.gameObject.GetComponent<Proto2D.RopeHandle>();
-        if (ropeHandle && hangable)
+
+        if (ropeHandle)
         {
+            if (!hangable)
+            {
+                return;
+            }
+
+            if (state is PlayerState_Hang || state is PlayerState_Knockback)
+            {
+                return;
+            }
+
             ChangeState(new PlayerState_Hang(ropeHandle));
         }
     }
