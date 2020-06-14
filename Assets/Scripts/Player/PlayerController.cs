@@ -479,9 +479,9 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         info.damage = damage;
         info.senderPos = sender.transform.position;
 
-        if (info.type == DamageType.FrailtyProjectile )
+        if (info.type == DamageType.FrailtyProjectile)
         {
-            if (state is PlayerState_Hop  || state is PlayerState_Attack)
+            if (state is PlayerState_Hop  || state is PlayerState_Attack || state is PlayerState_Hang)
             {
                 return;
             }
