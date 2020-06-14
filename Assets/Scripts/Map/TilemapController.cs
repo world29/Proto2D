@@ -61,7 +61,7 @@ namespace Proto2D
                 case "DecorationTile":
                     m_tilemapFront.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
                     break;
-                case "BackgroundTile2":
+                case "Scroll_BackgroundTile":
                     m_tilemapBackgroundAdd.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
                     break;
                 default:
