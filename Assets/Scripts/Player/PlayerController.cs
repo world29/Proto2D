@@ -152,7 +152,18 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private Queue<HitInfo> hitQueue;
     private Queue<DamageInfo> damageQueue;
 
-    public Vector2 directionalInput { get; private set; }
+    public Vector2 directionalInput {
+        get {
+            if (input.enabled)
+                return input.directionalInput;
+            else
+                return m_directionalInputInternal;
+        }
+        private set {
+            m_directionalInputInternal = value;
+        }
+    }
+    private Vector2 m_directionalInputInternal = Vector2.zero;
 
     private void Awake()
     {
@@ -213,7 +224,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
         ProcessEventQueue();
 
-        UpdateInput();
         IPlayerState next = state.Update(gameObject);
         if (next != state)
         {
@@ -224,14 +234,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
 
         UpdateAnimationParameters();
-    }
-
-    private void UpdateInput()
-    {
-        // PlayerInput が無効なら、外部から設定された値を使用するため、ここでは更新しない
-        if (!input.enabled) { return; }
-
-        directionalInput = input.directionalInput;
     }
 
     public void Jump()
@@ -478,6 +480,8 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         info.type = type;
         info.damage = damage;
         info.senderPos = sender.transform.position;
+
+        Debug.Log(info.type);
 
         if (info.type == DamageType.FrailtyProjectile)
         {

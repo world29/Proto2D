@@ -51,18 +51,18 @@ public class PlayerState_Climb : IPlayerState
         float moveDirY = 0;
 
         // 壁の向きか上下方向のキー入力で、壁を登る
-        if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) == wallDirX)
+        if (player.directionalInput.x != 0 && (int)Mathf.Sign(player.directionalInput.x) == wallDirX)
         {
             moveDirY = 1;
         }
-        else if (input.directionalInput.y != 0)
+        else if (player.directionalInput.y != 0)
         {
-            moveDirY = Mathf.Sign(input.directionalInput.y);
+            moveDirY = Mathf.Sign(player.directionalInput.y);
         }
         velocity.y = moveDirY * player.climbSpeed;
 
         // 壁と反対方向のキー入力で壁からジャンプする
-        if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
+        if (player.directionalInput.x != 0 && (int)Mathf.Sign(player.directionalInput.x) != wallDirX)
         {
             player.PlaySE(player.jumpSE);
             player.PlayEffect(player.jumpEffectPrefab);

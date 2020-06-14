@@ -115,9 +115,9 @@ public class PlayerState_Hang : IPlayerState
         player.UpdateFacing(Mathf.Sign(rigidbody.velocity.x));
 
         // ハンドルに力を与える
-        if (input.directionalInput.x != 0)
+        if (player.directionalInput.x != 0)
         {
-            Vector2 direction = input.directionalInput.x > 0 ? Vector2.right : Vector2.left;
+            Vector2 direction = player.directionalInput.x > 0 ? Vector2.right : Vector2.left;
             var force = direction * player.m_hangForceAmount;
             ropeHandleBody.AddForce(force);
         }

@@ -89,13 +89,13 @@ public class PlayerState_Attack : IPlayerState
         }
         else
         {
-            if (input.directionalInput != Vector2.zero)
+            if (player.directionalInput != Vector2.zero)
             {
-                float deg = Mathf.Atan2(input.directionalInput.y, input.directionalInput.x) * Mathf.Rad2Deg;
+                float deg = Mathf.Atan2(player.directionalInput.y, player.directionalInput.x) * Mathf.Rad2Deg;
                 joystick = AngleToJoystickDirection(deg);
             }
 
-            dir = input.directionalInput.normalized;
+            dir = player.directionalInput.normalized;
 
             Debug.LogFormat("attack key direction: {0}", dir.ToString());
         }
@@ -190,7 +190,7 @@ public class PlayerState_Attack : IPlayerState
     private void CalculateVelocity(ref Vector2 velocity)
     {
         // 水平方向の速度を算出
-        if (input.directionalInput.x == 0)
+        if (player.directionalInput.x == 0)
         {
             // 方向キーの入力がない場合、速度は 0 に近づく
             if (Mathf.Abs(velocity.x) > 0)
@@ -207,7 +207,7 @@ public class PlayerState_Attack : IPlayerState
         else
         {
             float acc = player.acceralationJumpAttack;
-            acc *= Mathf.Sign(input.directionalInput.x);
+            acc *= Mathf.Sign(player.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;
         }

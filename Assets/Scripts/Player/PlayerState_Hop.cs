@@ -63,7 +63,7 @@ public class PlayerState_Hop : IPlayerState
         else if (controller.collisions.right || controller.collisions.left)
         {
             // 壁と反対方向のキー入力で壁からジャンプする
-            if (input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) != wallDirX)
+            if (player.directionalInput.x != 0 && (int)Mathf.Sign(player.directionalInput.x) != wallDirX)
             {
                 player.PlaySE(player.hopWallKickSE);
                 player.PlayEffect(player.jumpEffectPrefab);
@@ -97,7 +97,7 @@ public class PlayerState_Hop : IPlayerState
         bool grounded = controller.collisions.below;
 
         // 水平方向の速度を算出
-        if (input.directionalInput.x == 0)
+        if (player.directionalInput.x == 0)
         {
             // 方向キーの入力がない場合、速度は 0 に近づく
             if (Mathf.Abs(velocity.x) > 0)
@@ -114,7 +114,7 @@ public class PlayerState_Hop : IPlayerState
         else
         {
             float acc = player.acceralationAirborne;
-            acc *= Mathf.Sign(input.directionalInput.x);
+            acc *= Mathf.Sign(player.directionalInput.x);
 
             velocity.x += acc * Time.deltaTime;
         }
