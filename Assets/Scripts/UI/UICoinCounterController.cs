@@ -34,12 +34,12 @@ namespace Proto2D
 
         IEnumerator IncrementedEffect(float duration)
         {
-            float startTime = Time.time;
+            float startTime = Time.unscaledTime;
             float endTime = startTime + duration;
 
-            while (Time.time < endTime)
+            while (Time.unscaledTime < endTime)
             {
-                float percentage = (Time.time - startTime) / duration;
+                float percentage = (Time.unscaledTime - startTime) / duration;
                 float value = m_scaleCurve.Evaluate(percentage);
 
                 m_counterText.rectTransform.localScale = new Vector3(value, value, 1);

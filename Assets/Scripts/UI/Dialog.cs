@@ -28,7 +28,6 @@ namespace Proto2D
 
         private void OnEnable()
         {
-            OnOpen();
         }
 
         private void OnDisable()
@@ -43,11 +42,17 @@ namespace Proto2D
 
             var playerInput = go.GetComponent<PlayerInput>();
             playerInput.enabled = false;
+
+            // 時間を停止
+            Time.timeScale = 0f;
         }
 
         private void OnClose()
         {
             onClose.Invoke();
+
+            // 時間の停止を解除
+            Time.timeScale = 1f;
 
             // ダイアログを閉じたときに PlayerInput を有効化
             var go = GameObject.FindGameObjectWithTag("Player");
