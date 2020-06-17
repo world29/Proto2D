@@ -164,7 +164,12 @@ namespace Proto2D
             {
                 Destroy(m_debugMenuCanvasClone);
                 m_debugMenuCanvasClone = null;
+
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>().enabled = true;
             });
+
+            // デバッグメニューを開いている間はプレイヤーの入力を無効化
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>().enabled = false;
         }
 
         // 現在のシーンをリトライ

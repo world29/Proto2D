@@ -34,6 +34,9 @@ namespace Proto2D
         [SerializeField]
         Dropdown m_inputTouchDropdown;
 
+        [SerializeField]
+        Slider m_timeScaleSlider;
+
         private void Start()
         {
             // ステージクリアフラグ
@@ -84,6 +87,13 @@ namespace Proto2D
             ServiceLocatorProvider.Instance
                 .ObserveEveryValueChanged(x => x.inputTouchMode)
                 .Subscribe(inputTouchMode => m_inputTouchDropdown.value = (int)inputTouchMode);
+
+            // タイムスケール
+            m_timeScaleSlider.value = Time.timeScale;
+
+            m_timeScaleSlider
+                .OnValueChangedAsObservable()
+                .Subscribe(timeScale => Time.timeScale = timeScale);
         }
     }
 }
