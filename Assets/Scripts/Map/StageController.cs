@@ -179,7 +179,7 @@ namespace Proto2D
         {
             m_isCompleted = true;
 
-            OnCompleted();
+            OnCompleted.Invoke();
 
             GameState.Instance.SetStageCompleted(Name, true);
         }
