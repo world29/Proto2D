@@ -15,7 +15,7 @@ namespace Proto2D
             {
                 if (Globals.SoundManager.Instance)
                 {
-                    Globals.SoundManager.Instance.StopMusic(m_fadeOutDuration);
+                    StartCoroutine(Globals.SoundManager.Instance.StopMusic(m_fadeOutDuration));
                 }
 
                 // BGM の変更は一度だけ行う

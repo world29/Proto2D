@@ -51,22 +51,24 @@ namespace Proto2D.Globals
         // BGM の停止
         public void StopMusic()
         {
-            StopMusic(5f);
+            StartCoroutine(StopMusic(m_fadeOutDuration));
         }
 
-        public void StopMusic(float fadeDuration)
+        public IEnumerator StopMusic(float fadeDuration)
         {
-            StartCoroutine(FadeOutMusic(fadeDuration));
+            yield return FadeOutMusic(fadeDuration);
+
+            m_musicSource.clip = null;
         }
 
         private IEnumerator FadeOutMusic(float duration)
         {
             float maxVolume = m_musicSource.volume;
-            float endTime = Time.timeSinceLevelLoad + duration;
+            float endTime = Time.time + duration;
 
-            while (Time.timeSinceLevelLoad < endTime)
+            while (Time.time < endTime)
             {
-                float percentage = (endTime - Time.timeSinceLevelLoad) / duration;
+                float percentage = (endTime - Time.time) / duration;
 
                 m_musicSource.volume = percentage * maxVolume;
 

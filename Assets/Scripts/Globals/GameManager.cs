@@ -117,6 +117,8 @@ namespace Proto2D
 
             yield return new WaitForSeconds(m_fadeWaitTime);
 
+            yield return Globals.SoundManager.Instance.StopMusic(0);
+
             // シーンを非同期で読み込み
             m_currentStageNum = stageNum;
             yield return SceneManager.LoadSceneAsync(m_stageName[m_currentStageNum]);
