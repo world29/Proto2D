@@ -58,7 +58,8 @@ namespace Proto2D
             // コイン数
             GameState.Instance
                 .ObserveEveryValueChanged(x => x.GetCoinCount())
-                .SubscribeToText(m_coinCountText, s => new System.Text.StringBuilder("Coins: ").Append(s).ToString());
+                .SubscribeToText(m_coinCountText, s => new System.Text.StringBuilder("Coins: ").Append(s).ToString())
+                .AddTo(this);
 
             m_coinCountResetButton
                 .OnClickAsObservable()
