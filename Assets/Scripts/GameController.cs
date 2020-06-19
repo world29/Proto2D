@@ -23,8 +23,6 @@ namespace Proto2D
 
     public class GameController : SingletonMonoBehaviour<GameController>
     {
-        public Text replayText;
-
         [Tooltip("ワールドの境界")]
         public Bounds m_worldBoundaryParam;
 
@@ -258,7 +256,6 @@ namespace Proto2D
         public void GameClear()
         {
             isGameClear = true;
-            replayText.text = "Congratulations!\nPress \'R\' to replay!";
 
             Pause();
         }
