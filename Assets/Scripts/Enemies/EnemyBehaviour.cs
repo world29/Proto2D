@@ -384,7 +384,10 @@ namespace Proto2D
             {
                 DOVirtual.DelayedCall(.1f, () =>
                 {
-                    OrbManager.Instance.DropOrb(transform.position);
+                    if (OrbManager.Instance)
+                    {
+                        OrbManager.Instance.DropOrb(transform.position);
+                    }
                 }).SetLoops(Mathf.FloorToInt(progressValue));
             }
         }
