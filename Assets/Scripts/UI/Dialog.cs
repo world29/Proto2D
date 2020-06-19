@@ -28,6 +28,7 @@ namespace Proto2D
 
         private void OnEnable()
         {
+            OnOpen();
         }
 
         private void OnDisable()

@@ -35,18 +35,10 @@ namespace Proto2D
                     m_dialogClone = GameObject.Instantiate(m_dialogPrefab);
                     m_dialogClone.Open();
 
-                    var cc = GameObject.FindObjectOfType<CameraController>();
-
                     m_dialogClone.onClose.AddListener(() =>
                     {
-                        cc.m_autoScrollEnabled = m_cameraScrollEnabled;
-
                         m_dialogClone = null;
                     });
-
-                    // カメラの自動スクロールを停止する
-                    m_cameraScrollEnabled = cc.m_autoScrollEnabled;
-                    cc.m_autoScrollEnabled = false;
                 });
         }
     }
