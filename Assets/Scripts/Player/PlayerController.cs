@@ -189,24 +189,6 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         health.SetMaxHealth(health.maxHealth.Value);
         health.SetCurrentHealth(health.maxHealth.Value);
 
-        health.currentHealth.Subscribe(hp => 
-        {
-            if (hp <= 0f)
-            {
-                // 死んだら拾えなくなる
-                canPickup = false;
-                hangable = false;
-
-                shield.ResetShields();
-
-                Vector2 hitNormal = transform.position.x > 0 ? Vector2.right : Vector2.left;
-                ChangeState(new PlayerState_Knockback(hitNormal, new PlayerState_Death()));
-
-                // 死亡時のシーケンスを再生する
-                Observable.FromCoroutine(StartDeathSequence).Subscribe();
-            }
-        });
-
         m_shopItemManager = FindObjectOfType<Proto2D.ShopItemManager>();
 
         canPickup = true;
@@ -394,11 +376,27 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         }
         else
         {
+            Vector2 hitNormal = (info.senderPos - transform.position).normalized;
             health.ApplyDamage(info.damage);
 
-            // ノックバック
-            Vector2 hitNormal = (info.senderPos - transform.position).normalized;
-            ChangeState(new PlayerState_Knockback(hitNormal, new PlayerState_Free()));
+            if (health.IsDead())
+            {
+                // 死んだら拾えなくなる
+                canPickup = false;
+                hangable = false;
+
+                shield.ResetShields();
+
+                ChangeState(new PlayerState_Knockback(hitNormal, new PlayerState_Death()));
+
+                // 死亡時のシーケンスを再生する
+                StartCoroutine(StartDeathSequence());
+            }
+            else
+            {
+                // ノックバック
+                ChangeState(new PlayerState_Knockback(hitNormal, new PlayerState_Free()));
+            }
         }
 
         // 無敵時間開始
@@ -409,6 +407,11 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     {
         // コリジョンを無効化
         controller.collisionMask = 0;
+
+        foreach (var collider in GetComponentsInChildren<Collider2D>())
+        {
+            collider.enabled = false;
+        }
 
         // カメラ追従を解除
         Camera.main.GetComponentInParent<Proto2D.CameraController>().enabled = false;

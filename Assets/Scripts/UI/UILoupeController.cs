@@ -16,8 +16,14 @@ namespace Proto2D
         {
             m_rectTransform = GetComponent<RectTransform>();
         }
+
         void Start()
         {
+        }
+
+        private void OnDisable()
+        {
+            m_target.DOFade(0, .5f);
         }
 
         void LateUpdate()
@@ -29,6 +35,7 @@ namespace Proto2D
             }
 
             PlayerController player = go.GetComponent<PlayerController>();
+            var isPlayerAlive = !player.GetComponent<PlayerHealth>().IsDead();
 
             // プレイヤーがビューポートの外にいる場合のみルーペを表示する
             bool isPlayerOutOfViewport = false;
@@ -43,7 +50,7 @@ namespace Proto2D
                 m_rectTransform.position = pos;
             }
 
-            if (isPlayerOutOfViewport)
+            if (isPlayerOutOfViewport && isPlayerAlive)
             {
                 m_target.DOFade(1, .5f);
             }
