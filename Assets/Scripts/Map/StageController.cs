@@ -16,6 +16,7 @@ namespace Proto2D
         public List<RoomController> m_bridgeRooms;
         public List<RoomController> m_bossRooms;
         public List<RoomController> m_normalRooms;
+        public List<RoomController> m_goalRooms;
 
         [Header("フェイズ毎の設定")]
         public List<StagePhaseParameters> stagePhaseParams = new List<StagePhaseParameters>();
@@ -140,6 +141,14 @@ namespace Proto2D
             int roomIndex = Random.Range(0, m_bossRooms.Count);
             return SpawnNextRoom(m_bossRooms[roomIndex], position);
 
+        }
+
+        public RoomController SpawnGoalRoom(Vector3 position)
+        {
+            Debug.Assert(m_startRooms.Count > 0);
+
+            int roomIndex = Random.Range(0, m_goalRooms.Count);
+            return SpawnNextRoom(m_goalRooms[roomIndex], position);
         }
 
         public RoomController SpawnBridgeRoom(Vector3 position)

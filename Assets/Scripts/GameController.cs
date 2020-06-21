@@ -109,6 +109,8 @@ namespace Proto2D
 
         private void LateUpdate()
         {
+            if (isGameClear) return;
+
             if (m_stageIndex >= 0 && m_stageIndex < m_stages.Count)
             {
                 m_worldBoundary.center = (Vector2)m_cameraRoot.gameObject.transform.position;
@@ -257,7 +259,8 @@ namespace Proto2D
         {
             isGameClear = true;
 
-            Pause();
+            // カメラの自動スクロールを停止する
+            m_cameraRoot.GetComponent<CameraController>().m_autoScrollEnabled = false;
         }
 
         private void OnCurrentStageCompleted()
@@ -271,6 +274,11 @@ namespace Proto2D
             }
             else
             {
+                // ゴール部屋を生成する
+                RoomController rc = Stage.SpawnGoalRoom(m_roomSpawnTransform.position);
+                updateSpawnPosition(rc);
+                registerRoom(rc);
+
                 GameClear();
             }
         }
