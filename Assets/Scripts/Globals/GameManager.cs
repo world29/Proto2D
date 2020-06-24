@@ -10,15 +10,18 @@ namespace Proto2D
 {
     public class GameManager : SingletonMonoBehaviour<GameManager>
     {
+        [SerializeField]
+        string m_sceneNameTitle;
+        [SerializeField]
+        string m_sceneNameGameDefault;
+        [SerializeField]
+        string m_sceneNameGameOver;
+
         [System.NonSerialized]
-        int m_currentStageNum = 0;
+        string m_sceneNameGamePlayed;
 
         [SerializeField]
-        string[] m_stageName;
-        [SerializeField]
         GameObject m_fadeCanvasPrefab;
-        [SerializeField]
-        GameObject m_gameOverCanvasPrefab;
         [SerializeField]
         GameObject m_debugMenuCanvasPrefab;
         [SerializeField]
@@ -46,23 +49,18 @@ namespace Proto2D
             isGameOver = m_isGameOver;
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            // UnityEditor でプレイ開始したシーンを記録しておく
+            if (string.IsNullOrEmpty(m_sceneNameGamePlayed))
+            {
+                m_sceneNameGamePlayed = SceneManager.GetActiveScene().name;
+            }
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Debug.Log("Return key pressed. jump to next stage.");
-
-                NextStage();
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Debug.Log("Escape key pressed. game over.");
-
-                GameOver();
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha0))
+            // [0] キーでサウンドメニューを開く
+            if (Input.GetKeyDown(KeyCode.Alpha0))
             {
                 Globals.SoundManager.Instance.OpenSoundMenu();
             }
@@ -80,30 +78,39 @@ namespace Proto2D
         }
 
         // 指定したシーンに遷移する
-        public void MoveToScene(string sceneName)
+        public void MoveScene(string sceneName)
         {
-            int sceneIndex = m_stageName.ToList().IndexOf(sceneName);
-            MoveToStage(sceneIndex);
+            StartCoroutine(WaitForLoadScene(sceneName));
         }
 
-        // 次のシーンに遷移する
-        public void NextStage()
+        // ゲームシーンに遷移する
+        public void MoveToGameScene()
         {
-            var nextStageNum = (m_currentStageNum + 1) % m_stageName.Length;
+            var sceneName = m_sceneNameGameDefault;
 
-            StartCoroutine(WaitForLoadScene(nextStageNum));
+            // UnityEditor からプレイ開始したシーンがタイトルでもゲームオーバーでもなければ、そのシーンに戻る
+            if (!string.IsNullOrEmpty(m_sceneNameGamePlayed) &&
+                m_sceneNameGamePlayed != m_sceneNameTitle &&
+                m_sceneNameGamePlayed != m_sceneNameGameOver)
+            {
+                sceneName = m_sceneNameGamePlayed;
+            }
+
+            MoveScene(sceneName);
         }
 
-        // 指定したシーンに遷移する
-        public void MoveToStage(int stageNum)
+        public void MoveToGameOverScene()
         {
-            StartCoroutine(WaitForLoadScene(stageNum));
+            MoveScene(m_sceneNameGameOver);
         }
 
-        IEnumerator WaitForLoadScene(int stageNum)
+        public void MoveToTitleScene()
         {
-            Debug.Assert(stageNum < m_stageName.Length);
+            MoveScene(m_sceneNameTitle);
+        }
 
+        IEnumerator WaitForLoadScene(string sceneName)
+        {
             // フェードオブジェクトを生成
             m_fadeCanvasClone = Instantiate(m_fadeCanvasPrefab);
 
@@ -120,8 +127,7 @@ namespace Proto2D
             yield return Globals.SoundManager.Instance.StopMusic(0);
 
             // シーンを非同期で読み込み
-            m_currentStageNum = stageNum;
-            yield return SceneManager.LoadSceneAsync(m_stageName[m_currentStageNum]);
+            yield return SceneManager.LoadSceneAsync(sceneName);
 
             m_fadeCanvas.fadeOut = true;
 
@@ -130,21 +136,7 @@ namespace Proto2D
 
         public void GameOver()
         {
-#if false
-            m_gameOverCanvasClone = Instantiate(m_gameOverCanvasPrefab);
-
-            // ゲームオーバー画面の UI セットアップ
-            m_buttons = m_gameOverCanvasClone.GetComponentsInChildren<Button>();
-
-            m_buttons[0].onClick.AddListener(Retry);
-            m_buttons[1].onClick.AddListener(Return);
-#else
-            if (m_stageName.Length > 0)
-            {
-                // 末尾のステージをゲームオーバーとみなす
-                MoveToStage(m_stageName.Length - 1);
-            }
-#endif
+            MoveToGameOverScene();
 
             m_isGameOver.Value = true;
 
@@ -172,22 +164,6 @@ namespace Proto2D
 
             // デバッグメニューを開いている間はプレイヤーの入力を無効化
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>().enabled = false;
-        }
-
-        // 現在のシーンをリトライ
-        public void Retry()
-        {
-            Destroy(m_gameOverCanvasClone);
-
-            MoveToStage(m_currentStageNum);
-        }
-
-        // 最初のシーンに戻る
-        public void Return()
-        {
-            Destroy(m_gameOverCanvasClone);
-
-            MoveToStage(0);
         }
     }
 }

@@ -6,18 +6,17 @@ using UniRx.Triggers;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(GameManagerStub))]
     public class TriggerScene : MonoBehaviour
     {
         [SerializeField]
-        string m_sceneName;
-
-        private GameManagerStub m_gameManager;
-
-        private void Awake()
+        enum SceneType
         {
-            m_gameManager = GetComponent<GameManagerStub>();
+            Title,
+            Game,
         }
+
+        [SerializeField]
+        SceneType m_sceneType;
 
         private void Start()
         {
@@ -30,7 +29,15 @@ namespace Proto2D
                     collider.gameObject.GetComponent<PlayerController>().enabled = false;
 
                     // シーン遷移
-                    m_gameManager.MoveToScene(m_sceneName);
+                    switch(m_sceneType)
+                    {
+                        case SceneType.Title:
+                            GameManager.Instance.MoveToTitleScene();
+                            break;
+                        case SceneType.Game:
+                            GameManager.Instance.MoveToGameScene();
+                            break;
+                    }
                 });
         }
     }

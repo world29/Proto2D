@@ -13,7 +13,7 @@ namespace Proto2D
 
         public void MoveToScene(string sceneName)
         {
-            GameManager.Instance.MoveToScene(sceneName);
+            GameManager.Instance.MoveScene(sceneName);
         }
     }
 }

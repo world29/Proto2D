@@ -51,7 +51,7 @@ namespace Proto2D
                 // カメラ移動と同時にゲームシーンへ遷移する
                 {
                     sequence.AppendCallback(() => {
-                        GameManager.Instance.NextStage();
+                        GameManager.Instance.MoveToGameScene();
                     });
 
                     // カメラを上に移動する
