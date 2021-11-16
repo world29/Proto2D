@@ -520,16 +520,20 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     public void SetAttackEnabled(bool enabled)
     {
+        /*
         GetComponentsInChildren<Proto2D.Damager>()
             .First(x => x.m_damageType == DamageType.Attack)
             .enabled = enabled;
+            */
     }
 
     public void SetStompEnabled(bool enabled)
     {
+        /*
         GetComponentsInChildren<Proto2D.Damager>()
             .First(x => x.m_damageType == DamageType.Stomp)
             .enabled = enabled;
+            */
     }
 
     IEnumerator StartInvincible(float duration, bool blinking = true)
