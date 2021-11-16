@@ -8,14 +8,13 @@ using UnityEngine.Tilemaps;
 
 public class StageRoomManager : MonoBehaviour, IPlayerPositionEvent
 {
-    Vector3 m_nextTilemapPosition = Vector3.zero;
-
-    bool m_once = true;
-
-    Coroutine m_coroutine;
-
     public Grid m_tilemapRoot;
-    Dictionary<string, Tilemap> m_sortingLayerNameToTilemapTable;
+    public bool m_enemySpawnEnabled = true;
+
+    private Vector3 m_nextTilemapPosition = Vector3.zero;
+    private bool m_once = true;
+    private Coroutine m_coroutine;
+    private Dictionary<string, Tilemap> m_sortingLayerNameToTilemapTable;
 
     readonly string[] roomNames =
     {
@@ -107,14 +106,17 @@ public class StageRoomManager : MonoBehaviour, IPlayerPositionEvent
 
             // 敵を生成
             // Enemy タグを持つものが対象
-            for (int i = 0; i < prefab.transform.childCount; i++)
+            if (m_enemySpawnEnabled)
             {
-                GameObject enemy = prefab.transform.GetChild(i).gameObject;
-
-                if (enemy.CompareTag("Enemy"))
+                for (int i = 0; i < prefab.transform.childCount; i++)
                 {
-                    // このゲームオブジェクトの子オブジェクトとして生成する
-                    Instantiate(enemy, enemy.transform.position + objectPositionOffset, Quaternion.identity, transform);
+                    GameObject enemy = prefab.transform.GetChild(i).gameObject;
+
+                    if (enemy.CompareTag("Enemy"))
+                    {
+                        // このゲームオブジェクトの子オブジェクトとして生成する
+                        Instantiate(enemy, enemy.transform.position + objectPositionOffset, Quaternion.identity, transform);
+                    }
                 }
             }
 
