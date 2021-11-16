@@ -130,12 +130,14 @@ public class Controller2D : RaycastController
                         continue;
                     }
 
+                    /* 下入力での床すり抜けを無効化
                     if (m_input.y == -1)
                     {
                         collisions.fallingThroughPlatform = true;
                         Invoke("ResetFallingThroughPlatform", .5f);
                         continue;
                     }
+                    */
                 }
 
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
