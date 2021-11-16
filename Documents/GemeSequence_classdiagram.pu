@@ -1,0 +1,33 @@
+﻿@startuml
+
+namespace Game {
+
+interface IScene {
+  void OnEnter()
+  void OnExit()
+}
+
+class SceneManager {
+}
+
+SceneManager *-- IScene
+
+class TitleMenuScene {
+}
+IScene <|-- TitleMenuScene
+
+class GameplayScene {
+}
+IScene <|-- GameplayScene
+
+class GameoverMenuScene {
+}
+IScene <|-- GameoverMenuScene
+
+class CreditScene {
+}
+IScene <|-- CreditScene
+
+}
+
+@enduml
