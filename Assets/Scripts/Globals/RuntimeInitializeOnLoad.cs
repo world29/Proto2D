@@ -7,7 +7,6 @@ namespace Proto2D
 {
     public class RuntimeInitializeOnLoad : MonoBehaviour
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Init()
         {
             Debug.Log("RuntimeInitializeOnLoadMethod");
