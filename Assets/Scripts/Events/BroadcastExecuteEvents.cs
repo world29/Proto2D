@@ -6,52 +6,49 @@ using System;
 
 // https://weekly-geekly.github.io/articles/254239/index.html
 
-namespace Proto2D
+public static class BroadcastReceivers
 {
-    public static class BroadcastReceivers
+    private static readonly IDictionary<Type, IList<GameObject>> BroadcstReceivers = new Dictionary<Type, IList<GameObject>>();
+
+    public static IList<GameObject> GetHandlersForEvent<TEventType>() where TEventType : IEventSystemHandler
     {
-        private static readonly IDictionary<Type, IList<GameObject>> BroadcstReceivers = new Dictionary<Type, IList<GameObject>>();
-
-        public static IList<GameObject> GetHandlersForEvent<TEventType>() where TEventType : IEventSystemHandler
+        if (!BroadcstReceivers.ContainsKey(typeof(TEventType)))
         {
-            if (!BroadcstReceivers.ContainsKey(typeof(TEventType)))
-            {
-                return null;
-            }
-            return BroadcstReceivers[typeof(TEventType)];
+            return null;
         }
-
-        public static void RegisterBroadcastReceiver<TEventType>(GameObject go) where TEventType : IEventSystemHandler
-        {
-            if (!BroadcstReceivers.ContainsKey(typeof(TEventType)))
-            {
-                BroadcstReceivers.Add(typeof(TEventType), new List<GameObject>());
-            }
-
-            BroadcstReceivers[typeof(TEventType)].Add(go);
-        }
-
-        public static void UnregisterBroadcastReceiver<TEventType>(GameObject go)
-        {
-            if (BroadcstReceivers.ContainsKey(typeof(TEventType)))
-            {
-                BroadcstReceivers[typeof(TEventType)].Remove(go);
-            }
-        }
+        return BroadcstReceivers[typeof(TEventType)];
     }
 
-    public static class BroadcastExecuteEvents
+    public static void RegisterBroadcastReceiver<TEventType>(GameObject go) where TEventType : IEventSystemHandler
     {
-        public static void Execute<T>(BaseEventData eventData, ExecuteEvents.EventFunction<T> functor) where T : IEventSystemHandler
+        if (!BroadcstReceivers.ContainsKey(typeof(TEventType)))
         {
-            var handlers = BroadcastReceivers.GetHandlersForEvent<T>();
+            BroadcstReceivers.Add(typeof(TEventType), new List<GameObject>());
+        }
 
-            if (handlers == null) return;
+        BroadcstReceivers[typeof(TEventType)].Add(go);
+    }
 
-            foreach (var handler in handlers)
-            {
-                ExecuteEvents.Execute<T>(handler, eventData, functor);
-            }
+    public static void UnregisterBroadcastReceiver<TEventType>(GameObject go)
+    {
+        if (BroadcstReceivers.ContainsKey(typeof(TEventType)))
+        {
+            BroadcstReceivers[typeof(TEventType)].Remove(go);
+        }
+    }
+}
+
+public static class BroadcastExecuteEvents
+{
+    public static void Execute<T>(BaseEventData eventData, ExecuteEvents.EventFunction<T> functor) where T : IEventSystemHandler
+    {
+        var handlers = BroadcastReceivers.GetHandlersForEvent<T>();
+
+        if (handlers == null) return;
+
+        foreach (var handler in handlers)
+        {
+            ExecuteEvents.Execute<T>(handler, eventData, functor);
         }
     }
 }
