@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPositionEventTest : MonoBehaviour
+public class DebugPlayerPositionEventTrigger : MonoBehaviour
 {
     [SerializeField]
     float m_speed = 1.0f;

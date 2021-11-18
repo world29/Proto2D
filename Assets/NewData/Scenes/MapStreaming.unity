@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 991277925}
   - component: {fileID: 991277924}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: PlayerInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,7 +656,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1277071558
 GameObject:
@@ -688,7 +688,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1277071560
 SpriteRenderer:
@@ -800,7 +800,7 @@ Transform:
   - {fileID: 1527826803}
   - {fileID: 926804671}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1512872896
 GameObject:
@@ -866,7 +866,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1527826802
 GameObject:
@@ -1079,98 +1079,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1612014081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85eb40c70e6a19c42ad638b727cc5050, type: 3}
+  m_Script: {fileID: 11500000, guid: e51e93c0ec0b4ac42a1b860481c432df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_camera: {fileID: 1612014083}
---- !u!1 &1660161074
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1660161076}
-  - component: {fileID: 1660161075}
-  m_Layer: 0
-  m_Name: AppSequence
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1660161075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660161074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1168fc81759a6964c8937a21a7732e33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1660161076
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660161074}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.304808, y: 77.67183, z: -8.927804}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1796179649
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1796179651}
-  - component: {fileID: 1796179650}
-  m_Layer: 0
-  m_Name: PlayerPositionEventTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1796179650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1796179649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e405002ee772444e944adba10d1fa52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 0.37
-  m_position: {x: 0, y: 0, z: 0}
---- !u!4 &1796179651
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1796179649}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2033941352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,8 +1092,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2033941354}
   - component: {fileID: 2033941353}
+  - component: {fileID: 2033941355}
   m_Layer: 0
-  m_Name: StageRoomManager
+  m_Name: RoomGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1201,6 +1113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_tilemapRoot: {fileID: 1322631905}
+  m_offsetForLoad: 30
   m_enemySpawnEnabled: 0
 --- !u!4 &2033941354
 Transform:
@@ -1216,6 +1129,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2033941355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033941352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d152011cc34074fba7de5de0ca9b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2178218724752190279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,7 +1332,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6503610204334182386
 BoxCollider2D:
@@ -1475,6 +1400,7 @@ GameObject:
   - component: {fileID: 2178218724752190279}
   - component: {fileID: 6503610204334182384}
   - component: {fileID: 4748702758755480549}
+  - component: {fileID: 6503610204334182389}
   m_Layer: 11
   m_Name: Player2
   m_TagString: Player
@@ -1482,6 +1408,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6503610204334182389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503610204334182388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 944c28d9535b2a54bbbbc96ab940659a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &6503610204334182390
 Animator:
   serializedVersion: 3
