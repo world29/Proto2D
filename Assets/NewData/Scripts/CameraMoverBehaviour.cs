@@ -8,6 +8,8 @@ namespace Assets.NewData.Scripts
     {
         public Camera TargetCamera { get; private set; }
 
+        public float SmoothTime = 0.3f;
+
         public float YMax { get { return m_focusArea.yMax; } set { m_focusArea.yMax = value; } }
         public float YMin { get { return m_focusArea.yMin; } set { m_focusArea.yMin = value; } }
 
@@ -20,6 +22,8 @@ namespace Assets.NewData.Scripts
 
         private FocusArea m_focusArea;
         private float m_worldOffsetCameraCenterToTop;
+        private Vector3 m_targetPosition;
+        private float m_currentVelocityY;
 
         private float cameraHeightMax
         {
@@ -45,6 +49,34 @@ namespace Assets.NewData.Scripts
             m_worldOffsetCameraCenterToTop = bottomToTop.y / 2;
         }
 
+        private void Start()
+        {
+            // ÉÅÉìÉoïœêîÇÃèâä˙âª
+            m_targetPosition = Vector3.zero;
+            m_currentVelocityY = 0;
+        }
+
+        private void LateUpdate()
+        {
+            Vector3 currentPosition = TargetCamera.transform.position;
+
+            if (m_targetPosition.y != currentPosition.y)
+            {
+                float nextY = Mathf.SmoothDamp(
+                    currentPosition.y,
+                    m_targetPosition.y,
+                    ref m_currentVelocityY,
+                    SmoothTime);
+
+                Vector3 nextPosition = new Vector3(currentPosition.x, nextY, currentPosition.z);
+
+                TargetCamera.transform.position = nextPosition;
+
+                BroadcastExecuteEvents.Execute<ICameraPositionEvent>(null,
+                    (handler, eventData) => handler.OnChangeCameraPosition(TargetCamera, nextPosition));
+            }
+        }
+
         public void OnEnable()
         {
             BroadcastReceivers.RegisterBroadcastReceiver<IPlayerPositionEvent>(gameObject);
@@ -57,14 +89,11 @@ namespace Assets.NewData.Scripts
 
         public void OnChangePlayerPosition(Vector3 position)
         {
-            Vector3 cameraPos = gameObject.transform.position;
+            Vector3 targetPosision = gameObject.transform.position;
 
-            cameraPos.y = Mathf.Clamp(position.y, cameraHeightMin, cameraHeightMax);
+            targetPosision.y = Mathf.Clamp(position.y, cameraHeightMin, cameraHeightMax);
 
-            gameObject.transform.position = cameraPos;
-
-            BroadcastExecuteEvents.Execute<ICameraPositionEvent>(null,
-                (handler, eventData) => handler.OnChangeCameraPosition(TargetCamera, cameraPos));
+            m_targetPosition = targetPosision;
         }
     }
 }
