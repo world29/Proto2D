@@ -16,6 +16,7 @@ namespace Assets.NewData.Scripts
 
         private Vector3 m_nextTilemapPosition = Vector3.zero;
         private int m_roomGeneratedCount = 0;
+        private int m_currentRoomGroup = 0;
         private Coroutine m_coroutine;
         private Dictionary<string, Tilemap> m_sortingLayerNameToTilemapTable;
 
@@ -60,13 +61,15 @@ namespace Assets.NewData.Scripts
                     // 定期的に休憩用の部屋を生成する
                     if (m_roomGeneratedCount % 3 == 0)
                     {
-                        m_coroutine = StartCoroutine(GenerateRoom("Tier01/RestRoom"));
+                        // 部屋グループを更新
+                        m_currentRoomGroup++;
+                        m_coroutine = StartCoroutine(GenerateRoom("Tier01/RestRoom", m_currentRoomGroup));
                     }
                     else
                     {
                         int index = Random.Range(0, roomNames.Length);
 
-                        m_coroutine = StartCoroutine(GenerateRoom(roomNames[index]));
+                        m_coroutine = StartCoroutine(GenerateRoom(roomNames[index], m_currentRoomGroup));
                     }
 
                     m_roomGeneratedCount++;
@@ -81,13 +84,13 @@ namespace Assets.NewData.Scripts
             {
                 var key = "Tier01/StartRoom";
 
-                m_coroutine = StartCoroutine(GenerateRoom(key));
+                m_coroutine = StartCoroutine(GenerateRoom(key, m_currentRoomGroup));
 
                 m_roomGeneratedCount++;
             }
         }
 
-        IEnumerator GenerateRoom(string addressableName)
+        IEnumerator GenerateRoom(string addressableName, int roomGroup)
         {
             var op = Addressables.LoadAssetAsync<GameObject>(addressableName);
 
@@ -119,17 +122,19 @@ namespace Assets.NewData.Scripts
                 }
 
                 // 敵を生成
+                List<GameObject> spawnedEnemies = new List<GameObject>();
                 // Enemy タグを持つものが対象
                 if (m_enemySpawnEnabled)
                 {
                     for (int i = 0; i < prefab.transform.childCount; i++)
                     {
-                        GameObject enemy = prefab.transform.GetChild(i).gameObject;
+                        GameObject enemyPrefab = prefab.transform.GetChild(i).gameObject;
 
-                        if (enemy.CompareTag("Enemy"))
+                        if (enemyPrefab.CompareTag("Enemy"))
                         {
                             // このゲームオブジェクトの子オブジェクトとして生成する
-                            Instantiate(enemy, enemy.transform.position + objectPositionOffset, Quaternion.identity, transform);
+                            GameObject enemyInstance = Instantiate(enemyPrefab, enemyPrefab.transform.position + objectPositionOffset, Quaternion.identity, transform);
+                            spawnedEnemies.Add(enemyInstance);
                         }
                     }
                 }
@@ -159,7 +164,11 @@ namespace Assets.NewData.Scripts
                     size = (Vector3)primaryTilemap.cellBounds.size * primaryTilemap.cellSize.x,
                 };
                 BroadcastExecuteEvents.Execute<IRoomEvent>(null,
-                    (handler, eventData) => handler.OnRoomGenerated(addressableName, roomBounds));
+                    (handler, eventData) => handler.OnRoomGenerated(addressableName, roomBounds, roomGroup));
+
+                // 敵生成イベント発行
+                BroadcastExecuteEvents.Execute<IRoomEvent>(null,
+                    (handler, eventData) => handler.OnRoomEnemySpawned(spawnedEnemies, roomGroup));
 
                 // 次にタイルマップを転写する基準位置を更新する
                 //MEMO: Tilemap.localBounds は Instantiate() しないと (0,0,0) が返ってくるので、 cellBounds から算出する。
