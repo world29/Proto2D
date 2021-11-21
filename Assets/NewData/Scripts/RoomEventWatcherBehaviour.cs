@@ -32,7 +32,7 @@ namespace Assets.NewData.Scripts
 
         public void OnChangePlayerPosition(Vector3 position)
         {
-            RoomInfo roomPlayerIsIn = m_roomInfos.Find(x => x.localBounds.Contains(position));
+            RoomInfo roomPlayerIsIn = m_roomInfos.Find(x => !x.isEntered && x.localBounds.Contains(position));
             if (roomPlayerIsIn == null)
             {
                 // 部屋が生成される前にプレイヤーイベントが発生すると、ここに来る。
