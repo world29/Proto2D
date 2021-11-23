@@ -8,7 +8,12 @@ using System;
 using System.Linq;
 
 [RequireComponent(typeof(Controller2D), typeof(PlayerInput), typeof(Animator))]
-public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, IItemReceiver
+public class PlayerController 
+    : MonoBehaviour, 
+    IDamageSender, 
+    IDamageReceiver, 
+    IItemReceiver, 
+    Assets.NewData.Scripts.IPauseEvent
 {
     public float gravity = 30;
     public Vector2 maxVelocity = new Vector2(5, 15);
@@ -130,6 +135,7 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
     private bool isHitStop;
     private float wallClimbEntryTimer;
     private bool canPickup;
+    private bool isPaused = false; // 仮
 
     [SerializeField]
     Proto2D.ShopItemDatabase m_shopItemDatabase;
@@ -184,6 +190,16 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
         state.OnEnter(gameObject);
     }
 
+    private void OnEnable()
+    {
+        BroadcastReceivers.RegisterBroadcastReceiver<Assets.NewData.Scripts.IPauseEvent>(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        BroadcastReceivers.UnregisterBroadcastReceiver<Assets.NewData.Scripts.IPauseEvent>(gameObject);
+    }
+
     void Start()
     {
         health.SetMaxHealth(health.maxHealth.Value);
@@ -199,6 +215,11 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
     void Update()
     {
+        if (isPaused)
+        {
+            return;
+        }
+
         if (isHitStop)
         {
             return;
@@ -634,5 +655,19 @@ public class PlayerController : MonoBehaviour, IDamageSender, IDamageReceiver, I
 
             ChangeState(new PlayerState_Hang(ropeHandle));
         }
+    }
+
+    public void OnPauseRequested()
+    {
+        isPaused = true;
+
+        animator.speed = 0;
+    }
+
+    public void OnResumeRequested()
+    {
+        animator.speed = 1;
+
+        isPaused = false;
     }
 }

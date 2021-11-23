@@ -8,7 +8,10 @@ using DG.Tweening;
 namespace Proto2D
 {
     [RequireComponent(typeof(Controller2D), typeof(Animator))]
-    public class EnemyBehaviour : MonoBehaviour, IDamageReceiver
+    public class EnemyBehaviour
+        : MonoBehaviour
+        , IDamageReceiver
+        , Assets.NewData.Scripts.IPauseEvent
     {
         public float gravity = 20;
         public float health = 1;
@@ -76,6 +79,8 @@ namespace Proto2D
         private float m_lastTurnTime;
         private const float m_kTurnInterval = 1;
 
+        private bool isPaused = false;
+
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
@@ -102,6 +107,16 @@ namespace Proto2D
             }
         }
 
+        private void OnEnable()
+        {
+            BroadcastReceivers.RegisterBroadcastReceiver<Assets.NewData.Scripts.IPauseEvent>(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            BroadcastReceivers.UnregisterBroadcastReceiver<Assets.NewData.Scripts.IPauseEvent>(gameObject);
+        }
+
         protected virtual void Start()
         {
             m_animator = GetComponent<Animator>();
@@ -117,6 +132,11 @@ namespace Proto2D
 
         protected virtual void Update()
         {
+            if (isPaused)
+            {
+                return;
+            }
+
             ResetMovement();
             UpdateStateMachine();
             UpdateMovement();
@@ -455,6 +475,20 @@ namespace Proto2D
             {
                 sights[i].DrawGizmo(this, i);
             }
+        }
+
+        public void OnPauseRequested()
+        {
+            isPaused = true;
+
+            m_animator.speed = 0;
+        }
+
+        public void OnResumeRequested()
+        {
+            m_animator.speed = 1;
+
+            isPaused = false;
         }
     }
 
