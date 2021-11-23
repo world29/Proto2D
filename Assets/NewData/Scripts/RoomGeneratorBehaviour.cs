@@ -117,7 +117,7 @@ namespace Assets.NewData.Scripts
                     if (regex.IsMatch(prop.name))
                     {
                         // このゲームオブジェクトの子オブジェクトとして生成する
-                        Instantiate(prop, prop.transform.position + objectPositionOffset, Quaternion.identity, transform);
+                        Instantiate(prop, prop.transform.position + objectPositionOffset, prop.transform.rotation, transform);
                     }
                 }
 
@@ -133,7 +133,7 @@ namespace Assets.NewData.Scripts
                         if (enemyPrefab.CompareTag("Enemy"))
                         {
                             // このゲームオブジェクトの子オブジェクトとして生成する
-                            GameObject enemyInstance = Instantiate(enemyPrefab, enemyPrefab.transform.position + objectPositionOffset, Quaternion.identity, transform);
+                            GameObject enemyInstance = Instantiate(enemyPrefab, enemyPrefab.transform.position + objectPositionOffset, enemyPrefab.transform.rotation, transform);
                             spawnedEnemies.Add(enemyInstance);
                         }
                     }
