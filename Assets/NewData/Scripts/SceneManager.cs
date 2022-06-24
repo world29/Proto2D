@@ -1,53 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Assets.NewData.Scripts {
-
-public interface IScene
+namespace Assets.NewData.Scripts
 {
-    void OnUpdate(float deltaTime); 
-    void OnEnterScene();
-    void OnExitScene();
-}
-
-public class SceneManager
-{
-    public IScene CurrentScene { get; private set; }
-
-    ~SceneManager()
+    public class SceneManager : MonoBehaviour
     {
-        CurrentScene.OnExitScene();
-    }
-
-    public void ChangeScene(IScene nextScene)
-    {
-        if (CurrentScene != null)
+        private static SceneManager _instance;
+        private static SceneManager Instance
         {
-            CurrentScene.OnExitScene();
+            get
+            {
+                if (_instance == null)
+                {
+                    var go = new GameObject("SceneManager");
+                    _instance = go.AddComponent<SceneManager>();
+                    DontDestroyOnLoad(go);
+                }
+                return _instance;
+            }
         }
 
-        if (nextScene != null)
+        public static void LoadScene(string sceneName)
         {
-            nextScene.OnEnterScene();
+            Instance.StartCoroutine(Instance.LoadSceneCoroutine(sceneName));
         }
 
-        CurrentScene = nextScene;
-    }
-
-    public void Update(float deltaTime)
-    {
-        if (CurrentScene != null)
+        private void Awake()
         {
-            CurrentScene.OnUpdate(deltaTime);
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            UnityEngine.SceneManagement.SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
+        }
+
+        private void SceneManager_sceneUnloaded(UnityEngine.SceneManagement.Scene arg0)
+        {
+            Debug.Log($"Scene unloaded: {arg0.name}");
+        }
+
+        private void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
+        {
+            Debug.Log($"Scene loaded: {arg0.name}");
+        }
+
+        private IEnumerator LoadSceneCoroutine(string sceneName)
+        {
+            // フェードアウト
+            yield return ScreenFader.FadeOut(0.5f);
+
+            // シーンの非同期ロード
+            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
+
+            // フェードイン
+            yield return ScreenFader.FadeIn(0.5f);
         }
     }
-
-    // singleton
-    private static SceneManager Instance = new SceneManager();
-    public static SceneManager GetInstance()
-    {
-        return Instance;
-    }
-}
 
 }
