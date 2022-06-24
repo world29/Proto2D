@@ -11,11 +11,6 @@ namespace Assets.NewData.Scripts
             DontDestroyOnLoad(gameObject);
         }
 
-        void Start()
-        {
-            SceneManager.LoadScene("TitleMenu");
-        }
-
         private void OnGUI()
         {
             GUILayout.Label("[1] Title");
