@@ -133,6 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1657637323}
   - component: {fileID: 1657637322}
+  - component: {fileID: 1657637325}
+  - component: {fileID: 1657637324}
   m_Layer: 0
   m_Name: TitleDemo
   m_TagString: Untagged
@@ -157,6 +159,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -1627385393926118605, guid: 70cbea3ff3f962a46abdd6c59d40d68f, type: 2}
     value: {fileID: 3354729301294683551}
+  - key: {fileID: -6929604757049627584, guid: 70cbea3ff3f962a46abdd6c59d40d68f, type: 2}
+    value: {fileID: 1657637321}
   m_ExposedReferences:
     m_References:
     - cb9dd6ca12b8a994d8b07ee3a0b78a0c: {fileID: 2116640304}
@@ -174,6 +178,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1657637324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657637321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 2e66e77ed43fea44eb7bc5d971385f4b, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1657637325}
+          m_TargetAssemblyTypeName: Assets.NewData.Scripts.TimelineSkip, Assembly-CSharp
+          m_MethodName: GetDirector
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1657637322}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Playables.PlayableDirector,
+              UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1657637325}
+          m_TargetAssemblyTypeName: Assets.NewData.Scripts.TimelineSkip, Assembly-CSharp
+          m_MethodName: GetSkipTime
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 150
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1657637325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657637321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845651793e0ee8140ac5512fe7a57c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1770246489
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 2116640306}
+  sceneNameTo: Gameplay
 --- !u!224 &267056276562000894
 RectTransform:
   m_ObjectHideFlags: 0

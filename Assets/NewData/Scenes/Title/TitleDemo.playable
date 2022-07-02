@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Children: []
   m_Clips: []
   m_Markers:
-    m_Objects: []
+    m_Objects:
+    - {fileID: 7110513187631557576}
 --- !u!114 &-6803417907866419655
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -363,3 +364,19 @@ MonoBehaviour:
     m_DisplayName: Button
   m_Markers:
     m_Objects: []
+--- !u!114 &7110513187631557576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
+  m_Name: Signal Emitter
+  m_EditorClassIdentifier: 
+  m_Time: 0.3333333333333333
+  m_Retroactive: 0
+  m_EmitOnce: 0
+  m_Asset: {fileID: 11400000, guid: 2e66e77ed43fea44eb7bc5d971385f4b, type: 2}
