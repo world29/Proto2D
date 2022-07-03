@@ -13,15 +13,18 @@ namespace Assets.NewData.Scripts
         private TMP_Text textLabel;
 
         [SerializeField]
-        private DialogueData _dialogueData;
+        private DialogueData _testDialogueData;
 
         private TypewriterEffect typewriterEffect;
+
+        public bool IsRunning { get; private set; }
 
         private void Start()
         {
             TryGetComponent<TypewriterEffect>(out typewriterEffect);
             CloseDialogueBox();
-            ShowDialogue(_dialogueData);
+
+            IsRunning = false;
         }
 
         public void ShowDialogue(DialogueData dialogueData)
@@ -32,6 +35,8 @@ namespace Assets.NewData.Scripts
 
         private IEnumerator StepThroughDialogue(DialogueData dialogueData)
         {
+            IsRunning = true;
+
             foreach (string text in dialogueData.Text)
             {
                 yield return typewriterEffect.Run(text, textLabel);
@@ -39,6 +44,8 @@ namespace Assets.NewData.Scripts
             }
 
             CloseDialogueBox();
+
+            IsRunning = false;
         }
 
         private void CloseDialogueBox()
