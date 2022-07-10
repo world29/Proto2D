@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 namespace Assets.NewData.Scripts
 {
     [RequireComponent(typeof(UnityEngine.InputSystem.PlayerInput))]
-    public class CutsceneInputHandler : MonoBehaviour, ITimeControl
+    public class PlayerInputHandler : MonoBehaviour
     {
         private UnityEngine.InputSystem.PlayerInput input;
 
@@ -15,21 +14,14 @@ namespace Assets.NewData.Scripts
             TryGetComponent(out input);
         }
 
-        public void OnControlTimeStart()
+        public void OnEnable()
         {
-            input.actions.FindActionMap("Player").Disable();
-            input.actions.FindActionMap("Cutscene").Enable();
-        }
-
-        public void OnControlTimeStop()
-        {
-            input.actions.FindActionMap("Cutscene").Disable();
             input.actions.FindActionMap("Player").Enable();
         }
 
-        public void SetTime(double time)
+        public void OnDisable()
         {
-
+            input.actions.FindActionMap("Player").Disable();
         }
     }
 }

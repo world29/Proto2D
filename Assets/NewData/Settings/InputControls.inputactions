@@ -2,6 +2,33 @@
     "name": "InputControls",
     "maps": [
         {
+            "name": "System",
+            "id": "f8087705-a19e-4ca8-81c3-18ac66e5e336",
+            "actions": [
+                {
+                    "name": "OpenMenu",
+                    "type": "Button",
+                    "id": "f3c0ccb7-3251-4b28-a036-dc95571ea965",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "09586518-a81f-463e-96dc-4e110b2ae3a1",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Player",
             "id": "d9a30bb3-fcb1-4dc7-a0ed-a801de799903",
             "actions": [
@@ -17,14 +44,6 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "0c9d5701-d48d-4027-8a5a-8a5d1cd2b004",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "OpenMenu",
-                    "type": "Button",
-                    "id": "b22553a0-76da-495b-87a4-e115a615cbfa",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -96,17 +115,6 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6c59a63c-00c2-4755-b8e4-ca2c7f180172",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -121,14 +129,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "OpenMenu",
-                    "type": "Button",
-                    "id": "aa2583eb-6dfa-44c0-935b-da844f94cfeb",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -140,17 +140,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveNext",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f898b2df-3511-4f85-98ed-eaf4af62e2b2",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

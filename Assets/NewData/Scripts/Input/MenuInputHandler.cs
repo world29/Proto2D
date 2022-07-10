@@ -12,10 +12,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         string sceneName;
 
-        [HideInInspector]
         private UnityEngine.InputSystem.PlayerInput input;
 
-        private string actionMapNameToRestore;
+        private List<InputActionMap> actionMapsToRestore = new List<InputActionMap>();
 
         private void Awake()
         {
@@ -24,30 +23,13 @@ namespace Assets.NewData.Scripts
 
         private void OnEnable()
         {
-            // OpenMenu アクションが複数のアクションマップに存在する
-            foreach (var actionMap in input.actions.actionMaps)
-            {
-                var action = actionMap.FindAction("OpenMenu");
-                if (action != null)
-                {
-                    action.started += OnOpenMenu;
-                }
-            }
-
+            input.actions["OpenMenu"].started += OnOpenMenu;
             input.actions["CloseMenu"].started += OnCloseMenu;
         }
 
         private void OnDisable()
         {
-            foreach (var actionMap in input.actions.actionMaps)
-            {
-                var action = actionMap.FindAction("OpenMenu");
-                if (action != null)
-                {
-                    action.started -= OnOpenMenu;
-                }
-            }
-
+            input.actions["OpenMenu"].started -= OnOpenMenu;
             input.actions["CloseMenu"].started -= OnCloseMenu;
         }
 
@@ -55,14 +37,30 @@ namespace Assets.NewData.Scripts
         {
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
-            actionMapNameToRestore = input.currentActionMap.name;
-            input.SwitchCurrentActionMap("UI");
+            // UI 以外のすべての入力を無効化する
+            actionMapsToRestore.Clear();
+            foreach (var actionMap in input.actions.actionMaps)
+            {
+                if (actionMap.name == "UI") continue;
+
+                if (actionMap.enabled)
+                {
+                    actionMapsToRestore.Add(actionMap);
+                    actionMap.Disable();
+                }
+            }
+            input.actions.FindActionMap("UI").Enable();
         }
 
         private void OnCloseMenu(InputAction.CallbackContext obj)
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
-            input.SwitchCurrentActionMap(actionMapNameToRestore);
+            input.actions.FindActionMap("UI").Disable();
+
+            foreach (var actionMap in actionMapsToRestore)
+            {
+                actionMap.Enable();
+            } 
         }
     }
 }
