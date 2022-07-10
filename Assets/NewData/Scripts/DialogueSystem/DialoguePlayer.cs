@@ -15,6 +15,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private DialogueData _testDialogueData;
 
+        [SerializeField]
+        private UnityEngine.InputSystem.PlayerInput input;
+
         private TypewriterEffect typewriterEffect;
 
         public bool IsRunning { get; private set; }
@@ -40,7 +43,7 @@ namespace Assets.NewData.Scripts
             foreach (string text in dialogueData.Text)
             {
                 yield return typewriterEffect.Run(text, textLabel);
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                yield return new WaitUntil(() => input.actions["MoveNext"].triggered);
             }
 
             CloseDialogueBox();
