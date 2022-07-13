@@ -5,31 +5,47 @@ using UnityEngine.Timeline;
 
 namespace Assets.NewData.Scripts
 {
-    [RequireComponent(typeof(UnityEngine.InputSystem.PlayerInput))]
     public class CutsceneInputHandler : MonoBehaviour, ITimeControl
     {
-        private UnityEngine.InputSystem.PlayerInput input;
-
-        private void Awake()
-        {
-            TryGetComponent(out input);
-        }
-
         public void OnControlTimeStart()
         {
-            input.actions.FindActionMap("Player").Disable();
-            input.actions.FindActionMap("Cutscene").Enable();
+            if (Application.isPlaying)
+            {
+                // カットシーン中はプレイヤー入力を無効化し、メッセージ送りの入力を有効化する
+                InputSystem.Input.Player.Disable();
+                InputSystem.Input.Cutscene.Enable();
+
+                // ポーズ中はメッセージ送りを無効化する
+                PauseSystem.OnPause += HandlePause;
+                PauseSystem.OnResume += HandleResume;
+            }
         }
 
         public void OnControlTimeStop()
         {
-            input.actions.FindActionMap("Cutscene").Disable();
-            input.actions.FindActionMap("Player").Enable();
+            if (Application.isPlaying)
+            {
+                PauseSystem.OnPause -= HandlePause;
+                PauseSystem.OnResume -= HandleResume;
+
+                InputSystem.Input.Cutscene.Disable();
+                InputSystem.Input.Player.Enable();
+            }
         }
 
         public void SetTime(double time)
         {
 
+        }
+
+        private void HandlePause()
+        {
+            InputSystem.Input.Cutscene.Disable();
+        }
+
+        private void HandleResume()
+        {
+            InputSystem.Input.Cutscene.Enable();
         }
     }
 }
