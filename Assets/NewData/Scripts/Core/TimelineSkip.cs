@@ -12,7 +12,7 @@ namespace Assets.NewData.Scripts
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E) && !isSceneSkipped)
+            if (InputSystem.Input.Cutscene.MoveNext.triggered && !isSceneSkipped)
             {
                 currentDirector.time = timeToSkipTo;
                 isSceneSkipped = true;

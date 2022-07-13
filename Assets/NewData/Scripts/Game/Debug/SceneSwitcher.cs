@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 namespace Assets.NewData.Scripts
 {
@@ -21,15 +22,15 @@ namespace Assets.NewData.Scripts
         void Update()
         {
 #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Keyboard.current.digit1Key.wasPressedThisFrame)
             {
                 SceneManager.LoadScene("TitleMenu");
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Keyboard.current.digit2Key.wasPressedThisFrame)
             {
                 SceneManager.LoadScene("Gameplay");
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Keyboard.current.digit3Key.wasPressedThisFrame)
             {
                 SceneManager.LoadScene("GameoverMenu");
             }
