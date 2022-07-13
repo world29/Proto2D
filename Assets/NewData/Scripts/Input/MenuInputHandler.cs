@@ -35,6 +35,8 @@ namespace Assets.NewData.Scripts
 
         private void OnOpenMenu(InputAction.CallbackContext obj)
         {
+            PauseSystem.Pause();
+
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             // UI ˆÈŠO‚Ì‚·‚×‚Ä‚Ì“ü—Í‚ð–³Œø‰»‚·‚é
@@ -60,7 +62,9 @@ namespace Assets.NewData.Scripts
             foreach (var actionMap in actionMapsToRestore)
             {
                 actionMap.Enable();
-            } 
+            }
+
+            PauseSystem.Resume();
         }
     }
 }
