@@ -37,6 +37,8 @@ namespace Assets.NewData.Scripts
         {
             SceneTransitionManager.EnsureInstance();
 
+            if (IsPaused) return;
+
             OnPause?.Invoke();
 
             UnityEngine.Time.timeScale = 0f;
@@ -47,6 +49,8 @@ namespace Assets.NewData.Scripts
         /// </summary>
         public static void Resume()
         {
+            if (!IsPaused) return;
+
             UnityEngine.Time.timeScale = 1f;
 
             OnResume?.Invoke();
