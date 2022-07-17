@@ -6,7 +6,7 @@
             "id": "f8087705-a19e-4ca8-81c3-18ac66e5e336",
             "actions": [
                 {
-                    "name": "OpenMenu",
+                    "name": "TogglePause",
                     "type": "Button",
                     "id": "f3c0ccb7-3251-4b28-a036-dc95571ea965",
                     "expectedControlType": "Button",
@@ -22,7 +22,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenMenu",
+                    "action": "TogglePause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -140,33 +140,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveNext",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "6e94c8ca-ce93-467a-acd5-b02664300a92",
-            "actions": [
-                {
-                    "name": "CloseMenu",
-                    "type": "Button",
-                    "id": "b8a01667-2acd-46eb-ae83-5a1b485c8950",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "b0ff4461-58cc-4945-8999-ba5cfdeb2833",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CloseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

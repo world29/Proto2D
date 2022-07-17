@@ -14,8 +14,6 @@ namespace Assets.NewData.Scripts
 
         private List<InputActionMap> _actionMapsToRestore = new List<InputActionMap>();
 
-        private readonly string sceneName = "Menu";
-
         public static InputSystem Instance
         {
             get
@@ -48,72 +46,35 @@ namespace Assets.NewData.Scripts
             _inputControls = new InputControls();
         }
 
+        private void OnDestroy()
+        {
+            if (_inputControls != null)
+            {
+                _inputControls.Dispose();
+            }
+        }
+
         private void OnEnable()
         {
-            // システム共通の入力はデフォルトで有効化しておく
-            _inputControls.System.Enable();
-
-            // ポーズ時の処理
-            PauseSystem.OnPause += OnPause;
-            PauseSystem.OnResume += OnResume;
-
             // ポーズボタンを押した際の処理を登録する
-            // System.ToggleMenu とかの方がよいかも..
-            _inputControls.System.OpenMenu.started += OnOpenMenu;
-            _inputControls.UI.CloseMenu.started += OnCloseMenu;
+            _inputControls.System.TogglePause.started += OnTogglePause;
         }
 
         private void OnDisable()
         {
-            _inputControls.System.OpenMenu.started -= OnOpenMenu;
-            _inputControls.UI.CloseMenu.started -= OnCloseMenu;
-
-            PauseSystem.OnPause -= OnPause;
-            PauseSystem.OnResume -= OnResume;
-
-            _inputControls.System.Disable();
+            _inputControls.System.TogglePause.started -= OnTogglePause;
         }
 
-        private void OnDestroy()
+        private void OnTogglePause(InputAction.CallbackContext obj)
         {
-            _inputControls.Dispose();
-        }
-
-        private void OnPause()
-        {
-            // UI 以外のすべての入力を無効化する
-            _actionMapsToRestore.Clear();
-            foreach (var actionMap in _inputControls.asset.actionMaps)
+            if (PauseSystem.IsPaused)
             {
-                if (actionMap.name == "UI") continue;
-
-                if (actionMap.enabled)
-                {
-                    _actionMapsToRestore.Add(actionMap);
-                    actionMap.Disable();
-                }
+                PauseSystem.Resume();
             }
-            _inputControls.UI.Enable();
-        }
-
-        private void OnResume()
-        {
-            _inputControls.UI.Disable();
-
-            foreach (var actionMap in _actionMapsToRestore)
+            else
             {
-                actionMap.Enable();
+                PauseSystem.Pause();
             }
-        }
-
-        private void OnOpenMenu(InputAction.CallbackContext obj)
-        {
-            PauseSystem.Pause();
-        }
-
-        private void OnCloseMenu(InputAction.CallbackContext obj)
-        {
-            PauseSystem.Resume();
         }
     }
 }

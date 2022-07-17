@@ -21,7 +21,7 @@ namespace Assets.NewData.Scripts
             ""id"": ""f8087705-a19e-4ca8-81c3-18ac66e5e336"",
             ""actions"": [
                 {
-                    ""name"": ""OpenMenu"",
+                    ""name"": ""TogglePause"",
                     ""type"": ""Button"",
                     ""id"": ""f3c0ccb7-3251-4b28-a036-dc95571ea965"",
                     ""expectedControlType"": ""Button"",
@@ -37,7 +37,7 @@ namespace Assets.NewData.Scripts
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenMenu"",
+                    ""action"": ""TogglePause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -159,40 +159,13 @@ namespace Assets.NewData.Scripts
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""UI"",
-            ""id"": ""6e94c8ca-ce93-467a-acd5-b02664300a92"",
-            ""actions"": [
-                {
-                    ""name"": ""CloseMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""b8a01667-2acd-46eb-ae83-5a1b485c8950"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b0ff4461-58cc-4945-8999-ba5cfdeb2833"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CloseMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
 }");
             // System
             m_System = asset.FindActionMap("System", throwIfNotFound: true);
-            m_System_OpenMenu = m_System.FindAction("OpenMenu", throwIfNotFound: true);
+            m_System_TogglePause = m_System.FindAction("TogglePause", throwIfNotFound: true);
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
@@ -200,9 +173,6 @@ namespace Assets.NewData.Scripts
             // Cutscene
             m_Cutscene = asset.FindActionMap("Cutscene", throwIfNotFound: true);
             m_Cutscene_MoveNext = m_Cutscene.FindAction("MoveNext", throwIfNotFound: true);
-            // UI
-            m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-            m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -252,12 +222,12 @@ namespace Assets.NewData.Scripts
         // System
         private readonly InputActionMap m_System;
         private ISystemActions m_SystemActionsCallbackInterface;
-        private readonly InputAction m_System_OpenMenu;
+        private readonly InputAction m_System_TogglePause;
         public struct SystemActions
         {
             private @InputControls m_Wrapper;
             public SystemActions(@InputControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @OpenMenu => m_Wrapper.m_System_OpenMenu;
+            public InputAction @TogglePause => m_Wrapper.m_System_TogglePause;
             public InputActionMap Get() { return m_Wrapper.m_System; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -267,16 +237,16 @@ namespace Assets.NewData.Scripts
             {
                 if (m_Wrapper.m_SystemActionsCallbackInterface != null)
                 {
-                    @OpenMenu.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnOpenMenu;
-                    @OpenMenu.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnOpenMenu;
-                    @OpenMenu.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnOpenMenu;
+                    @TogglePause.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnTogglePause;
+                    @TogglePause.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnTogglePause;
+                    @TogglePause.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnTogglePause;
                 }
                 m_Wrapper.m_SystemActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @OpenMenu.started += instance.OnOpenMenu;
-                    @OpenMenu.performed += instance.OnOpenMenu;
-                    @OpenMenu.canceled += instance.OnOpenMenu;
+                    @TogglePause.started += instance.OnTogglePause;
+                    @TogglePause.performed += instance.OnTogglePause;
+                    @TogglePause.canceled += instance.OnTogglePause;
                 }
             }
         }
@@ -355,42 +325,9 @@ namespace Assets.NewData.Scripts
             }
         }
         public CutsceneActions @Cutscene => new CutsceneActions(this);
-
-        // UI
-        private readonly InputActionMap m_UI;
-        private IUIActions m_UIActionsCallbackInterface;
-        private readonly InputAction m_UI_CloseMenu;
-        public struct UIActions
-        {
-            private @InputControls m_Wrapper;
-            public UIActions(@InputControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @CloseMenu => m_Wrapper.m_UI_CloseMenu;
-            public InputActionMap Get() { return m_Wrapper.m_UI; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-            public void SetCallbacks(IUIActions instance)
-            {
-                if (m_Wrapper.m_UIActionsCallbackInterface != null)
-                {
-                    @CloseMenu.started -= m_Wrapper.m_UIActionsCallbackInterface.OnCloseMenu;
-                    @CloseMenu.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnCloseMenu;
-                    @CloseMenu.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnCloseMenu;
-                }
-                m_Wrapper.m_UIActionsCallbackInterface = instance;
-                if (instance != null)
-                {
-                    @CloseMenu.started += instance.OnCloseMenu;
-                    @CloseMenu.performed += instance.OnCloseMenu;
-                    @CloseMenu.canceled += instance.OnCloseMenu;
-                }
-            }
-        }
-        public UIActions @UI => new UIActions(this);
         public interface ISystemActions
         {
-            void OnOpenMenu(InputAction.CallbackContext context);
+            void OnTogglePause(InputAction.CallbackContext context);
         }
         public interface IPlayerActions
         {
@@ -400,10 +337,6 @@ namespace Assets.NewData.Scripts
         public interface ICutsceneActions
         {
             void OnMoveNext(InputAction.CallbackContext context);
-        }
-        public interface IUIActions
-        {
-            void OnCloseMenu(InputAction.CallbackContext context);
         }
     }
 }

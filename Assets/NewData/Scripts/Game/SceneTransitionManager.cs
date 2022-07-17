@@ -27,6 +27,9 @@ namespace Assets.NewData.Scripts
         {
             PauseSystem.OnPause += OnPause;
             PauseSystem.OnResume += OnResume;
+
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+            UnityEngine.SceneManagement.SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
         private void OnDisable()
@@ -82,6 +85,24 @@ namespace Assets.NewData.Scripts
             if (UnityEngine.SceneManagement.SceneManager.GetSceneByName(pauseSceneName).isLoaded)
             {
                 UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(pauseSceneName);
+            }
+        }
+
+        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+        {
+            if (scene.name == "Gameplay")
+            {
+                InputSystem.Input.System.Enable();
+                InputSystem.Input.Player.Enable();
+            }
+        }
+
+        private void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene)
+        {
+            if (scene.name == "Gameplay")
+            {
+                InputSystem.Input.Player.Disable();
+                InputSystem.Input.System.Disable();
             }
         }
     }
