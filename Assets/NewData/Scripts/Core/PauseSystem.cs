@@ -35,6 +35,8 @@ namespace Assets.NewData.Scripts
         /// </summary>
         public static void Pause()
         {
+            SceneTransitionManager.EnsureInstance();
+
             OnPause?.Invoke();
 
             UnityEngine.Time.timeScale = 0f;

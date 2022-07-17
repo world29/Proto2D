@@ -53,6 +53,10 @@ namespace Assets.NewData.Scripts
             // システム共通の入力はデフォルトで有効化しておく
             _inputControls.System.Enable();
 
+            // ポーズ時の処理
+            PauseSystem.OnPause += OnPause;
+            PauseSystem.OnResume += OnResume;
+
             // ポーズボタンを押した際の処理を登録する
             // System.ToggleMenu とかの方がよいかも..
             _inputControls.System.OpenMenu.started += OnOpenMenu;
@@ -64,6 +68,9 @@ namespace Assets.NewData.Scripts
             _inputControls.System.OpenMenu.started -= OnOpenMenu;
             _inputControls.UI.CloseMenu.started -= OnCloseMenu;
 
+            PauseSystem.OnPause -= OnPause;
+            PauseSystem.OnResume -= OnResume;
+
             _inputControls.System.Disable();
         }
 
@@ -72,12 +79,8 @@ namespace Assets.NewData.Scripts
             _inputControls.Dispose();
         }
 
-        private void OnOpenMenu(InputAction.CallbackContext obj)
+        private void OnPause()
         {
-            PauseSystem.Pause();
-
-            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
             // UI 以外のすべての入力を無効化する
             _actionMapsToRestore.Clear();
             foreach (var actionMap in _inputControls.asset.actionMaps)
@@ -93,17 +96,23 @@ namespace Assets.NewData.Scripts
             _inputControls.UI.Enable();
         }
 
-        private void OnCloseMenu(InputAction.CallbackContext obj)
+        private void OnResume()
         {
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
-
             _inputControls.UI.Disable();
 
             foreach (var actionMap in _actionMapsToRestore)
             {
                 actionMap.Enable();
             }
+        }
 
+        private void OnOpenMenu(InputAction.CallbackContext obj)
+        {
+            PauseSystem.Pause();
+        }
+
+        private void OnCloseMenu(InputAction.CallbackContext obj)
+        {
             PauseSystem.Resume();
         }
     }

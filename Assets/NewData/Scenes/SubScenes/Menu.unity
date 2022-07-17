@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 297240406}
   - component: {fileID: 297240405}
   - component: {fileID: 297240404}
+  - component: {fileID: 297240407}
   m_Layer: 5
   m_Name: Button_Resume
   m_TagString: Untagged
@@ -685,7 +686,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 297240405}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 297240407}
+        m_TargetAssemblyTypeName: Assets.NewData.Scripts.EventHandler, Assembly-CSharp
+        m_MethodName: TogglePause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &297240405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,6 +737,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297240402}
   m_CullTransparentMesh: 1
+--- !u!114 &297240407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297240402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced61f7dce2d8484d8cc67f65178f226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &623481773
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +761,7 @@ GameObject:
   - component: {fileID: 623481776}
   - component: {fileID: 623481775}
   m_Layer: 5
-  m_Name: VerticalGroup
+  m_Name: ButtonGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1253,6 +1278,7 @@ GameObject:
   - component: {fileID: 1884472605}
   - component: {fileID: 1884472604}
   - component: {fileID: 1884472603}
+  - component: {fileID: 1884472606}
   m_Layer: 5
   m_Name: Button_BackToTitle
   m_TagString: Untagged
@@ -1323,7 +1349,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1884472604}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1884472606}
+        m_TargetAssemblyTypeName: Assets.NewData.Scripts.EventHandler, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: TitleMenu
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1884472604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,3 +1400,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1884472601}
   m_CullTransparentMesh: 1
+--- !u!114 &1884472606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884472601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced61f7dce2d8484d8cc67f65178f226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
