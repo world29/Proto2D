@@ -24,15 +24,15 @@ namespace Assets.NewData.Scripts
 #if UNITY_EDITOR
             if (Keyboard.current.digit1Key.wasPressedThisFrame)
             {
-                SceneManager.LoadScene("TitleMenu");
+                SceneTransitionManager.LoadScene("TitleMenu");
             }
             if (Keyboard.current.digit2Key.wasPressedThisFrame)
             {
-                SceneManager.LoadScene("Gameplay");
+                SceneTransitionManager.LoadScene("Gameplay");
             }
             if (Keyboard.current.digit3Key.wasPressedThisFrame)
             {
-                SceneManager.LoadScene("GameoverMenu");
+                SceneTransitionManager.LoadScene("GameoverMenu");
             }
 #endif
         }

@@ -10,7 +10,7 @@ namespace Assets.NewData.Scripts
 
         void Awake()
         {
-            SceneManager.LoadScene(initialSceneName);
+            SceneTransitionManager.LoadScene(initialSceneName);
         }
     }
 }

@@ -664,16 +664,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
+      - m_Target: {fileID: 2116640309}
+        m_TargetAssemblyTypeName: Assets.NewData.Scripts.EventHandler, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Gameplay
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2116640307
@@ -723,11 +723,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2116640304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2fdc83a26998d4c9bf7c1d5f194585, type: 3}
+  m_Script: {fileID: 11500000, guid: ced61f7dce2d8484d8cc67f65178f226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 2116640306}
-  sceneNameTo: Gameplay
 --- !u!224 &267056276562000894
 RectTransform:
   m_ObjectHideFlags: 0
