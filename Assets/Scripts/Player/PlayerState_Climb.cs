@@ -9,12 +9,16 @@ public class PlayerState_Climb : IPlayerState
     private Animator animator;
     private PlayerInput input;
 
+    private Assets.NewData.Scripts.InputControls newInput;
+
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         animator = context.GetComponent<Animator>();
         input = context.GetComponent<PlayerInput>();
+
+        newInput = Assets.NewData.Scripts.InputSystem.Input;
 
         animator.SetBool("climb", true);
     }
@@ -37,7 +41,7 @@ public class PlayerState_Climb : IPlayerState
         {
             return new PlayerState_Free();
         }
-        else if (input.isFlicked || input.isTouched)
+        else if (input.isFlicked || newInput.Player.Jump.triggered)
         {
             return new PlayerState_Attack();
         }

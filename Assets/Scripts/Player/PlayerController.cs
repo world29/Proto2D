@@ -142,6 +142,8 @@ public class PlayerController
 
     private Proto2D.ShopItemManager m_shopItemManager;
 
+    private Assets.NewData.Scripts.InputControls newInput;
+
     public struct HitInfo
     {
         public DamageType type;
@@ -158,6 +160,7 @@ public class PlayerController
     private Queue<HitInfo> hitQueue;
     private Queue<DamageInfo> damageQueue;
 
+#if false
     public Vector2 directionalInput {
         get {
             if (input.enabled)
@@ -169,6 +172,22 @@ public class PlayerController
             m_directionalInputInternal = value;
         }
     }
+#else
+    public Vector2 directionalInput
+    {
+        get
+        {
+            if (newInput.Player.enabled)
+                return newInput.Player.Move.ReadValue<Vector2>();
+            else
+                return m_directionalInputInternal;
+        }
+        private set
+        {
+            m_directionalInputInternal = value;
+        }
+    }
+#endif
     private Vector2 m_directionalInputInternal = Vector2.zero;
 
     private void Awake()
@@ -181,6 +200,7 @@ public class PlayerController
         controller = GetComponent<Controller2D>();
         animator = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
+        newInput = Assets.NewData.Scripts.InputSystem.Input;
 
         hitQueue = new Queue<HitInfo>();
         damageQueue = new Queue<DamageInfo>();
@@ -257,7 +277,9 @@ public class PlayerController
         if (controller.collisions.right || controller.collisions.left)
         {
             int wallDirX = controller.collisions.right ? 1 : -1;
-            bool inputToWall = input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) == wallDirX;
+            //bool inputToWall = input.directionalInput.x != 0 && (int)Mathf.Sign(input.directionalInput.x) == wallDirX;
+            var inputMove = newInput.Player.Move.ReadValue<Vector2>();
+            bool inputToWall = inputMove.x != 0 && (int)Mathf.Sign(inputMove.x) == wallDirX;
 
             // 地上にいる場合、壁方向に一定時間以上方向キーを入力すると壁アクションに移行する
             if (controller.collisions.below)
@@ -460,7 +482,7 @@ public class PlayerController
     {
         if (_direction == 0f)
         {
-            float inputX = input.directionalInput.x;
+            float inputX = directionalInput.x;
             if (inputX != 0)
             {
                 // キー入力の向き
@@ -468,6 +490,7 @@ public class PlayerController
             }
             else if (velocity.x == 0)
             {
+#if false //TODO
                 // マウス入力モードのときは、プレイヤーがポインターの方を向く
                 if (Proto2D.ServiceLocatorProvider.Instance.inputMode == Proto2D.ServiceLocatorProvider.InputMode.KeyboardAndMouse)
                 {
@@ -476,6 +499,7 @@ public class PlayerController
 
                     direction = Mathf.Sign(diff.x);
                 }
+#endif
             }
         }
         else

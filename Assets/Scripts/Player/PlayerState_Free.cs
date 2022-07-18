@@ -9,11 +9,15 @@ public class PlayerState_Free : IPlayerState
     private Controller2D controller;
     private PlayerInput input;
 
+    private Assets.NewData.Scripts.InputControls newInput;
+
     public void OnEnter(GameObject context)
     {
         player = context.GetComponent<PlayerController>();
         controller = context.GetComponent<Controller2D>();
         input = context.GetComponent<PlayerInput>();
+
+        newInput = Assets.NewData.Scripts.InputSystem.Input;
     }
 
     public void OnExit(GameObject context)
@@ -89,7 +93,7 @@ public class PlayerState_Free : IPlayerState
         velocity.x = Mathf.Clamp(velocity.x, -player.maxVelocity.x, player.maxVelocity.x);
 
         // 垂直方向の速度を算出
-        if (grounded && input.isTouched)
+        if (grounded && newInput.Player.Jump.triggered)
         {
             player.Jump();
         }
