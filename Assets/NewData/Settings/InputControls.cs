@@ -62,6 +62,14 @@ namespace Assets.NewData.Scripts
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jet"",
+                    ""type"": ""Button"",
+                    ""id"": ""6cb6e9d2-9ba1-47f2-b975-d3737708a936"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -122,12 +130,56 @@ namespace Assets.NewData.Scripts
                 },
                 {
                     ""name"": """",
+                    ""id"": ""610fd2db-4bad-45f6-8601-4954667d429b"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1bb9a796-7b15-4fcb-8a94-99ffed0bf012"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22f1a5cb-72d1-43e3-a588-8ad80ca89583"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""953ecd6f-2f39-46b6-a807-8c0a1e6800ea"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jet"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9727434c-3d89-4263-962f-09f085d9dbdc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jet"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -170,6 +222,7 @@ namespace Assets.NewData.Scripts
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+            m_Player_Jet = m_Player.FindAction("Jet", throwIfNotFound: true);
             // Cutscene
             m_Cutscene = asset.FindActionMap("Cutscene", throwIfNotFound: true);
             m_Cutscene_MoveNext = m_Cutscene.FindAction("MoveNext", throwIfNotFound: true);
@@ -257,12 +310,14 @@ namespace Assets.NewData.Scripts
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Jump;
+        private readonly InputAction m_Player_Jet;
         public struct PlayerActions
         {
             private @InputControls m_Wrapper;
             public PlayerActions(@InputControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
+            public InputAction @Jet => m_Wrapper.m_Player_Jet;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -278,6 +333,9 @@ namespace Assets.NewData.Scripts
                     @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                    @Jet.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJet;
+                    @Jet.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJet;
+                    @Jet.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJet;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -288,6 +346,9 @@ namespace Assets.NewData.Scripts
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
+                    @Jet.started += instance.OnJet;
+                    @Jet.performed += instance.OnJet;
+                    @Jet.canceled += instance.OnJet;
                 }
             }
         }
@@ -333,6 +394,7 @@ namespace Assets.NewData.Scripts
         {
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnJet(InputAction.CallbackContext context);
         }
         public interface ICutsceneActions
         {
