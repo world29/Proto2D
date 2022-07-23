@@ -193,11 +193,11 @@ namespace Assets.NewData.Scripts
             }
             else
             {
-                if (inputMove.x == 0f)
+                if (inputMove.x == 0f && inputMove.y == 0f)
                 {
                     _velocity.y = 0f;
                 }
-                else
+                else if (inputMove.x != 0f)
                 {
                     if ((_controller.collisions.right && inputMove.x > 0f) ||
                         (_controller.collisions.left && inputMove.x < 0f))
@@ -211,6 +211,10 @@ namespace Assets.NewData.Scripts
                     }
 
                     FacingRight = inputMove.x > 0;
+                }
+                else if (inputMove.y != 0f)
+                {
+                    _velocity.y = Mathf.Sign(inputMove.y) * climbSpeed;
                 }
             }
 
