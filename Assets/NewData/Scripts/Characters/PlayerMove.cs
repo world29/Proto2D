@@ -18,8 +18,21 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float jumpTimeToPeak = 1f;
 
+        [SerializeField, Range(0, 1)]
+        private float airAcceleration = 0.1f;
+
+        [SerializeField, Range(0, 5)]
+        private float airControl = 1f;
+
+        // ‹ó’†‚Å“ü—Í‚ª‚È‚¢‚Æ‚«‚ÌÃ~‚µ‚â‚·‚³
+        [SerializeField, Range(0, 1)]
+        private float airBrake = 0.1f;
+
         [SerializeField]
         private float climbSpeed = 3f;
+
+        [SerializeField]
+        private float wallJumpAngle = 30f;
 
         private Vector2 _velocity;
         private Controller2D _controller;
@@ -49,6 +62,17 @@ namespace Assets.NewData.Scripts
         private float JumpInitialVelocityY
         {
             get { return 2 * jumpHeight / jumpTimeToPeak; }
+        }
+
+        // ¶‚Ì•Ç‚ğ“o‚Á‚Ä‚¢‚é‚Æ‚«‚ÌƒWƒƒƒ“ƒv‰‘¬
+        private Vector2 WallJumpInitialVelocity
+        {
+            get
+            {
+                // ãŒü‚«‚ğ 0 degree ‚Æ‚·‚éB
+                var rad = wallJumpAngle * Mathf.Deg2Rad;
+                return new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * JumpInitialVelocityY;
+            }
         }
 
         private void Awake()
@@ -90,15 +114,44 @@ namespace Assets.NewData.Scripts
         {
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
             bool inputJump = _input.Player.Jump.triggered;
+
             bool jumpPerformed = false;
+            bool isGround = _controller.collisions.below;
 
             if (inputMove.x == 0f)
             {
-                _velocity.x = 0f;
+                if (isGround)
+                {
+                    _velocity.x = 0f;
+                }
+                else
+                {
+                    _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
+                }
             }
             else
             {
-                _velocity.x = Mathf.Sign(inputMove.x) * runSpeed;
+                if (isGround)
+                {
+                    _velocity.x = Mathf.Sign(inputMove.x) * runSpeed;
+                }
+                else
+                {
+                    // airAcceleration: 0 ‚È‚ç‹ó’†‚Å‚Ì‰Á‘¬‚È‚µA1 ‚È‚ç‘¦À‚ÉÅ‚‘¬“x‚É’B‚·‚é
+                    var acc = runSpeed * Mathf.Pow(airAcceleration, 2);
+
+                    // is•ûŒü‚Æ“ü—Í•ûŒü‚ªˆê’v‚µ‚Ä‚¢‚é‚©
+                    bool isInputBackward = (_velocity.x != 0) && (Mathf.Sign(_velocity.x) != Mathf.Sign(inputMove.x));
+
+                    if (isInputBackward)
+                    {
+                        acc *= airControl;
+                    }
+
+                    acc = inputMove.x > 0 ? acc : -acc;
+                    _velocity.x += acc;
+                    _velocity.x = Mathf.Clamp(_velocity.x, -runSpeed, runSpeed);
+                }
 
                 FacingRight = inputMove.x > 0;
             }
@@ -125,27 +178,40 @@ namespace Assets.NewData.Scripts
         private void MoveClimbing()
         {
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
+            bool inputJump = _input.Player.Jump.triggered;
 
             _velocity.x = 0f;
 
-            if (inputMove.x == 0f)
+            if (inputJump)
             {
-                _velocity.y = 0f;
+                _velocity = WallJumpInitialVelocity;
+                if (FacingRight)
+                {
+                    _velocity.x *= -1f;
+                }
+                Debug.Log($"WallJumpInitialVelocity: {_velocity.ToString("F3")}");
             }
             else
             {
-                if ((_controller.collisions.right && inputMove.x > 0f) ||
-                    (_controller.collisions.left && inputMove.x < 0f))
+                if (inputMove.x == 0f)
                 {
-                    // •Ç•ûŒü‚Ö‚Ì“ü—Í‚Å“o‚é
-                    _velocity.y = climbSpeed;
+                    _velocity.y = 0f;
                 }
                 else
                 {
-                    //todo: •Ç‚Æ”½‘Î•ûŒü‚Ö‚Ì“ü—Í‚Å”ò‚Ñ~‚è‚é
-                }
+                    if ((_controller.collisions.right && inputMove.x > 0f) ||
+                        (_controller.collisions.left && inputMove.x < 0f))
+                    {
+                        // •Ç•ûŒü‚Ö‚Ì“ü—Í‚Å“o‚é
+                        _velocity.y = climbSpeed;
+                    }
+                    else
+                    {
+                        //todo: •Ç‚Æ”½‘Î•ûŒü‚Ö‚Ì“ü—Í‚Å”ò‚Ñ~‚è‚é
+                    }
 
-                FacingRight = inputMove.x > 0;
+                    FacingRight = inputMove.x > 0;
+                }
             }
 
             _controller.Move(_velocity * Time.deltaTime, FacingRight);
