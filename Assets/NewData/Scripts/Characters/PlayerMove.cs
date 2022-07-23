@@ -18,6 +18,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float jumpTimeToPeak = 1f;
 
+        [SerializeField]
+        private float climbSpeed = 3f;
+
         private Vector2 _velocity;
         private Controller2D _controller;
         private Animator _animator;
@@ -73,6 +76,18 @@ namespace Assets.NewData.Scripts
         {
             if (!_input.Player.enabled) return;
 
+            if (_controller.collisions.climbingWall)
+            {
+                MoveClimbing();
+            }
+            else
+            {
+                Move();
+            }
+        }
+
+        private void Move()
+        {
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
             bool inputJump = _input.Player.Jump.triggered;
             bool jumpPerformed = false;
@@ -99,12 +114,41 @@ namespace Assets.NewData.Scripts
                 _velocity.y += Gravity * Time.deltaTime * gravityScale;
             }
 
-            _controller.Move(_velocity * Time.deltaTime);
+            _controller.Move(_velocity * Time.deltaTime, FacingRight);
 
             if (!jumpPerformed && (_controller.collisions.below || _controller.collisions.above))
             {
                 _velocity.y = 0f;
             }
+        }
+
+        private void MoveClimbing()
+        {
+            Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
+
+            _velocity.x = 0f;
+
+            if (inputMove.x == 0f)
+            {
+                _velocity.y = 0f;
+            }
+            else
+            {
+                if ((_controller.collisions.right && inputMove.x > 0f) ||
+                    (_controller.collisions.left && inputMove.x < 0f))
+                {
+                    // •Ç•ûŒü‚Ö‚Ì“ü—Í‚Å“o‚é
+                    _velocity.y = climbSpeed;
+                }
+                else
+                {
+                    //todo: •Ç‚Æ”½‘Î•ûŒü‚Ö‚Ì“ü—Í‚Å”ò‚Ñ~‚è‚é
+                }
+
+                FacingRight = inputMove.x > 0;
+            }
+
+            _controller.Move(_velocity * Time.deltaTime, FacingRight);
         }
 
         private void UpdateAnimation()
@@ -126,13 +170,39 @@ namespace Assets.NewData.Scripts
             }
             else
             {
-                nextState = "Apx_Jump";
+                if (_controller.collisions.climbingWall)
+                {
+                    if (_velocity.y == 0f)
+                    {
+                        nextState = "Apx_Climb_Idle";
+                    }
+                    else
+                    {
+                        nextState = "Apx_Climb";
+                    }
+                }
+                else
+                {
+                    nextState = "Apx_Jump";
+                }
             }
 
             if (_currentState != nextState)
             {
                 _animator.Play(nextState);
                 _currentState = nextState;
+            }
+        }
+
+        private void OnGUI()
+        {
+            if (_controller)
+            {
+                GUIStyle style = GUI.skin.label;
+                style.fontSize = 30;
+
+                GUILayout.Label($"Ground: {_controller.collisions.below}", style);
+                GUILayout.Label($"Climb: {_controller.collisions.climbingWall}", style);
             }
         }
     }
