@@ -91,6 +91,11 @@ namespace Assets.NewData.Scripts
 
                 if (hit)
                 {
+                    if (hit.collider.CompareTag("Through"))
+                    {
+                        continue;
+                    }
+
                     if (hit.distance == 0)
                     {
                         continue;
