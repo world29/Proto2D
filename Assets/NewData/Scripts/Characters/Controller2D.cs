@@ -37,6 +37,12 @@ namespace Assets.NewData.Scripts
             {
                 VerticalCollisions(ref moveAmount);
             }
+            else
+            {
+                // Ú’n”»’è‚Ì‚½‚ßã‰º•ûŒü‚ÌˆÚ“®‚ª‚È‚¢ê‡‚Í‰º•ûŒü‚ÌƒRƒŠƒWƒ‡ƒ“‚ğŒ©‚é
+                var dummyMove = new Vector2(0, -Time.deltaTime);
+                VerticalCollisions(ref dummyMove);
+            }
 
             transform.Translate(moveAmount, standingOnPlatform ? Space.World : Space.Self);
 
