@@ -34,6 +34,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float wallJumpAngle = 30f;
 
+        [SerializeField]
+        private int inputDurationToClimb = 100;
+
         private Vector2 _velocity;
         private Controller2D _controller;
         private Animator _animator;
@@ -41,6 +44,8 @@ namespace Assets.NewData.Scripts
         private InputControls _input;
         private string _currentState;
         private bool _facingRight;
+        private IActionState _actionState;
+        private int _inputWallFrames;
 
         private bool FacingRight
         {
@@ -87,6 +92,8 @@ namespace Assets.NewData.Scripts
 
             _currentState = string.Empty;
             _facingRight = false;
+            _actionState = _movingState;
+            _inputWallFrames = 0;
         }
 
         private void Update()
@@ -100,7 +107,7 @@ namespace Assets.NewData.Scripts
         {
             if (!_input.Player.enabled) return;
 
-            if (_controller.collisions.climbingWall)
+            if (_actionState is ClimbingState)
             {
                 MoveClimbing();
             }
@@ -108,6 +115,15 @@ namespace Assets.NewData.Scripts
             {
                 Move();
             }
+
+            ActionContext ctx = new ActionContext
+            {
+                inputWallThreshold = inputDurationToClimb,
+                inputWallFrames = _inputWallFrames,
+                isGrounded = _controller.collisions.below,
+                isTouchingWall = _controller.collisions.right || _controller.collisions.left,
+            };
+            _actionState = _actionState.Update(ctx);
         }
 
         private void Move()
@@ -118,6 +134,7 @@ namespace Assets.NewData.Scripts
             bool jumpPerformed = false;
             bool isGround = _controller.collisions.below;
 
+            // 移動
             if (inputMove.x == 0f)
             {
                 if (isGround)
@@ -156,6 +173,19 @@ namespace Assets.NewData.Scripts
                 FacingRight = inputMove.x > 0;
             }
 
+            //todo: 壁登りへ移行するための入力バッファを更新する
+            if ((_controller.collisions.right && inputMove.x > 0) ||
+                (_controller.collisions.left && inputMove.x < 0))
+            {
+                _inputWallFrames++;
+            }
+            else
+            {
+                _inputWallFrames = 0;
+            }
+
+
+            // ジャンプ
             if (inputJump && _controller.collisions.below)
             {
                 _velocity.y = JumpInitialVelocityY;
@@ -180,16 +210,13 @@ namespace Assets.NewData.Scripts
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
             bool inputJump = _input.Player.Jump.triggered;
 
+            bool jumpPerformed = false;
+
             _velocity.x = 0f;
 
             if (inputJump)
             {
-                _velocity = WallJumpInitialVelocity;
-                if (FacingRight)
-                {
-                    _velocity.x *= -1f;
-                }
-                Debug.Log($"WallJumpInitialVelocity: {_velocity.ToString("F3")}");
+                jumpPerformed = true;
             }
             else
             {
@@ -207,7 +234,8 @@ namespace Assets.NewData.Scripts
                     }
                     else
                     {
-                        //todo: 壁と反対方向への入力で飛び降りる
+                        // 壁と反対方向への入力で飛び降りる
+                        jumpPerformed = true;
                     }
 
                     FacingRight = inputMove.x > 0;
@@ -218,6 +246,18 @@ namespace Assets.NewData.Scripts
                 }
             }
 
+            if (jumpPerformed)
+            {
+                _velocity = WallJumpInitialVelocity;
+                if (_controller.collisions.right)
+                {
+                    _velocity.x *= -1f;
+                }
+                Debug.Log($"WallJumpInitialVelocity: {_velocity.ToString("F3")}");
+
+                FacingRight = !FacingRight;
+            }
+
             _controller.Move(_velocity * Time.deltaTime, FacingRight);
         }
 
@@ -225,30 +265,28 @@ namespace Assets.NewData.Scripts
         {
             string nextState;
 
-            bool isGrounded = _controller.collisions.below;
-
-            if (isGrounded)
+            if (_actionState is ClimbingState)
             {
-                if (_velocity.x == 0f)
+                if (_velocity.y == 0f)
                 {
-                    nextState = "Apx_Idle";
+                    nextState = "Apx_Climb_Idle";
                 }
                 else
                 {
-                    nextState = "Apx_Run";
+                    nextState = "Apx_Climb";
                 }
             }
             else
             {
-                if (_controller.collisions.climbingWall)
+                if (_controller.collisions.below)
                 {
-                    if (_velocity.y == 0f)
+                    if (_velocity.x == 0f)
                     {
-                        nextState = "Apx_Climb_Idle";
+                        nextState = "Apx_Idle";
                     }
                     else
                     {
-                        nextState = "Apx_Climb";
+                        nextState = "Apx_Run";
                     }
                 }
                 else
@@ -275,5 +313,46 @@ namespace Assets.NewData.Scripts
                 GUILayout.Label($"Climb: {_controller.collisions.climbingWall}", style);
             }
         }
+
+        struct ActionContext
+        {
+            public int inputWallThreshold;
+            public int inputWallFrames;
+            public bool isGrounded;
+            public bool isTouchingWall;
+        }
+
+        interface IActionState
+        {
+            IActionState Update(ActionContext ctx);
+        }
+
+        class MovingState : IActionState
+        {
+            public IActionState Update(ActionContext ctx)
+            {
+                // 壁への入力が一定フレームを超えたら ClimbingState に遷移する
+                if (ctx.inputWallFrames >= ctx.inputWallThreshold) {
+                    return _climbingState;
+                }
+                return this;
+            }
+        }
+
+        class ClimbingState : IActionState
+        {
+            public IActionState Update(ActionContext ctx)
+            {
+                //todo: 接地するか、壁から離れたら MovingState に遷移する
+                if (ctx.isGrounded || !ctx.isTouchingWall)
+                {
+                    return _movingState;
+                }
+                return this;
+            }
+        }
+
+        static MovingState _movingState = new MovingState();
+        static ClimbingState _climbingState = new ClimbingState();
     }
 }
