@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,16 +52,16 @@ namespace Assets.NewData.Scripts
         {
             yield return ScreenFader.FadeOut(0.5f);
 
-            // ƒ|[ƒYƒƒjƒ…[‚©‚çƒV[ƒ“‘JˆÚ‚·‚éê‡Aƒ|[ƒYƒƒjƒ…[‚ğƒAƒ“ƒ[ƒh‚µ‚Ä‚¨‚­
+            // ãƒãƒ¼ã‚ºãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ã‚·ãƒ¼ãƒ³é·ç§»ã™ã‚‹å ´åˆã€ãƒãƒ¼ã‚ºãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ãŠã
             if (UnityEngine.SceneManagement.SceneManager.GetSceneByName(pauseSceneName).isLoaded)
             {
                 yield return UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(pauseSceneName);
             }
 
-            // ƒV[ƒ“‚Ì”ñ“¯Šúƒ[ƒh
+            // ã‚·ãƒ¼ãƒ³ã®éåŒæœŸãƒ­ãƒ¼ãƒ‰
             yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
 
-            // ƒtƒF[ƒhƒCƒ“
+            // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
             yield return ScreenFader.FadeIn(0.5f);
 
             if (PauseSystem.IsPaused)
@@ -76,7 +76,7 @@ namespace Assets.NewData.Scripts
 
         private void OnPause()
         {
-            // Œ»İ‚ÌƒV[ƒ“‚É’Ç‰Á‚Åƒ|[ƒYƒƒjƒ…[‚ğ“Ç‚İ‚Ş
+            // ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã«è¿½åŠ ã§ãƒãƒ¼ã‚ºãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’èª­ã¿è¾¼ã‚€
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(pauseSceneName, UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 

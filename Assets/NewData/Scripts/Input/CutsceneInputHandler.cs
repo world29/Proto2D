@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -11,11 +11,11 @@ namespace Assets.NewData.Scripts
         {
             if (Application.isPlaying)
             {
-                // ƒJƒbƒgƒV[ƒ“’†‚ÍƒvƒŒƒCƒ„[“ü—Í‚ğ–³Œø‰»‚µAƒƒbƒZ[ƒW‘—‚è‚Ì“ü—Í‚ğ—LŒø‰»‚·‚é
+                // ã‚«ãƒƒãƒˆã‚·ãƒ¼ãƒ³ä¸­ã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å…¥åŠ›ã‚’ç„¡åŠ¹åŒ–ã—ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é€ã‚Šã®å…¥åŠ›ã‚’æœ‰åŠ¹åŒ–ã™ã‚‹
                 InputSystem.Input.Player.Disable();
                 InputSystem.Input.Cutscene.Enable();
 
-                // ƒ|[ƒY’†‚ÍƒƒbƒZ[ƒW‘—‚è‚ğ–³Œø‰»‚·‚é
+                // ãƒãƒ¼ã‚ºä¸­ã¯ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é€ã‚Šã‚’ç„¡åŠ¹åŒ–ã™ã‚‹
                 PauseSystem.OnPause += HandlePause;
                 PauseSystem.OnResume += HandleResume;
             }

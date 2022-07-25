@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace Assets.NewData.Scripts
 {
     public class Controller2D : RaycastController
     {
-        [Tooltip("ã‚è‰º‚è‚Å‚«‚éâ“¹‚ÌÅ‘åŠp“x (deg)")]
+        [Tooltip("ä¸Šã‚Šä¸‹ã‚Šã§ãã‚‹å‚é“ã®æœ€å¤§è§’åº¦ (deg)")]
         public float m_maxSlopeAngle = 60;
 
         [HideInInspector]
@@ -39,7 +39,7 @@ namespace Assets.NewData.Scripts
             }
             else
             {
-                // Ú’n”»’è‚Ì‚½‚ßã‰º•ûŒü‚ÌˆÚ“®‚ª‚È‚¢ê‡‚Í‰º•ûŒü‚ÌƒRƒŠƒWƒ‡ƒ“‚ğŒ©‚é
+                // æ¥åœ°åˆ¤å®šã®ãŸã‚ä¸Šä¸‹æ–¹å‘ã®ç§»å‹•ãŒãªã„å ´åˆã¯ä¸‹æ–¹å‘ã®ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚’è¦‹ã‚‹
                 var dummyMove = new Vector2(0, -Time.deltaTime);
                 VerticalCollisions(ref dummyMove);
             }
@@ -54,7 +54,7 @@ namespace Assets.NewData.Scripts
             RecoveryOverlap();
         }
 
-        // ‚ß‚è‚İ‚Ì‰ğÁ
+        // ã‚ã‚Šè¾¼ã¿ã®è§£æ¶ˆ
         void RecoveryOverlap()
         {
             var bounds = ComputeInnerBounds();
@@ -62,7 +62,7 @@ namespace Assets.NewData.Scripts
             var otherCollider = Physics2D.OverlapBox(transform.position, bounds.size, 0, collisionMask);
             if (otherCollider && !otherCollider.CompareTag("Through"))
             {
-                // Physics2D.autoSyncTransforms = false ‚Ìê‡‚ÉƒRƒ‰ƒCƒ_‚ÌˆÊ’uƒYƒŒ‚ğ–h‚®‚½‚ßAˆÊ’u‚ğ‹­§“I‚É“¯Šú‚·‚é
+                // Physics2D.autoSyncTransforms = false ã®å ´åˆã«ã‚³ãƒ©ã‚¤ãƒ€ã®ä½ç½®ã‚ºãƒ¬ã‚’é˜²ããŸã‚ã€ä½ç½®ã‚’å¼·åˆ¶çš„ã«åŒæœŸã™ã‚‹
                 Physics2D.SyncTransforms();
 
                 var colliderDistance = otherCollider.Distance(boxCollider);
@@ -154,7 +154,7 @@ namespace Assets.NewData.Scripts
                             continue;
                         }
 
-                        /* ‰º“ü—Í‚Å‚Ì°‚·‚è”²‚¯‚ğ–³Œø‰»
+                        /* ä¸‹å…¥åŠ›ã§ã®åºŠã™ã‚ŠæŠœã‘ã‚’ç„¡åŠ¹åŒ–
                         if (m_input.y == -1)
                         {
                             collisions.fallingThroughPlatform = true;

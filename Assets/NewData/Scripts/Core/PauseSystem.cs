@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.NewData.Scripts
 {
     /// <summary>
-    /// ƒQ[ƒ€‚Ìƒ|[ƒYó‘Ô‚ğŠÇ—‚·‚é
+    /// ã‚²ãƒ¼ãƒ ã®ãƒãƒ¼ã‚ºçŠ¶æ…‹ã‚’ç®¡ç†ã™ã‚‹
     /// </summary>
     public class PauseSystem
     {
         /// <summary>
-        /// ƒ|[ƒY’†‚©
+        /// ãƒãƒ¼ã‚ºä¸­ã‹
         /// </summary>
         public static bool IsPaused
         {
@@ -21,17 +21,17 @@ namespace Assets.NewData.Scripts
         }
 
         /// <summary>
-        /// ƒ|[ƒYó‘Ô‚É“ü‚é‚Æ‚«‚ÌƒCƒxƒ“ƒg
+        /// ãƒãƒ¼ã‚ºçŠ¶æ…‹ã«å…¥ã‚‹ã¨ãã®ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         public static event System.Action OnPause;
 
         /// <summary>
-        /// ƒ|[ƒYó‘Ô‚©‚ç•œ‹A‚·‚é‚Æ‚«‚ÌƒCƒxƒ“ƒg
+        /// ãƒãƒ¼ã‚ºçŠ¶æ…‹ã‹ã‚‰å¾©å¸°ã™ã‚‹ã¨ãã®ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         public static event System.Action OnResume;
 
         /// <summary>
-        /// ƒ|[ƒY
+        /// ãƒãƒ¼ã‚º
         /// </summary>
         public static void Pause()
         {
@@ -45,7 +45,7 @@ namespace Assets.NewData.Scripts
         }
 
         /// <summary>
-        /// ƒ|[ƒY‚©‚ç•œ‹A
+        /// ãƒãƒ¼ã‚ºã‹ã‚‰å¾©å¸°
         /// </summary>
         public static void Resume()
         {

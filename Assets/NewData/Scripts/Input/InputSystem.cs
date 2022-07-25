@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -56,7 +56,7 @@ namespace Assets.NewData.Scripts
 
         private void OnEnable()
         {
-            // ƒ|[ƒYƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½Û‚Ìˆ—‚ğ“o˜^‚·‚é
+            // ãƒãƒ¼ã‚ºãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸéš›ã®å‡¦ç†ã‚’ç™»éŒ²ã™ã‚‹
             _inputControls.System.TogglePause.started += OnTogglePause;
         }
 

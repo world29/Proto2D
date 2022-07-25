@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,11 +39,11 @@ namespace Assets.NewData.Scripts
             CalculateRaySpacing();
         }
 
-        // ƒXƒLƒ“‚Ì“à‘¤‚Ì‹«ŠEƒ{ƒbƒNƒX‚ğŒvZ‚·‚é
+        // ã‚¹ã‚­ãƒ³ã®å†…å´ã®å¢ƒç•Œãƒœãƒƒã‚¯ã‚¹ã‚’è¨ˆç®—ã™ã‚‹
         public Bounds ComputeInnerBounds()
         {
-            // BoxCollider2D.bounds ‚Í FixedUpdate ‚ÅXV‚³‚ê‚é‚½‚ßAUpdate ‚Åæ“¾‚·‚é‚ÆÀÛ‚ÌˆÊ’u‚ÆƒYƒŒ‚ª¶‚¶‚é‰Â”\«‚ª‚ ‚éB
-            // ‚»‚Ì‚½‚ßABoxCollider2D.bounds ‚ğ’¼Úg—p‚µ‚È‚¢B
+            // BoxCollider2D.bounds ã¯ FixedUpdate ã§æ›´æ–°ã•ã‚Œã‚‹ãŸã‚ã€Update ã§å–å¾—ã™ã‚‹ã¨å®Ÿéš›ã®ä½ç½®ã¨ã‚ºãƒ¬ãŒç”Ÿã˜ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã€‚
+            // ãã®ãŸã‚ã€BoxCollider2D.bounds ã‚’ç›´æ¥ä½¿ç”¨ã—ãªã„ã€‚
             // https://docs.unity3d.com/ScriptReference/Physics-autoSyncTransforms.html
             var bounds = new Bounds(transform.position, boxCollider.size);
             bounds.Expand(skinWidth * -2f);

@@ -1,17 +1,17 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.NewData.Scripts
 {
     /// <summary>
-    /// UI —pƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
-    /// ‚±‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ê‚µ‚Ä‚¢‚ë‚¢‚ë‚È‹@”\‚ğŒÄ‚Ño‚·
+    /// UI ç”¨ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
+    /// ã“ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’é€šã—ã¦ã„ã‚ã„ã‚ãªæ©Ÿèƒ½ã‚’å‘¼ã³å‡ºã™
     /// </summary>
     public class EventHandler : MonoBehaviour
     {
         /// <summary>
-        /// ƒV[ƒ“‘JˆÚ
+        /// ã‚·ãƒ¼ãƒ³é·ç§»
         /// </summary>
         public void LoadScene(string sceneName)
         {
@@ -21,7 +21,7 @@ namespace Assets.NewData.Scripts
         }
 
         /// <summary>
-        /// ƒ|[ƒY‚ÌØ‚è‘Ö‚¦
+        /// ãƒãƒ¼ã‚ºã®åˆ‡ã‚Šæ›¿ãˆ
         /// </summary>
         public void TogglePause()
         {

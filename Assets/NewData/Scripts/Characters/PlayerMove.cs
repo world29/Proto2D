@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ namespace Assets.NewData.Scripts
         [SerializeField, Range(0, 5)]
         private float airControl = 1f;
 
-        // ‹ó’†‚Å“ü—Í‚ª‚È‚¢‚Æ‚«‚ÌÃ~‚µ‚â‚·‚³
+        // ç©ºä¸­ã§å…¥åŠ›ãŒãªã„ã¨ãã®é™æ­¢ã—ã‚„ã™ã•
         [SerializeField, Range(0, 1)]
         private float airBrake = 0.1f;
 
@@ -67,7 +67,7 @@ namespace Assets.NewData.Scripts
             }
         }
 
-        // ƒWƒƒƒ“ƒv‚Ì‚‚³‚Æ’¸“_‚É’B‚·‚é‚Ü‚Å‚ÌŠÔ‚©‚ç‰Á‘¬“x g ‚Æ‰‘¬ v0 ‚ğZo‚·‚é
+        // ã‚¸ãƒ£ãƒ³ãƒ—ã®é«˜ã•ã¨é ‚ç‚¹ã«é”ã™ã‚‹ã¾ã§ã®æ™‚é–“ã‹ã‚‰åŠ é€Ÿåº¦ g ã¨åˆé€Ÿ v0 ã‚’ç®—å‡ºã™ã‚‹
         // https://www.youtube.com/watch?v=hG9SzQxaCm8
         private float Gravity
         {
@@ -79,12 +79,12 @@ namespace Assets.NewData.Scripts
             get { return 2 * jumpHeight / jumpTimeToPeak; }
         }
 
-        // ¶‚Ì•Ç‚ğ“o‚Á‚Ä‚¢‚é‚Æ‚«‚ÌƒWƒƒƒ“ƒv‰‘¬
+        // å·¦ã®å£ã‚’ç™»ã£ã¦ã„ã‚‹ã¨ãã®ã‚¸ãƒ£ãƒ³ãƒ—åˆé€Ÿ
         private Vector2 WallJumpInitialVelocity
         {
             get
             {
-                // ãŒü‚«‚ğ 0 degree ‚Æ‚·‚éB
+                // ä¸Šå‘ãã‚’ 0 degree ã¨ã™ã‚‹ã€‚
                 var rad = wallJumpAngle * Mathf.Deg2Rad;
                 return new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * JumpInitialVelocityY;
             }
@@ -151,7 +151,7 @@ namespace Assets.NewData.Scripts
 
             bool isGround = _controller.collisions.below;
 
-            // ˆÚ“®
+            // ç§»å‹•
             if (inputMove.x == 0f)
             {
                 if (isGround)
@@ -171,10 +171,10 @@ namespace Assets.NewData.Scripts
                 }
                 else
                 {
-                    // airAcceleration: 0 ‚È‚ç‹ó’†‚Å‚Ì‰Á‘¬‚È‚µA1 ‚È‚ç‘¦À‚ÉÅ‚‘¬“x‚É’B‚·‚é
+                    // airAcceleration: 0 ãªã‚‰ç©ºä¸­ã§ã®åŠ é€Ÿãªã—ã€1 ãªã‚‰å³åº§ã«æœ€é«˜é€Ÿåº¦ã«é”ã™ã‚‹
                     var acc = runSpeed * Mathf.Pow(airAcceleration, 2);
 
-                    // is•ûŒü‚Æ“ü—Í•ûŒü‚ªˆê’v‚µ‚Ä‚¢‚é‚©
+                    // é€²è¡Œæ–¹å‘ã¨å…¥åŠ›æ–¹å‘ãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹
                     bool isInputBackward = (_velocity.x != 0) && (Mathf.Sign(_velocity.x) != Mathf.Sign(inputMove.x));
 
                     if (isInputBackward)
@@ -190,7 +190,7 @@ namespace Assets.NewData.Scripts
                 FacingRight = inputMove.x > 0;
             }
 
-            //todo: •Ç“o‚è‚ÖˆÚs‚·‚é‚½‚ß‚Ì“ü—Íƒoƒbƒtƒ@‚ğXV‚·‚é
+            //todo: å£ç™»ã‚Šã¸ç§»è¡Œã™ã‚‹ãŸã‚ã®å…¥åŠ›ãƒãƒƒãƒ•ã‚¡ã‚’æ›´æ–°ã™ã‚‹
             if ((_controller.collisions.right && inputMove.x > 0) ||
                 (_controller.collisions.left && inputMove.x < 0))
             {
@@ -202,7 +202,7 @@ namespace Assets.NewData.Scripts
             }
 
 
-            // ƒWƒƒƒ“ƒv
+            // ã‚¸ãƒ£ãƒ³ãƒ—
             if (inputJump && _controller.collisions.below)
             {
                 _velocity.y = JumpInitialVelocityY;
@@ -244,12 +244,12 @@ namespace Assets.NewData.Scripts
                     if ((_controller.collisions.right && inputMove.x > 0f) ||
                         (_controller.collisions.left && inputMove.x < 0f))
                     {
-                        // •Ç•ûŒü‚Ö‚Ì“ü—Í‚Å“o‚é
+                        // å£æ–¹å‘ã¸ã®å…¥åŠ›ã§ç™»ã‚‹
                         _velocity.y = climbSpeed;
                     }
                     else
                     {
-                        // •Ç‚Æ”½‘Î•ûŒü‚Ö‚Ì“ü—Í‚Å”ò‚Ñ~‚è‚é
+                        // å£ã¨åå¯¾æ–¹å‘ã¸ã®å…¥åŠ›ã§é£›ã³é™ã‚Šã‚‹
                         _isJumpPerformed = true;
                     }
 
@@ -346,8 +346,9 @@ namespace Assets.NewData.Scripts
         {
             public IActionState Update(ActionContext ctx)
             {
-                // •Ç‚Ö‚Ì“ü—Í‚ªˆê’èƒtƒŒ[ƒ€‚ğ’´‚¦‚½‚ç ClimbingState ‚É‘JˆÚ‚·‚é
-                if (ctx.inputWallFrames >= ctx.inputWallThreshold) {
+                // å£ã¸ã®å…¥åŠ›ãŒä¸€å®šãƒ•ãƒ¬ãƒ¼ãƒ ã‚’è¶…ãˆãŸã‚‰ ClimbingState ã«é·ç§»ã™ã‚‹
+                if (ctx.inputWallFrames >= ctx.inputWallThreshold)
+                {
                     return _climbingState;
                 }
                 return this;
@@ -358,7 +359,7 @@ namespace Assets.NewData.Scripts
         {
             public IActionState Update(ActionContext ctx)
             {
-                //todo: Ú’n‚·‚é‚©A•Ç‚©‚ç—£‚ê‚½‚ç MovingState ‚É‘JˆÚ‚·‚é
+                //todo: æ¥åœ°ã™ã‚‹ã‹ã€å£ã‹ã‚‰é›¢ã‚ŒãŸã‚‰ MovingState ã«é·ç§»ã™ã‚‹
                 if (ctx.isGrounded || !ctx.isTouchingWall)
                 {
                     return _movingState;
