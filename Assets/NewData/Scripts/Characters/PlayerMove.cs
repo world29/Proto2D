@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.NewData.Scripts
 {
-    public class PlayerMove : MonoBehaviour
+    public class PlayerMove : MonoBehaviour, IPlayerMove
     {
         [SerializeField]
         private float gravityScale = 1f;
@@ -46,6 +46,16 @@ namespace Assets.NewData.Scripts
         private bool _facingRight;
         private IActionState _actionState;
         private int _inputWallFrames;
+        private bool _isJumpPerformed;
+
+        // IPlayerMove
+        public bool IsGround { get { return _controller.collisions.below; } }
+
+        // IPlayerMove
+        public bool IsJumpPerformed { get { return _isJumpPerformed; } }
+
+        // IPlayerMove
+        public Vector2 Velocity { get { return _velocity; } }
 
         private bool FacingRight
         {
@@ -94,13 +104,21 @@ namespace Assets.NewData.Scripts
             _facingRight = false;
             _actionState = _movingState;
             _inputWallFrames = 0;
+            _isJumpPerformed = false;
         }
 
         private void Update()
         {
+            ResetState();
+
             HandleInput();
 
             UpdateAnimation();
+        }
+
+        private void ResetState()
+        {
+            _isJumpPerformed = false;
         }
 
         private void HandleInput()
@@ -131,7 +149,6 @@ namespace Assets.NewData.Scripts
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
             bool inputJump = _input.Player.Jump.triggered;
 
-            bool jumpPerformed = false;
             bool isGround = _controller.collisions.below;
 
             // ˆÚ“®
@@ -190,7 +207,7 @@ namespace Assets.NewData.Scripts
             {
                 _velocity.y = JumpInitialVelocityY;
                 Debug.Log($"JumpInitialVelicity: {JumpInitialVelocityY}, Gravity: {Gravity}");
-                jumpPerformed = true;
+                _isJumpPerformed = true;
             }
             else
             {
@@ -199,7 +216,7 @@ namespace Assets.NewData.Scripts
 
             _controller.Move(_velocity * Time.deltaTime, FacingRight);
 
-            if (!jumpPerformed && (_controller.collisions.below || _controller.collisions.above))
+            if (!_isJumpPerformed && (_controller.collisions.below || _controller.collisions.above))
             {
                 _velocity.y = 0f;
             }
@@ -210,13 +227,11 @@ namespace Assets.NewData.Scripts
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
             bool inputJump = _input.Player.Jump.triggered;
 
-            bool jumpPerformed = false;
-
             _velocity.x = 0f;
 
             if (inputJump)
             {
-                jumpPerformed = true;
+                _isJumpPerformed = true;
             }
             else
             {
@@ -235,7 +250,7 @@ namespace Assets.NewData.Scripts
                     else
                     {
                         // •Ç‚Æ”½‘Î•ûŒü‚Ö‚Ì“ü—Í‚Å”ò‚Ñ~‚è‚é
-                        jumpPerformed = true;
+                        _isJumpPerformed = true;
                     }
 
                     FacingRight = inputMove.x > 0;
@@ -246,7 +261,7 @@ namespace Assets.NewData.Scripts
                 }
             }
 
-            if (jumpPerformed)
+            if (_isJumpPerformed)
             {
                 _velocity = WallJumpInitialVelocity;
                 if (_controller.collisions.right)
