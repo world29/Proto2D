@@ -35,7 +35,7 @@ namespace Assets.NewData.Scripts
         private float wallJumpAngle = 30f;
 
         [SerializeField]
-        private int inputDurationToClimb = 100;
+        private float inputTimeToClimb = 0.2f;
 
         private Vector2 _velocity;
         private Controller2D _controller;
@@ -45,7 +45,7 @@ namespace Assets.NewData.Scripts
         private string _currentState;
         private bool _facingRight;
         private IActionState _actionState;
-        private int _inputWallFrames;
+        private float _inputWallTime;
         private bool _isJumpPerformed;
 
         // IPlayerMove
@@ -103,7 +103,7 @@ namespace Assets.NewData.Scripts
             _currentState = string.Empty;
             _facingRight = false;
             _actionState = _movingState;
-            _inputWallFrames = 0;
+            _inputWallTime = 0;
             _isJumpPerformed = false;
         }
 
@@ -136,8 +136,8 @@ namespace Assets.NewData.Scripts
 
             ActionContext ctx = new ActionContext
             {
-                inputWallThreshold = inputDurationToClimb,
-                inputWallFrames = _inputWallFrames,
+                inputWallThreshold = inputTimeToClimb,
+                inputWallTime = _inputWallTime,
                 isGrounded = _controller.collisions.below,
                 isTouchingWall = _controller.collisions.right || _controller.collisions.left,
             };
@@ -194,11 +194,11 @@ namespace Assets.NewData.Scripts
             if ((_controller.collisions.right && inputMove.x > 0) ||
                 (_controller.collisions.left && inputMove.x < 0))
             {
-                _inputWallFrames++;
+                _inputWallTime += Time.deltaTime;
             }
             else
             {
-                _inputWallFrames = 0;
+                _inputWallTime = 0;
             }
 
 
@@ -331,8 +331,8 @@ namespace Assets.NewData.Scripts
 
         struct ActionContext
         {
-            public int inputWallThreshold;
-            public int inputWallFrames;
+            public float inputWallThreshold;
+            public float inputWallTime;
             public bool isGrounded;
             public bool isTouchingWall;
         }
@@ -346,8 +346,8 @@ namespace Assets.NewData.Scripts
         {
             public IActionState Update(ActionContext ctx)
             {
-                // 壁への入力が一定フレームを超えたら ClimbingState に遷移する
-                if (ctx.inputWallFrames >= ctx.inputWallThreshold)
+                // 壁への入力が一定時間を超えたら ClimbingState に遷移する
+                if (ctx.inputWallTime >= ctx.inputWallThreshold)
                 {
                     return _climbingState;
                 }
