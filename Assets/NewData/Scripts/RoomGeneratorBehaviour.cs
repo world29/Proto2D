@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,7 +11,7 @@ namespace Assets.NewData.Scripts
     public class RoomGeneratorBehaviour : MonoBehaviour, IPlayerPositionEvent
     {
         public Grid m_tilemapRoot;
-        public float m_offsetForLoad = 30; // ƒvƒŒƒCƒ„[ˆÊ’u‚ÉƒIƒtƒZƒbƒg‚ğ‘«‚µ‚½‚‚³‚É•”‰®‚ª‚È‚¯‚ê‚ÎA¶¬‚·‚é
+        public float m_offsetForLoad = 30; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã«ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¶³ã—ãŸé«˜ã•ã«éƒ¨å±‹ãŒãªã‘ã‚Œã°ã€ç”Ÿæˆã™ã‚‹
         public bool m_enemySpawnEnabled = true;
 
         private Vector3 m_nextTilemapPosition = Vector3.zero;
@@ -89,10 +89,10 @@ namespace Assets.NewData.Scripts
             {
                 if (m_coroutine == null)
                 {
-                    // ’èŠú“I‚É‹xŒe—p‚Ì•”‰®‚ğ¶¬‚·‚é
+                    // å®šæœŸçš„ã«ä¼‘æ†©ç”¨ã®éƒ¨å±‹ã‚’ç”Ÿæˆã™ã‚‹
                     if (m_roomGeneratedCount % 3 == 0)
                     {
-                        // •”‰®ƒOƒ‹[ƒv‚ğXV
+                        // éƒ¨å±‹ã‚°ãƒ«ãƒ¼ãƒ—ã‚’æ›´æ–°
                         m_currentRoomGroup++;
                         m_coroutine = StartCoroutine(GenerateRoom("Tier01/RestRoom", m_currentRoomGroup));
                     }
@@ -110,7 +110,7 @@ namespace Assets.NewData.Scripts
 
         void Update()
         {
-            // ‰‰ñ‚Ì•”‰®‚ğ¶¬
+            // åˆå›ã®éƒ¨å±‹ã‚’ç”Ÿæˆ
             if (m_roomGeneratedCount == 0)
             {
                 var key = "Tier01/StartRoom";
@@ -135,11 +135,11 @@ namespace Assets.NewData.Scripts
 
                 Tilemap primaryTilemap = prefab.GetComponent<Proto2D.RoomController>().PrimaryTilemap;
 
-                // ”wŒi¬•¨‚ğ¶¬
+                // èƒŒæ™¯å°ç‰©ã‚’ç”Ÿæˆ
                 Vector3 objectPositionOffset = m_nextTilemapPosition;
                 objectPositionOffset.y -= primaryTilemap.origin.y * primaryTilemap.cellSize.y;
 
-                // ƒIƒuƒWƒFƒNƒg–¼‚É "_Deco" ‚ªŠÜ‚Ü‚ê‚é‚à‚Ì‚ğ”wŒi¬•¨‚Æ‚İ‚È‚·B
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã« "_Deco" ãŒå«ã¾ã‚Œã‚‹ã‚‚ã®ã‚’èƒŒæ™¯å°ç‰©ã¨ã¿ãªã™ã€‚
                 Regex regex = new Regex("_Deco");
                 for (int i = 0; i < prefab.transform.childCount; i++)
                 {
@@ -147,14 +147,14 @@ namespace Assets.NewData.Scripts
 
                     if (regex.IsMatch(prop.name))
                     {
-                        // ‚±‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌqƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä¶¬‚·‚é
+                        // ã“ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ç”Ÿæˆã™ã‚‹
                         Instantiate(prop, prop.transform.position + objectPositionOffset, prop.transform.rotation, transform);
                     }
                 }
 
-                // “G‚ğ¶¬
+                // æ•µã‚’ç”Ÿæˆ
                 List<GameObject> spawnedEnemies = new List<GameObject>();
-                // Enemy ƒ^ƒO‚ğ‚Â‚à‚Ì‚ª‘ÎÛ
+                // Enemy ã‚¿ã‚°ã‚’æŒã¤ã‚‚ã®ãŒå¯¾è±¡
                 if (m_enemySpawnEnabled)
                 {
                     for (int i = 0; i < prefab.transform.childCount; i++)
@@ -163,17 +163,17 @@ namespace Assets.NewData.Scripts
 
                         if (enemyPrefab.CompareTag("Enemy"))
                         {
-                            // ‚±‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌqƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä¶¬‚·‚é
+                            // ã“ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ç”Ÿæˆã™ã‚‹
                             GameObject enemyInstance = Instantiate(enemyPrefab, enemyPrefab.transform.position + objectPositionOffset, enemyPrefab.transform.rotation, transform);
                             spawnedEnemies.Add(enemyInstance);
                         }
                     }
                 }
 
-                // ƒ^ƒCƒ‹ƒ}ƒbƒv‚ğ“]Ê‚·‚é
+                // ã‚¿ã‚¤ãƒ«ãƒãƒƒãƒ—ã‚’è»¢å†™ã™ã‚‹
 
-                // ƒ^ƒCƒ‹ƒ}ƒbƒvŒ´“_‚©‚ç‚ÌƒIƒtƒZƒbƒg‚ğl—¶
-                // Tilemap.origin ‚Íƒ^ƒCƒ‹ƒ}ƒbƒvŒ´“_‚ğ(0,0)‚Æ‚µ‚½¶‰º‚ÌÀ•WB
+                // ã‚¿ã‚¤ãƒ«ãƒãƒƒãƒ—åŸç‚¹ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è€ƒæ…®
+                // Tilemap.origin ã¯ã‚¿ã‚¤ãƒ«ãƒãƒƒãƒ—åŸç‚¹ã‚’(0,0)ã¨ã—ãŸå·¦ä¸‹ã®åº§æ¨™ã€‚
                 Vector3Int tilePositionOffset = Vector3Int.FloorToInt(m_nextTilemapPosition / primaryTilemap.cellSize.y);
                 tilePositionOffset.y -= primaryTilemap.origin.y;
 
@@ -188,7 +188,7 @@ namespace Assets.NewData.Scripts
                     }
                 }
 
-                // •”‰®¶¬ƒCƒxƒ“ƒg”­s
+                // éƒ¨å±‹ç”Ÿæˆã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œ
                 Bounds roomBounds = new Bounds
                 {
                     center = primaryTilemap.cellBounds.center + m_nextTilemapPosition,
@@ -197,12 +197,12 @@ namespace Assets.NewData.Scripts
                 BroadcastExecuteEvents.Execute<IRoomEvent>(null,
                     (handler, eventData) => handler.OnRoomGenerated(addressableName, roomBounds, roomGroup));
 
-                // “G¶¬ƒCƒxƒ“ƒg”­s
+                // æ•µç”Ÿæˆã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œ
                 BroadcastExecuteEvents.Execute<IRoomEvent>(null,
                     (handler, eventData) => handler.OnRoomEnemySpawned(spawnedEnemies, roomGroup));
 
-                // Ÿ‚Éƒ^ƒCƒ‹ƒ}ƒbƒv‚ğ“]Ê‚·‚éŠî€ˆÊ’u‚ğXV‚·‚é
-                //MEMO: Tilemap.localBounds ‚Í Instantiate() ‚µ‚È‚¢‚Æ (0,0,0) ‚ª•Ô‚Á‚Ä‚­‚é‚Ì‚ÅA cellBounds ‚©‚çZo‚·‚éB
+                // æ¬¡ã«ã‚¿ã‚¤ãƒ«ãƒãƒƒãƒ—ã‚’è»¢å†™ã™ã‚‹åŸºæº–ä½ç½®ã‚’æ›´æ–°ã™ã‚‹
+                //MEMO: Tilemap.localBounds ã¯ Instantiate() ã—ãªã„ã¨ (0,0,0) ãŒè¿”ã£ã¦ãã‚‹ã®ã§ã€ cellBounds ã‹ã‚‰ç®—å‡ºã™ã‚‹ã€‚
                 m_nextTilemapPosition.y += primaryTilemap.cellBounds.size.y * primaryTilemap.cellSize.y;
 
                 Debug.Log("Room generation done!");
@@ -225,7 +225,7 @@ namespace Assets.NewData.Scripts
                 }
             }
 
-            // ƒ^ƒCƒ‹‚ÌƒRƒs[‚ğÀs
+            // ã‚¿ã‚¤ãƒ«ã®ã‚³ãƒ”ãƒ¼ã‚’å®Ÿè¡Œ
             destTilemap.SetTiles(tiles.Keys.ToArray(), tiles.Values.ToArray());
         }
     }
