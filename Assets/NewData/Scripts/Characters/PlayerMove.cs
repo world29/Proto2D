@@ -109,6 +109,8 @@ namespace Assets.NewData.Scripts
 
         private void Update()
         {
+            if (!_input.Player.enabled) return;
+
             ResetState();
 
             HandleInput();
@@ -123,8 +125,6 @@ namespace Assets.NewData.Scripts
 
         private void HandleInput()
         {
-            if (!_input.Player.enabled) return;
-
             if (_actionState is ClimbingState)
             {
                 MoveClimbing();
