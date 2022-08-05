@@ -107,7 +107,7 @@ namespace Proto2D
                 rb.AddForce(new Vector2(Mathf.Cos(sheta), Mathf.Sin(sheta)));
             }
 
-            Physics2D.autoSimulation = false;
+            //Physics2D.autoSimulation = false;
             for (int i = 0; i < step; i++)
             {
                 Physics2D.Simulate(Time.fixedDeltaTime);
@@ -117,7 +117,7 @@ namespace Proto2D
                     break;
                 }
             }
-            Physics2D.autoSimulation = true;
+            //Physics2D.autoSimulation = true;
         }
 
         public List<Bounds> SelectRooms(List<Bounds> seeds, Bounds roomArea, Vector2 roomSize)

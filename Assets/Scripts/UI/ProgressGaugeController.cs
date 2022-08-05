@@ -73,12 +73,12 @@ namespace Proto2D
 
         private void HandlePhaseChanged(StagePhase phase)
         {
-            m_currentPhase = phase;
+            //m_currentPhase = phase;
         }
 
         private void HandleProgressChanged(float progress)
         {
-            m_currentProgress = progress - (m_maxProgress * (int)m_currentPhase);
+            //m_currentProgress = progress - (m_maxProgress * (int)m_currentPhase);
             m_mask.sliderValue = m_currentProgress / m_maxProgress;
 
             m_animator.SetTrigger("point_up");
