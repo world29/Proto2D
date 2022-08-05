@@ -400,7 +400,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 9.124087
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -424,7 +424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344754806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 9.979856, z: -10}
+  m_LocalPosition: {x: 0.50000006, y: 8.103945, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -908,6 +908,7 @@ GameObject:
   - component: {fileID: 1550008242}
   - component: {fileID: 1550008241}
   - component: {fileID: 1550008243}
+  - component: {fileID: 1550008244}
   m_Layer: 0
   m_Name: CM vcam2
   m_TagString: Untagged
@@ -937,7 +938,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 11
+    OrthographicSize: 9.124087
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -980,6 +981,20 @@ MonoBehaviour:
   m_ChannelMask: 1
   m_Gain: 1
   m_Use2DDistance: 0
+--- !u!114 &1550008244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550008240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dec017bfce24fc383a6f78606f017c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcam: {fileID: 1550008241}
+  horizontalTiles: 15
 --- !u!1 &1682202532
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +1006,7 @@ GameObject:
   - component: {fileID: 1682202534}
   - component: {fileID: 1682202533}
   - component: {fileID: 1682202535}
+  - component: {fileID: 1682202536}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -1020,7 +1036,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2070215730}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 11
+    OrthographicSize: 9.124087
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -1041,7 +1057,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682202532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -5.353062, z: -10}
+  m_LocalPosition: {x: 0.58, y: -6.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 841513692}
@@ -1065,6 +1081,20 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 1373509584}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &1682202536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682202532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dec017bfce24fc383a6f78606f017c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcam: {fileID: 1682202533}
+  horizontalTiles: 15
 --- !u!1 &1929705811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,12 +1230,12 @@ PrefabInstance:
     - target: {fileID: 8210632560912147323, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.6
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 8210632560912147323, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.7
+      value: -6.21
       objectReference: {fileID: 0}
     - target: {fileID: 8210632560912147323, guid: e7992d951e75c894aace524125025a25,
         type: 3}
