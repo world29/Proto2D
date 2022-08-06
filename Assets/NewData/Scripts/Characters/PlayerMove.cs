@@ -317,6 +317,7 @@ namespace Assets.NewData.Scripts
             }
         }
 
+        /*
         private void OnGUI()
         {
             if (_controller)
@@ -328,6 +329,7 @@ namespace Assets.NewData.Scripts
                 GUILayout.Label($"Climb: {_controller.collisions.climbingWall}", style);
             }
         }
+        */
 
         struct ActionContext
         {
