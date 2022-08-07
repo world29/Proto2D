@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 451113530}
   - component: {fileID: 451113529}
   - component: {fileID: 451113531}
+  - component: {fileID: 451113532}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -373,7 +374,7 @@ MonoBehaviour:
   m_Follow: {fileID: 882320988}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 11
+    OrthographicSize: 16.231884
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -418,6 +419,20 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 1554016161}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &451113532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451113528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dec017bfce24fc383a6f78606f017c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcam: {fileID: 451113529}
+  horizontalTiles: 15
 --- !u!4 &493791852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7132533431247099642, guid: 2fa158f627b87534c8132fb14814316d,
@@ -1019,7 +1034,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 16.231884
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1043,7 +1058,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481378893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.3000002, z: -10}
+  m_LocalPosition: {x: 0, y: 2.3000007, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
