@@ -26,11 +26,10 @@ namespace Assets.NewData.Scripts
             postOrientation = Input.deviceOrientation;
 
             var safeArea = Screen.safeArea;
-            var resolution = Screen.currentResolution;
 
             rectTransform.sizeDelta = Vector2.zero;
-            rectTransform.anchorMax = new Vector2(safeArea.xMax / resolution.width, safeArea.yMax / resolution.height);
-            rectTransform.anchorMin = new Vector2(safeArea.xMin / resolution.width, safeArea.yMin / resolution.height);
+            rectTransform.anchorMax = new Vector2(safeArea.xMax / Screen.width, safeArea.yMax / Screen.height);
+            rectTransform.anchorMin = new Vector2(safeArea.xMin / Screen.width, safeArea.yMin / Screen.height);
         }
     }
 }
