@@ -17,33 +17,6 @@ namespace Assets.NewData.Scripts
     ""name"": ""InputControls"",
     ""maps"": [
         {
-            ""name"": ""System"",
-            ""id"": ""f8087705-a19e-4ca8-81c3-18ac66e5e336"",
-            ""actions"": [
-                {
-                    ""name"": ""TogglePause"",
-                    ""type"": ""Button"",
-                    ""id"": ""f3c0ccb7-3251-4b28-a036-dc95571ea965"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""09586518-a81f-463e-96dc-4e110b2ae3a1"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TogglePause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Player"",
             ""id"": ""d9a30bb3-fcb1-4dc7-a0ed-a801de799903"",
             ""actions"": [
@@ -64,9 +37,9 @@ namespace Assets.NewData.Scripts
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Jet"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""6cb6e9d2-9ba1-47f2-b975-d3737708a936"",
+                    ""id"": ""38b92bf1-1e95-4a9c-ad8e-cea591bf6e91"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -163,34 +136,34 @@ namespace Assets.NewData.Scripts
                 },
                 {
                     ""name"": """",
-                    ""id"": ""953ecd6f-2f39-46b6-a807-8c0a1e6800ea"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""id"": ""bfdf73ea-e1fb-4277-a95e-80828029721d"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jet"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9727434c-3d89-4263-962f-09f085d9dbdc"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""id"": ""b58c33b7-b861-4264-a428-b7967dfaabd8"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jet"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Cutscene"",
+            ""name"": ""NonPlayer"",
             ""id"": ""8da3ee3f-4bea-4b6e-9802-989d36dbfb08"",
             ""actions"": [
                 {
-                    ""name"": ""MoveNext"",
+                    ""name"": ""Interaction"",
                     ""type"": ""Button"",
                     ""id"": ""3df572dc-883e-4a4c-b18d-a389e25fb928"",
                     ""expectedControlType"": ""Button"",
@@ -206,7 +179,29 @@ namespace Assets.NewData.Scripts
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveNext"",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""945234fa-5035-4a68-bf6a-4c2be72adb0f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ae0954e-304e-4c9d-94ca-98536a366a3d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -215,17 +210,14 @@ namespace Assets.NewData.Scripts
     ],
     ""controlSchemes"": []
 }");
-            // System
-            m_System = asset.FindActionMap("System", throwIfNotFound: true);
-            m_System_TogglePause = m_System.FindAction("TogglePause", throwIfNotFound: true);
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-            m_Player_Jet = m_Player.FindAction("Jet", throwIfNotFound: true);
-            // Cutscene
-            m_Cutscene = asset.FindActionMap("Cutscene", throwIfNotFound: true);
-            m_Cutscene_MoveNext = m_Cutscene.FindAction("MoveNext", throwIfNotFound: true);
+            m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+            // NonPlayer
+            m_NonPlayer = asset.FindActionMap("NonPlayer", throwIfNotFound: true);
+            m_NonPlayer_Interaction = m_NonPlayer.FindAction("Interaction", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -272,52 +264,19 @@ namespace Assets.NewData.Scripts
             asset.Disable();
         }
 
-        // System
-        private readonly InputActionMap m_System;
-        private ISystemActions m_SystemActionsCallbackInterface;
-        private readonly InputAction m_System_TogglePause;
-        public struct SystemActions
-        {
-            private @InputControls m_Wrapper;
-            public SystemActions(@InputControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @TogglePause => m_Wrapper.m_System_TogglePause;
-            public InputActionMap Get() { return m_Wrapper.m_System; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(SystemActions set) { return set.Get(); }
-            public void SetCallbacks(ISystemActions instance)
-            {
-                if (m_Wrapper.m_SystemActionsCallbackInterface != null)
-                {
-                    @TogglePause.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnTogglePause;
-                    @TogglePause.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnTogglePause;
-                    @TogglePause.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnTogglePause;
-                }
-                m_Wrapper.m_SystemActionsCallbackInterface = instance;
-                if (instance != null)
-                {
-                    @TogglePause.started += instance.OnTogglePause;
-                    @TogglePause.performed += instance.OnTogglePause;
-                    @TogglePause.canceled += instance.OnTogglePause;
-                }
-            }
-        }
-        public SystemActions @System => new SystemActions(this);
-
         // Player
         private readonly InputActionMap m_Player;
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Jump;
-        private readonly InputAction m_Player_Jet;
+        private readonly InputAction m_Player_Pause;
         public struct PlayerActions
         {
             private @InputControls m_Wrapper;
             public PlayerActions(@InputControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
-            public InputAction @Jet => m_Wrapper.m_Player_Jet;
+            public InputAction @Pause => m_Wrapper.m_Player_Pause;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -333,9 +292,9 @@ namespace Assets.NewData.Scripts
                     @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                    @Jet.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJet;
-                    @Jet.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJet;
-                    @Jet.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJet;
+                    @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -346,59 +305,55 @@ namespace Assets.NewData.Scripts
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
-                    @Jet.started += instance.OnJet;
-                    @Jet.performed += instance.OnJet;
-                    @Jet.canceled += instance.OnJet;
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
                 }
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
 
-        // Cutscene
-        private readonly InputActionMap m_Cutscene;
-        private ICutsceneActions m_CutsceneActionsCallbackInterface;
-        private readonly InputAction m_Cutscene_MoveNext;
-        public struct CutsceneActions
+        // NonPlayer
+        private readonly InputActionMap m_NonPlayer;
+        private INonPlayerActions m_NonPlayerActionsCallbackInterface;
+        private readonly InputAction m_NonPlayer_Interaction;
+        public struct NonPlayerActions
         {
             private @InputControls m_Wrapper;
-            public CutsceneActions(@InputControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @MoveNext => m_Wrapper.m_Cutscene_MoveNext;
-            public InputActionMap Get() { return m_Wrapper.m_Cutscene; }
+            public NonPlayerActions(@InputControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Interaction => m_Wrapper.m_NonPlayer_Interaction;
+            public InputActionMap Get() { return m_Wrapper.m_NonPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(CutsceneActions set) { return set.Get(); }
-            public void SetCallbacks(ICutsceneActions instance)
+            public static implicit operator InputActionMap(NonPlayerActions set) { return set.Get(); }
+            public void SetCallbacks(INonPlayerActions instance)
             {
-                if (m_Wrapper.m_CutsceneActionsCallbackInterface != null)
+                if (m_Wrapper.m_NonPlayerActionsCallbackInterface != null)
                 {
-                    @MoveNext.started -= m_Wrapper.m_CutsceneActionsCallbackInterface.OnMoveNext;
-                    @MoveNext.performed -= m_Wrapper.m_CutsceneActionsCallbackInterface.OnMoveNext;
-                    @MoveNext.canceled -= m_Wrapper.m_CutsceneActionsCallbackInterface.OnMoveNext;
+                    @Interaction.started -= m_Wrapper.m_NonPlayerActionsCallbackInterface.OnInteraction;
+                    @Interaction.performed -= m_Wrapper.m_NonPlayerActionsCallbackInterface.OnInteraction;
+                    @Interaction.canceled -= m_Wrapper.m_NonPlayerActionsCallbackInterface.OnInteraction;
                 }
-                m_Wrapper.m_CutsceneActionsCallbackInterface = instance;
+                m_Wrapper.m_NonPlayerActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @MoveNext.started += instance.OnMoveNext;
-                    @MoveNext.performed += instance.OnMoveNext;
-                    @MoveNext.canceled += instance.OnMoveNext;
+                    @Interaction.started += instance.OnInteraction;
+                    @Interaction.performed += instance.OnInteraction;
+                    @Interaction.canceled += instance.OnInteraction;
                 }
             }
         }
-        public CutsceneActions @Cutscene => new CutsceneActions(this);
-        public interface ISystemActions
-        {
-            void OnTogglePause(InputAction.CallbackContext context);
-        }
+        public NonPlayerActions @NonPlayer => new NonPlayerActions(this);
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
-            void OnJet(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
         }
-        public interface ICutsceneActions
+        public interface INonPlayerActions
         {
-            void OnMoveNext(InputAction.CallbackContext context);
+            void OnInteraction(InputAction.CallbackContext context);
         }
     }
 }

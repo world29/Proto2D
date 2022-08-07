@@ -90,20 +90,10 @@ namespace Assets.NewData.Scripts
 
         private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
         {
-            if (scene.name == "Gameplay")
-            {
-                InputSystem.Input.System.Enable();
-                InputSystem.Input.Player.Enable();
-            }
         }
 
         private void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene)
         {
-            if (scene.name == "Gameplay")
-            {
-                InputSystem.Input.Player.Disable();
-                InputSystem.Input.System.Disable();
-            }
         }
     }
 }

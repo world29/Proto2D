@@ -40,7 +40,7 @@ namespace Assets.NewData.Scripts
             foreach (string text in dialogueData.Text)
             {
                 yield return typewriterEffect.Run(text, textLabel);
-                yield return new WaitUntil(() => InputSystem.Input.Cutscene.MoveNext.triggered);
+                yield return new WaitUntil(() => InputSystem.Input.NonPlayer.Interaction.triggered);
             }
 
             CloseDialogueBox();

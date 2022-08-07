@@ -12,7 +12,7 @@ namespace Assets.NewData.Scripts
 
         private void Update()
         {
-            if (InputSystem.Input.Cutscene.MoveNext.triggered && !isSceneSkipped)
+            if (InputSystem.Input.NonPlayer.Interaction.triggered && !isSceneSkipped)
             {
                 currentDirector.time = timeToSkipTo;
                 isSceneSkipped = true;

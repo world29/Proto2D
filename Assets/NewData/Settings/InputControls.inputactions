@@ -2,33 +2,6 @@
     "name": "InputControls",
     "maps": [
         {
-            "name": "System",
-            "id": "f8087705-a19e-4ca8-81c3-18ac66e5e336",
-            "actions": [
-                {
-                    "name": "TogglePause",
-                    "type": "Button",
-                    "id": "f3c0ccb7-3251-4b28-a036-dc95571ea965",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "09586518-a81f-463e-96dc-4e110b2ae3a1",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TogglePause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "Player",
             "id": "d9a30bb3-fcb1-4dc7-a0ed-a801de799903",
             "actions": [
@@ -49,9 +22,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jet",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "6cb6e9d2-9ba1-47f2-b975-d3737708a936",
+                    "id": "38b92bf1-1e95-4a9c-ad8e-cea591bf6e91",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -148,34 +121,34 @@
                 },
                 {
                     "name": "",
-                    "id": "953ecd6f-2f39-46b6-a807-8c0a1e6800ea",
-                    "path": "<Keyboard>/e",
+                    "id": "bfdf73ea-e1fb-4277-a95e-80828029721d",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jet",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "9727434c-3d89-4263-962f-09f085d9dbdc",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "b58c33b7-b861-4264-a428-b7967dfaabd8",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jet",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Cutscene",
+            "name": "NonPlayer",
             "id": "8da3ee3f-4bea-4b6e-9802-989d36dbfb08",
             "actions": [
                 {
-                    "name": "MoveNext",
+                    "name": "Interaction",
                     "type": "Button",
                     "id": "3df572dc-883e-4a4c-b18d-a389e25fb928",
                     "expectedControlType": "Button",
@@ -191,7 +164,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveNext",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "945234fa-5035-4a68-bf6a-4c2be72adb0f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ae0954e-304e-4c9d-94ca-98536a366a3d",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

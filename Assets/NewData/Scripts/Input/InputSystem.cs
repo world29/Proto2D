@@ -57,12 +57,12 @@ namespace Assets.NewData.Scripts
         private void OnEnable()
         {
             // ポーズボタンを押した際の処理を登録する
-            _inputControls.System.TogglePause.started += OnTogglePause;
+            _inputControls.Player.Pause.started += OnTogglePause;
         }
 
         private void OnDisable()
         {
-            _inputControls.System.TogglePause.started -= OnTogglePause;
+            _inputControls.Player.Pause.started -= OnTogglePause;
         }
 
         private void OnTogglePause(InputAction.CallbackContext obj)
