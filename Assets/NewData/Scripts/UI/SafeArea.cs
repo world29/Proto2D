@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Assets.NewData.Scripts
 {
     // RectTransform をデバイスのセーフエリアのサイズに変更する
+    // Simulator ウィンドウと Game View を同時に開いている場合、Game View の表示が崩れる点に注意。
     public class SafeArea : MonoBehaviour
     {
         private RectTransform rectTransform;
