@@ -27,11 +27,11 @@ namespace Assets.NewData.Scripts
 
         private void Update()
         {
-            deltaTimeBuffer[bufferIndex] = Time.deltaTime;
+            deltaTimeBuffer[bufferIndex] = Time.unscaledDeltaTime;
 
             bufferIndex = (bufferIndex + 1) % bufferSize;
 
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             if (timer < updateInterval)
             {
                 return;
