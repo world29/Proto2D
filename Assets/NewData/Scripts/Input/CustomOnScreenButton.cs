@@ -14,27 +14,34 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private Image image;
 
+        [SerializeField]
+        private Sprite pressedSprite;
+
         [HideInInspector]
         public RectTransform rectTransform => transform.GetComponent<RectTransform>();
 
         private Color imageColor;
+        private Sprite defaultSprite;
 
         private void Awake()
         {
             imageColor = image.color;
+            defaultSprite = image.sprite;
         }
 
         public void OnButtonDown()
         {
             var pushedColor = image.color;
             pushedColor.a -= 0.2f;
-            image.color = pushedColor;
+            //image.color = pushedColor;
+            image.sprite = pressedSprite;
             SendValueToControl(1f);
         }
 
         public void OnButtonUp()
         {
-            image.color = imageColor;
+            image.sprite = defaultSprite;
+            //image.color = imageColor;
             SendValueToControl(0f);
         }
 
