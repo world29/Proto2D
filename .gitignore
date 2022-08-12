@@ -5,7 +5,7 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
-/[Bb]uild/
+/[Bb]uild/*
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
@@ -31,6 +31,9 @@
 
 # Mac
 .DS_Store
+
+# build settings
+!/Build/ExportOptions.plist
 
 # Gradle cache directory
 .gradle/
