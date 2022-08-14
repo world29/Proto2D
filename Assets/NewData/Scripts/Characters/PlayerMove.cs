@@ -37,6 +37,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float inputTimeToClimb = 0.2f;
 
+        [SerializeField]
+        private Vector2 ledgeCornerOffset;
+
         private Vector2 _velocity;
         private Controller2D _controller;
         private Animator _animator;
@@ -57,7 +60,13 @@ namespace Assets.NewData.Scripts
         // IPlayerMove
         public Vector2 Velocity { get { return _velocity; } }
 
-        private bool FacingRight
+        // IPlayerMove
+        public Vector2 Size { get { return GetComponent<BoxCollider2D>().size; } }
+
+        // IPlayerMove
+        public bool FacingRight { get { return _facingRight; } }
+
+        private bool facingRight
         {
             get { return _facingRight; }
             set
@@ -88,6 +97,13 @@ namespace Assets.NewData.Scripts
                 var rad = wallJumpAngle * Mathf.Deg2Rad;
                 return new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * JumpInitialVelocityY;
             }
+        }
+
+        // IPlayerMove
+        public void SetPosition(Vector2 pos)
+        {
+            transform.position = pos;
+            _velocity = Vector2.zero;
         }
 
         private void Awake()
@@ -125,7 +141,11 @@ namespace Assets.NewData.Scripts
 
         private void HandleInput()
         {
-            if (_actionState is ClimbingState)
+            if (_actionState is LedgeState)
+            {
+                MoveLedge();
+            }
+            else if (_actionState is ClimbingState)
             {
                 MoveClimbing();
             }
@@ -140,8 +160,19 @@ namespace Assets.NewData.Scripts
                 inputWallTime = _inputWallTime,
                 isGrounded = _controller.collisions.below,
                 isTouchingWall = _controller.collisions.right || _controller.collisions.left,
+                isTouchingLedge = _controller.collisions.touchingLedge,
+                animator = _animator,
+                collisions = _controller.collisions,
+                playerMove = this,
+                ledgeCornerOffset = ledgeCornerOffset,
             };
-            _actionState = _actionState.Update(ctx);
+            var nextActionState = _actionState.Update(ctx);
+            if (nextActionState != _actionState)
+            {
+                _actionState.Exit(ctx);
+                _actionState = nextActionState;
+                _actionState.Enter(ctx);
+            }
         }
 
         private void Move()
@@ -187,7 +218,7 @@ namespace Assets.NewData.Scripts
                     _velocity.x = Mathf.Clamp(_velocity.x, -runSpeed, runSpeed);
                 }
 
-                FacingRight = inputMove.x > 0;
+                facingRight = inputMove.x > 0;
             }
 
             //todo: 壁登りへ移行するための入力バッファを更新する
@@ -214,7 +245,7 @@ namespace Assets.NewData.Scripts
                 _velocity.y += Gravity * Time.deltaTime * gravityScale;
             }
 
-            _controller.Move(_velocity * Time.deltaTime, FacingRight);
+            _controller.Move(_velocity * Time.deltaTime, facingRight);
 
             if (!_isJumpPerformed && (_controller.collisions.below || _controller.collisions.above))
             {
@@ -253,7 +284,7 @@ namespace Assets.NewData.Scripts
                         _isJumpPerformed = true;
                     }
 
-                    FacingRight = inputMove.x > 0;
+                    facingRight = inputMove.x > 0;
                 }
                 else if (inputMove.y != 0f)
                 {
@@ -270,17 +301,30 @@ namespace Assets.NewData.Scripts
                 }
                 Debug.Log($"WallJumpInitialVelocity: {_velocity.ToString("F3")}");
 
-                FacingRight = !FacingRight;
+                facingRight = !facingRight;
             }
 
-            _controller.Move(_velocity * Time.deltaTime, FacingRight);
+            _controller.Move(_velocity * Time.deltaTime, facingRight);
+        }
+
+        void MoveLedge()
+        {
+
         }
 
         private void UpdateAnimation()
         {
             string nextState;
 
-            if (_actionState is ClimbingState)
+            if (_actionState is LedgeClimbState)
+            {
+                nextState = "Apx_Ledge_Climb";
+            }
+            else if (_actionState is LedgeState)
+            {
+                nextState = "Apx_Ledge";
+            }
+            else if (_actionState is ClimbingState)
             {
                 if (_velocity.y == 0f)
                 {
@@ -317,7 +361,7 @@ namespace Assets.NewData.Scripts
             }
         }
 
-        /*
+#if UNITY_EDITOR
         private void OnGUI()
         {
             if (_controller)
@@ -325,11 +369,16 @@ namespace Assets.NewData.Scripts
                 GUIStyle style = GUI.skin.label;
                 style.fontSize = 30;
 
-                GUILayout.Label($"Ground: {_controller.collisions.below}", style);
-                GUILayout.Label($"Climb: {_controller.collisions.climbingWall}", style);
+                GUILayout.BeginArea(new Rect(0, 50, 300, 300));
+                {
+                    GUILayout.Label($"Ground: {_controller.collisions.below}", style);
+                    GUILayout.Label($"Climb: {_controller.collisions.climbingWall}", style);
+                    GUILayout.Label($"Ledge: {_controller.collisions.touchingLedge}", style);
+                }
+                GUILayout.EndArea();
             }
         }
-        */
+#endif
 
         struct ActionContext
         {
@@ -337,21 +386,46 @@ namespace Assets.NewData.Scripts
             public float inputWallTime;
             public bool isGrounded;
             public bool isTouchingWall;
+            public bool isTouchingLedge;
+            public Animator animator;
+            public Controller2D.CollisionInfo collisions;
+            public IPlayerMove playerMove;
+            public Vector2 ledgeCornerOffset;
         }
 
         interface IActionState
         {
+            void Enter(ActionContext ctx);
+            void Exit(ActionContext ctx);
             IActionState Update(ActionContext ctx);
         }
 
         class MovingState : IActionState
         {
+            public void Enter(ActionContext ctx) { }
+            public void Exit(ActionContext ctx) { }
+
             public IActionState Update(ActionContext ctx)
             {
-                // 壁への入力が一定時間を超えたら ClimbingState に遷移する
                 if (ctx.inputWallTime >= ctx.inputWallThreshold)
                 {
-                    return _climbingState;
+                    if (ctx.isTouchingLedge)
+                    {
+                        if (ctx.playerMove.IsGround)
+                        {
+                            return _ledgeState;
+                        }
+                        else
+                        {
+                            return _ledgeClimbState;
+                        }
+                    }
+
+                    // 壁への入力が一定時間を超えたら ClimbingState に遷移する
+                    if (ctx.isTouchingWall)
+                    {
+                        return _climbingState;
+                    }
                 }
                 return this;
             }
@@ -359,18 +433,77 @@ namespace Assets.NewData.Scripts
 
         class ClimbingState : IActionState
         {
+            public void Enter(ActionContext ctx) { }
+            public void Exit(ActionContext ctx) { }
+
             public IActionState Update(ActionContext ctx)
             {
-                //todo: 接地するか、壁から離れたら MovingState に遷移する
-                if (ctx.isGrounded || !ctx.isTouchingWall)
+                if (ctx.isTouchingLedge)
                 {
+                    return _ledgeClimbState;
+                }
+                else if (ctx.isGrounded || !ctx.isTouchingWall)
+                {
+                    //todo: 接地するか、壁から離れたら MovingState に遷移する
                     return _movingState;
                 }
                 return this;
             }
         }
 
+        class LedgeState : IActionState
+        {
+            public void Enter(ActionContext ctx)
+            {
+                // Ledge アニメーション再生準備
+                var playerPos = ctx.collisions.ledgeCorner;
+                if (ctx.playerMove.FacingRight)
+                {
+                    playerPos.x += ctx.ledgeCornerOffset.x;
+                }
+                else
+                {
+                    playerPos.x -= ctx.ledgeCornerOffset.x;
+                }
+                playerPos.y += ctx.ledgeCornerOffset.y;
+
+                ctx.playerMove.SetPosition(playerPos);
+            }
+            public void Exit(ActionContext ctx)
+            {
+                // プレイヤーの位置を崖上に変更する
+                var playerPos = ctx.collisions.ledgeCorner;
+
+                if (ctx.playerMove.FacingRight)
+                {
+                    playerPos.x += ctx.playerMove.Size.x / 2;
+                }
+                else
+                {
+                    playerPos.x -= ctx.playerMove.Size.x / 2;
+                }
+                playerPos.y += ctx.playerMove.Size.y / 2;
+
+                ctx.playerMove.SetPosition(playerPos);
+            }
+
+            public IActionState Update(ActionContext ctx)
+            {
+                // アニメーションの再生が終わったら遷移する。
+                if (ctx.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {
+                    return _movingState;
+                }
+
+                return this;
+            }
+        }
+
+        class LedgeClimbState : LedgeState { };
+
         static MovingState _movingState = new MovingState();
         static ClimbingState _climbingState = new ClimbingState();
+        static LedgeState _ledgeState = new LedgeState();
+        static LedgeClimbState _ledgeClimbState = new LedgeClimbState();
     }
 }

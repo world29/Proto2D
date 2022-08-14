@@ -44,6 +44,9 @@ namespace Assets.NewData.Scripts
                 VerticalCollisions(ref dummyMove);
             }
 
+            // 壁掴みのチェック
+            CheckLedge(ref moveAmount, facingRight);
+
             transform.Translate(moveAmount, standingOnPlatform ? Space.World : Space.Self);
 
             if (standingOnPlatform)
@@ -173,6 +176,54 @@ namespace Assets.NewData.Scripts
             }
         }
 
+        void CheckLedge(ref Vector2 moveAmount, bool facingRight)
+        {
+            RaycastHit2D hitFoot, hitHead;
+
+            {
+                float rayLength = 0.2f;
+                Vector2 rayDir = facingRight ? Vector2.right : Vector2.left;
+                {
+                    Vector2 rayOrigin = new Vector2(
+                        facingRight ? raycastOrigins.bottomRight.x : raycastOrigins.bottomLeft.x,
+                        raycastOrigins.bottomRight.y);
+
+                    hitFoot = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
+
+                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitFoot ? Color.red : Color.blue);
+                }
+
+                {
+                    Vector2 rayOrigin = new Vector2(
+                        facingRight ? raycastOrigins.bottomRight.x : raycastOrigins.bottomLeft.x,
+                        raycastOrigins.topRight.y);
+
+                    hitHead = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
+
+                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitHead ? Color.red : Color.blue);
+                }
+            }
+
+            if (hitFoot && !hitHead)
+            {
+                // 崖の地面の高さを取得して、そこにキャラクターを移動させる
+                float offset = facingRight ? 0.1f : -0.1f;
+                float rayLength = raycastOrigins.topRight.y - raycastOrigins.bottomRight.y;
+                Vector2 rayDir = Vector2.down;
+
+                Vector2 rayOrigin = new Vector2(hitFoot.point.x + offset, raycastOrigins.topRight.y);
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
+                Debug.DrawRay(rayOrigin, rayDir * rayLength, hit ? Color.red : Color.blue);
+                if (hit)
+                {
+                    collisions.ledgeCorner = new Vector2(hitFoot.point.x, hit.point.y);
+                    collisions.ledgeClimbPosition = hit.point;
+
+                    collisions.touchingLedge = true;
+                }
+            }
+        }
+
         void ClimbSlope(ref Vector2 moveAmount, float slopeAngle)
         {
             float moveDistance = Mathf.Abs(moveAmount.x);
@@ -237,6 +288,10 @@ namespace Assets.NewData.Scripts
 
             public bool fallingThroughPlatform;
 
+            public bool touchingLedge;
+            public Vector2 ledgeCorner; // 崖のふち
+            public Vector2 ledgeClimbPosition; // 崖登り後の位置
+
             public void Reset()
             {
                 above = below = false;
@@ -249,6 +304,8 @@ namespace Assets.NewData.Scripts
                 slopeAngle = 0;
 
                 climbingWall = false;
+
+                touchingLedge = false;
             }
         }
 

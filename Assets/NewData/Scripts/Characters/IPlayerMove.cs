@@ -14,5 +14,14 @@ namespace Assets.NewData.Scripts
 
         // 速度
         Vector2 Velocity { get; }
+
+        // コリジョンのサイズ (x:width, y:height)
+        Vector2 Size { get; }
+
+        // 右を向いているか
+        bool FacingRight { get; }
+
+        // 位置の設定
+        void SetPosition(Vector2 pos);
     }
 }
