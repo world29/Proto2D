@@ -55,6 +55,24 @@ namespace Assets.NewData.Scripts
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""48a80cef-785a-47f7-b9ed-9e7ed57808a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""2155f21a-c6ad-4b42-a21e-bf5cf053d218"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +185,72 @@ namespace Assets.NewData.Scripts
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""617ab1b5-9a9d-4397-8bdf-fbd18ded50a2"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ba0b5ea-c5ef-40a8-bbe4-e57ba74a4cba"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5891b0c5-a8a2-4da5-81a0-b4640a2d8752"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4eaeb0b5-7f40-4200-91ac-5eaa8c91f2ba"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f904adde-3867-4291-9540-b84f31619e52"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0433ac71-387b-4156-bda3-954afd47c944"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -239,6 +323,8 @@ namespace Assets.NewData.Scripts
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+            m_Player_Left = m_Player.FindAction("Left", throwIfNotFound: true);
+            m_Player_Right = m_Player.FindAction("Right", throwIfNotFound: true);
             // NonPlayer
             m_NonPlayer = asset.FindActionMap("NonPlayer", throwIfNotFound: true);
             m_NonPlayer_Interaction = m_NonPlayer.FindAction("Interaction", throwIfNotFound: true);
@@ -304,6 +390,8 @@ namespace Assets.NewData.Scripts
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Pause;
+        private readonly InputAction m_Player_Left;
+        private readonly InputAction m_Player_Right;
         public struct PlayerActions
         {
             private @InputControls m_Wrapper;
@@ -311,6 +399,8 @@ namespace Assets.NewData.Scripts
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Pause => m_Wrapper.m_Player_Pause;
+            public InputAction @Left => m_Wrapper.m_Player_Left;
+            public InputAction @Right => m_Wrapper.m_Player_Right;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -329,6 +419,12 @@ namespace Assets.NewData.Scripts
                     @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                     @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                     @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Left.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeft;
+                    @Left.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeft;
+                    @Left.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeft;
+                    @Right.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRight;
+                    @Right.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRight;
+                    @Right.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRight;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -342,6 +438,12 @@ namespace Assets.NewData.Scripts
                     @Pause.started += instance.OnPause;
                     @Pause.performed += instance.OnPause;
                     @Pause.canceled += instance.OnPause;
+                    @Left.started += instance.OnLeft;
+                    @Left.performed += instance.OnLeft;
+                    @Left.canceled += instance.OnLeft;
+                    @Right.started += instance.OnRight;
+                    @Right.performed += instance.OnRight;
+                    @Right.canceled += instance.OnRight;
                 }
             }
         }
@@ -384,6 +486,8 @@ namespace Assets.NewData.Scripts
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);
+            void OnLeft(InputAction.CallbackContext context);
+            void OnRight(InputAction.CallbackContext context);
         }
         public interface INonPlayerActions
         {

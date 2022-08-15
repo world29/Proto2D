@@ -17,23 +17,47 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private Sprite pressedSprite;
 
+        [SerializeField]
+        private string actionName;
+
         [HideInInspector]
         public RectTransform rectTransform => transform.GetComponent<RectTransform>();
 
-        private Color imageColor;
         private Sprite defaultSprite;
 
         private void Awake()
         {
-            imageColor = image.color;
             defaultSprite = image.sprite;
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            UnityEngine.InputSystem.InputAction inputAction = InputSystem.Input.FindAction(actionName);
+            Debug.Assert(inputAction != null);
+            if (inputAction != null)
+            {
+                inputAction.started += OnPressed;
+                inputAction.canceled += OnReleased;
+            }
+        }
+
+        protected override void OnDisable()
+        {
+            UnityEngine.InputSystem.InputAction inputAction = InputSystem.Input.FindAction(actionName);
+            Debug.Assert(inputAction != null);
+            if (inputAction != null)
+            {
+                inputAction.canceled -= OnReleased;
+                inputAction.started -= OnPressed;
+            }
+
+            base.OnDisable();
         }
 
         public void OnButtonDown()
         {
-            var pushedColor = image.color;
-            pushedColor.a -= 0.2f;
-            //image.color = pushedColor;
             image.sprite = pressedSprite;
             SendValueToControl(1f);
         }
@@ -41,8 +65,17 @@ namespace Assets.NewData.Scripts
         public void OnButtonUp()
         {
             image.sprite = defaultSprite;
-            //image.color = imageColor;
             SendValueToControl(0f);
+        }
+
+        private void OnPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+        {
+            image.sprite = pressedSprite;
+        }
+
+        private void OnReleased(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+        {
+            image.sprite = defaultSprite;
         }
 
         [InputControl(layout = "Button"), SerializeField]

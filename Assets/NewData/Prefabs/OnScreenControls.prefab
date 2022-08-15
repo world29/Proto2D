@@ -243,7 +243,8 @@ MonoBehaviour:
   image: {fileID: 1828433099477614448}
   pressedSprite: {fileID: 8131805208485326556, guid: 10d0f1a1d0c384b798998565913316b0,
     type: 3}
-  _controlPath: <Keyboard>/a
+  actionName: Player/Left
+  _controlPath: <Gamepad>/leftStick/left
 --- !u!1 &2600052203126383615
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +414,7 @@ MonoBehaviour:
   image: {fileID: 4165760804869341720}
   pressedSprite: {fileID: 2244543426788808154, guid: 10d0f1a1d0c384b798998565913316b0,
     type: 3}
+  actionName: Player/Jump
   _controlPath: <Gamepad>/buttonSouth
 --- !u!114 &803527402723621465
 MonoBehaviour:
@@ -523,6 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -962,7 +965,8 @@ MonoBehaviour:
   image: {fileID: 5298237379431600957}
   pressedSprite: {fileID: 6117958387201724540, guid: 10d0f1a1d0c384b798998565913316b0,
     type: 3}
-  _controlPath: <Keyboard>/d
+  actionName: Player/Right
+  _controlPath: <Gamepad>/leftStick/right
 --- !u!1 &8308218018228203224
 GameObject:
   m_ObjectHideFlags: 0
