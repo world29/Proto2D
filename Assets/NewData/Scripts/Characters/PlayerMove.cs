@@ -50,6 +50,8 @@ namespace Assets.NewData.Scripts
         private IActionState _actionState;
         private float _inputWallTime;
         private bool _isJumpPerformed;
+        private PlayerStamina _playerStamina;
+        private bool _isGroundPrev;
 
         // IPlayerMove
         public bool IsGround { get { return _controller.collisions.below; } }
@@ -121,6 +123,8 @@ namespace Assets.NewData.Scripts
             _actionState = _movingState;
             _inputWallTime = 0;
             _isJumpPerformed = false;
+            _playerStamina = GetComponent<PlayerStamina>();
+            _isGroundPrev = false;
         }
 
         private void Update()
@@ -137,6 +141,13 @@ namespace Assets.NewData.Scripts
         private void ResetState()
         {
             _isJumpPerformed = false;
+
+            // スタミナリセット
+            if (!_isGroundPrev && IsGround)
+            {
+                _playerStamina.Recovery();
+            }
+            _isGroundPrev = IsGround;
         }
 
         private void HandleInput()
@@ -165,6 +176,7 @@ namespace Assets.NewData.Scripts
                 collisions = _controller.collisions,
                 playerMove = this,
                 ledgeCornerOffset = ledgeCornerOffset,
+                playerStamina = _playerStamina,
             };
             var nextActionState = _actionState.Update(ctx);
             if (nextActionState != _actionState)
@@ -302,9 +314,16 @@ namespace Assets.NewData.Scripts
                 Debug.Log($"WallJumpInitialVelocity: {_velocity.ToString("F3")}");
 
                 facingRight = !facingRight;
+
+                _playerStamina.Jump();
             }
 
             _controller.Move(_velocity * Time.deltaTime, facingRight);
+
+            if (_velocity.y != 0)
+            {
+                _playerStamina.Climb(Time.deltaTime);
+            }
         }
 
         void MoveLedge()
@@ -391,6 +410,7 @@ namespace Assets.NewData.Scripts
             public Controller2D.CollisionInfo collisions;
             public IPlayerMove playerMove;
             public Vector2 ledgeCornerOffset;
+            public PlayerStamina playerStamina;
         }
 
         interface IActionState
@@ -422,7 +442,7 @@ namespace Assets.NewData.Scripts
                     }
 
                     // 壁への入力が一定時間を超えたら ClimbingState に遷移する
-                    if (ctx.isTouchingWall)
+                    if (ctx.isTouchingWall && ctx.playerStamina.CanClimb())
                     {
                         return _climbingState;
                     }
@@ -442,9 +462,12 @@ namespace Assets.NewData.Scripts
                 {
                     return _ledgeClimbState;
                 }
-                else if (ctx.isGrounded || !ctx.isTouchingWall)
+                else if (ctx.isGrounded || !ctx.isTouchingWall || !ctx.playerStamina.CanClimb())
                 {
-                    //todo: 接地するか、壁から離れたら MovingState に遷移する
+                    // いずれかの条件を満たすとき MovingState に遷移する
+                    // - 接地した
+                    // - 壁から離れた
+                    // - スタミナを使い果たした
                     return _movingState;
                 }
                 return this;
