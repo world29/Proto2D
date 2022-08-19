@@ -21,14 +21,44 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private UnityEngine.UI.Slider slider;
 
+        // スタミナが満タンで一定時間変更がなければゲージを非表示にする。
+        [SerializeField]
+        private float hideTime = 1f;
+
+        [SerializeField]
+        private float hideDuration = 1f;
+
+        [SerializeField]
+        private UnityEngine.CanvasGroup canvasGroup;
+
         [HideInInspector]
         public float CurrentStatminaValue { get => _currentValue; }
 
         private float _currentValue;
+        private float _hideTimer;
+        private Coroutine _hideCoroutine;
 
         private void Start()
         {
             SetCurrentValue(maxStaminaValue);
+        }
+
+        private void LateUpdate()
+        {
+            if (_hideCoroutine != null)
+            {
+                return;
+            }
+
+            if (_currentValue == maxStaminaValue)
+            {
+                _hideTimer += Time.deltaTime;
+
+                if (_hideTimer >= hideTime)
+                {
+                    BeginHide();
+                }
+            }
         }
 
         public bool CanClimb()
@@ -57,7 +87,10 @@ namespace Assets.NewData.Scripts
 
         public void Recovery()
         {
-            SetCurrentValue(maxStaminaValue);
+            if (_currentValue < maxStaminaValue)
+            {
+                SetCurrentValue(maxStaminaValue);
+            }
         }
 
         private void SetCurrentValue(float newValue)
@@ -70,6 +103,42 @@ namespace Assets.NewData.Scripts
         private void UpdateUI()
         {
             slider.value = _currentValue;
+
+            CancelHide();
+
+            _hideTimer = 0;
+        }
+
+        private void BeginHide()
+        {
+            _hideCoroutine = StartCoroutine(HideGaugeCoroutine());
+        }
+
+        private void CancelHide()
+        {
+            if (_hideCoroutine != null)
+            {
+                StopCoroutine(_hideCoroutine);
+
+                _hideCoroutine = null;
+            }
+
+            canvasGroup.alpha = 1f;
+        }
+
+        private IEnumerator HideGaugeCoroutine()
+        {
+            // ゲージを非表示にする
+            var endTime = Time.timeSinceLevelLoad + hideDuration;
+
+            while (Time.timeSinceLevelLoad < endTime)
+            {
+                canvasGroup.alpha = (endTime - Time.timeSinceLevelLoad) / hideDuration;
+
+                yield return null;
+            }
+
+            canvasGroup.alpha = 0;
         }
     }
 }

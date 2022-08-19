@@ -334,6 +334,9 @@ MonoBehaviour:
   consumeClimb: 20
   consumeWallJump: 30
   slider: {fileID: 6224555597923387049}
+  hideTime: 0.5
+  hideDuration: 0.2
+  canvasGroup: {fileID: 6757089816690621827}
 --- !u!1001 &5470334171329707450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -466,6 +469,12 @@ PrefabInstance:
 --- !u!224 &5148937710796129920 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 909221775828876090, guid: 87c5590ab7ea346b0b4cbb38844ab9bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5470334171329707450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &6757089816690621827 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 1597799925734260793, guid: 87c5590ab7ea346b0b4cbb38844ab9bd,
     type: 3}
   m_PrefabInstance: {fileID: 5470334171329707450}
   m_PrefabAsset: {fileID: 0}
