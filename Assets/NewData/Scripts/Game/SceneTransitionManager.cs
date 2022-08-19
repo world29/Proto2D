@@ -48,6 +48,13 @@ namespace Assets.NewData.Scripts
             Instance.StartCoroutine(Instance.LoadSceneAsync(sceneName));
         }
 
+        public static void ReloadScene()
+        {
+            var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+
+            LoadScene(currentScene.name);
+        }
+
         private IEnumerator LoadSceneAsync(string sceneName)
         {
             yield return ScreenFader.FadeOut(0.5f);
