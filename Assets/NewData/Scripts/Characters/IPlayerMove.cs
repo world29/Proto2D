@@ -13,7 +13,7 @@ namespace Assets.NewData.Scripts
         bool IsJumpPerformed { get; }
 
         // 速度
-        Vector2 Velocity { get; }
+        Vector2 Velocity { get; set; }
 
         // コリジョンのサイズ (x:width, y:height)
         Vector2 Size { get; }

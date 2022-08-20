@@ -2227,15 +2227,15 @@ Transform:
   - {fileID: 1695759988}
   - {fileID: 282751245}
   - {fileID: 522663248}
+  - {fileID: 872477458}
   - {fileID: 528690577}
+  - {fileID: 1136470118}
   - {fileID: 989482029}
   - {fileID: 1183916758}
-  - {fileID: 1527053045}
-  - {fileID: 800259086}
-  - {fileID: 1136470118}
-  - {fileID: 1622658172}
   - {fileID: 1364007651}
-  - {fileID: 872477458}
+  - {fileID: 1527053045}
+  - {fileID: 1622658172}
+  - {fileID: 800259086}
   m_Father: {fileID: 693300698}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2369,6 +2369,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1419108019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8227151553751879269, guid: e7992d951e75c894aace524125025a25,
+    type: 3}
+  m_PrefabInstance: {fileID: 1908640389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94690d32f68248449eeaaa141a0cd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1481378893
 GameObject:
   m_ObjectHideFlags: 0
@@ -5893,15 +5905,40 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 762470697506023159, guid: e7992d951e75c894aace524125025a25,
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
         type: 3}
-      propertyPath: consumeClimb
-      value: 50
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 762470697506023159, guid: e7992d951e75c894aace524125025a25,
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
         type: 3}
-      propertyPath: consumeWallJump
-      value: 50
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
+        type: 3}
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1419108019}
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
+        type: 3}
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
+        type: 3}
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
+        type: 3}
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Assets.NewData.Scripts.PlayerDirector, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 817510561297191492, guid: e7992d951e75c894aace524125025a25,
+        type: 3}
+      propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1390920208943840232, guid: e7992d951e75c894aace524125025a25,
         type: 3}

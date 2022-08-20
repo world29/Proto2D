@@ -63,7 +63,14 @@ namespace Assets.NewData.Scripts
         public bool IsJumpPerformed { get { return _isJumpPerformed; } }
 
         // IPlayerMove
-        public Vector2 Velocity { get { return _velocity; } }
+        public Vector2 Velocity
+        {
+            get => _velocity;
+            set
+            {
+                _velocity = value;
+            }
+        }
 
         // IPlayerMove
         public Vector2 Size { get { return GetComponent<BoxCollider2D>().size; } }
@@ -126,6 +133,18 @@ namespace Assets.NewData.Scripts
         {
             transform.position = pos;
             _velocity = Vector2.zero;
+        }
+
+        // PlayerMove
+        public void ChangeStateToStun()
+        {
+            ChangeState(_stunState);
+        }
+
+        // PlayerMove
+        public void ChangeStateToMoving()
+        {
+            ChangeState(_movingState);
         }
 
         public void OnHealthZero()
@@ -192,6 +211,10 @@ namespace Assets.NewData.Scripts
             else if (_actionState is MovingState)
             {
                 Move();
+            }
+            else if (_actionState is StunState)
+            {
+                MoveStun();
             }
             else
             {
@@ -362,11 +385,39 @@ namespace Assets.NewData.Scripts
 
         }
 
+        private void MoveStun()
+        {
+            bool isGround = _controller.collisions.below;
+
+            // 移動
+            if (isGround)
+            {
+                _velocity.x = 0f;
+            }
+            else
+            {
+                _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
+            }
+
+            _velocity.y += Gravity * Time.deltaTime * gravityScale;
+
+            _controller.Move(_velocity * Time.deltaTime, facingRight);
+
+            if ((_controller.collisions.below || _controller.collisions.above))
+            {
+                _velocity.y = 0f;
+            }
+        }
+
         private void UpdateAnimation()
         {
             string nextState;
 
-            if (_actionState is LedgeClimbState)
+            if (_actionState is StunState)
+            {
+                nextState = "Apx_Damage";
+            }
+            else if (_actionState is LedgeClimbState)
             {
                 nextState = "Apx_Ledge_Climb";
             }
@@ -555,9 +606,21 @@ namespace Assets.NewData.Scripts
 
         class LedgeClimbState : LedgeState { };
 
+        class StunState : IActionState
+        {
+            public void Enter(ActionContext ctx) { }
+            public void Exit(ActionContext ctx) { }
+
+            public IActionState Update(ActionContext ctx)
+            {
+                return this;
+            }
+        }
+
         static MovingState _movingState = new MovingState();
         static ClimbingState _climbingState = new ClimbingState();
         static LedgeState _ledgeState = new LedgeState();
         static LedgeClimbState _ledgeClimbState = new LedgeClimbState();
+        static StunState _stunState = new StunState();
     }
 }

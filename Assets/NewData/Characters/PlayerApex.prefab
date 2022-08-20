@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84614c1982b164cd5ac394106cd26e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
+  hp: 500
   onHealthZero:
     m_PersistentCalls:
       m_Calls:
@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 197693636647143611}
   - component: {fileID: 8876414176735735169}
   - component: {fileID: 762470697506023159}
+  - component: {fileID: 8227151553751879269}
   m_Layer: 0
   m_Name: PlayerApex
   m_TagString: Player
@@ -331,12 +332,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStaminaValue: 100
-  consumeClimb: 20
-  consumeWallJump: 30
+  consumeClimb: 50
+  consumeWallJump: 50
   slider: {fileID: 6224555597923387049}
   hideTime: 0.5
   hideDuration: 0.2
   canvasGroup: {fileID: 6757089816690621827}
+--- !u!114 &8227151553751879269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210632560912147322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94690d32f68248449eeaaa141a0cd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 323283326791343267}
+  damageable: {fileID: 817510561297191492}
+  invinsibleTimeOnDamage: 1.5
+  stunTimeOnDamage: 0.3
+  knockbackOnDamage: {x: 2, y: 8}
 --- !u!1001 &5470334171329707450
 PrefabInstance:
   m_ObjectHideFlags: 0

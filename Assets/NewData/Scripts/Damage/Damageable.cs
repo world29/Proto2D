@@ -4,21 +4,13 @@ using UnityEngine;
 
 namespace Assets.NewData.Scripts
 {
-    [RequireComponent(typeof(Health))]
     public class Damageable : MonoBehaviour
     {
-        private Health _health;
-
-        private void Awake()
-        {
-            _health = GetComponent<Health>();
-        }
+        public UnityEngine.Events.UnityAction<float> OnTakeDamage;
 
         public void DealDamage(float damageAmount)
         {
-            _health.ChangeHealth(-damageAmount);
-
-            Debug.Log($"Damage: {damageAmount}");
+            OnTakeDamage?.Invoke(damageAmount);
         }
     }
 }
