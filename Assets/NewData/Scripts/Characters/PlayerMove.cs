@@ -104,6 +104,23 @@ namespace Assets.NewData.Scripts
             }
         }
 
+        private ActionContext currentActionContext
+        {
+            get => new ActionContext
+            {
+                inputWallThreshold = inputTimeToClimb,
+                inputWallTime = _inputWallTime,
+                isGrounded = _controller.collisions.below,
+                isTouchingWall = _controller.collisions.right || _controller.collisions.left,
+                isTouchingLedge = _controller.collisions.touchingLedge,
+                animator = _animator,
+                collisions = _controller.collisions,
+                playerMove = this,
+                ledgeCornerOffset = ledgeCornerOffset,
+                playerStamina = _playerStamina,
+            };
+        }
+
         // IPlayerMove
         public void SetPosition(Vector2 pos)
         {
@@ -172,29 +189,31 @@ namespace Assets.NewData.Scripts
             {
                 MoveClimbing();
             }
-            else
+            else if (_actionState is MovingState)
             {
                 Move();
             }
-
-            ActionContext ctx = new ActionContext
+            else
             {
-                inputWallThreshold = inputTimeToClimb,
-                inputWallTime = _inputWallTime,
-                isGrounded = _controller.collisions.below,
-                isTouchingWall = _controller.collisions.right || _controller.collisions.left,
-                isTouchingLedge = _controller.collisions.touchingLedge,
-                animator = _animator,
-                collisions = _controller.collisions,
-                playerMove = this,
-                ledgeCornerOffset = ledgeCornerOffset,
-                playerStamina = _playerStamina,
-            };
+                // DamageState, etc..
+            }
+
+            ActionContext ctx = currentActionContext;
             var nextActionState = _actionState.Update(ctx);
             if (nextActionState != _actionState)
             {
+                ChangeState(nextActionState);
+            }
+        }
+
+        private void ChangeState(IActionState nextState)
+        {
+            if (nextState != _actionState)
+            {
+                ActionContext ctx = currentActionContext;
+
                 _actionState.Exit(ctx);
-                _actionState = nextActionState;
+                _actionState = nextState;
                 _actionState.Enter(ctx);
             }
         }
