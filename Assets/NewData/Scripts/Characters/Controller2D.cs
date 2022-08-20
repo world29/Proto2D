@@ -62,7 +62,7 @@ namespace Assets.NewData.Scripts
         {
             var bounds = ComputeInnerBounds();
 
-            var otherCollider = Physics2D.OverlapBox(transform.position, bounds.size, 0, collisionMask);
+            var otherCollider = Physics2D.OverlapBox(bounds.center, bounds.size, 0, collisionMask);
             if (otherCollider && !otherCollider.CompareTag("Through"))
             {
                 // Physics2D.autoSyncTransforms = false の場合にコライダの位置ズレを防ぐため、位置を強制的に同期する
