@@ -45,7 +45,7 @@ namespace Assets.NewData.Scripts
             // BoxCollider2D.bounds は FixedUpdate で更新されるため、Update で取得すると実際の位置とズレが生じる可能性がある。
             // そのため、BoxCollider2D.bounds を直接使用しない。
             // https://docs.unity3d.com/ScriptReference/Physics-autoSyncTransforms.html
-            var bounds = new Bounds(transform.position, boxCollider.size);
+            var bounds = new Bounds(transform.position + (Vector3)boxCollider.offset, boxCollider.size);
             bounds.Expand(skinWidth * -2f);
             return bounds;
         }
