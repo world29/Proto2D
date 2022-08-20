@@ -106,8 +106,8 @@ namespace Assets.NewData.Scripts
             _invinsibleTimer = invinsibleTimeOnDamage;
 
             _spriteRenderer
-                .DOColor(Color.red, invinsibleTimeOnDamage)
-                .SetEase(Ease.OutFlash, 10);
+                .DOFade(0, invinsibleTimeOnDamage)
+                .SetEase(Ease.InFlash, 18);
         }
 
         //public void OnHealthZero() {}
