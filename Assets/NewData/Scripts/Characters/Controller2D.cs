@@ -178,45 +178,56 @@ namespace Assets.NewData.Scripts
 
         void CheckLedge(ref Vector2 moveAmount, bool facingRight)
         {
-            RaycastHit2D hitFoot, hitHead;
-
+            // 体の位置と頭上から真横にレイを飛ばし、
+            // 頭上のみヒットしなければ、崖に差し掛かったと判定する。
+            RaycastHit2D hitBody = default, hitAboveHead;
             {
                 float rayLength = 0.2f;
                 Vector2 rayDir = facingRight ? Vector2.right : Vector2.left;
+
+                for (int i = 0; i < horizontalRayCount; i++)
                 {
-                    Vector2 rayOrigin = new Vector2(
-                        facingRight ? raycastOrigins.bottomRight.x : raycastOrigins.bottomLeft.x,
-                        raycastOrigins.bottomRight.y);
+                    Vector2 rayOrigin = facingRight ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+                    rayOrigin += Vector2.up * (horizontalRaySpacing * i);
+                    hitBody = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
 
-                    hitFoot = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
+                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitBody ? Color.red : Color.blue);
 
-                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitFoot ? Color.red : Color.blue);
+                    if (hitBody)
+                    {
+                        if (hitBody.collider.CompareTag("Through"))
+                        {
+                            continue;
+                        }
+
+                        break;
+                    }
                 }
 
                 {
                     Vector2 rayOrigin = new Vector2(
                         facingRight ? raycastOrigins.bottomRight.x : raycastOrigins.bottomLeft.x,
-                        raycastOrigins.topRight.y);
+                        raycastOrigins.topRight.y + horizontalRaySpacing);
 
-                    hitHead = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
+                    hitAboveHead = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
 
-                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitHead ? Color.red : Color.blue);
+                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitAboveHead ? Color.red : Color.blue);
                 }
             }
 
-            if (hitFoot && !hitHead)
+            if (hitBody && !hitAboveHead)
             {
                 // 崖の地面の高さを取得して、そこにキャラクターを移動させる
                 float offset = facingRight ? 0.1f : -0.1f;
                 float rayLength = raycastOrigins.topRight.y - raycastOrigins.bottomRight.y;
                 Vector2 rayDir = Vector2.down;
 
-                Vector2 rayOrigin = new Vector2(hitFoot.point.x + offset, raycastOrigins.topRight.y);
+                Vector2 rayOrigin = new Vector2(hitBody.point.x + offset, raycastOrigins.topRight.y + horizontalRaySpacing);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
                 Debug.DrawRay(rayOrigin, rayDir * rayLength, hit ? Color.red : Color.blue);
                 if (hit)
                 {
-                    collisions.ledgeCorner = new Vector2(hitFoot.point.x, hit.point.y);
+                    collisions.ledgeCorner = new Vector2(hitBody.point.x, hit.point.y);
                     collisions.ledgeClimbPosition = hit.point;
 
                     collisions.touchingLedge = true;
