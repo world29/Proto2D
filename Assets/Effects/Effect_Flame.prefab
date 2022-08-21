@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7377307547102461608}
   - component: {fileID: 8362664129201032701}
   - component: {fileID: 4077929966673743753}
-  m_Layer: 0
+  - component: {fileID: 1777086848965439487}
+  m_Layer: 16
   m_Name: Effect_Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +69,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.010992214, y: 0.008904934}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -79,7 +80,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64386046, y: 0.47015923}
+  m_Size: {x: 0.64, y: 0.47}
   m_EdgeRadius: 0
 --- !u!114 &4077929966673743753
 MonoBehaviour:
@@ -100,6 +101,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -112,6 +114,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Kill
         m_Mode: 1
         m_Arguments:
@@ -123,6 +126,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -134,12 +138,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_OnLaunch:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -152,6 +155,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -163,10 +167,62 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_lifespan: Infinity
   m_targetRenderer: {fileID: 8548999168021721474}
+--- !u!114 &1777086848965439487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615431906169996719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c566e555812da46c38c05ebd820d07f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 100
+  onDamageDealt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: Proto2D.Projectile, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: c56b96284fbd1b44bae82374d6e83d74,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: Proto2D.Projectile, Assembly-CSharp
+        m_MethodName: PlayEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 7615431906169996719, guid: 3fd5afb12e2d87b4d91b6963444aad62,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4077929966673743753}
+        m_TargetAssemblyTypeName: Proto2D.Projectile, Assembly-CSharp
+        m_MethodName: Kill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8044988209328574676
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +270,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -225,6 +283,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -274,10 +333,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5547779684136353100}
     m_Modifications:
-    - target: {fileID: 8623584960773242303, guid: 6727c03d915d445cb867b4a1fc9155a4,
+    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
-      propertyPath: m_Name
-      value: Tier04A_prop11_2
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.45051417
+      objectReference: {fileID: 0}
+    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.45621693
+      objectReference: {fileID: 0}
+    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.45051417
       objectReference: {fileID: 0}
     - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
@@ -296,6 +370,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -308,16 +387,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
@@ -334,30 +403,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.45621693
-      objectReference: {fileID: 0}
-    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.45051417
-      objectReference: {fileID: 0}
-    - target: {fileID: 894616593494508051, guid: 6727c03d915d445cb867b4a1fc9155a4,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.45051417
-      objectReference: {fileID: 0}
     - target: {fileID: 6856749007942630269, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6856749007942630269, guid: 6727c03d915d445cb867b4a1fc9155a4,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.2
+      propertyPath: m_Color.b
+      value: 0.039215684
       objectReference: {fileID: 0}
     - target: {fileID: 6856749007942630269, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
@@ -366,8 +415,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6856749007942630269, guid: 6727c03d915d445cb867b4a1fc9155a4,
         type: 3}
-      propertyPath: m_Color.b
-      value: 0.039215684
+      propertyPath: m_Color.r
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856749007942630269, guid: 6727c03d915d445cb867b4a1fc9155a4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8623584960773242303, guid: 6727c03d915d445cb867b4a1fc9155a4,
+        type: 3}
+      propertyPath: m_Name
+      value: Tier04A_prop11_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6727c03d915d445cb867b4a1fc9155a4, type: 3}

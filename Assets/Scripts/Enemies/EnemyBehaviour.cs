@@ -7,7 +7,7 @@ using DG.Tweening;
 
 namespace Proto2D
 {
-    [RequireComponent(typeof(Controller2D), typeof(Animator))]
+    [RequireComponent(typeof(Assets.NewData.Scripts.Controller2D), typeof(Animator))]
     public class EnemyBehaviour
         : MonoBehaviour
         , IDamageReceiver
@@ -65,7 +65,7 @@ namespace Proto2D
         [Header("地面判定におけるレイの長さ (坂や段差を通りたい場合は長め (> 1.0f))")]
         public float groundDetectionRayLength = .5f;
 
-        protected Controller2D controller;
+        protected Assets.NewData.Scripts.Controller2D controller;
         public Vector2 velocity;
         private IEnemyState state;
         private GameObject player;
@@ -84,7 +84,7 @@ namespace Proto2D
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-            controller = GetComponent<Controller2D>();
+            controller = GetComponent<Assets.NewData.Scripts.Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
 
             //TODO: 敵全体に変更を反映する手間を省くためハードコードしているが、
@@ -121,7 +121,7 @@ namespace Proto2D
         {
             m_animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
-            controller = GetComponent<Controller2D>();
+            controller = GetComponent<Assets.NewData.Scripts.Controller2D>();
             player = GameObject.FindGameObjectWithTag("Player");
 
             state = new EnemyState_Idle();
@@ -158,12 +158,12 @@ namespace Proto2D
 
         void UpdateAnimationParameters()
         {
-            if(health==0)
+            if (health == 0)
             {
                 m_animator.SetBool("damage", false);
                 m_animator.SetBool("death", true);
             }
-            if(m_animator &&  m_animator.isActiveAndEnabled)
+            if (m_animator && m_animator.isActiveAndEnabled)
             {
                 m_animator.SetFloat("move_x", Mathf.Abs(velocity.x));
                 m_animator.SetFloat("move_y", Mathf.Abs(velocity.y));
@@ -216,7 +216,7 @@ namespace Proto2D
             return Mathf.Sign(transform.localScale.x);
         }
 
-        protected void ChangeState(IEnemyState next,bool force = false)
+        protected void ChangeState(IEnemyState next, bool force = false)
         {
             if (state != next)
             {
@@ -250,7 +250,8 @@ namespace Proto2D
         {
             bool canMoveForward = true;
 
-            if (autoGroundDetection) {
+            if (autoGroundDetection)
+            {
                 canMoveForward = CanMoveForward();
             }
 
@@ -266,7 +267,7 @@ namespace Proto2D
                     Turn();
                     m_lastTurnTime = Time.timeSinceLevelLoad;
                 }
-                
+
             }
         }
 
@@ -281,7 +282,7 @@ namespace Proto2D
             Vector2 front = GetFacingWorld() > 0 ? Vector2.right : Vector2.left;
             float rayLength = .1f;
             RaycastHit2D hit = Physics2D.Raycast(groundDetectionTransform.position, front, rayLength, controller.collisionMask | collisionMask);
-            Debug.DrawRay(groundDetectionTransform.position, front * rayLength, hit? Color.red : Color.green);
+            Debug.DrawRay(groundDetectionTransform.position, front * rayLength, hit ? Color.red : Color.green);
 
             return IsGroundDetected() && !hit;
         }
@@ -369,7 +370,7 @@ namespace Proto2D
 
         public virtual void OnTakeDamage(float damageAmount)
         {
-            if( health <= 0)
+            if (health <= 0)
             {
                 return;
             }
@@ -434,9 +435,9 @@ namespace Proto2D
 
         public void PlaySE(AudioClip clip)
         {
-            if(audioSource)
+            if (audioSource)
             {
-                if(clip)
+                if (clip)
                 {
                     audioSource.PlayOneShot(clip);
                 }
@@ -448,8 +449,8 @@ namespace Proto2D
             if (EffectPrefab)
             {
                 Vector3 pos = transform.position;
-                Vector3 rot = new Vector3(0,0,0);
-                Vector3 scale = new Vector3(1,1,1);
+                Vector3 rot = new Vector3(0, 0, 0);
+                Vector3 scale = new Vector3(1, 1, 1);
                 if (effectSocket)
                 {
                     pos = effectSocket.transform.position;
@@ -493,7 +494,8 @@ namespace Proto2D
     }
 
     [System.Serializable]
-    public struct EnemySight {
+    public struct EnemySight
+    {
         [Range(0, 360)]
         public float fov;
         public float viewDistance;
