@@ -12,6 +12,9 @@ namespace Assets.NewData.Scripts
         [SerializeField, Tooltip("めり込み解決の有効化")]
         private bool overlapRecovery = false;
 
+        [SerializeField, Tooltip("崖登り判定の有効化")]
+        private bool ledgeDetection = false;
+
         [HideInInspector]
         public bool IsGrounded { get { return collisions.below; } }
 
@@ -186,6 +189,11 @@ namespace Assets.NewData.Scripts
 
         void CheckLedge(ref Vector2 moveAmount, bool facingRight)
         {
+            if (!ledgeDetection)
+            {
+                return;
+            }
+
             // 体の位置と頭上から真横にレイを飛ばし、
             // 頭上のみヒットしなければ、崖に差し掛かったと判定する。
             RaycastHit2D hitBody = default, hitAboveHead;
