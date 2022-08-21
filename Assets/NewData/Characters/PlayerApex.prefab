@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 459580643153998652}
   - component: {fileID: 5154488621788833993}
-  - component: {fileID: 323283326791343267}
-  - component: {fileID: 817510561297191492}
+  - component: {fileID: 3890703330339624497}
   m_Layer: 17
   m_Name: Damageable
   m_TagString: Untagged
@@ -59,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.6}
   m_EdgeRadius: 0
---- !u!114 &323283326791343267
+--- !u!114 &3890703330339624497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,37 +67,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4315280129288993268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84614c1982b164cd5ac394106cd26e19, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d0d01b437fd29f40bbf21d367731345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 500
-  onHealthZero:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 197693636647143611}
-        m_TargetAssemblyTypeName: Assets.NewData.Scripts.PlayerMove, Assembly-CSharp
-        m_MethodName: OnHealthZero
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &817510561297191492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4315280129288993268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28633989cf6b34fb6b258d5044d16776, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  health: {fileID: 1700281865035060305}
+  playerMove: {fileID: 197693636647143611}
+  playerSpriteRenderer: {fileID: 7024371087871670193}
+  invinsibleTimeOnDamage: 1.5
+  stunTimeOnDamage: 0.3
+  knockbackOnDamage: {x: 2, y: 8}
 --- !u!1 &8210632560912147322
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,9 +91,9 @@ GameObject:
   - component: {fileID: 6363529002630174329}
   - component: {fileID: 5240219687971493360}
   - component: {fileID: 197693636647143611}
-  - component: {fileID: 8876414176735735169}
   - component: {fileID: 762470697506023159}
-  - component: {fileID: 8227151553751879269}
+  - component: {fileID: 1700281865035060305}
+  - component: {fileID: 8876414176735735169}
   m_Layer: 0
   m_Name: PlayerApex
   m_TagString: Player
@@ -309,18 +286,6 @@ MonoBehaviour:
   ledgeCornerOffset: {x: 0.2, y: 0.2}
   _ragdollPrefab: {fileID: 3689119195164305371, guid: 942268199c9734f3eb51357f4c0ba3aa,
     type: 3}
---- !u!114 &8876414176735735169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8210632560912147322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8db74ecd051f82d48b91f6aa77eca420, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &762470697506023159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +305,7 @@ MonoBehaviour:
   hideTime: 0.5
   hideDuration: 0.2
   canvasGroup: {fileID: 6757089816690621827}
---- !u!114 &8227151553751879269
+--- !u!114 &1700281865035060305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,14 +314,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 8210632560912147322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94690d32f68248449eeaaa141a0cd33, type: 3}
+  m_Script: {fileID: 11500000, guid: 84614c1982b164cd5ac394106cd26e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 323283326791343267}
-  damageable: {fileID: 817510561297191492}
-  invinsibleTimeOnDamage: 1.5
-  stunTimeOnDamage: 0.3
-  knockbackOnDamage: {x: 2, y: 8}
+  hp: 500
+  onHealthZero:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 197693636647143611}
+        m_TargetAssemblyTypeName: Assets.NewData.Scripts.PlayerMove, Assembly-CSharp
+        m_MethodName: OnHealthZero
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8876414176735735169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210632560912147322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db74ecd051f82d48b91f6aa77eca420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5470334171329707450
 PrefabInstance:
   m_ObjectHideFlags: 0

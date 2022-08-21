@@ -9,6 +9,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float damageAmount = 1f;
 
+        [SerializeField]
+        private UnityEngine.Events.UnityEvent onDamageDealt;
+
         public void OnTriggerEnter2D(Collider2D other)
         {
             GameObject hitObject = other.gameObject;
@@ -17,9 +20,12 @@ namespace Assets.NewData.Scripts
 
         private void TryDamageObject(GameObject objectToDamage)
         {
-            if (objectToDamage.TryGetComponent(out Damageable damageable))
+            if (objectToDamage.TryGetComponent(out IDamageable damageable))
             {
-                damageable.DealDamage(damageAmount);
+                if (damageable.TryDealDamage(damageAmount))
+                {
+                    onDamageDealt?.Invoke();
+                }
             }
         }
 

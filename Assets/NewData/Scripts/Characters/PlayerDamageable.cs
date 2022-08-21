@@ -5,15 +5,16 @@ using DG.Tweening;
 
 namespace Assets.NewData.Scripts
 {
-    // プレイヤーに対するイベントを処理して他のコンポーネントを調整する
-    // プレイヤーに関する情報の問い合わせに応じる
-    public class PlayerDirector : MonoBehaviour
+    public class PlayerDamageable : MonoBehaviour, IDamageable
     {
         [SerializeField]
         private Health health;
 
         [SerializeField]
-        private Damageable damageable;
+        private PlayerMove playerMove;
+
+        [SerializeField]
+        private SpriteRenderer playerSpriteRenderer;
 
         // ダメージ受けた時の無敵時間
         [SerializeField]
@@ -30,27 +31,13 @@ namespace Assets.NewData.Scripts
         [HideInInspector]
         private bool IsInvinsible => _invinsibleTimer > 0;
 
-        private PlayerMove _playerMove;
-        private SpriteRenderer _spriteRenderer;
         private float _invinsibleTimer;
         private float _stunTimer;
 
         private void Awake()
         {
-            TryGetComponent(out _playerMove);
-            TryGetComponent(out _spriteRenderer);
-
             _invinsibleTimer = 0;
-        }
-
-        private void OnEnable()
-        {
-            damageable.OnTakeDamage += TakeDamage;
-        }
-
-        private void OnDisable()
-        {
-            damageable.OnTakeDamage -= TakeDamage;
+            _stunTimer = 0;
         }
 
         private void Update()
@@ -66,21 +53,29 @@ namespace Assets.NewData.Scripts
 
                 if (_stunTimer <= 0)
                 {
-                    _playerMove.ChangeStateToMoving();
+                    playerMove.ChangeStateToMoving();
                 }
             }
         }
 
-        public void TakeDamage(float damageAmount)
+        // IDamageable
+        public bool TryDealDamage(float damageAmount)
         {
             if (IsInvinsible)
             {
-                return;
+                return false;
             }
 
             health.ChangeHealth(-damageAmount);
 
-            TakeKnockback();
+            OnTakeDamage();
+
+            return true;
+        }
+
+        private void OnTakeDamage()
+        {
+            Knockback();
 
             // 行動不能状態へ遷移
             BeginStun();
@@ -89,23 +84,23 @@ namespace Assets.NewData.Scripts
             BeginInvinsible();
         }
 
-        private void TakeKnockback()
+        private void Knockback()
         {
-            _playerMove.Velocity = new Vector2(_playerMove.FacingRight ? -knockbackOnDamage.x : knockbackOnDamage.x, knockbackOnDamage.y);
+            playerMove.Velocity = new Vector2(playerMove.FacingRight ? -knockbackOnDamage.x : knockbackOnDamage.x, knockbackOnDamage.y);
         }
 
         public void BeginStun()
         {
             _stunTimer = stunTimeOnDamage;
 
-            _playerMove.ChangeStateToStun();
+            playerMove.ChangeStateToStun();
         }
 
         public void BeginInvinsible()
         {
             _invinsibleTimer = invinsibleTimeOnDamage;
 
-            _spriteRenderer
+            playerSpriteRenderer
                 .DOFade(0, invinsibleTimeOnDamage)
                 .SetEase(Ease.InFlash, 18);
         }
