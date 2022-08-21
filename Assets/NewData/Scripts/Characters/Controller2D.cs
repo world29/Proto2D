@@ -194,6 +194,13 @@ namespace Assets.NewData.Scripts
                 return;
             }
 
+            if (!collisions.left && !collisions.right)
+            {
+                return;
+            }
+
+            float debugRayDuration = 0.5f;
+
             // 体の位置と頭上から真横にレイを飛ばし、
             // 頭上のみヒットしなければ、崖に差し掛かったと判定する。
             RaycastHit2D hitBody = default, hitAboveHead;
@@ -207,7 +214,7 @@ namespace Assets.NewData.Scripts
                     rayOrigin += Vector2.up * (horizontalRaySpacing * i);
                     hitBody = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
 
-                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitBody ? Color.red : Color.blue);
+                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitBody ? Color.red : Color.blue, debugRayDuration);
 
                     if (hitBody)
                     {
@@ -227,7 +234,7 @@ namespace Assets.NewData.Scripts
 
                     hitAboveHead = Physics2D.Raycast(rayOrigin, rayDir, rayLength, collisionMask);
 
-                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitAboveHead ? Color.red : Color.blue);
+                    Debug.DrawRay(rayOrigin, rayDir * rayLength, hitAboveHead ? Color.red : Color.blue, debugRayDuration);
                 }
             }
 
@@ -240,7 +247,7 @@ namespace Assets.NewData.Scripts
 
                 Vector2 rayOrigin = new Vector2(hitBody.point.x + offset, raycastOrigins.topRight.y + horizontalRaySpacing);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
-                Debug.DrawRay(rayOrigin, rayDir * rayLength, hit ? Color.red : Color.blue);
+                Debug.DrawRay(rayOrigin, rayDir * rayLength, hit ? Color.red : Color.blue, debugRayDuration);
                 if (hit)
                 {
                     collisions.ledgeCorner = new Vector2(hitBody.point.x, hit.point.y);
