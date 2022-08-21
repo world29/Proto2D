@@ -203,6 +203,8 @@ namespace Assets.NewData.Scripts
             if (_actionState is LedgeState)
             {
                 MoveLedge();
+                //todo: 崖登りに移行したタイミングで入力バッファをクリアする。
+                _inputWallTime = 0;
             }
             else if (_actionState is ClimbingState)
             {
