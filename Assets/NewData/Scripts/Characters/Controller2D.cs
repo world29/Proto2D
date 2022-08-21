@@ -9,6 +9,9 @@ namespace Assets.NewData.Scripts
         [Tooltip("上り下りできる坂道の最大角度 (deg)")]
         public float m_maxSlopeAngle = 60;
 
+        [SerializeField, Tooltip("めり込み解決の有効化")]
+        private bool overlapRecovery = false;
+
         [HideInInspector]
         public bool IsGrounded { get { return collisions.below; } }
 
@@ -60,6 +63,11 @@ namespace Assets.NewData.Scripts
         // めり込みの解消
         void RecoveryOverlap()
         {
+            if (!overlapRecovery)
+            {
+                return;
+            }
+
             var bounds = ComputeInnerBounds();
 
             var otherCollider = Physics2D.OverlapBox(bounds.center, bounds.size, 0, collisionMask);
