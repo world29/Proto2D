@@ -56,6 +56,7 @@ namespace Assets.NewData.Scripts
         private IActionState _actionState;
         private float _inputWallTime;
         private bool _isJumpPerformed;
+        private bool _isWallJumpPerformed;
         private PlayerStamina _playerStamina;
         private bool _isGroundPrev;
 
@@ -63,7 +64,7 @@ namespace Assets.NewData.Scripts
         public bool IsGround { get { return _controller.collisions.below; } }
 
         // IPlayerMove
-        public bool IsJumpPerformed { get { return _isJumpPerformed; } }
+        public bool IsJumpPerformed { get { return _isJumpPerformed || _isWallJumpPerformed; } }
 
         // IPlayerMove
         public Vector2 Velocity
@@ -117,6 +118,7 @@ namespace Assets.NewData.Scripts
             get => new ActionContext
             {
                 isJumpPerformed = _isJumpPerformed,
+                isWallJumpPerformed = _isWallJumpPerformed,
                 wallJumpDuration = wallJumpDuration,
                 inputWallThreshold = inputTimeToClimb,
                 inputWallTime = _inputWallTime,
@@ -174,6 +176,7 @@ namespace Assets.NewData.Scripts
             _actionState = _movingState;
             _inputWallTime = 0;
             _isJumpPerformed = false;
+            _isWallJumpPerformed = false;
             _playerStamina = GetComponent<PlayerStamina>();
             _isGroundPrev = false;
         }
@@ -192,6 +195,7 @@ namespace Assets.NewData.Scripts
         private void ResetState()
         {
             _isJumpPerformed = false;
+            _isWallJumpPerformed = false;
 
             // スタミナリセット
             if (!_isGroundPrev && IsGround)
@@ -308,12 +312,17 @@ namespace Assets.NewData.Scripts
             }
 
 
-            // ジャンプ
             if (inputJump && _controller.collisions.below)
             {
+                // 地上ジャンプ
                 _velocity.y = JumpInitialVelocityY;
                 Debug.Log($"JumpInitialVelicity: {JumpInitialVelocityY}, Gravity: {Gravity}");
                 _isJumpPerformed = true;
+            }
+            else if (inputJump && (_controller.collisions.right || _controller.collisions.left))
+            {
+                // 壁ジャンプ
+                WallJump();
             }
             else
             {
@@ -335,9 +344,11 @@ namespace Assets.NewData.Scripts
 
             _velocity.x = 0f;
 
+            bool jumpPerformed = false;
+
             if (inputJump)
             {
-                _isJumpPerformed = true;
+                jumpPerformed = true;
             }
             else
             {
@@ -356,7 +367,7 @@ namespace Assets.NewData.Scripts
                     else
                     {
                         // 壁と反対方向への入力で飛び降りる
-                        _isJumpPerformed = true;
+                        jumpPerformed = true;
                     }
 
                     facingRight = inputMove.x > 0;
@@ -367,18 +378,9 @@ namespace Assets.NewData.Scripts
                 }
             }
 
-            if (_isJumpPerformed)
+            if (jumpPerformed)
             {
-                _velocity = WallJumpInitialVelocity;
-                if (_controller.collisions.right)
-                {
-                    _velocity.x *= -1f;
-                }
-                Debug.Log($"WallJumpInitialVelocity: {_velocity.ToString("F3")}");
-
-                facingRight = !facingRight;
-
-                _playerStamina.Jump();
+                WallJump();
             }
 
             _controller.Move(_velocity * Time.deltaTime, facingRight);
@@ -445,6 +447,21 @@ namespace Assets.NewData.Scripts
             _inputWallTime += Time.deltaTime;
         }
 
+        private void WallJump()
+        {
+            _velocity = WallJumpInitialVelocity;
+            if (_controller.collisions.right)
+            {
+                _velocity.x *= -1f;
+            }
+            // 壁と反対方向を向く
+            facingRight = !_controller.collisions.right;
+
+            _isWallJumpPerformed = true;
+
+            _playerStamina.Jump();
+        }
+
         private void UpdateAnimation()
         {
             string nextState;
@@ -496,6 +513,12 @@ namespace Assets.NewData.Scripts
                 _animator.Play(nextState);
                 _currentState = nextState;
             }
+            else if (nextState == "Apx_Jump" && _isWallJumpPerformed)
+            {
+                //todo: リファクタリング
+                // 空中から壁ジャンプした場合、同じステート同士で遷移がないので、強制的に始めから再生する
+                _animator.PlayInFixedTime(nextState, 0, 0);
+            }
         }
 
 #if UNITY_EDITOR
@@ -520,6 +543,7 @@ namespace Assets.NewData.Scripts
         struct ActionContext
         {
             public bool isJumpPerformed;
+            public bool isWallJumpPerformed;
             public float wallJumpDuration;
             public float inputWallThreshold;
             public float inputWallTime;
@@ -567,6 +591,10 @@ namespace Assets.NewData.Scripts
                         return _climbingState;
                     }
                 }
+                else if (ctx.isWallJumpPerformed)
+                {
+                    return _wallJumpState;
+                }
                 return this;
             }
         }
@@ -582,7 +610,7 @@ namespace Assets.NewData.Scripts
                 {
                     return _ledgeClimbState;
                 }
-                else if (ctx.isJumpPerformed)
+                else if (ctx.isWallJumpPerformed)
                 {
                     return _wallJumpState;
                 }
