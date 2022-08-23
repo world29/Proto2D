@@ -19,7 +19,6 @@ namespace Assets.NewData.Scripts
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("OnTriggerEnter2D");
             if (other.gameObject.CompareTag("Player"))
             {
                 areaCamera.Priority = 100;
