@@ -464,6 +464,20 @@ namespace Proto2D
                 //Destroy(effect, 1);
             }
         }
+        public void PlayEffect2(GameObject EffectPrefab)
+        {
+            if (EffectPrefab)
+            {
+                Vector3 pos = transform.position;
+                Vector3 rot = new Vector3(0, 0, 0);
+                Vector3 scale = new Vector3(1, 1, 1);
+                scale.x *= GetFacingWorld();
+                GameObject effect = Instantiate(EffectPrefab, pos, Quaternion.identity, null);
+                effect.transform.eulerAngles = rot;
+                effect.transform.localScale = scale;
+                //Destroy(effect, 1);
+            }
+        }
 
         public void Kill()
         {
