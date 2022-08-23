@@ -32,7 +32,10 @@ namespace Assets.NewData.Scripts
         private float climbSpeed = 3f;
 
         [SerializeField]
-        private float wallJumpAngle = 30f;
+        private Vector2 wallJumpForce = Vector2.one;
+
+        [SerializeField]
+        private float wallJumpDuration = 0.2f;
 
         [SerializeField]
         private float inputTimeToClimb = 0.2f;
@@ -105,9 +108,7 @@ namespace Assets.NewData.Scripts
         {
             get
             {
-                // 上向きを 0 degree とする。
-                var rad = wallJumpAngle * Mathf.Deg2Rad;
-                return new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * JumpInitialVelocityY;
+                return wallJumpForce;
             }
         }
 
@@ -115,6 +116,8 @@ namespace Assets.NewData.Scripts
         {
             get => new ActionContext
             {
+                isJumpPerformed = _isJumpPerformed,
+                wallJumpDuration = wallJumpDuration,
                 inputWallThreshold = inputTimeToClimb,
                 inputWallTime = _inputWallTime,
                 isGrounded = _controller.collisions.below,
@@ -217,6 +220,10 @@ namespace Assets.NewData.Scripts
             else if (_actionState is StunState)
             {
                 MoveStun();
+            }
+            else if (_actionState is WallJumpState)
+            {
+                MoveWallJump();
             }
             else
             {
@@ -411,6 +418,33 @@ namespace Assets.NewData.Scripts
             }
         }
 
+        private void MoveWallJump()
+        {
+            bool isGround = _controller.collisions.below;
+
+            // 移動
+            if (isGround)
+            {
+                _velocity.x = 0f;
+            }
+            else
+            {
+                // 壁ジャンプ時は減衰しない
+                //_velocity.x *= (1f - Mathf.Pow(airBrake, 2));
+            }
+
+            _velocity.y += Gravity * Time.deltaTime * gravityScale;
+
+            _controller.Move(_velocity * Time.deltaTime, facingRight);
+
+            if ((_controller.collisions.below || _controller.collisions.above))
+            {
+                _velocity.y = 0f;
+            }
+
+            _inputWallTime += Time.deltaTime;
+        }
+
         private void UpdateAnimation()
         {
             string nextState;
@@ -485,6 +519,8 @@ namespace Assets.NewData.Scripts
 
         struct ActionContext
         {
+            public bool isJumpPerformed;
+            public float wallJumpDuration;
             public float inputWallThreshold;
             public float inputWallTime;
             public bool isGrounded;
@@ -545,6 +581,10 @@ namespace Assets.NewData.Scripts
                 if (ctx.isTouchingLedge)
                 {
                     return _ledgeClimbState;
+                }
+                else if (ctx.isJumpPerformed)
+                {
+                    return _wallJumpState;
                 }
                 else if (ctx.isGrounded || !ctx.isTouchingWall || !ctx.playerStamina.CanClimb())
                 {
@@ -619,10 +659,37 @@ namespace Assets.NewData.Scripts
             }
         }
 
+        class WallJumpState : IActionState
+        {
+            private float _wallJumpTimer;
+
+            public void Enter(ActionContext ctx)
+            {
+                _wallJumpTimer = 0;
+            }
+            public void Exit(ActionContext ctx) { }
+
+            public IActionState Update(ActionContext ctx)
+            {
+                _wallJumpTimer += Time.deltaTime;
+
+                if (ctx.isGrounded)
+                {
+                    return _movingState;
+                }
+                else if (_wallJumpTimer >= ctx.wallJumpDuration)
+                {
+                    return _movingState;
+                }
+                return this;
+            }
+        }
+
         static MovingState _movingState = new MovingState();
         static ClimbingState _climbingState = new ClimbingState();
         static LedgeState _ledgeState = new LedgeState();
         static LedgeClimbState _ledgeClimbState = new LedgeClimbState();
         static StunState _stunState = new StunState();
+        static WallJumpState _wallJumpState = new WallJumpState();
     }
 }
