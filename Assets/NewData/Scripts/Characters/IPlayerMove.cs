@@ -23,5 +23,8 @@ namespace Assets.NewData.Scripts
 
         // 位置の設定
         void SetPosition(Vector2 pos);
+
+        // ジャンプ
+        void Jump();
     }
 }

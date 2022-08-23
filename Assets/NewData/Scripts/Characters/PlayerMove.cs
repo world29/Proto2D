@@ -122,6 +122,7 @@ namespace Assets.NewData.Scripts
                 wallJumpDuration = wallJumpDuration,
                 inputWallThreshold = inputTimeToClimb,
                 inputWallTime = _inputWallTime,
+                inputJump = _input.Player.Jump.triggered,
                 isGrounded = _controller.collisions.below,
                 isTouchingWall = _controller.collisions.right || _controller.collisions.left,
                 isTouchingLedge = _controller.collisions.touchingLedge,
@@ -140,10 +141,22 @@ namespace Assets.NewData.Scripts
             _velocity = Vector2.zero;
         }
 
+        public void Jump()
+        {
+            _velocity.y = JumpInitialVelocityY;
+            _isJumpPerformed = true;
+        }
+
         // PlayerMove
         public void ChangeStateToStun()
         {
             ChangeState(_stunState);
+        }
+
+        // PlayerMove
+        public void ChangeStateToStomp()
+        {
+            ChangeState(_stompState);
         }
 
         // PlayerMove
@@ -315,9 +328,7 @@ namespace Assets.NewData.Scripts
             if (inputJump && _controller.collisions.below)
             {
                 // 地上ジャンプ
-                _velocity.y = JumpInitialVelocityY;
-                Debug.Log($"JumpInitialVelicity: {JumpInitialVelocityY}, Gravity: {Gravity}");
-                _isJumpPerformed = true;
+                Jump();
             }
             else if (inputJump && (_controller.collisions.right || _controller.collisions.left))
             {
@@ -466,7 +477,11 @@ namespace Assets.NewData.Scripts
         {
             string nextState;
 
-            if (_actionState is StunState)
+            if (_actionState is StompState)
+            {
+                nextState = "Apx_Stomp";
+            }
+            else if (_actionState is StunState)
             {
                 nextState = "Apx_Damage";
             }
@@ -547,6 +562,7 @@ namespace Assets.NewData.Scripts
             public float wallJumpDuration;
             public float inputWallThreshold;
             public float inputWallTime;
+            public bool inputJump;
             public bool isGrounded;
             public bool isTouchingWall;
             public bool isTouchingLedge;
@@ -713,11 +729,56 @@ namespace Assets.NewData.Scripts
             }
         }
 
+        class StompState : IActionState
+        {
+            private bool _inputJump = false;
+
+            public void Enter(ActionContext ctx)
+            {
+                _inputJump = false;
+            }
+            public void Exit(ActionContext ctx)
+            {
+                // 踏みつけアニメーション中にジャンプを入力すると、通常ジャンプと同じ高さまで飛べる
+                if (_inputJump)
+                {
+                    ctx.playerMove.Jump();
+                }
+            }
+
+            public IActionState Update(ActionContext ctx)
+            {
+                if (ctx.inputJump)
+                {
+                    _inputJump = true;
+                }
+
+                //todo: リファクタリング
+                // 外部から ChangeStateToXXX で遷移した場合、直後に UpdateAnimation() が呼ばれないため、
+                // GetCurrentAnimationStateInfo() で取得するアニメーションが遷移前のものとなる場合がある。
+                // ※通常は HandleInput() 内部で ChangeState() により遷移するので、直後に UpdateAnimation が呼ばれる。
+                var stateInfo = ctx.animator.GetCurrentAnimatorStateInfo(0);
+                if (!stateInfo.IsName("Apx_Stomp"))
+                {
+                    return this;
+                }
+
+                // アニメーションの再生が終わったら遷移する。
+                if (ctx.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {
+                    return _movingState;
+                }
+
+                return this;
+            }
+        }
+
         static MovingState _movingState = new MovingState();
         static ClimbingState _climbingState = new ClimbingState();
         static LedgeState _ledgeState = new LedgeState();
         static LedgeClimbState _ledgeClimbState = new LedgeClimbState();
         static StunState _stunState = new StunState();
         static WallJumpState _wallJumpState = new WallJumpState();
+        static StompState _stompState = new StompState();
     }
 }
