@@ -14,38 +14,32 @@ namespace Assets.NewData.Scripts
         private float disableTime = 3f;
 
         [SerializeField]
-        private float disappearingTime = 2f;
-
-        [SerializeField]
         private float delay = 0;
 
-        [SerializeField]
-        private SpriteRenderer spriteRenderer;
-
+        private Animator _animator;
         private Collider2D _collider;
+
+        private void Awake()
+        {
+            TryGetComponent(out _animator);
+            TryGetComponent(out _collider);
+        }
 
         private void Start()
         {
-            TryGetComponent(out _collider);
-
-            DisablePlatform();
+            DisableCollision();
 
             StartCoroutine(LoopCoroutine());
         }
 
-        private void EnablePlatform()
+        private void EnableCollision()
         {
             _collider.enabled = true;
-
-            spriteRenderer
-                .DOFade(1, 0.1f);
         }
 
-        private void DisablePlatform()
+        private void DisableCollision()
         {
             _collider.enabled = false;
-
-            spriteRenderer.color = new Color(1, 1, 1, 0);
         }
 
         private IEnumerator LoopCoroutine()
@@ -61,25 +55,14 @@ namespace Assets.NewData.Scripts
 
         private IEnumerator EnableCoroutine()
         {
-            EnablePlatform();
+            _animator.SetBool("Active", true);
 
-            yield return new WaitForSeconds(enableTime - disappearingTime);
-
-            yield return DisappearCoroutine();
-        }
-
-        private IEnumerator DisappearCoroutine()
-        {
-            spriteRenderer
-                .DOFade(0, disappearingTime)
-                .SetEase(Ease.Flash, 11);
-
-            yield return new WaitForSeconds(disappearingTime);
+            yield return new WaitForSeconds(enableTime);
         }
 
         private IEnumerator DisableCoroutine()
         {
-            DisablePlatform();
+            _animator.SetBool("Active", false);
 
             yield return new WaitForSeconds(disableTime);
         }
