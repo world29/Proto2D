@@ -28,6 +28,14 @@ namespace Assets.NewData.Scripts
         [SerializeField, Range(0, 1)]
         private float airBrake = 0.1f;
 
+        // 少し跳ねる強さ (通常ジャンプからの倍率で指定する)
+        [SerializeField]
+        private float hopForce = 0.6f;
+
+        // 踏みつけジャンプの強さ (通常ジャンプからの倍率で指定する)
+        [SerializeField]
+        private float stompJumpForce = 1.5f;
+
         [SerializeField]
         private float climbSpeed = 3f;
 
@@ -141,22 +149,38 @@ namespace Assets.NewData.Scripts
             _velocity = Vector2.zero;
         }
 
+        // IPlayerMove
         public void Jump()
         {
             _velocity.y = JumpInitialVelocityY;
             _isJumpPerformed = true;
         }
 
+        // IPlayerMove
+        public void Hop()
+        {
+            _velocity.y = JumpInitialVelocityY * hopForce;
+            _isJumpPerformed = true;
+        }
+
+        // IPlayerMove
+        public void StompJump()
+        {
+            _velocity.y = JumpInitialVelocityY * stompJumpForce;
+            _isJumpPerformed = true;
+        }
+
+        public void OnStompHit()
+        {
+            Debug.Log("Stomp hit!");
+
+            ChangeState(_stompState);
+        }
+
         // PlayerMove
         public void ChangeStateToStun()
         {
             ChangeState(_stunState);
-        }
-
-        // PlayerMove
-        public void ChangeStateToStomp()
-        {
-            ChangeState(_stompState);
         }
 
         // PlayerMove
@@ -739,10 +763,14 @@ namespace Assets.NewData.Scripts
             }
             public void Exit(ActionContext ctx)
             {
-                // 踏みつけアニメーション中にジャンプを入力すると、通常ジャンプと同じ高さまで飛べる
+                // 踏みつけアニメーション中にジャンプを入力すると、踏みつけジャンプする
                 if (_inputJump)
                 {
-                    ctx.playerMove.Jump();
+                    ctx.playerMove.StompJump();
+                }
+                else
+                {
+                    ctx.playerMove.Hop();
                 }
             }
 

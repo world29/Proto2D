@@ -26,5 +26,13 @@ namespace Assets.NewData.Scripts
 
         // ジャンプ
         void Jump();
+
+        // 少し跳ねる
+        // 敵を踏んづけたときなどに発生する
+        void Hop();
+
+        // 踏みつけジャンプ
+        // 敵を踏んづけた時にジャンプ入力すると、通常よりも高く跳ぶ
+        void StompJump();
     }
 }

@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 3685648828312164827}
   - component: {fileID: 579076909090815923}
   - component: {fileID: 8370161965908179433}
-  - component: {fileID: 343962432045221122}
   m_Layer: 18
   m_Name: CollisionDamage
   m_TagString: Untagged
@@ -151,8 +150,8 @@ MonoBehaviour:
   onDamageDealt:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 343962432045221122}
-        m_TargetAssemblyTypeName: Assets.NewData.Scripts.PlayerStomp, Assembly-CSharp
+      - m_Target: {fileID: 197693636647143611}
+        m_TargetAssemblyTypeName: Assets.NewData.Scripts.PlayerMove, Assembly-CSharp
         m_MethodName: OnStompHit
         m_Mode: 1
         m_Arguments:
@@ -163,20 +162,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &343962432045221122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7846360308825097917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5514092d3f75340a8327c77c8586a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMove: {fileID: 197693636647143611}
-  stompJumpForce: 8
 --- !u!1 &8210632560912147322
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +367,8 @@ MonoBehaviour:
   airAcceleration: 0.2
   airControl: 5
   airBrake: 0.1
+  hopForce: 0.6
+  stompJumpForce: 1.2
   climbSpeed: 3
   wallJumpForce: {x: 8, y: 14}
   wallJumpDuration: 0.25
@@ -421,21 +408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 500
-  onHealthZero:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 197693636647143611}
-        m_TargetAssemblyTypeName: Assets.NewData.Scripts.PlayerMove, Assembly-CSharp
-        m_MethodName: OnHealthZero
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &8876414176735735169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +549,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87c5590ab7ea346b0b4cbb38844ab9bd, type: 3}
+--- !u!225 &6757089816690621827 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 1597799925734260793, guid: 87c5590ab7ea346b0b4cbb38844ab9bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5470334171329707450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6224555597923387049 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2128117555874577171, guid: 87c5590ab7ea346b0b4cbb38844ab9bd,
@@ -592,12 +570,6 @@ MonoBehaviour:
 --- !u!224 &5148937710796129920 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 909221775828876090, guid: 87c5590ab7ea346b0b4cbb38844ab9bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 5470334171329707450}
-  m_PrefabAsset: {fileID: 0}
---- !u!225 &6757089816690621827 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 1597799925734260793, guid: 87c5590ab7ea346b0b4cbb38844ab9bd,
     type: 3}
   m_PrefabInstance: {fileID: 5470334171329707450}
   m_PrefabAsset: {fileID: 0}
@@ -670,12 +642,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd3f066c3eefb4383b5f60e7607c05c7, type: 3}
---- !u!4 &1752927904688098492 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4892621152155970031, guid: dd3f066c3eefb4383b5f60e7607c05c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 6608385529373025619}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1752927904688098483 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4892621152155970016, guid: dd3f066c3eefb4383b5f60e7607c05c7,
@@ -685,6 +651,12 @@ GameObject:
 --- !u!198 &1752927904688098493 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4892621152155970030, guid: dd3f066c3eefb4383b5f60e7607c05c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 6608385529373025619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1752927904688098492 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4892621152155970031, guid: dd3f066c3eefb4383b5f60e7607c05c7,
     type: 3}
   m_PrefabInstance: {fileID: 6608385529373025619}
   m_PrefabAsset: {fileID: 0}
