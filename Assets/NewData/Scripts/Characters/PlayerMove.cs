@@ -354,7 +354,7 @@ namespace Assets.NewData.Scripts
                 // 地上ジャンプ
                 Jump();
             }
-            else if (inputJump && (_controller.collisions.right || _controller.collisions.left))
+            else if (inputJump && (_controller.collisions.right || _controller.collisions.left) && _playerStamina.CanJump())
             {
                 // 壁ジャンプ
                 WallJump();
