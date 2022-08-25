@@ -498,6 +498,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 3182635431770261759}
+  animator: {fileID: 3695806071682226587}
+  deathStopTime: 0.5
+  deathParticlePrefab: {fileID: 340647146041602723, guid: 5f0fef723e3c4bd4088c31d0a6f1079d,
+    type: 3}
+  legacyEnemyBehaviour: {fileID: 1846819741723289012}
 --- !u!1 &7223372345357252062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,31 +1171,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  onHealthZero:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1846819741723289012}
-        m_TargetAssemblyTypeName: Proto2D.EnemyBehaviour, Assembly-CSharp
-        m_MethodName: PlayEffect2
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7615431906169996719, guid: 3fd5afb12e2d87b4d91b6963444aad62,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8778643387317822647}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2

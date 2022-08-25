@@ -9,8 +9,8 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float hp = 10f;
 
-        [SerializeField]
-        private UnityEngine.Events.UnityEvent onHealthZero;
+        // スクリプトからコールバックを登録するためのプロパティ
+        public UnityEngine.Events.UnityAction OnHealthZero;
 
         public void ChangeHealth(float amountToChange)
         {
@@ -18,7 +18,7 @@ namespace Assets.NewData.Scripts
 
             if (hp <= 0)
             {
-                onHealthZero?.Invoke();
+                OnHealthZero?.Invoke();
             }
         }
     }
