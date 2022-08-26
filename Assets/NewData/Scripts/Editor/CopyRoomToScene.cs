@@ -91,8 +91,21 @@ namespace Assets.NewData.Scripts
                 Regex regex = new Regex("_Deco");
                 if (regex.IsMatch(obj.name))
                 {
-                    var go = Instantiate(obj, obj.transform.localPosition + _propsOffset, obj.transform.rotation, _propsRoot);
-                    Undo.RegisterCreatedObjectUndo(go, "Instantiate Prop Object");
+                    // オブジェクトがプレハブから生成されたものなら、プレハブから生成する。
+                    var prefab = PrefabUtility.GetCorrespondingObjectFromSource(obj);
+                    if (prefab != null)
+                    {
+                        var go = PrefabUtility.InstantiatePrefab(prefab, _propsRoot) as GameObject;
+                        go.transform.localPosition = obj.transform.localPosition + _propsOffset;
+                        go.transform.localRotation = obj.transform.localRotation;
+                        go.transform.localScale = obj.transform.localScale;
+                        Undo.RegisterCreatedObjectUndo(go, "Instantiate Prop Prefab");
+                    }
+                    else
+                    {
+                        var go = Instantiate(obj, obj.transform.localPosition + _propsOffset, obj.transform.rotation, _propsRoot);
+                        Undo.RegisterCreatedObjectUndo(go, "Instantiate Prop Object");
+                    }
                 }
             }
         }
