@@ -195,7 +195,7 @@ namespace Assets.NewData.Scripts
             ragdoll.FacingRight = facingRight;
             ragdoll.TakeDamage();
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         private void Awake()
