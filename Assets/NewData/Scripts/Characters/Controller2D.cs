@@ -183,6 +183,15 @@ namespace Assets.NewData.Scripts
 
                     collisions.below = directionY == -1;
                     collisions.above = directionY == 1;
+
+                    // プラットフォームに乗っているいることを通知する
+                    if (collisions.below)
+                    {
+                        if (hit.collider.TryGetComponent(out IPlatform platform))
+                        {
+                            platform.OnLandingPlatform(gameObject.transform);
+                        }
+                    }
                 }
             }
         }
