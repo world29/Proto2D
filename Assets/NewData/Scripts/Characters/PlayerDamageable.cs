@@ -40,6 +40,11 @@ namespace Assets.NewData.Scripts
             _stunTimer = 0;
         }
 
+        private void Start()
+        {
+            health.OnHealthZero += playerMove.OnHealthZero;
+        }
+
         private void Update()
         {
             if (_invinsibleTimer > 0)
