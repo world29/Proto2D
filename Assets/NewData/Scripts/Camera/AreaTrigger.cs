@@ -12,6 +12,8 @@ namespace Assets.NewData.Scripts
 
         private int _initialPriority;
 
+        private static int priority = 100;
+
         void Awake()
         {
             _initialPriority = areaCamera.Priority;
@@ -21,16 +23,12 @@ namespace Assets.NewData.Scripts
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                areaCamera.Priority = 100;
+                areaCamera.Priority = priority++;
             }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                areaCamera.Priority = _initialPriority;
-            }
         }
     }
 }
