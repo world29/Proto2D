@@ -200,6 +200,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8682530340917369696}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -212,6 +213,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8682530340917369696}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -224,6 +226,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8682530340917369696}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Kill
         m_Mode: 1
         m_Arguments:
@@ -234,12 +237,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_OnLaunch:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8682530340917369696}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -252,6 +254,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8682530340917369696}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -263,8 +266,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_lifespan: Infinity
   m_targetRenderer: {fileID: 9058929004044536958}
 --- !u!114 &8209564876680426781
@@ -328,10 +329,12 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -339,6 +342,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -388,20 +392,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5547779684136353100}
     m_Modifications:
-    - target: {fileID: 9166418590241840204, guid: 159b99893ad33d645a5c0de93c5ba535,
+    - target: {fileID: 78748285314884664, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
-      propertyPath: m_Name
-      value: PileTrail
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0.11544248
       objectReference: {fileID: 0}
     - target: {fileID: 78748285314884664, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
       value: 0.27098456
       objectReference: {fileID: 0}
-    - target: {fileID: 78748285314884664, guid: 159b99893ad33d645a5c0de93c5ba535,
+    - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
-      value: 0.11544248
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
@@ -420,6 +424,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -435,16 +444,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939613327011973419, guid: 159b99893ad33d645a5c0de93c5ba535,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -457,6 +456,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9166418590241840204, guid: 159b99893ad33d645a5c0de93c5ba535,
+        type: 3}
+      propertyPath: m_Name
+      value: PileTrail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 159b99893ad33d645a5c0de93c5ba535, type: 3}

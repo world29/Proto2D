@@ -7,10 +7,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6657147086526764877, guid: b0577c52f6d60e74c90d7b075a891f08,
+    - target: {fileID: 6657147086526764864, guid: b0577c52f6d60e74c90d7b075a891f08,
         type: 3}
-      propertyPath: m_Name
-      value: CoinDynamic
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657147086526764864, guid: b0577c52f6d60e74c90d7b075a891f08,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 852bb58f863aed84d952127e4c736c16, type: 2}
+    - target: {fileID: 6657147086526764864, guid: b0577c52f6d60e74c90d7b075a891f08,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
         type: 3}
@@ -29,6 +44,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -40,16 +60,6 @@ PrefabInstance:
     - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6657147086526764867, guid: b0577c52f6d60e74c90d7b075a891f08,
@@ -67,25 +77,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6657147086526764877, guid: b0577c52f6d60e74c90d7b075a891f08,
+        type: 3}
+      propertyPath: m_Name
+      value: CoinDynamic
+      objectReference: {fileID: 0}
     - target: {fileID: 6657147086526764879, guid: b0577c52f6d60e74c90d7b075a891f08,
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6657147086526764864, guid: b0577c52f6d60e74c90d7b075a891f08,
-        type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6657147086526764864, guid: b0577c52f6d60e74c90d7b075a891f08,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 852bb58f863aed84d952127e4c736c16, type: 2}
-    - target: {fileID: 6657147086526764864, guid: b0577c52f6d60e74c90d7b075a891f08,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0577c52f6d60e74c90d7b075a891f08, type: 3}

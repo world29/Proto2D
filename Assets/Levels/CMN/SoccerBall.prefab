@@ -139,10 +139,12 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,6 +152,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -233,6 +236,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -245,6 +249,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -260,6 +265,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -272,6 +278,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -288,6 +295,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -300,6 +308,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -312,6 +321,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6770862135003315401}
+        m_TargetAssemblyTypeName: 
         m_MethodName: PlayEffect
         m_Mode: 2
         m_Arguments:
@@ -340,6 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_stagePhaseFlags: 7
   m_percentage: 54
+  m_playerCoinsMin: 0
 --- !u!1001 &6799654202011966338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,6 +362,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: JumpAttackTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
@@ -369,6 +385,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -381,16 +402,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1423300126281116193, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
@@ -414,6 +425,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
+      propertyPath: m_MinVertexDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.6736357
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
+        type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
       value: 0.8949585
       objectReference: {fileID: 0}
@@ -424,23 +445,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outSlope
-      value: -1.0035576
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inWeight
       value: 0.6738889
       objectReference: {fileID: 0}
     - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
         type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0.6736357
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257670170282149682, guid: 9c79fb8ad98e7284e9b75477e500a7fa,
-        type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 0.1
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outSlope
+      value: -1.0035576
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c79fb8ad98e7284e9b75477e500a7fa, type: 3}
