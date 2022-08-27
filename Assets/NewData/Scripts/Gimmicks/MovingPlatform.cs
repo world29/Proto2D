@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 namespace Assets.NewData.Scripts
 {
@@ -22,22 +23,29 @@ namespace Assets.NewData.Scripts
         [SerializeField, Range(0, 2)]
         private float m_easeAmount;
 
+        [SerializeField]
+        private bool m_moveOnLanding = false; // 誰か乗っているときだけ動く
+
         private Vector3[] m_globalWaypoints;
         private int m_fromWaypointIndex;
         private float m_percentBetweenWaypoints;
         private float m_nextMoveTime;
-        private Vector3 m_movementCurrentFrame;
+        private List<Transform> m_passengersThisFrame;
+        private float m_timer;
 
         protected override void OnPassengerEnter(Transform passenger) { }
         protected override void OnPassengerExit(Transform passenger) { }
         protected override void OnPassengerStay(Transform passenger)
         {
-            passenger.transform.Translate(m_movementCurrentFrame);
+            m_passengersThisFrame.Add(passenger);
         }
 
         protected new void Awake()
         {
             base.Awake();
+
+            m_passengersThisFrame = new List<Transform>();
+            m_timer = 0;
         }
 
         private void Start()
@@ -54,13 +62,29 @@ namespace Assets.NewData.Scripts
 
         protected new void Update()
         {
-            // このフレームでのプラットフォームの移動量を計算したのち、
-            // 上に乗っている者たちと自身にそれを適用する。
-            m_movementCurrentFrame = CalculatePlatformMovement();
+            m_passengersThisFrame.Clear();
 
             base.Update();
 
-            transform.Translate(m_movementCurrentFrame);
+            // 乗っている人がいなければ動かない
+            if (m_moveOnLanding && m_passengersThisFrame.Count() == 0)
+            {
+                return;
+            }
+
+            m_timer += Time.deltaTime;
+
+            // このフレームでのプラットフォームの移動量を計算したのち、
+            // 上に乗っている者たちと自身にそれを適用する。
+            var moveAmount = CalculatePlatformMovement();
+
+            foreach (var passenger in m_passengersThisFrame)
+            {
+                passenger.transform.Translate(moveAmount);
+            }
+
+
+            transform.Translate(moveAmount);
         }
 
         private float Ease(float x)
@@ -76,7 +100,7 @@ namespace Assets.NewData.Scripts
                 return Vector3.zero;
             }
 
-            if (Time.time < m_nextMoveTime)
+            if (m_timer < m_nextMoveTime)
             {
                 return Vector3.zero;
             }
@@ -103,7 +127,7 @@ namespace Assets.NewData.Scripts
                         System.Array.Reverse(m_globalWaypoints);
                     }
                 }
-                m_nextMoveTime = Time.time + m_waitTime;
+                m_nextMoveTime = m_timer + m_waitTime;
             }
             return newPos - transform.position;
         }
