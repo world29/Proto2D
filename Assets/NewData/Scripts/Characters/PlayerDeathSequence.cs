@@ -58,6 +58,8 @@ namespace Assets.NewData.Scripts
             StartCoroutine(DeathSequenceCoroutine());
 
             _playerObject.SetActive(false);
+
+            SoundManager.StopBgm(0f);
         }
 
         // 主に開発用の機能として、コンテキストメニューから呼び出せるようにしている
