@@ -30,6 +30,7 @@ namespace Assets.NewData.Scripts
         private IPlayerMove _playerMove;
         private PlayerMove _playerMoveImpl;
         private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
         private Coroutine _coroutine;
 
         private void Awake()
@@ -41,6 +42,7 @@ namespace Assets.NewData.Scripts
             TryGetComponent(out _playerMove);
             TryGetComponent(out _playerMoveImpl);
             TryGetComponent(out _spriteRenderer);
+            TryGetComponent(out _animator);
 
             _coroutine = null;
         }
@@ -54,6 +56,7 @@ namespace Assets.NewData.Scripts
 
         public IEnumerator KnockbackCoroutine()
         {
+            _animator.Play("Knockback");
             _velocity = new Vector2(_facingRight ? -knockback.x : knockback.x, knockback.y);
 
             while (true)
