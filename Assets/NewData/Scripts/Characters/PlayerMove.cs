@@ -51,9 +51,6 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private Vector2 ledgeCornerOffset;
 
-        [SerializeField]
-        private PlayerRagdoll _ragdollPrefab;
-
         private Vector2 _velocity;
         private Controller2D _controller;
         private Animator _animator;
@@ -187,15 +184,6 @@ namespace Assets.NewData.Scripts
         public void ChangeStateToMoving()
         {
             ChangeState(_movingState);
-        }
-
-        public void OnHealthZero()
-        {
-            var ragdoll = Instantiate(_ragdollPrefab, transform.position, Quaternion.identity);
-            ragdoll.FacingRight = facingRight;
-            ragdoll.TakeDamage();
-
-            gameObject.SetActive(false);
         }
 
         private void Awake()

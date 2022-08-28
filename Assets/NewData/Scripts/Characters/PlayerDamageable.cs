@@ -42,7 +42,6 @@ namespace Assets.NewData.Scripts
 
         private void Start()
         {
-            health.OnHealthZero += playerMove.OnHealthZero;
         }
 
         private void Update()

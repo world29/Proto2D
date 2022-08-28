@@ -10,10 +10,6 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private Vector2 knockback = new Vector2(10f, 10f);
 
-        // 持続時間
-        [SerializeField]
-        private float duration = 1f;
-
         // 空中で入力がないときの静止しやすさ
         [SerializeField, Range(0, 1)]
         private float airBrake = 0.1f;
@@ -28,9 +24,7 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         public float Gravity = -9.8f;
 
-        [SerializeField]
-        public bool FacingRight = false;
-
+        private bool _facingRight;
         private Vector2 _velocity;
         private Controller2D _controller;
         private IPlayerMove _playerMove;
@@ -40,6 +34,7 @@ namespace Assets.NewData.Scripts
 
         private void Awake()
         {
+            _facingRight = false;
             _velocity = Vector2.zero;
 
             TryGetComponent(out _controller);
@@ -50,70 +45,56 @@ namespace Assets.NewData.Scripts
             _coroutine = null;
         }
 
-        private void Update()
+        public IEnumerator HitStopCoroutine(bool facingRight, float hitStopTime)
         {
-            // AirBrake の計算
-            if (!_controller.collisions.below)
-            {
-                _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
-            }
+            _spriteRenderer.flipX = facingRight;
 
-            // 重力
-            _velocity.y += Gravity * Time.deltaTime;
-
-            //_controller.Move(_velocity * Time.deltaTime, _playerMove.FacingRight);
-            _controller.Move(_velocity * Time.deltaTime, FacingRight);
-
-            // 移動後の処理
-            if (Mathf.Abs(_velocity.x) <= velocityEpsilon)
-            {
-                _velocity.x = 0;
-            }
-
-            if (_controller.collisions.below)
-            {
-                if (Mathf.Abs(_velocity.y) > velocityEpsilon)
-                {
-                    // 地面に落ちたらバウンドさせる
-                    _velocity.y = -_velocity.y * bounciness;
-                }
-                else
-                {
-                    _velocity = Vector2.zero;
-                }
-            }
-            if (_controller.collisions.above)
-            {
-                _velocity.y = 0;
-            }
+            yield return new WaitForSecondsRealtime(hitStopTime);
         }
 
-        [ContextMenu("TakeDamage")]
-        public void TakeDamage()
+        public IEnumerator KnockbackCoroutine()
         {
-            // ダメージ中なので無視
-            if (_coroutine != null)
+            _velocity = new Vector2(_facingRight ? -knockback.x : knockback.x, knockback.y);
+
+            while (true)
             {
-                return;
+                // AirBrake の計算
+                if (!_controller.collisions.below)
+                {
+                    _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
+                }
+
+                // 重力
+                _velocity.y += Gravity * Time.deltaTime;
+
+                //_controller.Move(_velocity * Time.deltaTime, _playerMove.FacingRight);
+                _controller.Move(_velocity * Time.deltaTime, _facingRight);
+
+                // 移動後の処理
+                if (Mathf.Abs(_velocity.x) <= velocityEpsilon)
+                {
+                    _velocity.x = 0;
+                }
+
+                if (_controller.collisions.below)
+                {
+                    if (Mathf.Abs(_velocity.y) > velocityEpsilon)
+                    {
+                        // 地面に落ちたらバウンドさせる
+                        _velocity.y = -_velocity.y * bounciness;
+                    }
+                    else
+                    {
+                        _velocity = Vector2.zero;
+                    }
+                }
+                if (_controller.collisions.above)
+                {
+                    _velocity.y = 0;
+                }
+
+                yield return null;
             }
-
-            _coroutine = StartCoroutine(TakeDamageCoroutine());
-        }
-
-        private IEnumerator TakeDamageCoroutine()
-        {
-            _velocity = new Vector2(FacingRight ? -knockback.x : knockback.x, knockback.y);
-
-            _spriteRenderer.flipX = FacingRight;
-
-            //yield return new WaitForSeconds(duration);
-
-            // 地面に落ちるまで
-            yield return new WaitUntil(() => _controller.collisions.below);
-
-            _coroutine = null;
-
-            SceneTransitionManager.ReloadScene();
         }
     }
 }
