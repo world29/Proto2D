@@ -1,0 +1,635 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Audio
+  m_EditorClassIdentifier: 
+  m_GroupName: Audio
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f23b268c7e0bff14b98d2e5ace3fecee
+  m_SerializeEntries:
+  - m_GUID: ea4ea7b6ef4021242a32d136e3f06d4d
+    m_Address: 7mh43-h8rxw
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: ac85536a2f1d4884ab075f542205e943
+    m_Address: AncientWind
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: eca901c03410ee24aab1388c5d1be6b7
+    m_Address: Boss
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: c5e1a6301dbab4da98024005f01d1b4b
+    m_Address: bossA
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 5a6d563f1eced6e4087adf20be83010c
+    m_Address: LastBoss
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 8a1e3c044a2e2ec408f63935e5bf823c
+    m_Address: My Song 5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 3ff9b4b737da718499afa01a9eaeb7ee
+    m_Address: My Song 6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: b515a2aa0ff26ea4a9c570cbfe048d75
+    m_Address: My Song 7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 3654289ebdce3094f9943df1ccc4673b
+    m_Address: My Song 8
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 10ed08b9b6a15fb4491590038962ab72
+    m_Address: Snow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: face1759ae2d5c9408e55e7765254b0f
+    m_Address: SpaceElevator
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: af2b82a51bff34ed3b35bf7db57f5e07
+    m_Address: Stargazer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 6a4b1c6c016f6574c88d64f4a35a72c7
+    m_Address: Synthetic Statement 120bpm C Dorian
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: c57c4d6eb664c4b46bd4a76729b3ed1d
+    m_Address: Tier01_BGM
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 96902a91fab064b00b76b1aba5c80fb1
+    m_Address: Tier04A_SteamEmpire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
+  - m_GUID: 5dbab763e72575c4287bcc5c951deff3
+    m_Address: Bite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 789ade1e1f38ca14b9d3081e0c1cddd9
+    m_Address: Blip
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3ef65467771c84a0c940d7cead44b5a2
+    m_Address: Blip_select 10 (1)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: df19064108eaf4f0d91689d1a2a2393a
+    m_Address: Blip_select 10 (2)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 56a1c133e6d57446c9d4f1d05d92d8c8
+    m_Address: Blip_select 10 (3)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: bd80ccd15a29f4de0aca701c582e0250
+    m_Address: Blip_select 10 (4)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 6ce76b5d5f4b0450a9bd7a4fc9603e1d
+    m_Address: Blip_select 10 (5)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 71907306c1f0b46b6b1ca1e762a88b9c
+    m_Address: Blip_select 10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: dce5b6accccb44fbeb911219ccf1cfa4
+    m_Address: Blow (1)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 7376d052f4f7b411e84f18d3b7c43f1c
+    m_Address: Blow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 4a3414dd5ed3e435a8924cc1464ec666
+    m_Address: Blow2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 201dcc7a320693c42aaf44d992e7c9fa
+    m_Address: coin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: cbc531e982fccf347bb13e8ddfebf6d3
+    m_Address: CoinDrop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 9e2916cbf30d743ed834c07e3c497351
+    m_Address: Crash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 5b0893963548c544f82adbf7d53ae3db
+    m_Address: damage (2)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 8a955b7e2f27611488631ce42dc668f5
+    m_Address: Damage
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 55251fe493c5b11438e0899bebfb0415
+    m_Address: Explosion 19 (1)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 34ab1f048400452429d3f51af701dbc3
+    m_Address: Explosion 19
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: ef1973d96f9a4a842b0013ba73dc0a64
+    m_Address: Explosion 29
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 12c11d9fbb6e08140b8169a5a0580fbe
+    m_Address: Explosion 30
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 9a067f1631c3f21408026965e4253401
+    m_Address: Explosion 34
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 5c78dbd912e6f50488fc0ac71f2af554
+    m_Address: Explosion 36
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 854ba29233f104dbda8d5ef78dc55eb3
+    m_Address: Explosion 53
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 20b88d88e0a97a24b9063213eadda400
+    m_Address: Explosion 75
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 733016cad1ff62d4585211d3c979d686
+    m_Address: Explosion 95
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3dde23ce7eaa1cc468c833dbce36336d
+    m_Address: Explosion 113
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 9128b3a793c3a714aa1d2a34113ca383
+    m_Address: Explosion 120
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 77e093d245f8910419709d7e7eeda1af
+    m_Address: Explosion 123 (1)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 6b605ef7c769ace44985721462677b7f
+    m_Address: Explosion 123 (2)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 1d76a65677ba1c34b8c7a4549dc978a8
+    m_Address: Explosion 123
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3856bea2388207846a558d0ed8ada1ea
+    m_Address: Explosion 129
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 850c9d7705362b64c9e5606b65dcbc28
+    m_Address: Explosion 132
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: c56b96284fbd1b44bae82374d6e83d74
+    m_Address: Fire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: d6ed3365da326f340ba07bb39efa75e7
+    m_Address: Fire2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: a778e6ce7e6482341b4f9dffffc8fb11
+    m_Address: getBanana
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: eb032f8a416a646319ae25938bee3dcf
+    m_Address: guruguru
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 540eccce65df17944b8c41d8c8260c69
+    m_Address: hit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 7948c83ad21064b36ac7b40fe1fad585
+    m_Address: Hit_hurt 3 (1)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 88b734582a0164771876aa7b5c21b9a6
+    m_Address: Hit_hurt 3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 8f3b07ed2fea14f48b0f86ef76622a65
+    m_Address: Hit_hurt 17 (1)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 2bcf69e5dadd36a47979a9ad83d31415
+    m_Address: Hit_hurt 17 (2)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 6e3fd1d4f05ed4c4aab4b0fb5969d0e1
+    m_Address: Hit_hurt 17 (3)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 423259af99e88d24dbf1472be5e76234
+    m_Address: Hit_hurt 17 (4)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 7619c9f3f8a0887448e103b6050dd1b1
+    m_Address: Hit_hurt 17
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 5522083748c5af340a0992372cd30e8c
+    m_Address: Hit_hurt 51
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 8ab617dc1ba70c541acdf17f2048578b
+    m_Address: Hit_hurt 52
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: ba0b82af3bea8ac4a84edb93c0925132
+    m_Address: Hit_hurt 78
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 699180a8bb7185549b6b422662361a79
+    m_Address: Hit_hurt 79
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: a90e4744fe1dc0f478c39771a49d733f
+    m_Address: Jump 14
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: f59679d1a161a0c42a84f4c272d1b8a3
+    m_Address: Jump 15
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: ae573ca9d1b2f1649be67569a694c20a
+    m_Address: Jump 16
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: abcc6ddb7348e48acbb16104e6bc4c69
+    m_Address: Jump 17
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3f8f8a191d69641f5b26107d0af51dc7
+    m_Address: Jump 18
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: e0f1109473fe04386a38056275f347fc
+    m_Address: laser
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: b107852d98f26e84d8cd491e0ae233e5
+    m_Address: Laser_shoot 4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 0ae803c7431134b41a8b662026f2a185
+    m_Address: Laser_shoot 5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: fb03efc2010314566ae1ee7649dae9dc
+    m_Address: noise
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 2b5cb74cdc9bd46c58f93e5d00c82d6f
+    m_Address: Pickup_coin 63
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 97382af2c48594bde81a939b74c6f068
+    m_Address: Pickup_coin 73
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3254be561c9a43541be90e356cb9a2c3
+    m_Address: Pickup_HealthPack
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: ba751fe22acb64d6db993b9dfa848ae6
+    m_Address: potion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 77b81b21052cfe04fb948139e6bec978
+    m_Address: Powerup 6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 64ebdf92fcf5f4594934a2bec7102940
+    m_Address: Powerup 23
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: c72b649e19a9e4ac39a5b9b7aa173723
+    m_Address: Powerup 28
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 684296c0f40f0234a8a1d0cd2b5f36ce
+    m_Address: Powerup 64
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 718f062922174794ba8af304b7cc50d0
+    m_Address: Powerup 69
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3a52064058c9af449a27da43fd83deb7
+    m_Address: Powerup 71
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 80797293985a51b49b4118c1345b3288
+    m_Address: Powerup 73
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: bd86237206c4e45cdb88f0e1603e3f69
+    m_Address: rough
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 42245de78853f974192c9f8e89c68732
+    m_Address: Shout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 48d8e7005c2c0a946ae68628f42e9c2f
+    m_Address: Shout2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: b749c321285fc614eab7753434e3cb25
+    m_Address: Slash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: ce2d3065582e37e449fb5d2bb53c1e30
+    m_Address: Slash2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: c702ba22cd58bb84fb82a52e04a551d8
+    m_Address: Spray
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 5406464d0a3fe964c9f48b6b34eb34d5
+    m_Address: sword
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: db62d9afdbd3f43bba5435b43a4a48a1
+    m_Address: sword2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 777b73669bee84de18d71c2238212c2e
+    m_Address: sword3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: c4e7e186eec584b29a3b674632456492
+    m_Address: sword4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: d221ebd16e21d0a4791a7d863e77f78e
+    m_Address: Wind 1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 24b5931c9064c5f4382097c2df3938c9
+    m_Address: Wind 2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 2a3fcd4c67ace21428eadb058b845e0b
+    m_Address: Wind
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 1430b53ead6164f9887d48ef24bb8859
+    m_Address: Boo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: f21d5ee21bad74fe5a90c458926c8efa
+    m_Address: Boo2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 47167ed129dd24e2598f93bb27b59509
+    m_Address: Boo3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: c9749ad3d515c46c99562050a43c5228
+    m_Address: Booa
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: b5a219c2345e64b409445f890ba8c012
+    m_Address: Burn
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: f6d558515038042c9a9b94cf8e893be0
+    m_Address: Burn_Long
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: d554db8d2577a43cf92d6b40e54d585e
+    m_Address: Collapse
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 7093fe478a2d7483988f0fa46e840bd1
+    m_Address: Damage
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 39146497fdd6e44699672a9d67b5ff9e
+    m_Address: Damage2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 674d16716d1ca41d1878251090217964
+    m_Address: Explosion 1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 10d3ca9c698924148b162505848c472a
+    m_Address: Explosion 2 (11)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 21162399befa94ccb9a9569294bce3ea
+    m_Address: Explosion 2 (12)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 9fe0b183d11994917ac4f9d1842e67fc
+    m_Address: Explosion 2 (13)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 8bbf5503c72bb4931a36c97452ec1cee
+    m_Address: Explosion 2 (15)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: bc2c07f434bcd43b19d02671bf9d9a7a
+    m_Address: Explosion 2 (16)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: c4ff5d8718b5e497a8d74ef5c5ec2d2e
+    m_Address: Explosion 2 (17)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 11ef7b37da6f04254b8e3a94b3a6cf08
+    m_Address: Explosion 2 (18)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 3a42fc95295d3437990ed7f5a40956b3
+    m_Address: Explosion 2 (19)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: f7c35bca0394b4848ba22966a1a320c1
+    m_Address: Explosion 2 (20)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 0aa255762db734fd399f3a7aa4e49168
+    m_Address: Fire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: f97df990fa5c24c1ea8682eed1f7d27c
+    m_Address: Ghost
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 7d186cad72849431f9afc3b2659c3765
+    m_Address: Keen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: e226f87c9145b431dae4a948bf775dc8
+    m_Address: Shout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 888b41101b2c640349e7d2f180d8445b
+    m_Address: Shout2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: b7bba7e7f2cf641159a72d8c3f77c8b2
+    m_Address: Shout3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  - m_GUID: 0204a64708e314b458e2fcc4e6f79cc1
+    m_Address: Shout4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SE
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d0dd9a9c2dcd1c04a9dfcd03a46cd7c7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 58e5fb85cebafa24f959f71c60400f15, type: 2}
+    - {fileID: 11400000, guid: 2f7ceb48fd8ce534aafedbfe8e4835ac, type: 2}
