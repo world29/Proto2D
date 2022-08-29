@@ -27,8 +27,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private PlayerRagdoll playerRagdoll;
 
+        // デス時のカメラシェイクに使用するインパルスデータ
         [SerializeField]
-        private Cinemachine.CinemachineImpulseSource cinemachineImpulseSource;
+        private CinemachineImpluseData impulseData;
 
         private UnityEngine.Events.UnityAction OnCompleteSequence;
 
@@ -88,7 +89,7 @@ namespace Assets.NewData.Scripts
 
             if (shakeCamera)
             {
-                cinemachineImpulseSource.GenerateImpulse();
+                impulseData.GenerateImpluse(_playerObject.transform.position);
             }
 
             // やられモーション

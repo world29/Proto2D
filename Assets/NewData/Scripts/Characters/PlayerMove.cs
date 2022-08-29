@@ -51,6 +51,10 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private Vector2 ledgeCornerOffset;
 
+        // 踏みつけ時のカメラシェイクに使用するインパルスデータ
+        [SerializeField]
+        private CinemachineImpluseData stompImpulseData;
+
         private Vector2 _velocity;
         private Controller2D _controller;
         private Animator _animator;
@@ -169,7 +173,7 @@ namespace Assets.NewData.Scripts
 
         public void OnStompHit()
         {
-            Debug.Log("Stomp hit!");
+            stompImpulseData.GenerateImpluse(transform.position);
 
             ChangeState(_stompState);
         }
