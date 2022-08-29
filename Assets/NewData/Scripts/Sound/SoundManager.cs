@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Assets.NewData.Scripts
 {
-    public class SoundManager : SingletonMonoBehaviour<SoundManager>
+    public class SoundManager : MonoBehaviour
     {
         // static methods
         public static void PlaySe(AudioClip clip)
@@ -39,30 +39,57 @@ namespace Assets.NewData.Scripts
             Instance.StopBgmImpl(fadeOutTime);
         }
 
-        [SerializeField]
-        private AudioMixer mixer;
+        private static SoundManager _instance;
+        public static SoundManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    var previous = FindObjectOfType<SoundManager>();
+                    if (previous)
+                    {
+                        Debug.LogWarning("Initialized twice. Don't use SoundManager in scene hierarchy.");
+                        _instance = (SoundManager)previous;
+                    }
+                    else
+                    {
+                        var go = new GameObject("__SoundManager (singleton)");
+                        _instance = go.AddComponent<SoundManager>();
+                        DontDestroyOnLoad(go);
+                        go.hideFlags = HideFlags.HideInHierarchy;
+                    }
+                }
 
+                return _instance;
+            }
+        }
+
+        static readonly string k_AudioMixerAddress = "AudioMixer";
         const int SE_CHANNELS = 4;
 
+        private AudioMixer _mixer;
         private AudioSource _bgmSource;
         private AudioSource[] _seSources = new AudioSource[SE_CHANNELS];
 
-        protected override void Awake()
-        {
-            base.Awake();
+        private Coroutine _initializeCoroutine;
 
-            DontDestroyOnLoad(gameObject);
-        }
-
-        private void Start()
+        private void Awake()
         {
-            StartCoroutine(InitializeCoroutine());
+            _initializeCoroutine = StartCoroutine(InitializeCoroutine());
         }
 
         private IEnumerator InitializeCoroutine()
         {
-            AudioMixerGroup[] mixerBgmGroups = mixer.FindMatchingGroups("BGM");
-            AudioMixerGroup[] mixerSeGroups = mixer.FindMatchingGroups("SE");
+            var op = Addressables.LoadAssetAsync<AudioMixer>(k_AudioMixerAddress);
+
+            yield return op;
+            Debug.Assert(op.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded);
+
+            _mixer = op.Result;
+
+            AudioMixerGroup[] mixerBgmGroups = _mixer.FindMatchingGroups("BGM");
+            AudioMixerGroup[] mixerSeGroups = _mixer.FindMatchingGroups("SE");
 
             _bgmSource = gameObject.AddComponent<AudioSource>();
             _bgmSource.loop = true;
@@ -76,8 +103,6 @@ namespace Assets.NewData.Scripts
                 _seSources[i].playOnAwake = false;
                 _seSources[i].outputAudioMixerGroup = mixerSeGroups[0];
             }
-
-            yield return null;
         }
 
         private void PlaySeImpl(string assetAddress)
@@ -133,6 +158,10 @@ namespace Assets.NewData.Scripts
 
         private IEnumerator FadeInBgmCoroutine(AudioClip clip, float fadeInTime)
         {
+            // 初期化完了を待機する
+            yield return _initializeCoroutine;
+            Debug.Assert(_bgmSource != null);
+
             _bgmSource.volume = 0;
             _bgmSource.clip = clip;
             _bgmSource.Play();
@@ -151,6 +180,10 @@ namespace Assets.NewData.Scripts
 
         private IEnumerator FadeOutBgmCoroutine(float fadeOutTime)
         {
+            // 初期化完了を待機する
+            yield return _initializeCoroutine;
+            Debug.Assert(_bgmSource != null);
+
             float timer = 0;
             while (timer < fadeOutTime)
             {
