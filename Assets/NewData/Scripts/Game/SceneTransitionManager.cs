@@ -48,6 +48,11 @@ namespace Assets.NewData.Scripts
             Instance.StartCoroutine(Instance.LoadSceneAsync(sceneName));
         }
 
+        public static void LoadSceneAdditive(string sceneName)
+        {
+            Instance.StartCoroutine(Instance.LoadSceneAdditiveAsync(sceneName));
+        }
+
         public static void ReloadScene()
         {
             var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
@@ -75,6 +80,11 @@ namespace Assets.NewData.Scripts
             {
                 PauseSystem.Resume();
             }
+        }
+
+        private IEnumerator LoadSceneAdditiveAsync(string sceneName)
+        {
+            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 
         private void CheckInstance()
