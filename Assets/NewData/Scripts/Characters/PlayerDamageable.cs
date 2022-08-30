@@ -16,6 +16,9 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private SpriteRenderer playerSpriteRenderer;
 
+        [SerializeField]
+        private CollisionDamage damageCollision;
+
         // ダメージ受けた時の無敵時間
         [SerializeField]
         private float invinsibleTimeOnDamage = 1f;
@@ -58,6 +61,8 @@ namespace Assets.NewData.Scripts
                 if (_stunTimer <= 0)
                 {
                     playerMove.ChangeStateToMoving();
+
+                    damageCollision.gameObject.SetActive(true);
                 }
             }
         }
@@ -98,6 +103,8 @@ namespace Assets.NewData.Scripts
             _stunTimer = stunTimeOnDamage;
 
             playerMove.ChangeStateToStun();
+
+            damageCollision.gameObject.SetActive(false);
         }
 
         public void BeginInvinsible()
