@@ -65,7 +65,7 @@ namespace Assets.NewData.Scripts
         // IDamageable
         public bool TryDealDamage(float damageAmount)
         {
-            if (IsInvinsible)
+            if (IsInvinsible || playerMove.IsInvinsible)
             {
                 return false;
             }

@@ -37,6 +37,9 @@ namespace Assets.NewData.Scripts
         private float stompJumpForce = 1.5f;
 
         [SerializeField]
+        private float stompInvinsibleTime = 0.5f;
+
+        [SerializeField]
         private float climbSpeed = 3f;
 
         [SerializeField]
@@ -68,6 +71,7 @@ namespace Assets.NewData.Scripts
         private bool _isWallJumpPerformed;
         private PlayerStamina _playerStamina;
         private bool _isGroundPrev;
+        private float _invinsibleTimer;
 
         // IPlayerMove
         public bool IsGround { get { return _controller.collisions.below; } }
@@ -90,6 +94,8 @@ namespace Assets.NewData.Scripts
 
         // IPlayerMove
         public bool FacingRight { get { return _facingRight; } }
+
+        public bool IsInvinsible { get { return _invinsibleTimer > 0; } }
 
         private bool facingRight
         {
@@ -176,6 +182,8 @@ namespace Assets.NewData.Scripts
             stompImpulseData.GenerateImpluse(transform.position);
 
             ChangeState(_stompState);
+
+            StartCoroutine(InvinsibleCoroutine());
         }
 
         // PlayerMove
@@ -188,6 +196,15 @@ namespace Assets.NewData.Scripts
         public void ChangeStateToMoving()
         {
             ChangeState(_movingState);
+        }
+
+        private IEnumerator InvinsibleCoroutine()
+        {
+            _invinsibleTimer = stompInvinsibleTime;
+
+            yield return new WaitForSeconds(stompInvinsibleTime);
+
+            _invinsibleTimer = 0;
         }
 
         private void Awake()
@@ -208,6 +225,7 @@ namespace Assets.NewData.Scripts
             _isWallJumpPerformed = false;
             _playerStamina = GetComponent<PlayerStamina>();
             _isGroundPrev = false;
+            _invinsibleTimer = 0;
         }
 
         private void Update()

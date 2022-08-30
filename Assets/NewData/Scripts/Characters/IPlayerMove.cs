@@ -21,6 +21,9 @@ namespace Assets.NewData.Scripts
         // 右を向いているか
         bool FacingRight { get; }
 
+        // 無敵か
+        bool IsInvinsible { get; }
+
         // 位置の設定
         void SetPosition(Vector2 pos);
 
