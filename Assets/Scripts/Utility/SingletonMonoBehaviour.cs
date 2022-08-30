@@ -25,14 +25,17 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        CheckInstance();
+        if (CheckInstance())
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     protected bool CheckInstance()
     {
         if (this == Instance) { return true; }
 
-        Destroy(this);
+        Destroy(gameObject);
 
         return false;
     }
