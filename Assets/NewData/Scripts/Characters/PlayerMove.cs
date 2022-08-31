@@ -24,21 +24,23 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float fallSpeedLimit = 20f;
 
-        [SerializeField, Range(0, 1)]
-        private float airAcceleration = 0.1f;
+        // 空中での加速
+        [SerializeField, Range(0, 10)]
+        private float airAcceleration = 1f;
 
+        // 空中での方向転換のしやすさ
         [SerializeField, Range(0, 5)]
         private float airControl = 1f;
 
         // 空中で入力がないときの静止しやすさ
-        [SerializeField, Range(0, 1)]
-        private float airBrake = 0.1f;
+        [SerializeField, Range(0, 10)]
+        private float airBrake = 1f;
 
-        // 少し跳ねる強さ (通常ジャンプからの倍率で指定する)
+        // 踏みつけ時、ジャンプを入力しないときの跳ねる強さ (通常ジャンプからの倍率で指定する)
         [SerializeField]
         private float hopForce = 0.6f;
 
-        // 踏みつけジャンプの強さ (通常ジャンプからの倍率で指定する)
+        // 踏みつけ時、ジャンプを入力しているときの跳ねる強さ (通常ジャンプからの倍率で指定する)
         [SerializeField]
         private float stompJumpForce = 1.5f;
 
@@ -330,9 +332,9 @@ namespace Assets.NewData.Scripts
                 {
                     _velocity.x = 0f;
                 }
-                else
+                else if (_velocity.x != 0f)
                 {
-                    _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
+                    _velocity.x -= (_velocity.x * airBrake * Time.deltaTime);
                 }
             }
             else
@@ -343,8 +345,7 @@ namespace Assets.NewData.Scripts
                 }
                 else
                 {
-                    // airAcceleration: 0 なら空中での加速なし、1 なら即座に最高速度に達する
-                    var acc = runSpeed * Mathf.Pow(airAcceleration, 2);
+                    var acc = runSpeed * airAcceleration * Time.deltaTime;
 
                     // 進行方向と入力方向が一致しているか
                     bool isInputBackward = (_velocity.x != 0) && (Mathf.Sign(_velocity.x) != Mathf.Sign(inputMove.x));
@@ -471,9 +472,9 @@ namespace Assets.NewData.Scripts
             {
                 _velocity.x = 0f;
             }
-            else
+            else if (_velocity.x != 0f)
             {
-                _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
+                _velocity.x -= (_velocity.x * airBrake * Time.deltaTime);
             }
 
             _velocity.y += Gravity * Time.deltaTime;
