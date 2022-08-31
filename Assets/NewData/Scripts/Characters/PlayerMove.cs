@@ -276,6 +276,8 @@ namespace Assets.NewData.Scripts
             else if (_actionState is ClimbingState)
             {
                 MoveClimbing();
+
+                _isJumping = false;
             }
             else if (_actionState is MovingState)
             {
@@ -288,6 +290,8 @@ namespace Assets.NewData.Scripts
             else if (_actionState is WallJumpState)
             {
                 MoveWallJump();
+
+                _isJumping = false;
             }
             else
             {
