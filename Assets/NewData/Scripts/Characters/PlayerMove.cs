@@ -7,9 +7,6 @@ namespace Assets.NewData.Scripts
     public class PlayerMove : MonoBehaviour, IPlayerMove
     {
         [SerializeField]
-        private float gravityScale = 1f;
-
-        [SerializeField]
         private float runSpeed = 5f;
 
         [SerializeField]
@@ -17,6 +14,15 @@ namespace Assets.NewData.Scripts
 
         [SerializeField]
         private float jumpTimeToPeak = 1f;
+
+        [SerializeField]
+        private float fallMultiplier = 1.5f;
+
+        [SerializeField]
+        private float jumpVelocityFalloff = 10f;
+
+        [SerializeField]
+        private float fallSpeedLimit = 20f;
 
         [SerializeField, Range(0, 1)]
         private float airAcceleration = 0.1f;
@@ -72,6 +78,7 @@ namespace Assets.NewData.Scripts
         private PlayerStamina _playerStamina;
         private bool _isGroundPrev;
         private float _invinsibleTimer;
+        private bool _isJumping;
 
         // IPlayerMove
         public bool IsGround { get { return _controller.collisions.below; } }
@@ -137,7 +144,7 @@ namespace Assets.NewData.Scripts
                 wallJumpDuration = wallJumpDuration,
                 inputWallThreshold = inputTimeToClimb,
                 inputWallTime = _inputWallTime,
-                inputJump = _input.Player.Jump.triggered,
+                inputJump = _input.Player.Jump.IsPressed(),
                 isGrounded = _controller.collisions.below,
                 isTouchingWall = _controller.collisions.right || _controller.collisions.left,
                 isTouchingLedge = _controller.collisions.touchingLedge,
@@ -161,6 +168,7 @@ namespace Assets.NewData.Scripts
         {
             _velocity.y = JumpInitialVelocityY;
             _isJumpPerformed = true;
+            _isJumping = true;
         }
 
         // IPlayerMove
@@ -226,6 +234,7 @@ namespace Assets.NewData.Scripts
             _playerStamina = GetComponent<PlayerStamina>();
             _isGroundPrev = false;
             _invinsibleTimer = 0;
+            _isJumping = false;
         }
 
         private void Update()
@@ -248,6 +257,8 @@ namespace Assets.NewData.Scripts
             if (!_isGroundPrev && IsGround)
             {
                 _playerStamina.Recovery();
+
+                _isJumping = false;
             }
             _isGroundPrev = IsGround;
         }
@@ -281,6 +292,9 @@ namespace Assets.NewData.Scripts
                 // DamageState, etc..
             }
 
+            // 速度制限
+            _velocity.y = Mathf.Clamp(_velocity.y, -fallSpeedLimit, float.MaxValue);
+
             ActionContext ctx = currentActionContext;
             var nextActionState = _actionState.Update(ctx);
             if (nextActionState != _actionState)
@@ -304,7 +318,8 @@ namespace Assets.NewData.Scripts
         private void Move()
         {
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
-            bool inputJump = _input.Player.Jump.triggered;
+            bool inputJumpTriggered = _input.Player.Jump.triggered;
+            bool inputJump = _input.Player.Jump.IsPressed();
 
             bool isGround = _controller.collisions.below;
 
@@ -359,19 +374,25 @@ namespace Assets.NewData.Scripts
             }
 
 
-            if (inputJump && _controller.collisions.below)
+            if (inputJumpTriggered && _controller.collisions.below)
             {
                 // 地上ジャンプ
                 Jump();
             }
-            else if (inputJump && (_controller.collisions.right || _controller.collisions.left) && _playerStamina.CanJump())
+            else if (inputJumpTriggered && (_controller.collisions.right || _controller.collisions.left) && _playerStamina.CanJump())
             {
                 // 壁ジャンプ
                 WallJump();
             }
+            else if (_isJumping && (_velocity.y < -jumpVelocityFalloff || _velocity.y > 0 && !inputJump))
+            {
+                // ジャンプの降りる部分では、追加の加速度を与える
+                // また、ジャンプボタンを押すのをやめたら下降する
+                _velocity.y += Gravity * Time.deltaTime * fallMultiplier;
+            }
             else
             {
-                _velocity.y += Gravity * Time.deltaTime * gravityScale;
+                _velocity.y += Gravity * Time.deltaTime;
             }
 
             _controller.Move(_velocity * Time.deltaTime, facingRight);
@@ -385,13 +406,13 @@ namespace Assets.NewData.Scripts
         private void MoveClimbing()
         {
             Vector2 inputMove = _input.Player.Move.ReadValue<Vector2>();
-            bool inputJump = _input.Player.Jump.triggered;
+            bool inputJumpTriggered = _input.Player.Jump.triggered;
 
             _velocity.x = 0f;
 
             bool jumpPerformed = false;
 
-            if (inputJump)
+            if (inputJumpTriggered)
             {
                 jumpPerformed = true;
             }
@@ -455,7 +476,7 @@ namespace Assets.NewData.Scripts
                 _velocity.x *= (1f - Mathf.Pow(airBrake, 2));
             }
 
-            _velocity.y += Gravity * Time.deltaTime * gravityScale;
+            _velocity.y += Gravity * Time.deltaTime;
 
             _controller.Move(_velocity * Time.deltaTime, facingRight);
 
@@ -480,7 +501,7 @@ namespace Assets.NewData.Scripts
                 //_velocity.x *= (1f - Mathf.Pow(airBrake, 2));
             }
 
-            _velocity.y += Gravity * Time.deltaTime * gravityScale;
+            _velocity.y += Gravity * Time.deltaTime;
 
             _controller.Move(_velocity * Time.deltaTime, facingRight);
 
@@ -581,8 +602,10 @@ namespace Assets.NewData.Scripts
                 GUILayout.BeginArea(new Rect(0, 50, 300, 300));
                 {
                     GUILayout.Label($"Ground: {_controller.collisions.below}", style);
+                    GUILayout.Label($"Jump: {_isJumping}", style);
                     GUILayout.Label($"Climb: {_controller.collisions.climbingWall}", style);
                     GUILayout.Label($"Ledge: {_controller.collisions.touchingLedge}", style);
+                    GUILayout.Label($"Velocity.y: {_velocity.y.ToString("F3")}", style);
                 }
                 GUILayout.EndArea();
             }
@@ -773,7 +796,7 @@ namespace Assets.NewData.Scripts
             }
             public void Exit(ActionContext ctx)
             {
-                // 踏みつけアニメーション中にジャンプを入力すると、踏みつけジャンプする
+                // 踏みつけアニメーション中にジャンプを押していると、踏みつけジャンプする
                 if (_inputJump)
                 {
                     ctx.playerMove.StompJump();

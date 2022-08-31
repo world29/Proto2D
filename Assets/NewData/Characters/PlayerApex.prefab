@@ -361,10 +361,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11e97e377fd808448ebb146c72c5d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
   runSpeed: 5
   jumpHeight: 3.2
   jumpTimeToPeak: 0.4
+  fallMultiplier: 1
+  jumpVelocityFalloff: 0
+  fallSpeedLimit: 20
   airAcceleration: 0.2
   airControl: 5
   airBrake: 0.1
