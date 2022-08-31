@@ -6,6 +6,9 @@ namespace Assets.NewData.Scripts
 {
     public class SceneTransitionManager : MonoBehaviour
     {
+        [SerializeField]
+        private float transitionTime = 0.8f;
+
         // シーン遷移開始。このイベントに合わせてフェードアウトを呼び出す
         public UnityEngine.Events.UnityAction<float> OnBeginTransition;
 
@@ -28,8 +31,6 @@ namespace Assets.NewData.Scripts
         }
 
         private readonly string pauseSceneName = "Menu";
-
-        private readonly float k_TransitionTime = 1f;
 
         private void Awake()
         {
@@ -70,8 +71,8 @@ namespace Assets.NewData.Scripts
 
         private IEnumerator LoadSceneAsync(string sceneName)
         {
-            OnBeginTransition?.Invoke(k_TransitionTime);
-            yield return new WaitForSecondsRealtime(k_TransitionTime);
+            OnBeginTransition?.Invoke(transitionTime);
+            yield return new WaitForSecondsRealtime(transitionTime);
 
             // ポーズメニューからシーン遷移する場合、ポーズメニューをアンロードしておく
             if (UnityEngine.SceneManagement.SceneManager.GetSceneByName(pauseSceneName).isLoaded)
@@ -83,8 +84,8 @@ namespace Assets.NewData.Scripts
             yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
 
             // フェードイン
-            OnEndTransition?.Invoke(k_TransitionTime);
-            yield return new WaitForSecondsRealtime(k_TransitionTime);
+            OnEndTransition?.Invoke(transitionTime);
+            yield return new WaitForSecondsRealtime(transitionTime);
 
             if (PauseSystem.IsPaused)
             {

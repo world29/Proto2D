@@ -13,7 +13,7 @@ namespace Assets.NewData.Scripts
         private float defaultTransitionTime = 1f;
 
         [SerializeField]
-        private string propertyName = "_Scale";
+        private string propertyName = "_Progress";
 
         private void OnEnable()
         {
