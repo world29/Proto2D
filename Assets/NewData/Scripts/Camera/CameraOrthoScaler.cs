@@ -15,16 +15,26 @@ namespace Assets.NewData.Scripts
         [SerializeField]
         private float horizontalTiles = 9f;
 
-        private void Update()
+        private void Start()
         {
-            //Debug.Log($"(w:h): ({Screen.width}, {Screen.height})");
+            FitCameraOrthoSize();
+        }
 
+        private void FitCameraOrthoSize()
+        {
             if (vcam)
             {
-                float currentAspectPortrait = (float)Screen.height / Screen.width;
+                float currentAspectPortrait = 1.0f / vcam.m_Lens.Aspect;
 
                 vcam.m_Lens.OrthographicSize = currentAspectPortrait * horizontalTiles / 2;
             }
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            FitCameraOrthoSize();
+        }
+#endif
     }
 }
