@@ -108,13 +108,10 @@ namespace Proto2D.AI
             nodes.ForEach(node => (node as Node).Setup());
 
             // ルートノードを検索する
-            if (m_rootNode == null)
-            {
-                XNode.Node root = nodes.Find(item => (item as Node).IsRoot());
+            XNode.Node root = nodes.Find(item => (item as Node).IsRoot());
 
-                m_rootNode = root as Node;
-                Debug.Assert(m_rootNode != null, "BehaviourTree.m_rootNode is null");
-            }
+            m_rootNode = root as Node;
+            Debug.Assert(m_rootNode != null, "BehaviourTree.m_rootNode is null");
         }
 
         public NodeStatus Evaluate(EnemyBehaviour enemyBehaviour)
