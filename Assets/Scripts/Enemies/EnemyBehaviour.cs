@@ -350,6 +350,15 @@ namespace Proto2D
             return false;
         }
 
+        public bool IsAnimatorStateName(string stateName)
+        {
+            if (TryGetComponent(out Animator animator))
+            {
+                return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+            }
+            return false;
+        }
+
         public void OnReceiveDamage(DamageType type, float damage, GameObject sender)
         {
             switch (type)
