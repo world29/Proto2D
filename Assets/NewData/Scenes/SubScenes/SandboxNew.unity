@@ -2307,6 +2307,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chameleon
       objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822647, guid: 13e2f715f3e33684f8d6dae3adf6e6f3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e2f715f3e33684f8d6dae3adf6e6f3, type: 3}
 --- !u!4 &190505494 stripped
@@ -3371,7 +3376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308005726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.68, y: 56.8, z: -10}
+  m_LocalPosition: {x: 5.7, y: 67.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1547547908}
@@ -3417,7 +3422,7 @@ MonoBehaviour:
   m_Follow: {fileID: 882320988}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 12.119806
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -4727,7 +4732,7 @@ MonoBehaviour:
   m_Follow: {fileID: 882320988}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 12.119806
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -4748,7 +4753,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 451113528}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.68, y: 56.8, z: -10}
+  m_LocalPosition: {x: 5.7, y: 67.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 516605950}
@@ -6880,6 +6885,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BerryPlant
       objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822647, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52247a89b4d120c4887d902e54e8c641, type: 3}
 --- !u!4 &569417517 stripped
@@ -7693,6 +7703,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PetitRock
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822647, guid: e9b3a326bb7c4514cbcdc288762575f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9b3a326bb7c4514cbcdc288762575f5, type: 3}
@@ -9618,6 +9633,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chameleon (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778643387317822647, guid: 13e2f715f3e33684f8d6dae3adf6e6f3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e2f715f3e33684f8d6dae3adf6e6f3, type: 3}
@@ -23174,7 +23194,7 @@ Tilemap:
       - {fileID: 21300018, guid: c8f5310d2f8432744995ba9408a373cc, type: 3}
       - {fileID: 21300020, guid: c8f5310d2f8432744995ba9408a373cc, type: 3}
       - {fileID: 21300022, guid: c8f5310d2f8432744995ba9408a373cc, type: 3}
-      m_AnimationSpeed: 20.000002
+      m_AnimationSpeed: 20
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 5, y: 172, z: 0}
@@ -24231,7 +24251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325337621}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.68, y: 56.8, z: -10}
+  m_LocalPosition: {x: 5.7, y: 67.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 769476984}
@@ -24291,7 +24311,7 @@ MonoBehaviour:
   m_Follow: {fileID: 882320988}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 12.119806
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -47397,6 +47417,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 192383656}
     m_Modifications:
+    - target: {fileID: 1846819741723289012, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: sights.Array.data[0].fov
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846819741723289012, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: sights.Array.data[1].fov
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846819741723289012, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: sights.Array.data[0].viewDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846819741723289012, guid: 52247a89b4d120c4887d902e54e8c641,
+        type: 3}
+      propertyPath: sights.Array.data[1].viewDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
         type: 3}
       propertyPath: m_RootOrder
@@ -47415,7 +47455,7 @@ PrefabInstance:
     - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 72.9
+      value: 72.63
       objectReference: {fileID: 0}
     - target: {fileID: 8778643387317822643, guid: 52247a89b4d120c4887d902e54e8c641,
         type: 3}
@@ -47888,7 +47928,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 12.119806
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -47912,7 +47952,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481378893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9570308, y: 56.8, z: -10}
+  m_LocalPosition: {x: 0, y: 67.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -106438,7 +106478,7 @@ PrefabInstance:
     - target: {fileID: 1390920208943840232, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3025054656447431874, guid: e7992d951e75c894aace524125025a25,
         type: 3}
@@ -106448,12 +106488,12 @@ PrefabInstance:
     - target: {fileID: 4188887452673608562, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4188887452673608562, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7024371087871670193, guid: e7992d951e75c894aace524125025a25,
         type: 3}
@@ -106478,12 +106518,12 @@ PrefabInstance:
     - target: {fileID: 8210632560912147323, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.68
+      value: 5.7
       objectReference: {fileID: 0}
     - target: {fileID: 8210632560912147323, guid: e7992d951e75c894aace524125025a25,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 56.8
+      value: 67.2
       objectReference: {fileID: 0}
     - target: {fileID: 8210632560912147323, guid: e7992d951e75c894aace524125025a25,
         type: 3}
